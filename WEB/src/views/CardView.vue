@@ -12,7 +12,7 @@ export default {
 
 <template>
   <!-- <Card /> -->
-  <div class="container">
+  <div class="flex justify-center items-center container">
     <div class="contain">inside the card</div>
   </div>
 </template>
@@ -22,14 +22,10 @@ export default {
   border: solid red 1px;
   margin: auto 0;
   max-width: 1600px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
 }
 .container {
   border: solid blue 1px;
   width: 100%;
-  
 }
 </style>

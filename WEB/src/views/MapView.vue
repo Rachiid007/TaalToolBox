@@ -16,7 +16,7 @@ export default {
   </main>
 </template>
 
-<style scoped>
+<style>
 main {
   display: flex;
   flex-direction: column;
@@ -28,7 +28,7 @@ main {
   margin: 0;
   padding: 0;
 }
-.ol-zoom {
+.ol-overlaycontainer-stopevent {
   display: none;
 }
 </style>

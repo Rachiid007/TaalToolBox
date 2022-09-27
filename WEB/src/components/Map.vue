@@ -3,9 +3,11 @@
 </template>
 
 <script>
-import { Map, View } from 'ol'
-import { Tile as TileLayer } from 'ol/layer'
-import { OSM } from 'ol/source'
+import { Point } from 'ol/geom'
+import { fromLonLat } from 'ol/proj'
+import { Map, View, Feature } from 'ol'
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
+import { OSM,Vector as VectorSource } from 'ol/source'
 import MapView from '../views/MapView.vue'
 
 export default {
@@ -17,16 +19,35 @@ export default {
         new TileLayer({
           source: new OSM()
           // name: "OSM",
+        }),
+        new VectorLayer({
+          source: new VectorSource({
+            features: [
+              new Feature({
+                geometry: new Point(fromLonLat([4.39064, 50.83756])) //[4.39064, 50.83756]
+              })
+            ]
+          })
         })
       ],
       view: new View({
-        // center: [-9869708.964428628, 4908948.052576464],
         center: [485151.97, 6586152.84],
-        // center: [5634052.84, 595151.97],
+        // center: fromLonLat([4.39064, 50.83756]),
         zoom: 12
       })
     })
-    this.$store.commit('setMap', this.map)
+    // var layer = new VectorL({
+    //   source: new VectorS({
+    //     features: [
+    //       new Feature({
+    //         geometry: new Point(fromLonLat([4.39064, 50.83756])) //[4.39064, 50.83756]
+    //       })
+    //     ]
+    //   })
+    // })
+    // this.map.addLayer(layer)
+
+    // this.$store.commit('setMap', this.map)
   }
 }
 </script>
