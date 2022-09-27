@@ -28,4 +28,7 @@ main {
   margin: 0;
   padding: 0;
 }
+.ol-zoom {
+  display: none;
+}
 </style>
