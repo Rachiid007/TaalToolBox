@@ -1,11 +1,8 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 export const useCardStore = defineStore('card', () => {
-  const remaining = ref(30)
-
-  const getters_remaining = computed(() => {})
-
+  const remaining = ref(10)
   const decrement = () => {
     remaining.value--
   }

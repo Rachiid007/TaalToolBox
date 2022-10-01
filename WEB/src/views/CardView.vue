@@ -1,21 +1,14 @@
-<script lang="ts">
-import Card from '../components/card/Card.vue'
-
-// export default {
-//   name: 'Card',
-//   components: {
-//     'card-body': Card
-//     // Container
-//   }
-// }
+<script setup lang="ts">
+import Card from '@/components/card/Card.vue'
+import RemainingCard from '@/components/card/RemainingCard.vue'
 </script>
 <!-- Est ce qu'il yaura ou pas un header -->
 <template>
   <div class="big-container">
     <div class="container">
-      <div class="rest-card">inside rest card</div>
+      <div class="rest-card"><RemainingCard /></div>
       <div class="play-card">
-        <card-body></card-body>
+        <Card />
         <div class="answer">inside answer card</div>
       </div>
     </div>
@@ -33,7 +26,7 @@ import Card from '../components/card/Card.vue'
   height: 100vh;
 }
 .container {
-  border: solid blue 1px;
+  /* border: solid blue 1px; */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -43,10 +36,10 @@ import Card from '../components/card/Card.vue'
   height: 100vh;
 }
 .rest-card {
-  border: solid green 1px;
+  /* border: solid green 1px; */
 }
 .play-card {
-  border: solid red 1px;
+  /* border: solid red 1px; */
 }
 @media (max-width: 768px) {
   .container {

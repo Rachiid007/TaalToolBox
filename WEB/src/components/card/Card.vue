@@ -1,8 +1,4 @@
-<script lang="ts">
-export default {
-  name: 'Card'
-}
-</script>
+<script setup lang="ts"></script>
 <!-- 03 Parties : -->
 <template>
   <div class="card-container">
@@ -40,7 +36,7 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped>
 .card {
   display: flex;
   flex-direction: column;
