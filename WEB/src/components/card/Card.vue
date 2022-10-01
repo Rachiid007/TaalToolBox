@@ -3,7 +3,7 @@ export default {
   name: 'Card'
 }
 </script>
-
+<!-- 03 Parties : -->
 <template>
   <div class="card">
     <div class="question">

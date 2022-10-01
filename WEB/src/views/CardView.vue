@@ -9,11 +9,15 @@ export default {
   }
 }
 </script>
-
+<!-- Est ce qu'il yaura ou pas un header -->
 <template>
   <div class="big-container">
     <div class="container">
-      <card-body></card-body>
+      <div class="rest-card">inside rest card</div>
+      <div class="play-card">
+        <card-body></card-body>
+        <div class="answer">inside answer card</div>
+      </div>
     </div>
   </div>
 </template>
@@ -31,14 +35,19 @@ export default {
 .container {
   border: solid blue 1px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   height: auto;
   max-width: 1600px;
   height: 100vh;
 }
-
+.rest-card {
+  border: solid green 1px;
+}
+.play-card {
+  border: solid red 1px;
+}
 @media (max-width: 768px) {
   .container {
     padding: 10px;
