@@ -1,13 +1,13 @@
-<script setup lang="ts">
+<script lang="ts">
 import Card from '../components/card/Card.vue'
 
-export default {
-  name: 'Card',
-  components: {
-    'card-body': Card
-    // Container
-  }
-}
+// export default {
+//   name: 'Card',
+//   components: {
+//     'card-body': Card
+//     // Container
+//   }
+// }
 </script>
 <!-- Est ce qu'il yaura ou pas un header -->
 <template>
