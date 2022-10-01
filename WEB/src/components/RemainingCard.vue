@@ -3,9 +3,11 @@ import { useCardStore } from '../stores/card'
 import { computed } from 'vue'
 const store = useCardStore()
 
+const remaining = computed(() => store.remaining)
+
 const monTab = computed(() => {
   let myArray = []
-  for (let i = 0; i < store.remaining; i++) {
+  for (let i = 0; i < remaining.value; i++) {
     myArray.push({
       card: i,
       offsetLeft: i * 7
@@ -22,7 +24,9 @@ const monTab = computed(() => {
       v-for="index in monTab"
       :key="index.card"
       :style="{ left: index.offsetLeft + 'px' }"
-    ></div>
+    >
+      {{ remaining }}
+    </div>
   </div>
 </template>
 
@@ -39,15 +43,18 @@ const monTab = computed(() => {
   background-color: white;
   position: absolute;
   top: 0;
-}
-
-.card:last-of-type:before {
-  content: '5';
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
+  font-size: 50px;
+  font-weight: bold;
+  color: green;
+}
+
+.card:last-of-type {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 50px;
   font-weight: bold;
   color: green;
