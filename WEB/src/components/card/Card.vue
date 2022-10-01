@@ -5,14 +5,25 @@ export default {
 </script>
 <!-- 03 Parties : -->
 <template>
-  <div class="card">
+  <div class="card-container">
     <div class="question">
-      <p>Traduire le mot: <span id="question value">Found</span></p>
+      <!-- Doit être remplacer par le mot lors de la révélation -->
+      <p>Comment dit-on</p>
     </div>
-    <div class="question response-value">
-      <p>Réponse : <span id="response-value">Trouvée</span></p>
+    <div class="word-answer hidden">
+      <p>Cheval</p>
     </div>
-    <div class="answer">
+    <div class="card">
+      <!-- Réponse de la carte avec une image éventuelle -->
+      <div class="word-answer">
+        <p>Cheval</p>
+      </div>
+      <div class="image-answer">
+        <img class="image-answer-reveal" src="src/assets/images/cheval.svg" alt="" />
+      </div>
+    </div>
+    <button class="reveal">Réveler</button>
+    <!-- <div class="answer">
       <ul>
         <li class="response">
           <label><input type="radio" name="answer" value="trouve" /> Trouvé</label>
@@ -25,36 +36,48 @@ export default {
           <label><input type="radio" name="answer" value="rate" /> Raté</label>
         </li>
       </ul>
-    </div>
-    <button class="next">suivant</button>
+    </div> -->
   </div>
 </template>
 
 <style>
 .card {
-  border: solid rgba(0, 0, 0, 0.09) 1px;
-  width: 500px;
-  height: 300px;
-  position: relative;
-  background: rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  border: solid rgba(0, 0, 0, 0.3) 2px;
+  width: 350px;
+  height: 400px;
   box-shadow: inset;
-  border-radius: 5px;
+  border-radius: 15px;
   padding: 5px;
 }
-.next {
-  background: #ed1b0d;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  position: absolute;
-  bottom: 20px;
-  right: 25px;
+.word-answer {
+  /* border: solid red 1px; */
+  color: #74ac8c;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 25px;
+}
+.image-answer {
+  /* border: solid red 1px; */
+  margin-top: 25px;
+  /* margin: auto 0; */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.image-answer-reveal {
+  object-fit: contain;
 }
 .question {
   /* border: solid red 1px; */
   margin: 15px 0;
-  text-align: left;
   padding-left: 10px;
+  font-size: 25px;
+  color: rgba(0, 0, 0, 0.5);
 }
 .answer {
   /* border: solid black 1px; */
@@ -67,6 +90,26 @@ export default {
   margin: 15px 0;
 }
 
+.reveal {
+  /* background: #ed1b0d; */
+  color: #40dd84;
+  border: solid #40dd84 2.5px;
+  padding: 10px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  margin-top: 30px;
+  width: 100%;
+  font-size: 18px;
+  font-weight: bolder;
+  /* position: absolute;
+  bottom: 20px;
+  right: 25px; #c5dece*/
+}
+.reveal:hover {
+  color: #40ef84;
+  border: solid #40ef84 2.5px;
+}
 @media (max-width: 768px) {
   .card {
     width: 100%;
