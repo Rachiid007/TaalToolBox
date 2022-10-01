@@ -7,7 +7,7 @@ import { Point } from 'ol/geom'
 import { fromLonLat } from 'ol/proj'
 import { Map, View, Feature } from 'ol'
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
-import { OSM,Vector as VectorSource } from 'ol/source'
+import { OSM, Vector as VectorSource } from 'ol/source'
 import MapView from '../views/MapView.vue'
 
 export default {

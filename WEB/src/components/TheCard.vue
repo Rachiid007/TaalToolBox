@@ -1,8 +1,4 @@
-<script lang="ts">
-export default {
-  name: 'Card'
-}
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div>Bienvenue sur l'application</div>

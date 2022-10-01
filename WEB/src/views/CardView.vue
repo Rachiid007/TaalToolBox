@@ -1,14 +1,4 @@
-<script lang="ts">
-import Card from '../components/Card.vue'
-
-export default {
-  name: 'Card',
-  components: {
-    Card
-    // Container
-  }
-}
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <!-- <Card /> -->
