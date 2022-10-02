@@ -1,12 +1,12 @@
 <script lang="ts">
-import Map from '../components/Map.vue'
+  import Map from '../components/Map.vue'
 
-export default {
-  name: 'App',
-  components: {
-    Map
+  export default {
+    name: 'App',
+    components: {
+      Map
+    }
   }
-}
 </script>
 
 <template>
@@ -17,18 +17,18 @@ export default {
 </template>
 
 <style>
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#map {
-  height: 1000px;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-.ol-overlaycontainer-stopevent {
-  display: none;
-}
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #map {
+    height: 1000px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .ol-overlaycontainer-stopevent {
+    display: none;
+  }
 </style>
