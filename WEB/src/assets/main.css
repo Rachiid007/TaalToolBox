@@ -70,3 +70,8 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: microsan_A;
+  src: url('./MIASWFTE.TTF');
+}
