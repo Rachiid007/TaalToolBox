@@ -43,6 +43,7 @@
   justify-content: center;
   align-content: center;
   border: solid rgba(0, 0, 0, 0.3) 2px;
+  background-color: rgba(0, 0, 0, 0.03);
   width: 350px;
   height: 400px;
   box-shadow: inset;
@@ -60,7 +61,6 @@
 .image-answer {
   /* border: solid red 1px; */
   margin-top: 25px;
-  /* margin: auto 0; */
   text-align: center;
   display: flex;
   justify-content: center;
@@ -110,6 +110,25 @@
   .card {
     width: 100%;
     margin: 0 5px;
+  }
+  .card-container {
+    width: 260px;
+  }
+  .reveal {
+    position: absolute;
+    bottom: 15px;
+    /* margin: 0 auto; */
+    right: 0;
+    left: 0;
+
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+  }
+}
+@media (max-width: 615px) {
+  .card-container {
+    width: 210px;
   }
 }
 </style>
