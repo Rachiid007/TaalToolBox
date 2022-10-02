@@ -2,7 +2,7 @@
   <div id="map"></div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Point } from 'ol/geom'
 import { fromLonLat } from 'ol/proj'
 import { Map, View, Feature } from 'ol'
@@ -13,15 +13,20 @@ import { Modify } from 'ol/interaction'
 import MapView from '../views/MapView.vue'
 import { onMounted, ref } from 'vue'
 import useMapStore from '../stores/map'
+import router from '@/router'
 
 const mapStore = useMapStore()
 
 const iconStyle = new Style({
+  // stroke: new Stroke({
+  //       width: 5,
+  //       color: "#ff0000"
+  //     },
   image: new Icon({
     anchor: [0.5, 46],
     anchorXUnits: 'fraction',
     anchorYUnits: 'pixels',
-    src: 'src/assets/images/geo-alt-isj.svg',
+    src: 'src/assets/images/geo-alt-isj.svg'
   })
 })
 
@@ -40,40 +45,51 @@ const ICMFeature = new Feature({
 ISJFeature.setStyle(iconStyle)
 IDBFeature.setStyle(iconStyle)
 ICMFeature.setStyle(iconStyle)
+const featureListener = function () {
+  console.log('featureListenerCalled')
+  alert('Feature Listener Called')
+}
 
 onMounted(() => {
   // mapStore.setMap(
-  const map2 = ref(
-    new Map({
-      target: 'map',
-      layers: [
-        new TileLayer({
-          source: new OSM()
-          // name: "OSM",
-        }),
-        new VectorLayer({
-          source: new VectorSource({
-            features: [ISJFeature]
-          })
-        }),
-        new VectorLayer({
-          source: new VectorSource({
-            features: [IDBFeature]
-          })
-        }),
-        new VectorLayer({
-          source: new VectorSource({
-            features: [ICMFeature]
-          })
+  const map2 = new Map({
+    target: 'map',
+    layers: [
+      new TileLayer({
+        source: new OSM()
+        // name: "OSM",
+      }),
+      new VectorLayer({
+        source: new VectorSource({
+          features: [ISJFeature]
         })
-      ],
-      view: new View({
-        center: [485151.97, 6586152.84],
-        // center: fromLonLat([4.39064, 50.83756]),
-        zoom: 12
+      }),
+      new VectorLayer({
+        source: new VectorSource({
+          features: [IDBFeature]
+        })
+      }),
+      new VectorLayer({
+        source: new VectorSource({
+          features: [ICMFeature]
+        })
       })
+    ],
+    view: new View({
+      center: [485151.97, 6586152.84],
+      // center: fromLonLat([4.39064, 50.83756]),
+      zoom: 12
     })
-  )
+  })
+  map2.on('singleclick', function (evt) {
+    map2.forEachFeatureAtPixel(evt.pixel, function (feature, layer: any) {
+      // let source = layer.getSource()
+      // console.log(layer)
+      // console.log(feature)
+      router.push({ name: 'cards' })
+    })
+  })
+
   console.log(map2)
 })
 // this.$store.commit('setMap', this.map)
