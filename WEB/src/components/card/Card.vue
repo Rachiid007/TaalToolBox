@@ -1,4 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useCardStore } from '@/stores/card'
+const store = useCardStore()
+
+const decreaseRemaining = () => {
+  store.decrement()
+}
+</script>
 <!-- 03 Parties : -->
 <template>
   <div class="card-container">
@@ -18,7 +25,7 @@
         <img class="image-answer-reveal" src="src/assets/images/cheval.svg" alt="" />
       </div>
     </div>
-    <button class="reveal">Réveler</button>
+    <button class="reveal" @click="decreaseRemaining">Réveler</button>
     <!-- <div class="answer">
       <ul>
         <li class="response">

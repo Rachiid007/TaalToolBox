@@ -1,10 +1,10 @@
-<script lang="ts"></script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="main">
     <div class="title">
       <p class="activity_name">Flash</p>
-      <img src="../assets/lightning.svg" />
+      <img src="@/assets/lightning.svg" />
       <p class="activity_name">Cards</p>
     </div>
   </div>

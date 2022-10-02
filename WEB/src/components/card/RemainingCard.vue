@@ -7,7 +7,7 @@ const remaining = computed(() => store.remaining)
 
 const monTab = computed(() => {
   let myArray = []
-  if (remaining.value <= 8) {
+  if (remaining.value <= 10) {
     for (let i = 0; i < remaining.value; i++) {
       myArray.push({
         card: i,
@@ -15,7 +15,7 @@ const monTab = computed(() => {
       })
     }
   } else {
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 10; i++) {
       myArray.push({
         card: 10,
         offsetLeft: i * 7

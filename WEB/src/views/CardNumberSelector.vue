@@ -1,19 +1,11 @@
-<script lang="ts">
-import CardNumber from '../components/CardNumber.vue'
-import Header from '../components/Header.vue'
-
-export default {
-  name: 'test',
-  components: {
-    CardNumber,
-    Header
-  }
-}
+<script setup lang="ts">
+import CardNumber from '@/components/CardNumber.vue'
+import TheHeader from '@/components/TheHeader.vue'
 </script>
 
 <template>
   <div class="page">
-    <Header />
+    <TheHeader />
     <CardNumber />
   </div>
 </template>

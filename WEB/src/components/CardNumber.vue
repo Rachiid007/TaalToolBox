@@ -1,15 +1,8 @@
-<script lang="ts">
-export default {
-  data() {
-    return {
-      cardNumber: 0
-    }
-  },
-  methods: {
-    getCardNumber() {
-      console.log('hello')
-    }
-  }
+<script setup lang="ts">
+import { useCardStore } from '@/stores/card'
+const store = useCardStore()
+const setNbrOfCardsforthegame = (cardNumber) => {
+  store.setRemaining(cardNumber)
 }
 </script>
 
@@ -23,12 +16,14 @@ export default {
           <p>15 cartes</p>
         </div>
         <div class="img">
-          <img src="../assets/timer1.svg" />
+          <img src="@/assets/timer1.svg" />
         </div>
         <div class="time">
           <div style="color: #5d00ff">~5mins</div>
         </div>
-        <button class="play" @click="getCardNumber">JOUER</button>
+        <router-link to="/cards" class="play" @click="setNbrOfCardsforthegame(15)"
+          >JOUER</router-link
+        >
       </div>
       <div class="card">
         <div class="card_number_and_name">
@@ -36,12 +31,14 @@ export default {
           <p>30 cartes</p>
         </div>
         <div class="img">
-          <img src="../assets/timer2.svg" />
+          <img src="@/assets/timer2.svg" />
         </div>
         <div class="time">
           <div style="color: #02a83a">~10mins</div>
         </div>
-        <button class="play">JOUER</button>
+        <router-link to="/cards" class="play" @click="setNbrOfCardsforthegame(30)"
+          >JOUER</router-link
+        >
       </div>
       <div class="card">
         <div class="card_number_and_name">
@@ -49,12 +46,14 @@ export default {
           <p>50 cartes</p>
         </div>
         <div class="img">
-          <img src="../assets/timer3.svg" />
+          <img src="@/assets/timer3.svg" />
         </div>
         <div class="time">
           <div style="color: #ff0000">~20mins</div>
         </div>
-        <button class="play">JOUER</button>
+        <router-link to="/cards" class="play" @click="setNbrOfCardsforthegame(50)"
+          >JOUER</router-link
+        >
       </div>
     </div>
   </div>
