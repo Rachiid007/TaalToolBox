@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 
-const store = defineStore('map', {
+const useMapStore = defineStore('map', {
   state: () => {
-    return { map: null }
+    return { map: 15 }
   },
 
   getters: {
@@ -17,4 +17,4 @@ const store = defineStore('map', {
   }
 })
 
-export default store
+export default useMapStore
