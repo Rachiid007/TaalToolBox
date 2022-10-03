@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { useCardStore } from '@/stores/card'
   const store = useCardStore()
-  const setNbrOfCardsforthegame = (cardNumber) => {
+  const setNbrOfCardsforthegame = (cardNumber: number) => {
     store.setRemaining(cardNumber)
   }
 </script>

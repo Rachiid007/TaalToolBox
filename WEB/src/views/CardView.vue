@@ -2,6 +2,12 @@
   import Card from '@/components/card/Card.vue'
   import RemainingCard from '@/components/card/RemainingCard.vue'
   import ButtonValidation from '@/components/card/ButtonValidation.vue'
+
+  import { useCardStore } from '@/stores/card'
+  import { computed } from 'vue'
+  const store = useCardStore()
+
+  const remaining = computed(() => store.remaining)
 </script>
 <!-- Est ce qu'il yaura ou pas un header -->
 <template>

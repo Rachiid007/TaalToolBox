@@ -8,16 +8,19 @@
 
   const getAnswer = () => {
     console.log('getAnswer')
+    store.incrementGoodAnswers()
     decreaseRemaining()
   }
 
   const almost = () => {
     console.log('almost')
+    store.incrementAlmostGoodAnswers()
     decreaseRemaining()
   }
 
   const noAnswer = () => {
     console.log('noAnswer')
+    store.incrementWrongAnswers()
     decreaseRemaining()
   }
 </script>
@@ -49,7 +52,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
   .container {
     display: flex;
     justify-content: space-around;
