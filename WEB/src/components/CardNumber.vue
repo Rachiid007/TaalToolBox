@@ -13,7 +13,7 @@
       <div class="card">
         <div class="card_number_and_name">
           <h1 class="name">Partie courte</h1>
-          <p>15 cartes</p>
+          <p>5 cartes</p>
         </div>
         <div class="img">
           <img src="@/assets/timer1.svg" />
@@ -24,14 +24,14 @@
         <router-link
           to="/cards"
           class="play"
-          @click="setNbrOfCardsforthegame(15)"
+          @click="setNbrOfCardsforthegame(5)"
           >JOUER</router-link
         >
       </div>
       <div class="card">
         <div class="card_number_and_name">
           <h1 class="name">Partie normale</h1>
-          <p>30 cartes</p>
+          <p>10 cartes</p>
         </div>
         <div class="img">
           <img src="@/assets/timer2.svg" />
@@ -42,14 +42,14 @@
         <router-link
           to="/cards"
           class="play"
-          @click="setNbrOfCardsforthegame(30)"
+          @click="setNbrOfCardsforthegame(10)"
           >JOUER</router-link
         >
       </div>
       <div class="card">
         <div class="card_number_and_name">
           <h1 class="name">Partie longue</h1>
-          <p>50 cartes</p>
+          <p>20 cartes</p>
         </div>
         <div class="img">
           <img src="@/assets/timer3.svg" />
@@ -60,7 +60,7 @@
         <router-link
           to="/cards"
           class="play"
-          @click="setNbrOfCardsforthegame(50)"
+          @click="setNbrOfCardsforthegame(20)"
           >JOUER</router-link
         >
       </div>
