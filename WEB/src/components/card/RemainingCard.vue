@@ -7,12 +7,17 @@
 
   const monTab = computed(() => {
     let myArray = []
-    for (let i = 0; i < remaining.value; i++) {
-      myArray.push({
-        card: i,
-        offsetLeft: i * 7
-      })
+    if (remaining.value > 0) {
+      let maxValue = 0
+      remaining.value > 10 ? (maxValue = 10) : (maxValue = remaining.value)
+      for (let i = 0; i < maxValue; i++) {
+        myArray.push({
+          card: i,
+          offsetLeft: i * 7
+        })
+      }
     }
+
     return myArray
   })
 </script>

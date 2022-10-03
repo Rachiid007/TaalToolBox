@@ -1,9 +1,17 @@
 <script setup lang="ts">
+  import { ref } from 'vue'
+  import { flashcardsData } from '@/data/animalFlashcards'
   import { useCardStore } from '@/stores/card'
   const store = useCardStore()
 
-  const decreaseRemaining = () => {
-    store.decrement()
+  const currentQuestion = ref()
+  const currentAnswer = ref()
+
+  const flashcardsArray = flashcardsData.slice(0, store.remaining)
+
+  // ! TODO: create a function to get the answer
+  const showAnswer = () => {
+    console.log('Show answer (TODO !)')
   }
 </script>
 <!-- 03 Parties : -->
@@ -31,7 +39,7 @@
     </div>
     <button
       class="reveal"
-      @click="decreaseRemaining"
+      @click="showAnswer"
     >
       Réveler
     </button>
