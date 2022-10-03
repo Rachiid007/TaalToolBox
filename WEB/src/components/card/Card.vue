@@ -1,9 +1,7 @@
 <script setup lang="ts">
-  import { useCardStore } from '@/stores/card'
-  const store = useCardStore()
-
-  const decreaseRemaining = () => {
-    store.decrement()
+  // ! TODO: create a function to get the answer
+  const showAnswer = () => {
+    console.log('Show answer (TODO !)')
   }
 </script>
 <!-- 03 Parties : -->
@@ -31,7 +29,7 @@
     </div>
     <button
       class="reveal"
-      @click="decreaseRemaining"
+      @click="showAnswer"
     >
       Réveler
     </button>
