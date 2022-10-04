@@ -1,4 +1,14 @@
 <script setup lang="ts">
+  import { ref } from 'vue'
+  import { flashcardsData } from '@/data/animalFlashcards'
+  import { useCardStore } from '@/stores/card'
+  const store = useCardStore()
+
+  const currentQuestion = ref()
+  const currentAnswer = ref()
+
+  const flashcardsArray = flashcardsData.slice(0, store.remaining)
+
   // ! TODO: create a function to get the answer
   const showAnswer = () => {
     console.log('Show answer (TODO !)')
