@@ -48,7 +48,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
   .card {
     border: solid rgba(0, 0, 0, 0.09) 1px;
     width: 500px;
