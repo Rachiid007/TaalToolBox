@@ -13,7 +13,7 @@ import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
+// import { diskStorage } from 'multer';
 
 @Controller('cards')
 export class CardsController {
@@ -45,23 +45,8 @@ export class CardsController {
   }
 
   @Post('upload')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './uploads',
-        filename: (req, file, cb) => {
-          const fileNameSplit = file.originalname.split('.');
-          const fileExtName = fileNameSplit[fileNameSplit.length - 1];
-          cb(null, `${Date.now()}.${fileExtName}`);
-        },
-      }),
-    }),
-  )
-  async uploadFile(@UploadedFile() file) {
-    const response = {
-      originalname: file.originalname,
-      filename: file.filename,
-    };
-    return response;
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file) {
+    return this.cardsService.uploadFile(file);
   }
 }

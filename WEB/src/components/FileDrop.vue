@@ -2,11 +2,11 @@
   <div class="container">
     <h1 class="title">Ajouter une activité</h1>
     <p class="the-text">
-      Veuillez sélectionner un fichier excel .xslx pour encoder une nouvelle activité:
+      Veuillez sélectionner un fichier Excel (.xslx) pour encoder une nouvelle activité :
     </p>
     <div
       class="label"
-      :class="entering ? 'dark-gray' : 'light gray'"
+      :class="entering ? 'dark-gray' : 'light-gray'"
       @drop.prevent="handleDrop"
       @dragenter="entering = true"
       @dragleave="entering = false"
@@ -18,7 +18,7 @@
         class="input"
         @input="handleInput"
       />
-      <span class="message">Drop your files here</span>
+      <span class="message">Glissez vos fichiers .XLSX ici...</span>
     </div>
   </div>
 </template>
@@ -46,8 +46,8 @@
 
 <style scoped>
   .container {
-    width: 1000px;
-    height: 700px;
+    width: 100vw;
+    height: 100vh;
   }
   .label {
     position: relative;
@@ -55,42 +55,47 @@
     border: 3px dashed lightslategrey;
     width: 700px;
     height: 250px;
+    margin: 0 auto;
+    border-radius: 7px;
   }
-
   .label:hover {
-    background-color: lightslategrey;
+    background-color: rgb(170, 172, 174);
   }
   .input {
     position: absolute;
-    bottom: 100px;
-    left: 50%;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    opacity: 0;
   }
   .message {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
-
-  .dark-gray {
-    background-color: lightslategrey;
+    font-size: 1.3rem;
   }
 
   .light-gray {
-    background-color: lightgray;
+    background-color: rgb(225, 222, 222);
+  }
+
+  .dark-gray {
+    background-color: rgb(170, 172, 174);
   }
 
   .title {
-    font-size: 20px;
+    font-size: 26px;
     font-weight: bold;
-    border-bottom: 3px solid green;
+    border-bottom: 3px solid rgb(32, 163, 32);
     display: inline-block;
-    padding-bottom: 5px;
+    padding-bottom: 2px;
+    margin-bottom: 10px;
   }
-
   .the-text {
-    color: green;
+    color: rgb(28, 143, 28);
+    font-size: 20px;
+    margin: 10px 0;
   }
 </style>
