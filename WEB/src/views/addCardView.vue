@@ -9,9 +9,7 @@
 
 <script setup lang="ts">
   import { defineAsyncComponent } from 'vue'
-
   import axios from 'axios'
-
   const sendFileToNest = (file: File) => {
     const formData = new FormData()
     formData.append('file', file)
@@ -28,11 +26,9 @@
         console.log(error)
       })
   }
-
   const FileDrop = defineAsyncComponent(
     () => import(/*webpackChunkName:"filedrop"*/ '@/components/FileDrop.vue')
   )
-
   function startUpload(files: File[]): void {
     files.map((file) => {
       console.log('uploading', file)

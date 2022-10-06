@@ -1,12 +1,12 @@
 <script setup lang="ts">
-  import MainHeader from '@/components/headers/MainHeader.vue'
-  import Greetings from '@/components/Greetings.vue'
+  import CardNumber from '@/components/CardNumber.vue'
+  import TheHeader from '@/components/TheHeader.vue'
 </script>
 
 <template>
   <div class="page">
-    <MainHeader />
-    <Greetings />
+    <TheHeader />
+    <CardNumber />
   </div>
 </template>
 
@@ -15,6 +15,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 50px;
+    padding-bottom: 25px;
   }
 </style>
