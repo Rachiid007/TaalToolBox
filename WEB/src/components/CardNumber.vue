@@ -79,6 +79,7 @@
     color: #707070;
     font-size: 2em;
     margin-top: 3%;
+    text-align: center;
   }
   .options {
     display: flex;
