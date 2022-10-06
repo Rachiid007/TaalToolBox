@@ -6,10 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+// import { diskStorage } from 'multer';
 
 @Controller('cards')
 export class CardsController {
@@ -38,5 +42,11 @@ export class CardsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.cardsService.remove(+id);
+  }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadFile(@UploadedFile() file) {
+    return this.cardsService.uploadFile(file);
   }
 }
