@@ -86,7 +86,7 @@
         // let source = layer.getSource()
         // console.log(layer)
         // console.log(feature)
-        router.push({ name: 'cards' })
+        router.push({ name: 'CardNumberSelector' })
       })
     })
 
