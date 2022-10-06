@@ -15,8 +15,8 @@
     <Map />
   </main>
 </template>
+<style scoped>
 
-<style>
   main {
     display: flex;
     flex-direction: column;

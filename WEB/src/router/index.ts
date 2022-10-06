@@ -28,6 +28,10 @@ const router = createRouter({
       path: '/CardNumberSelector',
       name: 'CardNumberSelector',
       component: CardNumberSelector
+},{
+      path: '/addCard',
+      name: 'addCard',
+      component: addCardView
     }
   ]
 })

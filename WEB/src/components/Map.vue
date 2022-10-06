@@ -1,8 +1,8 @@
 <template>
   <div id="map"></div>
 </template>
-
 <script setup lang="ts">
+
   import { Point } from 'ol/geom'
   import { fromLonLat } from 'ol/proj'
   import { Map, View, Feature } from 'ol'
@@ -75,6 +75,11 @@
           source: new VectorSource({
             features: [ICMFeature]
           })
+        ],
+        view: new View({
+          center: [485151.97, 6586152.84],
+          // center: fromLonLat([4.39064, 50.83756]),
+          zoom: 12
         })
       ],
       view: new View({
