@@ -16,9 +16,6 @@
   </main>
 </template>
 <style scoped>
-
-<style scoped>
-
   main {
     display: flex;
     flex-direction: column;

@@ -66,6 +66,7 @@
     margin-bottom: 30px;
     font-size: 2.8em;
     color: #026b30;
+    text-align: center;
   }
   .info {
     display: flex;

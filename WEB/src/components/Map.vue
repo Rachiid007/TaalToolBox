@@ -14,9 +14,7 @@
   import { onMounted, ref } from 'vue'
   import useMapStore from '../stores/map'
   import router from '@/router'
-
   const mapStore = useMapStore()
-
   const iconStyle = new Style({
     // stroke: new Stroke({
     //       width: 5,
@@ -29,16 +27,13 @@
       src: 'src/assets/images/geo-alt-isj.svg'
     })
   })
-
   const ISJFeature = new Feature({
     geometry: new Point(fromLonLat([4.39064, 50.83756])), //[4.39064, 50.83756],
     name: 'Institut Saint Joseph'
   })
-
   const IDBFeature = new Feature({
     geometry: new Point(fromLonLat([4.42537, 50.83826])) //[4.39064, 50.83756]
   })
-
   const ICMFeature = new Feature({
     geometry: new Point(fromLonLat([4.37576, 50.87358])) //[4.39064, 50.83756]
   })
@@ -49,7 +44,6 @@
     console.log('featureListenerCalled')
     alert('Feature Listener Called')
   }
-
   onMounted(() => {
     // mapStore.setMap(
     const map2 = new Map({
@@ -86,7 +80,7 @@
         // let source = layer.getSource()
         // console.log(layer)
         // console.log(feature)
-        router.push({ name: 'CardNumberSelector' })
+        router.push({ name: 'cards' })
       })
     })
 

@@ -29,7 +29,7 @@
       >
       <router-link
         class="tabs_element"
-        to="/"
+        to="/map"
         >Carte</router-link
       >
       <router-link
