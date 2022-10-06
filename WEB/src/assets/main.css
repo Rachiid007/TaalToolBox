@@ -73,5 +73,17 @@ body {
 
 @font-face {
   font-family: microsan_A;
-  src: url('./MIASWFTE.TTF');
+  src: url('./font/MIASWFTE.TTF');
+}
+@font-face {
+  font-family: Tertiary Writting Font;
+  src: url('./font/Tertiary_Writing_font.ttf');
+}
+@font-face {
+  font-family: Didno;
+  src: url('./font/Didno.ttf');
+}
+@font-face {
+  font-family: NotoSans-Regular;
+  src: url('./font/NotoSans-Regular.ttf');
 }

@@ -4,7 +4,7 @@
   <div class="main">
     <div class="title">
       <p class="activity_name">Flash</p>
-      <img src="@/assets/lightning.svg" />
+      <img src="@/assets/logo/lightning.svg" />
       <p class="activity_name">Cards</p>
     </div>
   </div>
