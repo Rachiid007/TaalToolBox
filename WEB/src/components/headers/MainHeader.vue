@@ -275,8 +275,8 @@
     position: absolute;
     width: 0px;
     left: -15px;
-    top: 10px;
-    height: 2px;
+    top: 50%;
+    height: 5%;
     transform: rotate(45deg);
     background-color: #026b30;
   }
@@ -285,8 +285,8 @@
     position: absolute;
     width: 0px;
     left: -15px;
-    top: 16px;
-    height: 2px;
+    top: 50%;
+    height: 5%;
     transform: rotate(-45deg);
     background-color: #026b30;
   }
@@ -297,11 +297,11 @@
     width: 10px;
   }
 
-  /* @media (min-width: 701px) {
+  @media (min-width: 701px) {
     .rightTab {
-      display: none;
+      visibility: hidden;
     }
-  } */
+  }
   @media (max-width: 1200px) {
     .tabs {
       font-size: 1.1em;
