@@ -98,6 +98,7 @@
     padding: 15px 3% 15px 3%;
     width: 20%;
     min-width: 180px;
+    text-align: center;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   }
   .name {
@@ -156,6 +157,7 @@
       display: flex;
       width: 100%;
       flex-direction: row;
+      text-align: center;
     }
     .name {
       font-size: 5vw;

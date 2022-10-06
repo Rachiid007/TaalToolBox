@@ -55,7 +55,7 @@
     border: solid green 1px;
   } */
   .validation-button {
-    display: none;
+    /* display: none; */
   }
   .play-card {
     /* border: solid red 1px; */
