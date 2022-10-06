@@ -2,22 +2,15 @@
   import { useCardStore } from '@/stores/card'
   import { ref, computed, onMounted, onUpdated } from 'vue'
   import TheModal from '@/components/TheModal.vue'
-
   const isModalOpen = ref(false)
-
   const store = useCardStore()
-
   const remaining = computed(() => store.remaining)
-
   onMounted(() => {
     isModalOpen.value = remaining.value === 0
   })
-
   onUpdated(() => {
     isModalOpen.value = remaining.value === 0
   })
-
-
   const monTab = computed(() => {
     let myArray = []
     if (remaining.value > 0) {
@@ -30,7 +23,6 @@
         })
       }
     }
-
     return myArray
   })
 </script>
@@ -100,7 +92,6 @@
     color: green;
     box-shadow: 5 0 5px 0 rgba(0, 0, 0, 0.5);
   }
-
   .card:last-of-type {
     display: flex;
     justify-content: center;

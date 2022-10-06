@@ -1,8 +1,8 @@
 <template>
   <div id="map"></div>
 </template>
-
 <script setup lang="ts">
+
   import { Point } from 'ol/geom'
   import { fromLonLat } from 'ol/proj'
   import { Map, View, Feature } from 'ol'
@@ -14,6 +14,7 @@
   import { onMounted, ref } from 'vue'
   import useMapStore from '../stores/map'
   import router from '@/router'
+  import { viewDepthKey } from 'vue-router'
 
   const mapStore = useMapStore()
 
@@ -23,10 +24,11 @@
     //       color: "#ff0000"
     //     },
     image: new Icon({
-      anchor: [0.5, 46],
+      anchor: [0.5, 45],
       anchorXUnits: 'fraction',
       anchorYUnits: 'pixels',
-      src: 'src/assets/images/geo-alt-isj.svg'
+      src: 'src/assets/images/localisation_icon.svg',
+      scale: 0.5
     })
   })
 
@@ -73,12 +75,18 @@
           source: new VectorSource({
             features: [ICMFeature]
           })
+        ],
+        view: new View({
+          center: [485151.97, 6586152.84],
+          // center: fromLonLat([4.39064, 50.83756]),
+          zoom: 12
         })
       ],
       view: new View({
-        center: [485151.97, 6586152.84],
+        center: [489151.97, 6594152.84],
         // center: fromLonLat([4.39064, 50.83756]),
-        zoom: 12
+        zoom: 12,
+        minZoom: 11
       })
     })
     map2.on('singleclick', function (evt) {
@@ -89,7 +97,7 @@
         router.push({ name: 'CardNumberSelector' })
       })
     })
-
+    console.log(map2.getLayers())
     console.log(map2)
   })
   // this.$store.commit('setMap', this.map)

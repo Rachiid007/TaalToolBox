@@ -13,7 +13,12 @@ module.exports = {
     ecmaVersion: 'latest'
   },
   rules: {
-    // 'prettier/prettier': 'error',
-    useTabs: false
-  }
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto'
+      }
+    ]
+  },
+  useTabs: false
 }

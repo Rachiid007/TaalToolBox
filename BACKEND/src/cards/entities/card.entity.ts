@@ -6,11 +6,8 @@ export class Card {
   id: number;
 
   @Column()
-  title: string;
+  word: string;
 
   @Column()
-  description: string;
-
-  @Column('json', { nullable: true })
-  answers: string[];
+  translation: string;
 }

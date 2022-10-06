@@ -1,3 +1,4 @@
+
 <script setup lang="ts">
   import Card from '@/components/card/Card.vue'
   import RemainingCard from '@/components/card/RemainingCard.vue'
@@ -53,7 +54,6 @@
   /* .rest-card {
     border: solid green 1px;
   } */
-
   .validation-button {
     display: none;
   }

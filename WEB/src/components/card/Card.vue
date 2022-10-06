@@ -3,12 +3,9 @@
   import { flashcardsData } from '@/data/animalFlashcards'
   import { useCardStore } from '@/stores/card'
   const store = useCardStore()
-
   const currentQuestion = ref()
   const currentAnswer = ref()
-
   const flashcardsArray = flashcardsData.slice(0, store.remaining)
-
   // ! TODO: create a function to get the answer
   const showAnswer = () => {
     console.log('Show answer (TODO !)')
@@ -128,7 +125,6 @@
     /* border: solid green 1px ;   */
     margin: 15px 0;
   }
-
   .reveal {
     /* background: #ed1b0d; */
     color: #40dd84;
@@ -186,7 +182,6 @@
       /* border: solid green 1px ;   */
       margin: 15px 0;
     }
-
     @media (max-width: 768px) {
       .card {
         width: 100%;
@@ -202,7 +197,6 @@
       /* margin: 0 auto; */
       right: 0;
       left: 0;
-
       margin-left: auto;
       margin-right: auto;
       width: 60%;

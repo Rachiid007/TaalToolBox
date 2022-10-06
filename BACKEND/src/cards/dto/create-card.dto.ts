@@ -2,11 +2,8 @@ import { IsString } from 'class-validator';
 
 export class CreateCardDto {
   @IsString()
-  readonly title: string;
+  readonly word: string;
 
   @IsString()
-  readonly description: string;
-
-  @IsString({ each: true })
-  readonly answers: string[];
+  readonly translation: string;
 }

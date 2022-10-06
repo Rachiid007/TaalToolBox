@@ -1,8 +1,20 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import MainHeader from '@/components/headers/MainHeader.vue'
+  import Greetings from '@/components/Greetings.vue'
+</script>
 
 <template>
-  <main>
-    <h1>Projet Langue</h1>
-    <p>Projet d'intégration App Web et Mobile.</p>
-  </main>
+  <div class="page">
+    <MainHeader />
+    <Greetings />
+  </div>
 </template>
+
+<style scoped>
+  .page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+  }
+</style>

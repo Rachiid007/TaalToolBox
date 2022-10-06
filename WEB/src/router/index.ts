@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import MapView from '@/views/MapView.vue'
 import CardView from '@/views/CardView.vue'
 import CardNumberSelector from '@/views/CardNumberSelector.vue'
+import HomeView from '@/views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,6 +15,11 @@ const router = createRouter({
       component: MapView
     },
     {
+      path: '/home',
+      name: 'mainHome',
+      component: HomeView
+    },
+    {
       path: '/cards',
       name: 'cards',
       component: CardView
@@ -22,6 +28,10 @@ const router = createRouter({
       path: '/CardNumberSelector',
       name: 'CardNumberSelector',
       component: CardNumberSelector
+},{
+      path: '/addCard',
+      name: 'addCard',
+      component: addCardView
     }
   ]
 })
