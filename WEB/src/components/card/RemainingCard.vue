@@ -17,6 +17,7 @@
     isModalOpen.value = remaining.value === 0
   })
 
+
   const monTab = computed(() => {
     let myArray = []
     if (remaining.value > 0) {
