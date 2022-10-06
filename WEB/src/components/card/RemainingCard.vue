@@ -4,7 +4,7 @@
   const store = useCardStore()
 
   const remaining = computed(() => store.remaining)
-
+  // const remaining = { value: 2 }
   const monTab = computed(() => {
     let myArray = []
     if (remaining.value > 0) {

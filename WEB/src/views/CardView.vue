@@ -11,20 +11,27 @@
         <RemainingCard />
       </div>
       <div class="play-card">
-        <Card />
+        <div>
+          <Card />
+          <div><span></span></div>
+        </div>
         <!-- <div class="answer">inside answer card</div> -->
+        <div class="validation-button">
+          <ButtonValidation />
+        </div>
       </div>
+      <div></div>
     </div>
-    <ButtonValidation />
   </div>
 </template>
 
 <style scoped>
   .big-container {
     /* border: solid red 1px; */
-    /* display: flex;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center; */
+    justify-content: center;
     margin: 0 auto;
     width: 100%;
     height: 100vh;
@@ -40,11 +47,17 @@
   /* .rest-card {
     border: solid green 1px;
   } */
+
+  .validation-button {
+    display: none;
+  }
   .play-card {
     /* border: solid red 1px; */
-    /* flex: 0.8; */
+    flex: 0.6;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
   }
   @media (max-width: 768px) {
     .container {

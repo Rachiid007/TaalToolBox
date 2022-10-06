@@ -116,6 +116,7 @@
     padding-left: 10px;
     font-size: 25px;
     color: rgba(0, 0, 0, 0.5);
+    text-align: center;
   }
   .answer {
     /* border: solid black 1px; */
@@ -140,6 +141,7 @@
     width: 100%;
     font-size: 18px;
     font-weight: bolder;
+    text-align: center;
     /* position: absolute;
   bottom: 20px;
   right: 25px; #c5dece*/
