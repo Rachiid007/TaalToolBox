@@ -1,60 +1,50 @@
-<script lang="ts">
-  
-
-</script>
-
-
+<script lang="ts"></script>
 
 <template>
-<!-- <div class="main">
+  <!-- <div class="main">
   <div class="title">
     <p class="activity_name">Connexion/Inscription</p>
   </div>
 </div> -->
-<div class="main">
-  <div class="title">
-      <p id="connection" class="connectInscri">Connection</p>
-      <p id="inscription" class="connectInscri">Inscription</p>  
-  </div>
-  <div class="content">
-    <div class="title-image">
-        <img src="../assets/logoProjet.png" class="image">
+  <div class="main">
+    <div class="content">
+      <div class="title-image">
+        <img src="../assets/logoProjet.png" class="image" />
         <p class="logoName">TaalToolBox</p>
-    </div>
-    <div class="fields">
-      <form class="form">
-        <div class="firstDiv">
-          <input type="text" placeholder="Nom">
-          <input type="text" placeholder="Prénom">
-        </div>
-        <div class="secondDiv">
-          <input type="text" placeholder="Mail">
-          <input type="text" placeholder="Mot de passe">
-          <input type="text" placeholder="Confirmer le mot de passe">
-        </div>
-      </form>
-    </div>
-    <div class="buttons">
-      <button id="precedent" class="clickButton">Précédent</button>
-      <button id="suivant" class="clickButton">Suivant</button>
+      </div>
+      <div class="fields">
+        <form class="form">
+          <div class="firstDiv">
+            <input type="text" placeholder="Nom" />
+            <input type="text" placeholder="Prénom" />
+          </div>
+          <div class="secondDiv">
+            <input type="text" placeholder="Mail" />
+            <input type="text" placeholder="Mot de passe" />
+            <input type="text" placeholder="Confirmer le mot de passe" />
+          </div>
+        </form>
+      </div>
+      <div class="buttons">
+        <button id="precedent" class="clickButton">Précédent</button>
+        <button id="suivant" class="clickButton">Suivant</button>
+      </div>
     </div>
   </div>
-</div>
-
 </template>
 
 <style>
-  .container2{
-      padding: 38px;
-  }
-  .main {
+.container2 {
+  padding: 38px;
+}
+.main {
   /* width: 100vw; */
   /* max-width: 1600px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: solid grey 1px;
+  /* border: solid grey 1px; */
 }
 
 .title {
@@ -62,131 +52,132 @@
   flex-direction: row;
 }
 
-
 .activity_name {
   /* font-family: 'Courier New', monospace; */
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: grey;
   /* #026b30; */
   font-weight: 400;
   font-size: 1.8em;
 }
 
-.globalBorder{
+.globalBorder {
   /* padding: 38px; */
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
-.borderTop{
+.borderTop {
   /* border: solid 1px black;
   padding: 6px; */
   display: flex;
   flex-direction: row;
   align-items: center;
 }
- .connectInscri {
-   border-bottom: solid 1px grey;
-   padding: 6px;
-   padding-left:100px ;
-   padding-right:100px;
-   font-size: 1.5em;
- }
+.connectInscri {
+  border-bottom: solid 1px grey;
+  padding: 6px;
+  padding-left: 100px;
+  padding-right: 100px;
+  font-size: 1.5em;
+}
 
- #connection {
-  background-color:  white;
+#connection {
+  background-color: white;
   color: grey;
- }
+}
 
- #inscription {
-  background-color : #026b30;
+#inscription {
+  background-color: #026b30;
   color: white;
- }
+}
 
- .content{
+.content {
   display: flex;
   flex-direction: column;
   align-items: center;
- }
-  
- .firstDiv{
+}
+
+.firstDiv {
   gap: 15px;
   display: flex;
   flex-direction: row;
- }
+}
 
- .secondDiv{
+.secondDiv {
   gap: 25px;
   display: flex;
   flex-direction: column;
- }
+}
 
- .buttons{
-  padding-bottom: 10% ;
+.buttons {
+  padding-bottom: 10%;
   padding-top: 10%;
   gap: 200px;
   display: flex;
   flex-direction: row;
   align-self: center;
- }
+}
 
- .clickButton{
-  border: solid 1px black;
+.clickButton {
+  border: none;
   margin: 5px;
   border-radius: 5px;
   font-size: 15px;
   width: 100px;
   height: 40px;
- }
+}
 
- #precedent{
-  border: solid grey 1px;
-  color: grey
- }
+#precedent {
+  border: solid grey 2px;
+  color: grey;
+}
 
- #suivant{
+#suivant {
   color: white;
   background-color: #026b30;
- }
+}
 
- input[type="text"] {
-				color: #026b30;
-				/* width: 70%; */
-				padding: 2px;
-				border-radius: 5px;
-				outline: none;
-        /* margin-top: 20px; */
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
-      }
- .generalBorder{
+input[type='text'] {
+  color: #026b30;
+  /* width: 70%; */
+  padding: 2px;
+  border-radius: 5px;
+  outline: none;
+  /* margin-top: 20px; */
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
+}
+.generalBorder {
   display: flex;
   justify-content: center;
   align-items: center;
- }
+}
 
- .title-image{
+.title-image {
   padding: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
- }
+  gap: 5%;
+}
 
- .form{
+.form {
   display: flex;
   flex-direction: column;
   gap: 15px;
- }
+}
 
- .image{
+.image {
   /* display: flex;
   justify-content: center;
   align-items: center; */
-   width: 50px;
- }
+  width: 50px;
+}
 
- .logoName{
+.logoName {
   font-family: Segoe print;
-  padding-right: 10px;
- }
-
+  /* padding-right: 10px; */
+  color: #707070;
+  font-size: 1.5em;
+}
 </style>
