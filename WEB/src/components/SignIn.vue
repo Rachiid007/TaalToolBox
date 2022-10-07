@@ -22,7 +22,7 @@
         <p class="logoName">TaalToolBox</p>
     </div>
     <div class="fields">
-      <form>
+      <form class="form">
         <div class="firstDiv">
           <input type="text" placeholder="Nom">
           <input type="text" placeholder="Prénom">
@@ -34,10 +34,9 @@
         </div>
       </form>
     </div>
-
     <div class="buttons">
-      <button>Précédent</button>
-      <button>Suivant</button>
+      <button id="precedent" class="clickButton">Précédent</button>
+      <button id="suivant" class="clickButton">Suivant</button>
     </div>
   </div>
 </div>
@@ -87,7 +86,6 @@
   align-items: center;
 }
  .connectInscri {
-    
    border-bottom: solid 1px grey;
    padding: 6px;
    padding-left:100px ;
@@ -96,13 +94,13 @@
  }
 
  #connection {
-  background-color : #026b30;
-  color: white;
+  background-color:  white;
+  color: grey;
  }
 
  #inscription {
-  background-color:  white;
-  color: grey;
+  background-color : #026b30;
+  color: white;
  }
 
  .content{
@@ -110,30 +108,56 @@
   flex-direction: column;
   align-items: center;
  }
-
+  
  .firstDiv{
+  gap: 15px;
   display: flex;
   flex-direction: row;
  }
 
  .secondDiv{
+  gap: 25px;
   display: flex;
   flex-direction: column;
  }
 
  .buttons{
-  gap: 50%;
+  padding-bottom: 10% ;
+  padding-top: 10%;
+  gap: 200px;
   display: flex;
   flex-direction: row;
   align-self: center;
  }
 
- input{
-  border: solid 1px grey;
-  outline: none;
-  color: #026b30;
+ .clickButton{
+  border: solid 1px black;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 15px;
+  width: 100px;
+  height: 40px;
  }
 
+ #precedent{
+  border: solid grey 1px;
+  color: grey
+ }
+
+ #suivant{
+  color: white;
+  background-color: #026b30;
+ }
+
+ input[type="text"] {
+				color: #026b30;
+				/* width: 70%; */
+				padding: 2px;
+				border-radius: 5px;
+				outline: none;
+        /* margin-top: 20px; */
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
+      }
  .generalBorder{
   display: flex;
   justify-content: center;
@@ -145,6 +169,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+ }
+
+ .form{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
  }
 
  .image{

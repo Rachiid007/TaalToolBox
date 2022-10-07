@@ -1,10 +1,10 @@
 <script lang="ts">
-    import UserLogin from '../components/UserLogin.vue'
+    import Login from '../components/Login.vue'
 
     export default {
-    name: 'Login',
+    name: 'login',
     components: {
-      UserLogin
+      Login
       // Container
     }
   }
@@ -14,7 +14,7 @@
 
 <template>
 <div class="page">
-  <UserLogin/>
+  <Login/>
 </div>  
 </template>
 
