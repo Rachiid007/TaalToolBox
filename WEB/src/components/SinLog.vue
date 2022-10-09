@@ -35,7 +35,7 @@ export default {
   <div class="master">
     <div class="component">
       <div class="title">
-        <p id="connection" class="connectInscri" @click="swapToTrue">Connection</p>
+        <p id="connection" class="connectInscri" @click="swapToTrue">Connexion</p>
         <p id="inscription" class="connectInscri" @click="swapToFalse">Inscription</p>
       </div>
       <div>
@@ -64,14 +64,18 @@ export default {
   flex-direction: column;
   align-items: center;
   border: solid grey 1px;
+  max-width: 450px;
 }
 .title {
   display: flex;
   flex-direction: row;
+  min-width: 400px;
+  width: 100%;
 }
 .connectInscri {
+  flex-grow: 5;
   border-bottom: solid 1px grey;
-  padding: 10px 65px 10px 65px;
+  /* padding: 10px 5% 10px 5%; */
   font-size: 1.5em;
   cursor: pointer;
 }

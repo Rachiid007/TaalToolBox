@@ -9,17 +9,17 @@ const hideTab = () => {
 
 <template>
   <div class="main">
-    <router-link class="logo" to="/home">
+    <router-link class="logo" to="/">
       <div class="logo_img">
-        <img class="main_logo" src="@/assets/logo/logoProjet.png" />
+        <img class="main_logo" src="@/assets/logo/logo.svg" />
       </div>
       <p class="logo_title">TaalToolBox</p>
     </router-link>
     <div class="tabs">
-      <router-link class="tabs_element" to="/home">Acceuil</router-link>
-      <router-link class="tabs_element" to="/map">Carte</router-link>
-      <router-link to="/home" class="tabs_element">Jeux</router-link>
-      <router-link to="/home" class="tabs_element">Classe</router-link>
+      <router-link class="tabs_element" to="/">Acceuil</router-link>
+      <router-link class="tabs_element" to="/">Carte</router-link>
+      <router-link to="/" class="tabs_element">Jeux</router-link>
+      <router-link to="/" class="tabs_element">Classe</router-link>
     </div>
     <div class="conreg">S'inscrire/Se connecter</div>
     <div class="hamburger" @click="showTab">
@@ -36,11 +36,11 @@ const hideTab = () => {
           <div class="build_deploid"></div>
           <div class="build_deploid"></div>
         </div>
-        <router-link class="right_tab_element" to="/home">Acceuil</router-link>
+        <router-link class="right_tab_element" to="/">Acceuil</router-link>
         <router-link class="right_tab_element" to="/">Carte</router-link>
-        <router-link to="/home" class="right_tab_element">Jeux</router-link>
-        <router-link to="/home" class="right_tab_element">Classe</router-link>
-        <router-link to="/home" style="margin-top: 60vh; align-self: center"
+        <router-link to="/" class="right_tab_element">Jeux</router-link>
+        <router-link to="/" class="right_tab_element">Classe</router-link>
+        <router-link to="/" style="margin-top: 60vh; align-self: center"
           >Se connecter/S'inscrire</router-link
         >
       </div>
