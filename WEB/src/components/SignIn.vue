@@ -9,19 +9,19 @@
   <div class="main">
     <div class="content">
       <div class="title-image">
-        <img src="../assets/logoProjet.png" class="image" />
+        <img src="../assets/logo/logoProjet.png" class="image" />
         <p class="logoName">TaalToolBox</p>
       </div>
       <div class="fields">
         <form class="form">
           <div class="firstDiv">
-            <input type="text" placeholder="Nom" />
-            <input type="text" placeholder="Prénom" />
+            <input class="firstFields" type="text" placeholder="Nom" />
+            <input class="firstFields" type="text" placeholder="Prénom" />
           </div>
           <div class="secondDiv">
-            <input type="text" placeholder="Mail" />
-            <input type="text" placeholder="Mot de passe" />
-            <input type="text" placeholder="Confirmer le mot de passe" />
+            <input class="secondFields" type="text" placeholder="Mail" />
+            <input class="secondFields" type="text" placeholder="Mot de passe" />
+            <input class="secondFields" type="text" placeholder="Confirmer le mot de passe" />
           </div>
         </form>
       </div>
@@ -33,7 +33,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .container2 {
   padding: 38px;
 }
@@ -99,21 +99,26 @@
 }
 
 .firstDiv {
-  gap: 15px;
+  gap: 25px;
+  color: #026b30;
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .secondDiv {
   gap: 25px;
   display: flex;
   flex-direction: column;
+  /* justify-content: center; */
+  margin-left: 73px;
+  align-items: center;
 }
 
 .buttons {
-  padding-bottom: 10%;
-  padding-top: 10%;
-  gap: 200px;
+  padding-bottom: 7%;
+  padding-top: 7%;
+  gap: 108px;
   display: flex;
   flex-direction: row;
   align-self: center;
@@ -123,8 +128,8 @@
   border: none;
   margin: 5px;
   border-radius: 5px;
-  font-size: 15px;
-  width: 100px;
+  font-size: 18px;
+  width: 85px;
   height: 40px;
 }
 
@@ -138,14 +143,26 @@
   background-color: #026b30;
 }
 
-input[type='text'] {
+input[type='text'].secondFields  {
   color: #026b30;
-  /* width: 70%; */
+  width: 80%;
   padding: 2px;
   border-radius: 5px;
   outline: none;
-  /* margin-top: 20px; */
+  margin-right: 20%;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
+}
+
+input[type='text'].firstFields  {
+  width: 30%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+input::placeholder {
+  color: #026b30;
+  opacity: 1;
 }
 .generalBorder {
   display: flex;
@@ -164,7 +181,7 @@ input[type='text'] {
 .form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 25px;
 }
 
 .image {

@@ -11,7 +11,7 @@ const hideTab = () => {
   <div class="main">
     <router-link class="logo" to="/home">
       <div class="logo_img">
-        <img class="main_logo" src="@/assets/logo/logo.svg" />
+        <img class="main_logo" src="@/assets/logo/logoProjet.png" />
       </div>
       <p class="logo_title">TaalToolBox</p>
     </router-link>

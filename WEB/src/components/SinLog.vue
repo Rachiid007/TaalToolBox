@@ -59,7 +59,7 @@ export default {
   z-index: 1;
 }
 .component {
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,7 +71,7 @@ export default {
 }
 .connectInscri {
   border-bottom: solid 1px grey;
-  padding: 10px 50px 10px 50px;
+  padding: 10px 65px 10px 65px;
   font-size: 1.5em;
   cursor: pointer;
 }
