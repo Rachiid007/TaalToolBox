@@ -4,25 +4,25 @@
   <div class="main">
     <div class="content">
       <div class="title-image">
-        <img src="../assets/logoProjet.png" class="image" />
+        <img src="../assets/logo/logoProjet.png" class="image" />
         <p class="logoName">TaalToolBox</p>
       </div>
-      <div class="fields">
+      <div class="fields2">
         <form class="form">
           <div class="fields-connection">
-            <input type="text" placeholder="Mail" />
-            <input type="text" placeholder="Mot de passe" />
+            <input class="mailPass" type="text" placeholder="Mail"/>
+            <input class="mailPass" type="text" placeholder="Mot de passe" />
           </div>
         </form>
       </div>
-      <div class="buttons">
-        <button id="suivant" class="clickButton">Se connecter</button>
+      <div class="buttonConnect">
+        <button id="suivant" class="clickButton2">Se connecter</button>
       </div>
     </div>
   </div>
 </template>
 
-<style>
+<style scoped>
 .container2 {
   padding: 38px;
 }
@@ -76,21 +76,21 @@
 }
 
 .fields-connection {
-  gap: 25px;
+  gap:  40px;
   display: flex;
   flex-direction: column;
-}
+ }
 
-.buttons {
-  padding-bottom: 10%;
-  padding-top: 10%;
+.buttonConnect {
+  padding-bottom: 15%;
+  padding-top: 15%;
   gap: 200px;
   display: flex;
   flex-direction: row;
   align-self: center;
 }
 
-.clickButton {
+.clickButton2 {
   border: solid 1px black;
   margin: 5px;
   border-radius: 5px;
@@ -109,12 +109,23 @@
   background-color: #026b30;
 }
 
-input[type='text'] {
+input {
   color: #026b30;
-  padding: 2px;
+  width: 100%;
   border-radius: 5px;
-  outline: none;
+  padding: 3px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
+  outline: none;
+} 
+
+ input[type="text"].mailPass {
+  padding: 4px;
+  margin-right: 100px;
+  /* margin-left: 50px; */
+} 
+
+input::placeholder {
+  color:#026b30;
 }
 .generalBorder {
   display: flex;
@@ -127,12 +138,13 @@ input[type='text'] {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 5%;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 100px;
 }
 
 .image {
@@ -142,5 +154,6 @@ input[type='text'] {
 .logoName {
   font-family: Segoe print;
   padding-right: 10px;
+  font-size: 1.5em;
 }
 </style>
