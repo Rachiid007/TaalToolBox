@@ -1,33 +1,20 @@
-<script lang="ts">
+<script setup lang="ts">
 import Login from './Login.vue'
 import SignIn from './SignIn.vue'
+import { ref, reactive } from 'vue'
 
-export default {
-  name: 'SinLog',
-  components: {
-    Login,
-    SignIn
-    // Container
-  },
-  data() {
-    return { showConnection: true }
-  },
-  methods: {
-    swapToFalse() {
-      this.showConnection = false
-      document.getElementById('connection').style.backgroundColor = 'white'
-      document.getElementById('connection').style.color = 'grey'
-      document.getElementById('inscription').style.backgroundColor = '#026b30'
-      document.getElementById('inscription').style.color = 'white'
-    },
-    swapToTrue() {
-      this.showConnection = true
-      document.getElementById('connection').style.backgroundColor = '#026b30'
-      document.getElementById('connection').style.color = 'white'
-      document.getElementById('inscription').style.backgroundColor = 'white'
-      document.getElementById('inscription').style.color = 'grey'
-    }
-  }
+const state = reactive({ connection: 'connection1', inscription: 'inscription1' })
+const showConnection = ref(true)
+
+const swapToFalse = () => {
+  showConnection.value = false
+  state.connection = 'connection2'
+  state.inscription = 'inscription2'
+}
+const swapToTrue = () => {
+  showConnection.value = true
+  state.connection = 'connection1'
+  state.inscription = 'inscription1'
 }
 </script>
 
@@ -35,8 +22,12 @@ export default {
   <div class="master">
     <div class="component">
       <div class="title">
-        <p id="connection" class="connectInscri" @click="swapToTrue">Connexion</p>
-        <p id="inscription" class="connectInscri" @click="swapToFalse">Inscription</p>
+        <p :id="state.connection" ref="connection" class="connectInscri" @click="swapToTrue">
+          Connexion
+        </p>
+        <p :id="state.inscription" ref="inscription" class="connectInscri" @click="swapToFalse">
+          Inscription
+        </p>
       </div>
       <div>
         <Login v-if="showConnection" />
@@ -79,12 +70,22 @@ export default {
   font-size: 1.5em;
   cursor: pointer;
 }
-#connection {
+
+#connection1 {
   background-color: #026b30;
   color: white;
 }
-#inscription {
+#inscription1 {
   background-color: white;
   color: grey;
+}
+
+#connection2 {
+  background-color: white;
+  color: grey;
+}
+#inscription2 {
+  background-color: #026b30;
+  color: white;
 }
 </style>

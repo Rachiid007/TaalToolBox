@@ -1,33 +1,27 @@
-<script lang="ts">
-export default {
-  name: 'SignIn',
-  data() {
-    return {
-      firstPage: true,
-      firstName: '',
-      secondName: '',
-      mail: '',
-      password: '',
-      confirmPassword: '',
-      phoneNumber: '',
-      birthDate: '',
-      gender: ''
-    }
-  },
-  methods: {
-    swapToTrue() {
-      this.firstPage = true
-    },
-    swapToFalse() {
-      this.firstPage = false
-    }
-  }
+<script setup lang="ts">
+import { reactive } from 'vue'
+const state = reactive({
+  firstPage: true,
+  firstName: '',
+  secondName: '',
+  mail: '',
+  password: '',
+  confirmPassword: '',
+  phoneNumber: '',
+  birthDate: '',
+  gender: ''
+})
+const swapToTrue = () => {
+  state.firstPage = true
+}
+const swapToFalse = () => {
+  state.firstPage = false
 }
 </script>
 
 <template>
   <div class="main">
-    <div class="page1" v-if="firstPage">
+    <div class="page1" v-if="state.firstPage">
       <div class="title-image">
         <img src="../assets/logo/logo.svg" class="image" />
         <p class="logoName">TaalToolBox</p>
@@ -38,15 +32,15 @@ export default {
             class="firstFields"
             type="text"
             placeholder="Nom"
-            :value="firstName"
-            @input="(event) => (firstName = event.target.value)"
+            :value="state.firstName"
+            @input="(event) => (state.firstName = event.target.value)"
           />
           <input
             class="firstFields"
             type="text"
             placeholder="Prénom"
-            :value="secondName"
-            @input="(event) => (secondName = event.target.value)"
+            :value="state.secondName"
+            @input="(event) => (state.secondName = event.target.value)"
           />
         </div>
         <div class="secondDiv">
@@ -54,22 +48,22 @@ export default {
             class="secondFields"
             type="email"
             placeholder="Mail"
-            :value="mail"
-            @input="(event) => (mail = event.target.value)"
+            :value="state.mail"
+            @input="(event) => (state.mail = event.target.value)"
           />
           <input
             class="secondFields"
             type="password"
             placeholder="Mot de passe"
-            :value="password"
-            @input="(event) => (password = event.target.value)"
+            :value="state.password"
+            @input="(event) => (state.password = event.target.value)"
           />
           <input
             class="secondFields"
             type="password"
             placeholder="Confirmer le mot de passe"
-            :value="confirmPassword"
-            @input="(event) => (confirmPassword = event.target.value)"
+            :value="state.confirmPassword"
+            @input="(event) => (state.confirmPassword = event.target.value)"
           />
         </div>
       </form>
@@ -98,11 +92,11 @@ export default {
           <fieldset class="radioField">
             <div class="radioLegend"><legend>Sexe:</legend></div>
             <div class="radioInput">
-              <input type="radio" name="gender" value="man" v-model="gender" />
+              <input type="radio" name="gender" value="man" v-model="state.gender" />
               <img src="@/assets/logo/man.svg" alt="manSign" class="radioImage" />
             </div>
             <div class="radioInput">
-              <input type="radio" name="gender" value="woman" v-model="gender" />
+              <input type="radio" name="gender" value="woman" v-model="state.gender" />
               <img src="@/assets/logo/woman.svg" alt="womanSign" class="radioImage" />
             </div>
           </fieldset>
