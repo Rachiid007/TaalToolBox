@@ -54,58 +54,56 @@
   .container {
     display: flex;
     flex-direction: column;
+    margin: 0;
     width: 100%;
     height: auto;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
+    outline: 2px solid black;
+    gap: 20px 0;
   }
 
   .title {
-    margin: 0;
     font-size: 24px;
     font-weight: bold;
     text-align: center;
-    background-color: green;
+    background-color: #056b30;
     color: white;
   }
 
   form {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    align-items: center;
+    gap: 10px 0;
     width: 100%;
   }
 
   label {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 300;
+    align-self: flex-start;
+    margin-left: 20px;
   }
 
   input {
-    margin: 0 0 10px 0;
     padding: 5px;
-    font-size: 16px;
-    font-weight: 300;
     border: 1px solid #000;
     border-radius: 5px;
-    width: 100%;
+    width: 90%;
   }
 
   button {
-    margin: 10px 0 0 0;
-    padding: 5px;
-    font-size: 16px;
-    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
     border: 1px solid #000;
     border-radius: 5px;
     cursor: pointer;
-    background-color: green;
+    background-color: #056b30;
     color: #fff;
-    width: 100%;
+    width: max-content;
     height: 40px;
-    text-align: center;
   }
 
   button:hover {

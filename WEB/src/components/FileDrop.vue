@@ -18,7 +18,13 @@
         class="input"
         @input="handleInput"
       />
-      <span class="message">Glissez vos fichiers .XLSX ici...</span>
+      <span class="message">
+        <span class="icon">
+          <i class="fas fa-cloud-upload-alt fa-2xl"></i>
+        </span>
+
+        Glissez vos fichiers .XLSX ici...</span
+      >
     </div>
   </div>
 </template>
@@ -100,10 +106,10 @@
     transform: translateX(-50%);
     width: 330px;
     height: 3px;
-    background-color: green;
+    background-color: #056b30;
   }
   .the-text {
-    color: rgb(28, 143, 28);
+    color: #056b30;
     font-size: 20px;
     margin: 10px 0;
   }

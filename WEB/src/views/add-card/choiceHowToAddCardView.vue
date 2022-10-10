@@ -6,3 +6,5 @@
   <choice-how-to-add-card />
   <RouterView />
 </template>
+
+<style scoped></style>

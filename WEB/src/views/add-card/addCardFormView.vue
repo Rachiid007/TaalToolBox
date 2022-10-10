@@ -17,20 +17,20 @@
     :translation="translation"
     :image="LeCheval"
   /> -->
-  <div class="container">
+  <div class="container-view">
     <add-card-form id="add-card-form" />
     <all-card id="all-card" />
   </div>
 </template>
 
 <style scoped>
-  .container {
+  .container-view {
     display: flex;
     width: 100%;
     max-width: 1400px;
     height: auto;
-    border: 1px solid rgb(207, 27, 27);
-    gap: 20px;
+    gap: 0 20px;
+    margin: 0 auto;
   }
 
   #add-card-form {

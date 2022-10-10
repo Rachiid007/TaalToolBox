@@ -17,52 +17,59 @@
 </template>
 
 <style scoped>
-  .title {
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: bold;
-  }
   .big-container {
     width: 100%;
     height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    outline: 2px solid rgb(248, 39, 248);
+  }
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    background-color: #056b30;
+    color: white;
+    width: 100%;
   }
 
   .container {
     display: flex;
-    justify-content: center;
-    border: 1px solid black;
     flex-wrap: wrap;
-    /* flex-shrink: 0; */
+    width: 100%;
+    height: auto;
+    gap: 10px;
   }
 
   .card {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 150px;
     height: 200px;
-    margin: 5px;
+    padding: 20px;
     border: 1px solid black;
     border-radius: 10px;
     text-align: center;
   }
 
   .btn {
-    margin: auto;
-    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
     font-size: 18px;
+    font-weight: bold;
     border: 1px solid #000;
     border-radius: 5px;
     cursor: pointer;
-    background-color: green;
+    background-color: #056b30;
     color: #fff;
-    width: 200px;
+    width: max-content;
     height: 40px;
-    text-align: center;
-    font-weight: bold;
   }
 
   .btn:hover {
-    background-color: black;
+    background-color: #000;
   }
 </style>
