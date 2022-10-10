@@ -43,6 +43,7 @@ export default {}
 }
 
 .fields-connection {
+  padding-top: 30px;
   gap: 40px;
   display: flex;
   flex-direction: column;
@@ -113,12 +114,18 @@ input::placeholder {
 .form {
   display: flex;
   flex-direction: column;
-  gap: 100px;
+  gap: 25px;
+
+  /* display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 80%; */
 }
 
 .logoName {
   font-family: Segoe print;
-  padding-right: 10px;
+  /* padding-right: 10px; */
+  color: #707070;
   font-size: 1.5em;
 }
 </style>
