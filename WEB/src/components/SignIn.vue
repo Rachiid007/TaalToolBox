@@ -1,27 +1,77 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 const state = reactive({
+  page1: {
+    firstName: '',
+    secondName: '',
+    mail: '',
+    password: '',
+    confirmPassword: ''
+  },
+  page2: {
+    phoneNumber: '',
+    birthDate: '',
+    gender: ''
+  }
+})
+const manage = reactive({
   firstPage: true,
-  firstName: '',
-  secondName: '',
-  mail: '',
-  password: '',
-  confirmPassword: '',
-  phoneNumber: '',
-  birthDate: '',
-  gender: ''
+  error: ''
 })
 const swapToTrue = () => {
-  state.firstPage = true
+  manage.error = ''
+  manage.firstPage = true
 }
 const swapToFalse = () => {
-  state.firstPage = false
+  manage.error = ''
+  manage.firstPage = false
+}
+const checkPasswordStrength = (password: string) => {
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
+  if (!/\d/.test(password)) {
+    return 'Le mot de passe doit contenir au moins un chiffre'
+  } else if (!specialChars.test(password)) {
+    return 'Le mot de passe doit contenir au moins un caractère spécial'
+  } else if (password.length < 12) {
+    return 'Le mot de passe doit contenir au moins 12 caractères'
+  }
+  return 0
+}
+const checkFields = (page: string) => {
+  if (page == 'page1') {
+    for (let key in state.page1) {
+      if (state.page1[key] == '') {
+        manage.error = 'Veuillez compléter tous les champs !'
+        console.log(key)
+        return 1
+      }
+    }
+    if (state.page1.password != state.page1.confirmPassword) {
+      manage.error = "Le champ mot de passe n'est pas identique au champ répéter le mot de passe !"
+      return 1
+    }
+    if (checkPasswordStrength(state.page1.password)) {
+      manage.error = checkPasswordStrength(state.page1.password)
+      return 1
+    }
+    swapToFalse()
+  } else {
+    for (let key in state.page2) {
+      if (state.page2[key] == '') {
+        manage.error = 'Veuillez compléter tous les champs !'
+        console.log(key)
+        return 1
+      }
+    }
+  }
+  // Verifier que les données ne sont pas déjà utilisées pour un autre compte
+  console.log('TODO: Envoyer les données au back')
 }
 </script>
 
 <template>
   <div class="main">
-    <div class="page1" v-if="state.firstPage">
+    <div class="page1" v-if="manage.firstPage">
       <div class="title-image">
         <img src="../assets/logo/logo.svg" class="image" />
         <p class="logoName">TaalToolBox</p>
@@ -32,38 +82,28 @@ const swapToFalse = () => {
             class="firstFields"
             type="text"
             placeholder="Nom"
-            :value="state.firstName"
-            @input="(event) => (state.firstName = event.target.value)"
+            v-model="state.page1.firstName"
           />
           <input
             class="firstFields"
             type="text"
             placeholder="Prénom"
-            :value="state.secondName"
-            @input="(event) => (state.secondName = event.target.value)"
+            v-model="state.page1.secondName"
           />
         </div>
         <div class="secondDiv">
-          <input
-            class="secondFields"
-            type="email"
-            placeholder="Mail"
-            :value="state.mail"
-            @input="(event) => (state.mail = event.target.value)"
-          />
+          <input class="secondFields" type="email" placeholder="Mail" v-model="state.page1.mail" />
           <input
             class="secondFields"
             type="password"
             placeholder="Mot de passe"
-            :value="state.password"
-            @input="(event) => (state.password = event.target.value)"
+            v-model="state.page1.password"
           />
           <input
             class="secondFields"
             type="password"
             placeholder="Confirmer le mot de passe"
-            :value="state.confirmPassword"
-            @input="(event) => (state.confirmPassword = event.target.value)"
+            v-model="state.page1.confirmPassword"
           />
         </div>
       </form>
@@ -71,7 +111,10 @@ const swapToFalse = () => {
         <button id="precedent" class="clickButton" style="opacity: 0.5; cursor: text">
           Précédent
         </button>
-        <button id="suivant" class="clickButton" @click="swapToFalse">Suivant</button>
+        <button id="suivant" class="clickButton" @click="checkFields('page1')">Suivant</button>
+      </div>
+      <div class="error">
+        {{ manage.error }}
       </div>
     </div>
     <div class="page2" v-else>
@@ -81,22 +124,28 @@ const swapToFalse = () => {
       </div>
       <form class="form">
         <div class="secondDiv">
-          <input class="secondFields" type="tel" placeholder="Téléphone" />
+          <input
+            class="secondFields"
+            type="tel"
+            placeholder="Téléphone"
+            v-model="state.page2.phoneNumber"
+          />
           <input
             class="secondFields"
             type="text"
             placeholder="Date de naissance"
             onfocus="(this.type='date')"
             onblur="(this.type='text')"
+            v-model="state.page2.birthDate"
           />
           <fieldset class="radioField">
             <div class="radioLegend"><legend>Sexe:</legend></div>
             <div class="radioInput">
-              <input type="radio" name="gender" value="man" v-model="state.gender" />
+              <input type="radio" name="gender" value="man" v-model="state.page2.gender" />
               <img src="@/assets/logo/man.svg" alt="manSign" class="radioImage" />
             </div>
             <div class="radioInput">
-              <input type="radio" name="gender" value="woman" v-model="state.gender" />
+              <input type="radio" name="gender" value="woman" v-model="state.page2.gender" />
               <img src="@/assets/logo/woman.svg" alt="womanSign" class="radioImage" />
             </div>
           </fieldset>
@@ -104,7 +153,10 @@ const swapToFalse = () => {
       </form>
       <div class="buttons">
         <button id="precedent" class="clickButton" @click="swapToTrue">Précédent</button>
-        <button id="suivant" class="clickButton">Terminer</button>
+        <button id="suivant" class="clickButton" @click="checkFields('page2')">Terminer</button>
+      </div>
+      <div class="error">
+        {{ manage.error }}
       </div>
     </div>
   </div>
@@ -221,13 +273,13 @@ input::placeholder {
 .radioInput {
   display: flex;
   position: relative;
+  gap: 10px;
 }
 .radioImage {
   height: auto;
   width: 100%;
 }
 .buttons {
-  padding-bottom: 5%;
   gap: 35%;
   display: flex;
   flex-direction: row;
@@ -241,6 +293,12 @@ input::placeholder {
   border-radius: 5px;
   font-size: 1.1em;
   min-width: 100px;
+}
+
+.error {
+  color: red;
+  padding-bottom: 5%;
+  font-weight: bold;
 }
 
 #precedent {
