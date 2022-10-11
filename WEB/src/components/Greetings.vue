@@ -87,6 +87,7 @@
     gap: 40px;
     align-self: flex-start;
     margin-top: 35px;
+    text-align: center;
   }
   .imageLeft {
     width: 100%;
@@ -100,6 +101,7 @@
     gap: 30px;
     align-self: flex-start;
     margin-top: 30px;
+    text-align: center;
   }
   .imageRight {
     width: 55%;
