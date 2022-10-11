@@ -6,6 +6,7 @@ import CardView from '@/views/CardView.vue'
 import CardNumberSelector from '@/views/CardNumberSelector.vue'
 import HomeView from '@/views/HomeView.vue'
 import addCardView from '@/views/addCardView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,11 @@ const router = createRouter({
       path: '/addCard',
       name: 'addCard',
       component: addCardView
+    },
+    {
+      path: '/Profile',
+      name: 'Profile',
+      component: ProfileView
     }
   ]
 })
