@@ -34,15 +34,16 @@
   <div class="card-container">
     <div class="question">
       <!-- Doit être remplacer par le mot lors de la révélation -->
-      <p>Comment dit-on</p>
+      <p v-if="!storeShow.getShowAnswer()">Comment dit-on</p>
+      <p v-else>Bonne Réponse</p>
     </div>
     <div class="word-answer">
-      <p v-show="storeShow.getShowAnswer()">{{ actualCard.answer }}</p>
     </div>
     <div class="card">
       <!-- Réponse de la carte avec une image éventuelle -->
       <div class="word-answer">
-        <p>{{ actualCard.question }}</p>
+        <p v-if="storeShow.getShowAnswer()">{{ actualCard.answer }}</p>
+        <p v-else>{{ actualCard.question }}</p>
       </div>
       <div class="image-answer">
         <img
