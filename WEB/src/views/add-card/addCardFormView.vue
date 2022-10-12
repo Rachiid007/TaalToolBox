@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import addCardForm from '@/components/addCardForm.vue'
+  import addCardForm from '@/components/card/add/addCardForm.vue'
   // import LittleCard from '@/components/LittleCard.vue'
   // import LeCheval from '@/assets/images/cheval.svg'
 
@@ -8,7 +8,7 @@
   // const word = ref('Le cheval')
   // const translation = ref('Het paard')
 
-  import AllCard from '@/components/AllCard.vue'
+  import AllCard from '@/components/card/add/AllCard.vue'
 </script>
 
 <template>

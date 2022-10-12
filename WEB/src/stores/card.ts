@@ -1,7 +1,9 @@
+import type Flashcard from '@/types/Flashcard'
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, reactive, computed } from 'vue'
 
 export const useCardStore = defineStore('card', () => {
+  //point management
   const remaining = ref(0)
   const totalQuestions = ref(0)
   const goodAnswers = ref(0)
@@ -34,6 +36,25 @@ export const useCardStore = defineStore('card', () => {
     wrongAnswers.value++
   }
 
+  // ADD CARD FORM
+
+  const flashcardList = reactive([]) as Flashcard[]
+
+  const addFlashcard = (flashcard: Flashcard) => {
+    flashcardList.push(flashcard)
+  }
+
+  const removeFlashcard = (id: number): void => {
+    flashcardList.forEach((flashcard, index) => {
+      if (flashcard.id === id) {
+        flashcardList.splice(index, 1)
+        return
+      }
+
+      console.log("PROBLEME D'ID -> carte pas trouvé dans le store")
+    })
+  }
+
   return {
     remaining,
     totalQuestions,
@@ -45,6 +66,9 @@ export const useCardStore = defineStore('card', () => {
     decrement,
     incrementGoodAnswers,
     incrementAlmostGoodAnswers,
-    incrementWrongAnswers
+    incrementWrongAnswers,
+    addFlashcard,
+    flashcardList,
+    removeFlashcard
   }
 })

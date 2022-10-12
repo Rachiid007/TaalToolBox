@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import choiceHowToAddCard from '@/components/choiceHowToAddCard.vue'
+  import choiceHowToAddCard from '@/components/card/add/choiceHowToAddCard.vue'
 </script>
 
 <template>

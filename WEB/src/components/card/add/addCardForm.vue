@@ -1,17 +1,38 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { reactive } from 'vue'
+  import { useCardStore } from '@/stores/card'
+  import type Flashcard from '@/types/Flashcard'
 
-  const word = ref('')
-  const translation = ref('')
-  const image = ref('')
+  const store = useCardStore()
+
+  const dataForm = reactive<Flashcard>({
+    id: 0,
+    word: '',
+    translation: '',
+    image: null,
+    url: ''
+  })
 
   const handleImage = (e: any) => {
-    image.value = e.target.files[0]
+    dataForm.url = URL.createObjectURL(e.target.files[0])
+    dataForm.image = e.target.files[0]
   }
 
-  const handleSubmit = () => {
-    console.log(word.value, translation.value)
-    console.log(image.value)
+  const onSubmit = () => {
+    const copyDataForm: Flashcard = {
+      id: dataForm.id,
+      word: dataForm.word,
+      translation: dataForm.translation,
+      image: dataForm.image,
+      url: dataForm.url
+    }
+
+    store.addFlashcard(copyDataForm)
+    dataForm.id++
+    dataForm.word = ''
+    dataForm.translation = ''
+    dataForm.image = null
+    dataForm.url = ''
   }
 </script>
 
@@ -20,21 +41,21 @@
     <h2 class="title">Ajouter une carte</h2>
     <form
       method="post"
-      @submit.prevent="handleSubmit"
+      @submit.prevent="onSubmit"
     >
       <label for="word">Mot :</label>
       <input
         type="text"
         name="word"
         id="word"
-        v-model="word"
+        v-model="dataForm.word"
       />
       <label for="translation">Traduction :</label>
       <input
         type="text"
         name="translation"
         id="translation"
-        v-model="translation"
+        v-model="dataForm.translation"
       />
 
       <label for="image">Ajouter une image :</label>
@@ -47,6 +68,14 @@
       />
       <button type="submit">Ajouter</button>
     </form>
+
+    <div class="preview">
+      <img
+        v-show="dataForm.url"
+        :src="dataForm.url"
+        alt="preview"
+      />
+    </div>
   </div>
 </template>
 
@@ -57,7 +86,7 @@
     margin: 0;
     width: 100%;
     height: auto;
-    outline: 2px solid black;
+    outline: 1px solid gray;
     gap: 20px 0;
   }
 

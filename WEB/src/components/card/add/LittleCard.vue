@@ -1,26 +1,31 @@
 <script setup lang="ts">
-  defineProps<{
+  import { useCardStore } from '@/stores/card'
+
+  const store = useCardStore()
+
+  const props = defineProps<{
+    id: number
     word: string
     translation: string
-    image?: string
+    url: string
   }>()
 
-  defineEmits<{
-    delete: (id: number) => void
-  }>()
+  const handleDelete = (id: number) => {
+    store.removeFlashcard(id)
+  }
 </script>
 
 <template>
   <div class="container">
-    <p class="word">{{ word }}</p>
-    <p class="translation">{{ translation }}</p>
+    <p class="word">{{ props.word }}</p>
+    <p class="translation">{{ props.translation }}</p>
     <img
-      :src="image"
+      :src="props.url"
       alt="image"
     />
     <button
       class="btn"
-      @click="$emit('delete', 1)"
+      @click="handleDelete(props.id)"
     >
       Supprimer
     </button>
@@ -31,15 +36,11 @@
   .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width: 200px;
-    height: 250px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid black;
-    border-radius: 5px;
-    text-align: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
   }
 
   .word {
@@ -50,23 +51,25 @@
     font-style: italic;
   }
 
-  img {
-    width: 80%;
+  /* img {
+    width: 90%;
     height: auto;
-  }
+  } */
 
   .btn {
-    margin: 10px 0 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 30px;
     padding: 5px;
     font-size: 16px;
-    font-weight: 300;
-    border: 1px solid #000;
+    font-weight: bold;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
     background-color: red;
     color: #fff;
-    width: 100%;
-    height: 40px;
   }
 
   .btn:hover {
