@@ -1,4 +1,31 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { useCardStore } from '@/stores/card'
+  import { ref, computed, onMounted, onUpdated, getCurrentInstance } from 'vue'
+  const store = useCardStore()
+
+  //Get the number of card choose by user
+  const card = computed(() => store.getCard())
+  console.log(card.value[0])
+  //choose random card inside the user deck 
+
+  // const actualCard = computed(() => store.getActualCard())
+  const actualCard = computed(() => {
+    if (card.value.length > 0) {
+      store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
+      return store.getActualCard()
+    }
+    return { question: 'cheval' }
+  })
+  onMounted(() => {
+    console.log('inside onMounted')
+    // console.log(card.value.tableCard)
+    // actualCard = card.value.tableCard[Math.floor(Math.random() * card.value.tableCard.length)]
+  })
+  onUpdated(() => {
+    // console.log('inside onUpdate')
+    // actualCard = card.value.tableCard[Math.floor(Math.random() * card.value.tableCard.length)]
+  })
+</script>
 <!-- 03 Parties : -->
 <template>
   <div class="card-container">
@@ -12,7 +39,7 @@
     <div class="card">
       <!-- Réponse de la carte avec une image éventuelle -->
       <div class="word-answer">
-        <p>Cheval</p>
+        <p>{{ actualCard.question }}</p>
       </div>
       <div class="image-answer">
         <img

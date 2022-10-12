@@ -3,9 +3,10 @@
   import RemainingCard from '@/components/card/RemainingCard.vue'
   import ButtonValidation from '@/components/card/ButtonValidation.vue'
   import { useCardStore } from '@/stores/card'
-  import { computed } from 'vue'
+  import { computed, ref } from 'vue'
   const store = useCardStore()
   const remaining = computed(() => store.remaining)
+  const card = computed(() => store.getCard())
 </script>
 <!-- Est ce qu'il yaura ou pas un header -->
 <template>
@@ -16,7 +17,7 @@
       </div>
       <div class="play-card">
         <div>
-          <Card />
+          <Card v-if="store.tableCard" />
           <div><span></span></div>
         </div>
         <!-- <div class="answer">inside answer card</div> -->

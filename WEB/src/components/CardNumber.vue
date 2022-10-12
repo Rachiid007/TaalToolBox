@@ -3,6 +3,7 @@
   const store = useCardStore()
   const setNbrOfCardsforthegame = (cardNumber: number) => {
     store.setRemaining(cardNumber)
+    store.setCard(cardNumber)
   }
 </script>
 
