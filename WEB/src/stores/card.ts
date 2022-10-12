@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { flashcardsData } from '../data/animalFlashcards'
 
 export const useCardStore = defineStore('card', () => {
+  // const animal = flashcardsData
+  // console.log(animal)
   const remaining = ref(0)
   const totalQuestions = ref(0)
   const goodAnswers = ref(0)
@@ -10,7 +13,15 @@ export const useCardStore = defineStore('card', () => {
   const goodAnswerPercentage = computed(() => {
     return Math.round((goodAnswers.value / totalQuestions.value) * 100)
   })
+  const setCard = (card: string) => {
+    flashcardsData
+    if (totalQuestions.value){
+      const tableCard = 
+    }
+  }
 
+
+  // POUR LE NOMBRE DE CARTE RESTANT
   const setRemaining = (nbrOfCards: number) => {
     totalQuestions.value = nbrOfCards
     remaining.value = nbrOfCards
