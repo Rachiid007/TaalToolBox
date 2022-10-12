@@ -3,8 +3,15 @@
   import RemainingCard from '@/components/card/RemainingCard.vue'
   import ButtonValidation from '@/components/card/ButtonValidation.vue'
   import { useCardStore } from '@/stores/card'
+  import { useShowStore } from '@/stores/show'
   import { computed, ref } from 'vue'
   const store = useCardStore()
+  const storeShow = useShowStore()
+  const showButtonValidation = computed(() => storeShow.getShowButtonValidation())
+
+  //pour faire remonter l'état au composant parent
+  const showButtonReveal = computed(() => storeShow.getShowButtonReveal())
+  const showAnswer = computed(() => storeShow.getShowAnswer())
   const remaining = computed(() => store.remaining)
   const card = computed(() => store.getCard())
 </script>
@@ -17,12 +24,12 @@
       </div>
       <div class="play-card">
         <div>
-          <Card v-if="store.tableCard" />
+          <Card />
           <div><span></span></div>
         </div>
         <!-- <div class="answer">inside answer card</div> -->
         <div class="validation-button">
-          <ButtonValidation />
+          <ButtonValidation v-show="showButtonValidation" />
         </div>
       </div>
       <div></div>
@@ -54,6 +61,7 @@
   } */
   .validation-button {
     /* display: none; */
+    margin-top: 15px;
   }
   .play-card {
     /* border: solid red 1px; */

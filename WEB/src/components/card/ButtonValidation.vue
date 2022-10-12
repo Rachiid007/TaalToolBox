@@ -1,7 +1,9 @@
 <script setup lang="ts">
   import { useCardStore } from '@/stores/card'
+  import { useShowStore } from '@/stores/show'
   import { computed } from 'vue'
   const store = useCardStore()
+  const storeShow = useShowStore()
 
   const switchCorrectCard = () => {
     console.log('inside switch card')
@@ -10,7 +12,7 @@
     store.removeCorrectCard(store.getActualCard())
     const card = computed(() => store.getCard())
     //mettre a jour le deck avec les cartes restantes
-    store.setActualCard(card.value[Math.floor(Math.random() * card.length)])
+    store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
     console.log(store.getActualCard())
   }
   const decreaseRemaining = () => {
@@ -51,6 +53,9 @@
         () => {
           getAnswer()
           switchCorrectCard()
+          storeShow.setShowButtonReveal(true)
+          storeShow.setShowAnswer(false)
+          storeShow.setShowButtonValidation(false)
         }
       "
     >
