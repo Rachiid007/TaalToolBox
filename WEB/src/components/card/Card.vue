@@ -47,7 +47,7 @@
       <div class="image-answer">
         <img
           class="image-answer-reveal"
-          src="src/assets/images/card/cheval.svg"
+          :src="actualCard.image"
           alt=""
         />
       </div>
