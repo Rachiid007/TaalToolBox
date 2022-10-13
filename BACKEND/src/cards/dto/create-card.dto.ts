@@ -6,4 +6,7 @@ export class CreateCardDto {
 
   @IsString()
   readonly translation: string;
+
+  @IsString()
+  readonly image?: string;
 }

@@ -64,7 +64,7 @@
   </Teleport>
 </template>
 
-<style>
+<style scoped>
   .modal-mask {
     position: fixed;
     left: 0;
