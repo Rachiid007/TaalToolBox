@@ -14,7 +14,6 @@
   import { Vector as VectorSource } from 'ol/source'
   import { Control, defaults as defaultControls } from 'ol/control'
   import { defaults as defaultInteractions } from 'ol/interaction.js'
-  import { getArea } from 'ol/extent'
 
   //
   //
