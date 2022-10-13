@@ -1,7 +1,20 @@
 <script setup lang="ts">
   import { useCardStore } from '@/stores/card'
+  import { useShowStore } from '@/stores/show'
+  import { computed } from 'vue'
   const store = useCardStore()
+  const storeShow = useShowStore()
 
+  const switchCorrectCard = () => {
+    console.log('inside switch card')
+
+    //Enlever la carte qu'il a répondu du tableau
+    store.removeCorrectCard(store.getActualCard())
+    const card = computed(() => store.getCard())
+    //mettre a jour le deck avec les cartes restantes
+    store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
+    console.log(store.getActualCard())
+  }
   const decreaseRemaining = () => {
     store.decrement()
   }
@@ -36,7 +49,15 @@
     <button
       class="btn"
       id="getAnswer"
-      @click="getAnswer"
+      @click="
+        () => {
+          getAnswer()
+          switchCorrectCard()
+          storeShow.setShowButtonReveal(true)
+          storeShow.setShowAnswer(false)
+          storeShow.setShowButtonValidation(false)
+        }
+      "
     >
       J'ai trouvé
     </button>
@@ -58,7 +79,6 @@
 </template>
 
 <style scoped>
-
   .container {
     display: flex;
     justify-content: space-around;
