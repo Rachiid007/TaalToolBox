@@ -27,7 +27,7 @@
       })
   }
   const FileDrop = defineAsyncComponent(
-    () => import(/*webpackChunkName:"filedrop"*/ '@/components/FileDrop.vue')
+    () => import(/*webpackChunkName:"filedrop"*/ '@/components/card/add/FileDrop.vue')
   )
   function startUpload(files: File[]): void {
     files.map((file) => {

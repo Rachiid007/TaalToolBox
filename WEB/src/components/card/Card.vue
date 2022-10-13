@@ -1,28 +1,70 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { useCardStore } from '@/stores/card'
+  import { useShowStore } from '@/stores/show'
+  import { ref, computed, onMounted, onUpdated, getCurrentInstance } from 'vue'
+  const store = useCardStore()
+  const storeShow = useShowStore()
+  const showAnswer = computed(() => storeShow.getShowAnswer())
+  //Get the number of card choose by user
+  const card = computed(() => store.getCard())
+  // console.log(card.value[0])
+  //choose random card inside the user deck
+  console.log(showAnswer)
+  // const actualCard = computed(() => store.getActualCard())
+  const actualCard = computed(() => {
+    if (card.value.length > 0) {
+      store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
+      return store.getActualCard()
+    }
+    return { question: 'cheval', answer: 'horse' }
+  })
+
+  onMounted(() => {
+    console.log('inside onMounted')
+    // console.log(card.value.tableCard)
+    // actualCard = card.value.tableCard[Math.floor(Math.random() * card.value.tableCard.length)]
+  })
+  onUpdated(() => {
+    // console.log('inside onUpdate')
+    // actualCard = card.value.tableCard[Math.floor(Math.random() * card.value.tableCard.length)]
+  })
+</script>
 <!-- 03 Parties : -->
 <template>
   <div class="card-container">
     <div class="question">
       <!-- Doit être remplacer par le mot lors de la révélation -->
-      <p>Comment dit-on</p>
+      <p v-if="!storeShow.getShowAnswer()">Comment dit-on</p>
+      <p v-else>Bonne Réponse</p>
     </div>
-    <div class="word-answer hidden">
-      <p>Cheval</p>
-    </div>
+    <div class="word-answer"></div>
     <div class="card">
       <!-- Réponse de la carte avec une image éventuelle -->
       <div class="word-answer">
-        <p>Cheval</p>
+        <p v-if="storeShow.getShowAnswer()">{{ actualCard.answer }}</p>
+        <p v-else>{{ actualCard.question }}</p>
       </div>
       <div class="image-answer">
         <img
           class="image-answer-reveal"
-          src="src/assets/images/cheval.svg"
+          src="src/assets/images/card/cheval.svg"
           alt=""
         />
       </div>
     </div>
-    <button class="reveal">Réveler</button>
+    <button
+      class="reveal"
+      v-show="storeShow.getShowButtonReveal()"
+      @click="
+        () => {
+          storeShow.setShowAnswer(true)
+          storeShow.setShowButtonReveal(false)
+          storeShow.setShowButtonValidation(true)
+        }
+      "
+    >
+      Réveler
+    </button>
     <!-- <div class="answer">
       <ul>
         <li class="response">
@@ -54,6 +96,7 @@
     border-radius: 15px;
     padding: 5px;
   }
+
   .word-answer {
     /* border: solid red 1px; */
     color: #74ac8c;
@@ -62,15 +105,25 @@
     text-align: center;
     margin-bottom: 25px;
   }
+  .answer {
+    display: none;
+  }
   .image-answer {
     /* border: solid red 1px; */
+    width: 100%;
+    height: 270px;
     margin-top: 25px;
     text-align: center;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
   .image-answer-reveal {
+    /* border: solid blue 1px; */
+    width: 100%;
+    height: 100%;
     object-fit: contain;
+    overflow: hidden;
   }
   .question {
     /* border: solid red 1px; */

@@ -64,7 +64,7 @@
   </Teleport>
 </template>
 
-<style>
+<style scoped>
   .modal-mask {
     position: fixed;
     left: 0;
@@ -74,6 +74,7 @@
     z-index: 9998;
     background-color: rgba(0, 0, 0, 0.6);
     transition: opacity 0.7s ease;
+    overflow: show;
   }
   .modal-wrapper {
     position: relative;
@@ -82,7 +83,8 @@
     transform: translate(-50%, -50%);
     background-color: whitesmoke;
     border-radius: 0.7em;
-    overflow: auto !important;
+    /* overflow: auto !important; */
+    overflow: show;
     padding: 1em;
     width: max-content;
     height: max-content;
@@ -115,8 +117,8 @@
   /* CLOSE BUTTON */
   .btn-close {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: -35px;
+    right: -35px;
     margin: 0;
     border: 0;
     padding: 0;

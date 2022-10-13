@@ -18,7 +18,13 @@
         class="input"
         @input="handleInput"
       />
-      <span class="message">Glissez vos fichiers .XLSX ici...</span>
+      <span class="message">
+        <span class="icon">
+          <i class="fas fa-cloud-upload-alt fa-2xl"></i>
+        </span>
+
+        Glissez vos fichiers .XLSX ici...</span
+      >
     </div>
   </div>
 </template>
@@ -48,6 +54,7 @@
   .container {
     width: 100vw;
     height: 100vh;
+    text-align: center;
   }
   .label {
     position: relative;
@@ -86,15 +93,23 @@
   }
 
   .title {
-    font-size: 26px;
-    font-weight: bold;
-    border-bottom: 3px solid rgb(32, 163, 32);
-    display: inline-block;
-    padding-bottom: 2px;
-    margin-bottom: 10px;
+    font-size: 2rem;
+    margin: 30px auto;
+    position: relative;
+  }
+
+  .title::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 330px;
+    height: 3px;
+    background-color: #056b30;
   }
   .the-text {
-    color: rgb(28, 143, 28);
+    color: #056b30;
     font-size: 20px;
     margin: 10px 0;
   }
