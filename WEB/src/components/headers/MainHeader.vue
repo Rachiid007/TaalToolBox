@@ -11,7 +11,7 @@
   <div class="main">
     <router-link
       class="logo"
-      to="/home"
+      to="/"
     >
       <div class="logo_img">
         <img
@@ -24,7 +24,7 @@
     <div class="tabs">
       <router-link
         class="tabs_element"
-        to="/home"
+        to="/"
         >Acceuil</router-link
       >
       <router-link
@@ -33,12 +33,12 @@
         >Carte</router-link
       >
       <router-link
-        to="/home"
+        to="/add-card"
         class="tabs_element"
-        >Jeux</router-link
+        >Ajouter</router-link
       >
       <router-link
-        to="/home"
+        to="/"
         class="tabs_element"
         >Classe</router-link
       >
@@ -66,7 +66,7 @@
         </div>
         <router-link
           class="right_tab_element"
-          to="/home"
+          to="/"
           >Acceuil</router-link
         >
         <router-link
@@ -75,17 +75,17 @@
           >Carte</router-link
         >
         <router-link
-          to="/home"
+          to="/add-card"
           class="right_tab_element"
-          >Jeux</router-link
+          >Ajouter</router-link
         >
         <router-link
-          to="/home"
+          to="/"
           class="right_tab_element"
           >Classe</router-link
         >
         <router-link
-          to="/home"
+          to="/"
           style="margin-top: 60vh; align-self: center"
           >Se connecter/S'inscrire</router-link
         >
