@@ -10,4 +10,7 @@ export class Card {
 
   @Column()
   translation: string;
+
+  @Column()
+  image?: string;
 }
