@@ -37,8 +37,7 @@
       <p v-if="!storeShow.getShowAnswer()">Comment dit-on</p>
       <p v-else>Bonne Réponse</p>
     </div>
-    <div class="word-answer">
-    </div>
+    <div class="word-answer"></div>
     <div class="card">
       <!-- Réponse de la carte avec une image éventuelle -->
       <div class="word-answer">
@@ -48,7 +47,7 @@
       <div class="image-answer">
         <img
           class="image-answer-reveal"
-          src="src/assets/images/cheval.svg"
+          src="src/assets/images/card/cheval.svg"
           alt=""
         />
       </div>
@@ -111,13 +110,20 @@
   }
   .image-answer {
     /* border: solid red 1px; */
+    width: 100%;
+    height: 270px;
     margin-top: 25px;
     text-align: center;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
   .image-answer-reveal {
+    /* border: solid blue 1px; */
+    width: 100%;
+    height: 100%;
     object-fit: contain;
+    overflow: hidden;
   }
   .question {
     /* border: solid red 1px; */

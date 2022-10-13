@@ -9,14 +9,14 @@ export const flashcardsData: {
     id: 1,
     question: 'Le cheval',
     answer: 'Horse',
-    image: 'horse.jpg',
+    image: 'src/assets/images/card/cheval.svg',
     category: 'animals'
   },
   {
     id: 2,
     question: 'Le chien',
     answer: 'Dog',
-    image: 'dog.jpg',
+    image: 'src/assets/images/card/chien.svg',
     category: 'animals'
   },
   {
