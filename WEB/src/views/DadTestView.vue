@@ -1,12 +1,12 @@
 <script setup lang="ts">
-  import CardNumber from '@/components/CardNumber.vue'
-  import TheHeader from '@/components/TheHeaderFlashcards.vue'
+  import Dragndrop from '@/components/testDragNDrop/dragndrop.vue'
+  import TheHeaderDnd from '@/components/TheHeaderDragNDrop.vue'
 </script>
 
 <template>
   <div class="page">
-    <TheHeader />
-    <CardNumber />
+    <TheHeaderDnd />
+    <Dragndrop />
   </div>
 </template>
 
@@ -15,6 +15,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 25px;
+    padding-bottom: 50px;
   }
 </style>

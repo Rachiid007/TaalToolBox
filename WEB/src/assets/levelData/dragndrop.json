@@ -1,0 +1,70 @@
+[
+  {
+    "fields": [
+      {
+        "test": "1",
+        "number": 1,
+        "top": "45%",
+        "left": "32%",
+        "width": "20%",
+        "height": "7%",
+        "rightValue": "Michaël Pourbaix"
+      },
+      {
+        "test": "2",
+        "number": 2,
+        "top": "54.5%",
+        "left": "32%",
+        "width": "20%",
+        "height": "7%",
+        "rightValue": "aymar.hakizimana@davy.com"
+      },
+      {
+        "test": "3",
+        "number": 3,
+        "top": "64%",
+        "left": "32%",
+        "width": "20%",
+        "height": "7%",
+        "rightValue": "0788 22 78 16"
+      },
+      {
+        "test": "4",
+        "number": 4,
+        "top": "73%",
+        "left": "32%",
+        "width": "28%",
+        "height": "7%",
+        "rightValue": "Rue du pompidou 1"
+      },
+      {
+        "test": "5",
+        "number": 5,
+        "top": "45%",
+        "left": "75%",
+        "width": "18%",
+        "height": "45%",
+        "rightValue": "Photo de profil"
+      },
+      {
+        "test": "6",
+        "number": 6,
+        "top": "82.5%",
+        "left": "32%",
+        "width": "28%",
+        "height": "7%",
+        "rightValue": "11 mai 1997"
+      },
+      {
+        "test": "7",
+        "number": 7,
+        "top": "91%",
+        "left": "32%",
+        "width": "15%",
+        "height": "7%",
+        "rightValue": "Allemand"
+      }
+    ],
+    "backImage": "/src/assets/images/form3.png"
+  }
+]

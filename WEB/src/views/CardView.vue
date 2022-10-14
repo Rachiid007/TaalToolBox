@@ -2,7 +2,7 @@
   import Card from '@/components/card/Card.vue'
   import RemainingCard from '@/components/card/RemainingCard.vue'
   import ButtonValidation from '@/components/card/ButtonValidation.vue'
-  import TheHeader from '@/components/TheHeader.vue'
+  import TheHeader from '@/components/TheHeaderFlashcards.vue'
   import { useCardStore } from '@/stores/card'
   import { useShowStore } from '@/stores/show'
   import { computed, ref } from 'vue'
@@ -79,8 +79,7 @@
   .card {
     /* border: solid red 1px; */
     margin-left: 16%;
-    padding: 5px ;
-  
+    padding: 5px;
   }
   @media (max-width: 768px) {
     .container {
