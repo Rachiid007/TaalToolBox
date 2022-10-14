@@ -17,11 +17,8 @@ import { CategoryModule } from './category/category.module';
 import { LangModule } from './lang/lang.module';
 import { RoleModule } from './role/role.module';
 import { AnswerModule } from './answer/answer.module';
-<<<<<<< HEAD
 import { LearnDomainModule } from './learn_domain/learn_domain.module';
 // import { RewardModule } from './reward/reward.module';
-=======
->>>>>>> 61d731d ([ADD] answer)
 
 @Module({
   imports: [
@@ -48,11 +45,8 @@ import { LearnDomainModule } from './learn_domain/learn_domain.module';
     LangModule,
     RoleModule,
     AnswerModule,
-<<<<<<< HEAD
     LearnDomainModule,
     // RewardModule,
-=======
->>>>>>> 61d731d ([ADD] answer)
   ],
   controllers: [AppController],
   providers: [AppService],
