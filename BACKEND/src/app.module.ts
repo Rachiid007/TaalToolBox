@@ -5,6 +5,8 @@ import { ActivitiesModule } from './activities/activities.module';
 import { CardsModule } from './cards/cards.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { CategoryModule } from './category/category.module';
+import { LangModule } from './lang/lang.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { ConfigModule } from '@nestjs/config';
       autoLoadEntities: true,
       synchronize: true, // ! SET TO FALSE IN PRODUCTION
     }),
+    CategoryModule,
+    LangModule,
   ],
   controllers: [AppController],
   providers: [AppService],
