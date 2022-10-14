@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CategoryModule } from './category/category.module';
 import { LangModule } from './lang/lang.module';
+import { RoleModule } from './role/role.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { LangModule } from './lang/lang.module';
     }),
     CategoryModule,
     LangModule,
+    RoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
