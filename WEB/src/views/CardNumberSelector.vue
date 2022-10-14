@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import MainHeader from '@/components/headers/MainHeader.vue'
   import CardNumber from '@/components/CardNumber.vue'
-  import TheHeader from '@/components/TheHeader.vue'
+  import TheHeader from '@/components/TheHeaderFlashcards.vue'
 </script>
 
 <template>
