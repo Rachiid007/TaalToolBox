@@ -18,7 +18,11 @@ import { LangModule } from './lang/lang.module';
 import { RoleModule } from './role/role.module';
 import { AnswerModule } from './answer/answer.module';
 import { LearnDomainModule } from './learn_domain/learn_domain.module';
+<<<<<<< HEAD
 // import { RewardModule } from './reward/reward.module';
+=======
+import { RewardModule } from './reward/reward.module';
+>>>>>>> a4dbfc2 ( [ADD] reward)
 
 @Module({
   imports: [
@@ -46,7 +50,11 @@ import { LearnDomainModule } from './learn_domain/learn_domain.module';
     RoleModule,
     AnswerModule,
     LearnDomainModule,
+<<<<<<< HEAD
     // RewardModule,
+=======
+    RewardModule,
+>>>>>>> a4dbfc2 ( [ADD] reward)
   ],
   controllers: [AppController],
   providers: [AppService],
