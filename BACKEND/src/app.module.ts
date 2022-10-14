@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CategoryModule } from './category/category.module';
 import { LangModule } from './lang/lang.module';
 import { RoleModule } from './role/role.module';
+import { AnswerModule } from './answer/answer.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { RoleModule } from './role/role.module';
     CategoryModule,
     LangModule,
     RoleModule,
+    AnswerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
