@@ -25,6 +25,9 @@ const checkFields = () => {
 <template>
   <div class="main">
     <div class="content">
+      <div class="title">
+        <p class="connect">Connection</p>
+      </div>
       <div class="title-image">
         <img src="../assets/logo/logo.svg" class="image" />
         <p class="logoName">TaalToolBox</p>
@@ -53,18 +56,27 @@ const checkFields = () => {
 </template>
 
 <style scoped>
+.container2 {
+  padding: 38px;
+}
 .main {
+  padding: 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border: solid grey 1px; */
 }
 
 .content {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: solid grey 1px;
+  max-width: 450px;
 }
 
 .title-image {
@@ -88,17 +100,14 @@ const checkFields = () => {
   font-size: 1.5em;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-
-  /* display: flex;
-  flex-direction: column;
-  gap: 25px;
-  width: 80%; */
+.clickButton2 {
+  border: solid 1px black;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 15px;
+  width: 100px;
+  height: 40px;
 }
-
 .fields-connection {
   padding-top: 30px;
   gap: 40px;
@@ -141,12 +150,34 @@ input::placeholder {
   height: 40px;
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.logoName {
+  font-family: Segoe print;
+  color: #707070;
+  font-size: 1.5em;
+}
+.title {
+  min-width: 400px;
+  width: 100%;
+  background-color: #026b30;
+}
+.connect{
+  background-color: #026b30;
+  color: white;
+  flex-grow: 5;
+  border-bottom: solid 1px grey;
+  font-size: 1.5em;
+}
 .error {
   color: red;
   padding-bottom: 5%;
   font-weight: bold;
 }
-
 #suivant {
   color: white;
   background-color: #026b30;

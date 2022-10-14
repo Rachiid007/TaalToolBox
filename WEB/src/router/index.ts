@@ -11,6 +11,8 @@ import choiceHowToAddCardView from '@/views/add-card/choiceHowToAddCardView.vue'
 import DadTestView from '@/views/DadTestView.vue'
 import DadTestTeacherView from '@/views/DadTestTeacherView.vue'
 import ConReg from '../views/ConReg.vue'
+import Login from '../views/Login.vue'
+import SignIn from '../views/SignIn.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -74,6 +76,16 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: ConReg
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/signIn',
+      name: 'signIn',
+      component: SignIn
     }
   ]
 })
