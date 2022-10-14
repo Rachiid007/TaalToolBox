@@ -9,6 +9,7 @@ import { CategoryModule } from './category/category.module';
 import { LangModule } from './lang/lang.module';
 import { RoleModule } from './role/role.module';
 import { AnswerModule } from './answer/answer.module';
+import { LearnDomainModule } from './learn_domain/learn_domain.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { AnswerModule } from './answer/answer.module';
     LangModule,
     RoleModule,
     AnswerModule,
+    LearnDomainModule,
   ],
   controllers: [AppController],
   providers: [AppService],
