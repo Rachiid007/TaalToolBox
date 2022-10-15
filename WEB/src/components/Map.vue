@@ -95,25 +95,6 @@
         }
       }
     })
-    // const ISJFeature = new Feature({
-    //   geometry: new Point(fromLonLat([4.39064, 50.83756])), //[4.39064, 50.83756],
-    //   name: 'Institut Saint Joseph',
-    //   id: 1
-    // })
-    // const IDBFeature = new Feature({
-    //   geometry: new Point(fromLonLat([4.42537, 50.83826])), //[4.39064, 50.83756]
-    //   name: 'Institut Don Bosco',
-    //   id: 2
-    // })
-    // const ICMFeature = new Feature({
-    //   geometry: new Point(fromLonLat([4.37576, 50.87358])), //[4.39064, 50.83756]
-    //   name: 'Institut Cardinal Mercier',
-    //   id: 3
-    // })
-
-    // ISJFeature.setStyle(iconStyle)
-    // IDBFeature.setStyle(iconStyle)
-    // ICMFeature.setStyle(iconStyle)
 
     const map = new Map({
       layers: [

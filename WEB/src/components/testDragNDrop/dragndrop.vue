@@ -202,13 +202,18 @@
     gap: 5%;
     width: 250px;
     height: 22px;
-    border: 2px solid green;
+    border: 2px solid #00307e;
     border-radius: 5px;
     position: absolute;
     /* top: 41%;
     left: 28%; */
     background-color: white;
     overflow: hidden;
+    p {
+      color: red;
+      width: 100%;
+      font-size: 100%;
+    }
   }
   .logo {
     height: auto;
@@ -226,6 +231,8 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
+    color: #00307e;
+    background-color: white;
   }
   .resultCheck {
     display: flex;
@@ -247,14 +254,14 @@
   }
   .resultShow {
     font-size: 1.3em;
-    color: #026b30;
+    color: #00307e;
   }
   .result {
     font-size: 1.8em;
     font-weight: bold;
   }
   .revealButton {
-    background: #026b30;
+    background: #00307e;
     color: white;
     padding: 5px;
     border-radius: 5px;
