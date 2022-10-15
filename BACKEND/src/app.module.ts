@@ -13,16 +13,9 @@ import { ActivitiesModule } from './activities/activities.module';
 import { CardsModule } from './cards/cards.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { CategoryModule } from './category/category.module';
-import { LangModule } from './lang/lang.module';
-import { RoleModule } from './role/role.module';
-import { AnswerModule } from './answer/answer.module';
-import { LearnDomainModule } from './learn_domain/learn_domain.module';
-<<<<<<< HEAD
-// import { RewardModule } from './reward/reward.module';
-=======
-import { RewardModule } from './reward/reward.module';
->>>>>>> a4dbfc2 ( [ADD] reward)
+import { UsersController } from './users/users.controller';
+import { UsersService } from './users/users.service';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -39,25 +32,9 @@ import { RewardModule } from './reward/reward.module';
       autoLoadEntities: true,
       synchronize: true, // ! SET TO FALSE IN PRODUCTION
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-    }),
-    MulterModule.register({
-      dest: join(__dirname, '..', 'public/images'),
-    }),
-    CategoryModule,
-    LangModule,
-    RoleModule,
-    AnswerModule,
-    LearnDomainModule,
-<<<<<<< HEAD
-    // RewardModule,
-=======
-    RewardModule,
->>>>>>> a4dbfc2 ( [ADD] reward)
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, UsersController],
+  providers: [AppService, UsersService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
