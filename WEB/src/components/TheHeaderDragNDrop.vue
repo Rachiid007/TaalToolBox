@@ -3,7 +3,11 @@
 <template>
   <div class="main">
     <div class="title">
-      <p class="activity_name">DragNDrop</p>
+      <!-- <p class="activity_name">DragNDrop</p> -->
+      <img
+        src="@/assets/logo/dragandlearn.svg"
+        alt="drag and drop gamemode logo"
+      />
     </div>
   </div>
 </template>
@@ -28,11 +32,8 @@
     align-items: center;
     justify-content: center;
   }
-  .activity_name {
-    /* font-family: 'Courier New', monospace; */
-    font-family: microsan_A;
-    color: #026b30;
-    font-weight: 500;
-    font-size: 2em;
+  img {
+    height: auto;
+    width: 60%;
   }
 </style>
