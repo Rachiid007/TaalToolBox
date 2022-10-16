@@ -117,18 +117,19 @@ const checkFields = () => {
 
 input {
   color: #026b30;
+  
   width: 100%;
   border-radius: 5px;
   padding: 3px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
   outline: none;
+  margin-right: 50px;
 }
 
-input[type='text'].mailPass {
+/* input[type='text'].mailPass {
   padding: 4px;
   margin-right: 100px;
-  /* margin-left: 50px; */
-}
+} */
 
 input::placeholder {
   color: #026b30;
