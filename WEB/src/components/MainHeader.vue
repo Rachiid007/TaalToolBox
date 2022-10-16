@@ -91,7 +91,7 @@ const hideTab = () => {
   text-align: left;
   /* outline: 1px solid blue; */
   color: #026b30;
-  font-family: Didno;
+  font-family: Segoe print;
 }
 .tabs {
   display: flex;
