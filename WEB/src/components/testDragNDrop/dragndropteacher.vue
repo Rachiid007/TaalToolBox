@@ -39,7 +39,7 @@
 
     //Si un champ était déjà sélectionné au paravant, on le remet à la couleur de bordure initiale
     if (selectedId.value) {
-      document.getElementById(selectedId.value).style.border = '2px dashed blue'
+      document.getElementById(selectedId.value).style.border = '2px dashed #00307e'
     }
     selectedId.value = e.target.id
     let element = document.getElementById(selectedId.value)
@@ -131,7 +131,7 @@
         class="back"
       >
         <img
-          src="@/assets/images/form3.png"
+          src="@/assets/images/form.png"
           alt="image for the exercice"
           ref="image"
         />

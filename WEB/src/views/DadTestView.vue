@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import Dragndrop from '@/components/testDragNDrop/dragndrop.vue'
-  import TheHeaderDnd from '@/components/TheHeaderDragNDrop.vue'
+  import TheHeader from '@/components/TheHeader.vue'
   import { ref } from 'vue'
 
   const loading = ref()
@@ -15,11 +15,22 @@
       ref="loading"
       class="showup"
     >
-      <img src="@/assets/logo/dalcard.svg" />
+      <img
+        class="loadingLogo"
+        src="@/assets/logo/dalcard.svg"
+      />
       <p class="loading">Chargement de l'activité ...</p>
     </div>
     <div>
-      <TheHeaderDnd />
+      <TheHeader>
+        <div class="title">
+          <img
+            class="headerLogo"
+            src="@/assets/logo/dragandlearn.svg"
+            alt="drag and drop gamemode logo"
+          />
+        </div>
+      </TheHeader>
       <Dragndrop />
     </div>
   </div>
@@ -32,6 +43,17 @@
     align-items: center;
     padding-bottom: 30px;
     overflow-x: hidden;
+  }
+
+  .title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .headerLogo {
+    height: auto;
+    width: 50%;
   }
   .showup {
     position: absolute;
@@ -48,7 +70,7 @@
     animation-fill-mode: forwards;
     z-index: 10;
   }
-  img {
+  .loadingLogo {
     border: 3px solid grey;
     padding: 22px 15px 22px 15px;
     border-radius: 15px;
