@@ -16,6 +16,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './Auth/auth/auth.module';
 
 @Module({
   imports: [
@@ -32,6 +33,8 @@ import { UsersModule } from './users/users.module';
       autoLoadEntities: true,
       synchronize: true, // ! SET TO FALSE IN PRODUCTION
     }),
+    UsersModule,
+    AuthModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, UsersService],
