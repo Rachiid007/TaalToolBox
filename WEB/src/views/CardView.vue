@@ -2,7 +2,7 @@
   import Card from '@/components/card/Card.vue'
   import RemainingCard from '@/components/card/RemainingCard.vue'
   import ButtonValidation from '@/components/card/ButtonValidation.vue'
-  import TheHeader from '@/components/TheHeaderFlashcards.vue'
+  import TheHeader from '@/components/TheHeader.vue'
   import { useCardStore } from '@/stores/card'
   import { useShowStore } from '@/stores/show'
   import { computed, ref } from 'vue'
@@ -19,7 +19,13 @@
 <!-- Est ce qu'il yaura ou pas un header -->
 <template>
   <div class="big-container">
-    <TheHeader />
+    <TheHeader>
+      <div class="title">
+        <p class="activity_name">Flash</p>
+        <img src="@/assets/logo/lightning.svg" />
+        <p class="activity_name">Cards</p>
+      </div>
+    </TheHeader>
     <div class="container">
       <div class="rest-card">
         <RemainingCard />
@@ -93,5 +99,21 @@
     .play-card {
       flex: 0.8;
     }
+  }
+  .title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .activity_name {
+    font-family: 'Courier New', monospace;
+    font-family: microsan_A;
+    color: #026b30;
+    font-weight: 500;
+    font-size: 2em;
+  }
+  img {
+    height: auto;
+    width: 10%;
   }
 </style>
