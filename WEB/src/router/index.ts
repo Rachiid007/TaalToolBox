@@ -8,6 +8,7 @@ import HomeView from '@/views/HomeView.vue'
 import addCardExcelView from '@/views/add-card/addCardExcelView.vue'
 import addCardFormView from '@/views/add-card/addCardFormView.vue'
 import choiceHowToAddCardView from '@/views/add-card/choiceHowToAddCardView.vue'
+import ChooseActivities from '@/views/chooseActivities/MultipleActivities.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +47,11 @@ const router = createRouter({
       path: '/add-card/form',
       name: 'add-card-form',
       component: addCardFormView
+    },
+    {
+      path: '/chooseActivities',
+      name: 'chooseActivities',
+      component: ChooseActivities
     }
   ]
 })
