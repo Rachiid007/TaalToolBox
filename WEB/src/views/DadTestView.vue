@@ -3,20 +3,20 @@
   import TheHeaderDnd from '@/components/TheHeaderDragNDrop.vue'
   import { ref } from 'vue'
 
-  const test = ref()
+  const loading = ref()
   setTimeout(function () {
-    test.value.style.display = 'none'
+    loading.value.style.display = 'none'
   }, 4000)
 </script>
 
 <template>
   <div class="page">
     <div
-      ref="test"
+      ref="loading"
       class="showup"
     >
       <img src="@/assets/logo/dalcard.svg" />
-      <p class="loading">Loading activity ...</p>
+      <p class="loading">Chargement de l'activité ...</p>
     </div>
     <div>
       <TheHeaderDnd />
@@ -30,7 +30,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
+    overflow-x: hidden;
   }
   .showup {
     position: absolute;
@@ -61,6 +62,16 @@
     font-size: 1.2em;
     font-weight: bold;
     color: #00307e;
+    position: relative;
+  }
+  .loading::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 9%;
+    right: 0%;
+    background: white;
+    animation: horizontalSequence 1.5s ease 2;
   }
   @keyframes fadeIn {
     0% {
@@ -79,6 +90,20 @@
     100% {
       opacity: 0%;
       display: none;
+    }
+  }
+  @keyframes horizontalSequence {
+    0% {
+      width: 9%;
+    }
+    33% {
+      width: 6%;
+    }
+    66% {
+      width: 3%;
+    }
+    100% {
+      width: 0%;
     }
   }
 </style>

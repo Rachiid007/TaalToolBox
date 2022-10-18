@@ -9,6 +9,7 @@ import addCardExcelView from '@/views/add-card/addCardExcelView.vue'
 import addCardFormView from '@/views/add-card/addCardFormView.vue'
 import choiceHowToAddCardView from '@/views/add-card/choiceHowToAddCardView.vue'
 import DadTestView from '@/views/DadTestView.vue'
+import DadTestTeacherView from '@/views/DadTestTeacherView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +53,11 @@ const router = createRouter({
       path: '/dadtest',
       name: 'dadtest',
       component: DadTestView
+    },
+    {
+      path: '/dadteachertest',
+      name: 'dadteachertest',
+      component: DadTestTeacherView
     }
   ]
 })
