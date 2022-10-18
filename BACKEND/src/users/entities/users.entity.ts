@@ -17,7 +17,7 @@ export class Users {
   name: string;
 
   @Column('character varying')
-  surmane: string;
+  surname: string;
 
   @Column()
   email: string;
@@ -26,7 +26,7 @@ export class Users {
   password: string;
 
   @Column('date')
-  birthdate: Date;
+  birthdate: string;
 
   @Column('character varying')
   telephone: string;
