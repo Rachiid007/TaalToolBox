@@ -72,6 +72,9 @@ const checkFields = (page: string) => {
 <template>
   <div class="main">
     <div class="page1" v-if="manage.firstPage">
+      <div class="title">
+        <p class="inscrit">Inscription</p>
+      </div>
       <div class="title-image">
         <img src="../assets/logo/logo.svg" class="image" />
         <p class="logoName">TaalToolBox</p>
@@ -118,6 +121,9 @@ const checkFields = (page: string) => {
       </div>
     </div>
     <div class="page2" v-else>
+      <div class="title">
+        <p class="inscrit">Inscription</p>
+      </div>
       <div class="title-image">
         <img src="../assets/logo/logo.svg" class="image" />
         <p class="logoName">TaalToolBox</p>
@@ -164,26 +170,34 @@ const checkFields = (page: string) => {
 
 <style scoped>
 .main {
-  /* width: 100vw; */
-  /* max-width: 1600px; */
+  padding: 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border: solid grey 1px; */
 }
 .page1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 35px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: solid grey 1px;
+  max-width: 500px;
 }
 
 .page2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 35px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: solid grey 1px;
+  max-width: 500px;
 }
 
 .title-image {
@@ -203,12 +217,12 @@ const checkFields = (page: string) => {
 
 .logoName {
   font-family: Segoe print;
-  /* padding-right: 10px; */
   color: #707070;
   font-size: 1.5em;
 }
 
 .form {
+  padding: 30px;
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -224,11 +238,9 @@ const checkFields = (page: string) => {
 }
 
 .secondDiv {
-  gap: 25px;
+  gap: 30px;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  /* margin-left: 73px; */
   align-items: center;
 }
 
@@ -238,12 +250,10 @@ input.secondFields {
   padding: 2px;
   border-radius: 5px;
   outline: none;
-  /* margin-right: 20%; */
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
 }
 
 input.firstFields {
-  /* width: 30%; */
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
   border-radius: 5px;
@@ -280,6 +290,7 @@ input::placeholder {
   width: 100%;
 }
 .buttons {
+  padding-bottom: 5%;
   gap: 35%;
   display: flex;
   flex-direction: row;
@@ -309,5 +320,18 @@ input::placeholder {
 #suivant {
   color: white;
   background-color: #026b30;
+}
+.title {
+  min-width: 400px;
+  width: 100%;
+  background-color: #026b30;
+}
+
+.inscrit {
+  background-color: #026b30;
+  color: white;
+  flex-grow: 5;
+  border-bottom: solid 1px grey;
+  font-size: 1.5em;
 }
 </style>
