@@ -3,10 +3,10 @@ CREATE TABLE role (
   name VARCHAR(45) NOT NULL,
 );
 
-INSERT INTO role (id_role, name) VALUES (DEFAULT, 'administrateur');
-INSERT INTO role (id_role, name) VALUES (DEFAULT, 'professeur');
-INSERT INTO role (id_role, name) VALUES (DEFAULT, 'createur');
-INSERT INTO role (id_role, name) VALUES (DEFAULT, 'eleve');
+INSERT INTO role (id, name) VALUES (DEFAULT, 'administrateur');
+INSERT INTO role (id, name) VALUES (DEFAULT, 'professeur');
+INSERT INTO role (id, name) VALUES (DEFAULT, 'createur');
+INSERT INTO role (id, name) VALUES (DEFAULT, 'eleve');
 
 CREATE TABLE ecole (
     Id_ecole SERIAL PRIMARY KEY,
@@ -14,10 +14,10 @@ CREATE TABLE ecole (
     addresse varchar (70)
 );
 
-INSERT INTO ecole (Id_ecole, Nom_ecole, addresse) VALUES (DEFAULT, 'Institut Saint-Joseph','Rue Félix Hap 14, 1040 Bruxelles');
-INSERT INTO ecole (Id_ecole, Nom_ecole, addresse) VALUES (DEFAULT, 'Institut Don Bosco ','Av. du Val dOr 90, 1150 Woluwe-Saint-Pierre');
-INSERT INTO ecole (Id_ecole, Nom_ecole, addresse) VALUES (DEFAULT, 'Institut Cardinal Mercier','Rue Portaels 81, 1030 Schaerbeek');
-INSERT INTO ecole (Id_ecole, Nom_ecole, addresse) VALUES (DEFAULT, 'C.E.S.E. Ernest Richard','Pl. Saint-Pierre 5, 1040 Etterbeek');
+INSERT INTO classroom (id, name, address) VALUES (DEFAULT, 'Institut Saint-Joseph','Rue Félix Hap 14, 1040 Bruxelles');
+INSERT INTO classroom (id, name, address) VALUES (DEFAULT, 'Institut Don Bosco ','Av. du Val dOr 90, 1150 Woluwe-Saint-Pierre');
+INSERT INTO classroom (id, name, address) VALUES (DEFAULT, 'Institut Cardinal Mercier','Rue Portaels 81, 1030 Schaerbeek');
+INSERT INTO classroom (id, name, address) VALUES (DEFAULT, 'C.E.S.E. Ernest Richard','Pl. Saint-Pierre 5, 1040 Etterbeek');
 
 CREATE TABLE user_test (
   id_user SERIAL PRIMARY KEY,
