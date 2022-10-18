@@ -34,6 +34,6 @@
   }
   img {
     height: auto;
-    width: 60%;
+    width: 50%;
   }
 </style>
