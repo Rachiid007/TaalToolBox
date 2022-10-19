@@ -19,6 +19,7 @@ import { RoleModule } from './role/role.module';
 import { AnswerModule } from './answer/answer.module';
 import { LearnDomainModule } from './learn_domain/learn_domain.module';
 // import { RewardModule } from './reward/reward.module';
+import { WeightCardModule } from './weight_card/weight_card.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { LearnDomainModule } from './learn_domain/learn_domain.module';
     RoleModule,
     AnswerModule,
     LearnDomainModule,
+    WeightCardModule,
     // RewardModule,
   ],
   controllers: [AppController],
