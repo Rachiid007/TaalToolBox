@@ -3,7 +3,6 @@ import { defineStore } from 'pinia'
 import { ref,reactive, computed } from 'vue'
 import type Flashcard from '@/types/Flashcard'
 import type { Ref } from 'vue'
-export const useCardStore = defineStore('card', () => {
   // const animal = flashcardsData
   // console.log(animal)
   interface FlashCardData {

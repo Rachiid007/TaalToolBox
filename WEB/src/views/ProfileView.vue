@@ -73,7 +73,8 @@
     color: #242928;
     text-align: center;
     font-size: 28px;
-    padding: 20px;
+    padding: 40px;
+    margin: 8%;
     width: 100%;
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
@@ -86,6 +87,6 @@
   }
   .buttons{
     float: left;
-    margin-top: 70px;
+    margin-top: 5%;
   }
 </style>
