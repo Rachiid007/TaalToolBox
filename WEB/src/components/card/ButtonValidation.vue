@@ -1,10 +1,11 @@
 <script setup lang="ts">
   import { useCardStore } from '@/stores/card'
   import { useShowStore } from '@/stores/show'
+  import {useWeightCardStore} from "@/stores/weightCard"
   import { computed } from 'vue'
   const store = useCardStore()
   const storeShow = useShowStore()
-
+  const storeWeightCard = useWeightCardStore()
   const correctAndAlmostAnswer = () => {
     // Enlever la carte trouvé ou presque trouvé
     store.removeCorrectCard(store.getActualCard())
@@ -53,6 +54,7 @@
           //Incrémenter son cota de réponse correct
           //TODOLe poids de la carte doit diminuer
           store.incrementGoodAnswers()
+          storeWeightCard.getWeightCards()
         }
       "
     >
