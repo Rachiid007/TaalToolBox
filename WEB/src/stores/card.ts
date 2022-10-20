@@ -76,6 +76,7 @@ export const useCardStore = defineStore('card', () => {
   const flashcardList = reactive([]) as Flashcard[]
 
   const addFlashcard = (flashcard: Flashcard) => {
+    console.log(flashcard)
     flashcardList.push(flashcard)
   }
 
