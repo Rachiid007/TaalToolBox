@@ -7,177 +7,177 @@ export const flashcardsData: {
 }[] = [
   {
     id: 1,
-    question: 'Le cheval',
+    question: 'Cheval',
     answer: 'Horse',
     image: 'src/assets/images/card/cheval.svg',
     category: 'animals'
   },
   {
     id: 2,
-    question: 'Le chien',
+    question: 'Chien',
     answer: 'Dog',
     image: 'src/assets/images/card/chien.svg',
     category: 'animals'
   },
   {
     id: 3,
-    question: 'Le chat',
+    question: 'Chat',
     answer: 'Cat',
-    image: 'cat.jpg',
+    image: 'src/assets/images/card/chat.svg',
     category: 'animals'
   },
   {
     id: 4,
-    question: 'Le cochon',
+    question: 'Cochon',
     answer: 'Pig',
-    image: 'pig.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/cochon.svg'
   },
   {
     id: 5,
-    question: 'Le mouton',
+    question: 'Mouton',
     answer: 'Sheep',
-    image: 'sheep.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/mouton.svg'
   },
   {
     id: 6,
-    question: 'Le canard',
+    question: 'Canard',
     answer: 'Duck',
-    image: 'duck.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/canard.svg'
   },
   {
     id: 7,
-    question: 'Le lapin',
+    question: 'Lapin',
     answer: 'Rabbit',
-    image: 'rabbit.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/lapin.svg'
   },
   {
     id: 8,
-    question: 'Le poulet',
+    question: 'Poulet',
     answer: 'Chicken',
-    image: 'chicken.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/poulet.svg'
   },
   {
     id: 9,
-    question: 'Le vache',
+    question: 'Vache',
     answer: 'Cow',
-    image: 'cow.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/vache.svg'
   },
   {
     id: 10,
-    question: 'Le oiseau',
+    question: 'Oiseau',
     answer: 'Bird',
-    image: 'bird.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/oiseau.svg'
   },
   {
     id: 11,
-    question: 'Le poisson',
+    question: 'Poisson',
     answer: 'Fish',
-    image: 'fish.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/poisson.svg'
   },
   {
     id: 12,
-    question: 'Le serpent',
+    question: 'Serpent',
     answer: 'Snake',
-    image: 'snake.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/serpent.svg'
   },
   {
     id: 13,
-    question: 'Le lion',
+    question: 'Lion',
     answer: 'Lion',
-    image: 'lion.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/lion.svg'
   },
   {
     id: 14,
-    question: 'Le tigre',
+    question: 'Tigre',
     answer: 'Tiger',
-    image: 'tiger.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/tigre.svg'
   },
   {
     id: 15,
-    question: 'Le éléphant',
+    question: 'Eléphant',
     answer: 'Elephant',
-    image: 'elephant.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/éléphant.svg'
   },
   {
     id: 16,
-    question: 'Le singe',
+    question: 'Singe',
     answer: 'Monkey',
-    image: 'monkey.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/singe.svg'
   },
   {
     id: 17,
-    question: 'Le girafe',
+    question: 'Girafe',
     answer: 'Giraffe',
-    image: 'giraffe.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/girafe.svg'
   },
   {
     id: 18,
-    question: 'Le zèbre',
+    question: 'Zèbre',
     answer: 'Zebra',
-    image: 'zebra.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/zèbre.svg'
   },
   {
     id: 19,
-    question: 'Le chèvre',
+    question: 'Chèvre',
     answer: 'Goat',
-    image: 'goat.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/chèvre.svg'
   },
   {
     id: 20,
-    question: 'Le kangourou',
+    question: 'Kangourou',
     answer: 'Kangaroo',
-    image: 'kangaroo.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/kangourou.svg'
   },
   {
     id: 21,
-    question: 'Le panda',
+    question: 'Panda',
     answer: 'Panda',
-    image: 'panda.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/panda.svg'
   },
   {
     id: 22,
-    question: 'Le ours',
+    question: 'Ours',
     answer: 'Bear',
-    image: 'bear.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/ours.svg'
   },
   {
     id: 23,
-    question: 'Le crocodile',
+    question: 'Crocodile',
     answer: 'Crocodile',
-    image: 'crocodile.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/crocodile.svg'
   },
   {
     id: 24,
-    question: 'Le hippopotame',
+    question: 'Hippopotame',
     answer: 'Hippopotamus',
-    image: 'hippopotamus.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/hippopotame.svg'
   },
   {
     id: 25,
-    question: 'Le rhinocéros',
+    question: 'Rhinocéros',
     answer: 'Rhino',
-    image: 'rhino.jpg',
-    category: 'animals'
+    category: 'animals',
+    image: 'src/assets/images/card/rhinocéros.svg'
   }
 ]

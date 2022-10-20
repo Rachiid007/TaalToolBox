@@ -16,7 +16,7 @@
       store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
       return store.getActualCard()
     }
-    return { question: 'cheval', answer: 'horse' }
+    return { question: 'cheval', answer: 'horse', image: 'src/assets/images/card/cheval.svg' }
   })
 
   onMounted(() => {
@@ -47,7 +47,7 @@
       <div class="image-answer">
         <img
           class="image-answer-reveal"
-          src="src/assets/images/card/cheval.svg"
+          :src="actualCard.image"
           alt=""
         />
       </div>

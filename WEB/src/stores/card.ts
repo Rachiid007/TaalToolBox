@@ -1,18 +1,16 @@
 import { flashcardsData } from './../data/animalFlashcards'
 import { defineStore } from 'pinia'
-import { ref,reactive, computed } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import type Flashcard from '@/types/Flashcard'
 import type { Ref } from 'vue'
-  // const animal = flashcardsData
-  // console.log(animal)
-  interface FlashCardData {
-    id: number
-    question: string
-    answer: string
-    image: string
-    category: string
-  }
 
+interface FlashCardData {
+  id: number
+  question: string
+  answer: string
+  image: string
+  category: string
+}
 
 export const useCardStore = defineStore('card', () => {
   const remaining = ref(0)
