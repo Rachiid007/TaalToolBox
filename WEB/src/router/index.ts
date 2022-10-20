@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 // import HomeView from '../views/HomeView.vue'
-
 import MapView from '@/views/MapView.vue'
 import CardView from '@/views/CardView.vue'
 import CardNumberSelector from '@/views/CardNumberSelector.vue'
 import HomeView from '@/views/HomeView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 import addCardExcelView from '@/views/add-card/addCardExcelView.vue'
 import addCardFormView from '@/views/add-card/addCardFormView.vue'
 import choiceHowToAddCardView from '@/views/add-card/choiceHowToAddCardView.vue'
@@ -33,6 +33,11 @@ const router = createRouter({
       component: CardNumberSelector
     },
     {
+      path: '/Profile',
+      name: 'Profile',
+      component: ProfileView
+      },
+      {
       path: '/add-card',
       name: 'add-card',
       component: choiceHowToAddCardView
