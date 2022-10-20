@@ -7,10 +7,12 @@
   //     file.value = e.target.file[0]
   //     console.log(image.value, file.value)
   //   }
+
   const numberField = ref(0)
   const fieldList = ref([])
   const background = ref()
   const image = ref()
+
   const selectedId = ref('')
   const selectedDiv = ref()
 
@@ -20,7 +22,9 @@
   const selectedDivWidth = ref(0)
   const selectedDivHeight = ref(0)
 
-  // Les valeurs de position pour les divs
+  const selectedDivContent = ref('')
+
+  // Les valeurs de position pour les divs quand on utilise le drag and drop
   const positions = ref({
     pos1: 0,
     pos2: 0,
@@ -39,15 +43,21 @@
 
     //Si un champ était déjà sélectionné au paravant, on le remet à la couleur de bordure initiale
     if (selectedId.value) {
-      document.getElementById(selectedId.value).style.border = '2px dashed #00307e'
+      let element: any = document.getElementById(selectedId.value)
+      element.style.border = '2px dashed #00307e'
     }
     selectedId.value = e.target.id
-    let element = document.getElementById(selectedId.value)
+    let element: any = document.getElementById(selectedId.value)
     element.style.border = '2px dashed red'
     selectedDivWidth.value = parseInt(getComputedStyle(element).width)
     selectedDivHeight.value = parseInt(getComputedStyle(element).height)
     selectedDivTop.value = element.offsetTop
     selectedDivLeft.value = element.offsetLeft
+    if (element.innerText) {
+      selectedDivContent.value = element.innerText
+    } else {
+      selectedDivContent.value = ''
+    }
   }
 
   const dragMouseDown = (e: any) => {
@@ -111,15 +121,42 @@
   }
 
   const changeSelectedWidth = (newValue: number) => {
-    let div = document.getElementById(selectedId.value)
+    // Cette fonction permet de changer la width de la div sélectionnée
+    let div: any = document.getElementById(selectedId.value)
     div.style.width = newValue + 'px'
     selectedDivWidth.value = newValue
   }
 
   const changeSelectedHeight = (newValue: number) => {
-    let div = document.getElementById(selectedId.value)
+    // Cette fonction permet de changer la height de la div sélectionnée
+    let div: any = document.getElementById(selectedId.value)
     div.style.height = newValue + 'px'
     selectedDivHeight.value = newValue
+  }
+
+  const setDivContent = (newContent: string) => {
+    let element: any = document.getElementById(selectedId.value)
+    element.innerText = newContent
+  }
+
+  const setDivTop = (newTop: number) => {
+    let element: any = document.getElementById(selectedId.value)
+    let calc: number = selectedDivTop.value + newTop
+    if (
+      calc > 0 &&
+      parseInt(getComputedStyle(image.value).height) > calc + selectedDivHeight.value
+    ) {
+      element.style.top = calc + 'px'
+      selectedDivTop.value = calc
+    }
+  }
+  const setDivLeft = (newLeft: number) => {
+    let element: any = document.getElementById(selectedId.value)
+    let calc: number = selectedDivLeft.value + newLeft
+    if (calc > 0 && parseInt(getComputedStyle(image.value).width) > calc + selectedDivWidth.value) {
+      element.style.left = calc + 'px'
+      selectedDivLeft.value = calc
+    }
   }
 </script>
 <template>
@@ -147,7 +184,7 @@
         <div
           v-for="item in fieldList"
           class="fields"
-          :id="'id' + item.toString()"
+          :id="'id' + parseInt(item).toString()"
           @click="clicked"
           @mousedown="dragMouseDown"
         ></div>
@@ -160,9 +197,62 @@
         >
           + Ajouter un champ
         </button>
-        <p>Id de la div sélectionnée: {{ selectedId }}</p>
-        <p class="coordinates">Y: {{ selectedDivTop }}</p>
-        <p class="coordinates">X: {{ selectedDivLeft }}</p>
+        <div>
+          <p
+            class="infoHeaderSub"
+            v-show="selectedId"
+          >
+            Positions:
+          </p>
+          <div
+            class="positionInfo"
+            v-show="selectedId"
+          >
+            <p
+              class="commands"
+              @click="setDivTop(-1)"
+            >
+              <img
+                src="@/assets/logo/minus_logo.svg"
+                alt="minus logo"
+              />
+            </p>
+            <p class="coordinates">Y: {{ selectedDivTop }}</p>
+            <p
+              class="commands"
+              @click="setDivTop(1)"
+            >
+              <img
+                src="@/assets/logo/plus_logo.svg"
+                alt="plus logo"
+              />
+            </p>
+          </div>
+          <div
+            class="positionInfo"
+            v-show="selectedId"
+          >
+            <p
+              class="commands"
+              @click="setDivLeft(-1)"
+            >
+              <img
+                src="@/assets/logo/minus_logo.svg"
+                alt="minus logo"
+              />
+            </p>
+            <p class="coordinates">X: {{ selectedDivLeft }}</p>
+            <p
+              class="commands"
+              @click="setDivLeft(1)"
+            >
+              <img
+                src="@/assets/logo/plus_logo.svg"
+                alt="plus logo"
+              />
+            </p>
+          </div>
+        </div>
         <div
           class="dimensionSettings"
           v-show="selectedId"
@@ -202,13 +292,26 @@
             ></div>
           </div>
         </div>
+        <div
+          class="divContentSetter"
+          v-show="selectedId"
+        >
+          <p class="infoHeaderSub">Valeur du champ:</p>
+          <input
+            class="divContentInput"
+            v-model="selectedDivContent"
+            type="text"
+            @change="setDivContent(selectedDivContent)"
+            placeholder="Insérer la valeur du champ"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
   .main {
-    margin-top: 75px;
+    margin-top: 35px;
     max-width: 1600px;
     width: 100vw;
     display: flex;
@@ -218,7 +321,6 @@
     gap: 3%;
   }
   .playground {
-    margin-top: 25px;
     display: flex;
     max-width: 100%;
     width: 95%;
@@ -251,14 +353,14 @@
   }
   .fields {
     position: absolute;
-    color: red;
+    color: #707070;
     border: 2px dashed #00307e;
     width: 150px;
     height: 30px;
     top: 0;
     left: 0;
     text-align: center;
-    font-size: 100%;
+    font-size: 130%;
     font-weight: bold;
     background-color: white;
     cursor: move;
@@ -271,6 +373,7 @@
     height: max-content;
     min-height: 50px;
     background-color: rgb(112, 112, 112, 0.05);
+    border: 1px solid #00307e;
     border-radius: 5px;
     padding: 15px;
     gap: 15px;
@@ -285,7 +388,7 @@
   }
   .addField {
     background-color: #00307e;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 10px;
     color: white;
     text-align: center;
@@ -293,7 +396,24 @@
     align-self: center;
   }
   .coordinates {
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    width: 30%;
+  }
+  .positionInfo {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 0px;
+  }
+  .commands {
+    border: 1px solid black;
+    padding: 1px;
+    font-weight: bold;
+    border: 5px;
+    cursor: pointer;
+    width: 5%;
   }
   .dimensionSettings {
     display: flex;
@@ -336,6 +456,18 @@
     border-left: 20px solid #555;
     border-bottom: 10px solid transparent;
     cursor: pointer;
+  }
+  .divContentSetter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .divContentInput {
+    border: 1px solid #00307e;
+    width: 90%;
+    padding: 2px 5px;
+    display: flex;
   }
 
   input::-webkit-outer-spin-button,
