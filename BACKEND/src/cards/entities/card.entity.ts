@@ -1,3 +1,4 @@
+import { IsOptional } from 'class-validator';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
@@ -11,6 +12,6 @@ export class Card {
   @Column()
   translation: string;
 
-  @Column()
-  image?: string;
+  @Column({ default: null })
+  image: string;
 }

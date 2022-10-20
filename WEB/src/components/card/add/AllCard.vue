@@ -2,19 +2,22 @@
   import { useCardStore } from '@/stores/card'
   import LittleCard from '@/components/card/add/LittleCard.vue'
   import FlashcardService from '@/services/FlashcardService'
-
   const store = useCardStore()
-
   const sendToApi = () => {
     store.flashcardList.forEach((flashcard) => {
       FlashcardService.postFlashcard({
         word: flashcard.word,
-        translation: flashcard.translation
+        translation: flashcard.translation,
+        image: flashcard.image
       })
+        .then((rep) => {
+          console.log(rep)
+        })
+        .catch((err) => {
+          console.error(err)
+        })
     })
-
     // ! TODO: send image to api
-
     store.flashcardList = []
   }
 </script>
@@ -63,7 +66,6 @@
     gap: 20px;
     outline: 1px solid gray;
   }
-
   .title {
     font-size: 1.5rem;
     font-weight: bold;
@@ -72,7 +74,6 @@
     color: white;
     width: 100%;
   }
-
   .container {
     display: flex;
     flex-wrap: wrap;
@@ -80,7 +81,6 @@
     height: auto;
     gap: 10px;
   }
-
   #notAdd {
     display: flex;
     justify-content: center;
@@ -89,18 +89,15 @@
     height: 100px;
     font-size: 1.5rem;
   }
-
   #emoji {
     font-size: 2.5rem;
   }
-
   .card {
     width: 150px;
     height: 200px;
     border: 1px solid black;
     border-radius: 10px;
   }
-
   .btn {
     display: flex;
     justify-content: center;
@@ -116,7 +113,6 @@
     width: max-content;
     height: 40px;
   }
-
   .btn:hover {
     background-color: #000;
   }
