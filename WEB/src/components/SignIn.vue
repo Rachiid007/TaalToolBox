@@ -1,19 +1,38 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { onMounted, reactive } from 'vue'
+import axios from 'axios'
+
 const state = reactive({
   page1: {
-    firstName: '',
-    secondName: '',
-    mail: '',
-    password: '',
-    confirmPassword: ''
+    firstName: 'Michaël',
+    secondName: 'Pourbaix',
+    mail: 'test@test.com'
+    // confirmPassword: 'testtest123M@'
   },
   page2: {
-    phoneNumber: '',
-    birthDate: '',
-    gender: ''
+    phoneNumber: '0444 05 04 05',
+    birthDate: '05-04-2002',
+    gender: 'man'
+  },
+  auth: {
+    password: ''
   }
 })
+
+const sendData = () => {
+  let payload = { ...state.page1, ...state.page2, ...state.auth }
+  console.log(payload)
+  // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
+  // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
+  axios
+    .post('http://localhost:3000/auth/register', payload, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
+      }
+    })
+    .then((response) => console.log(response))
+}
 const manage = reactive({
   firstPage: true,
   error: ''
@@ -26,17 +45,17 @@ const swapToFalse = () => {
   manage.error = ''
   manage.firstPage = false
 }
-const checkPasswordStrength = (password: string) => {
-  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
-  if (!/\d/.test(password)) {
-    return 'Le mot de passe doit contenir au moins un chiffre'
-  } else if (!specialChars.test(password)) {
-    return 'Le mot de passe doit contenir au moins un caractère spécial'
-  } else if (password.length < 12) {
-    return 'Le mot de passe doit contenir au moins 12 caractères'
-  }
-  return 0
-}
+// const checkPasswordStrength = (password: string) => {
+//   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
+//   if (!/\d/.test(password)) {
+//     return 'Le mot de passe doit contenir au moins un chiffre'
+//   } else if (!specialChars.test(password)) {
+//     return 'Le mot de passe doit contenir au moins un caractère spécial'
+//   } else if (password.length < 12) {
+//     return 'Le mot de passe doit contenir au moins 12 caractères'
+//   }
+//   return 0
+// }
 const checkFields = (page: string) => {
   if (page == 'page1') {
     for (let key in state.page1) {
@@ -46,14 +65,14 @@ const checkFields = (page: string) => {
         return 1
       }
     }
-    if (state.page1.password != state.page1.confirmPassword) {
-      manage.error = "Le champ mot de passe n'est pas identique au champ répéter le mot de passe !"
-      return 1
-    }
-    if (checkPasswordStrength(state.page1.password)) {
-      manage.error = checkPasswordStrength(state.page1.password)
-      return 1
-    }
+    // if (state.page1.password != state.page1.confirmPassword) {
+    //   manage.error = "Le champ mot de passe n'est pas identique au champ répéter le mot de passe !"
+    //   return 1
+    // }
+    // if (checkPasswordStrength(state.page1.password)) {
+    //   manage.error = checkPasswordStrength(state.page1.password)
+    //   return 1
+    // }
     swapToFalse()
   } else {
     for (let key in state.page2) {
@@ -63,7 +82,12 @@ const checkFields = (page: string) => {
         return 1
       }
     }
+    let birth_date = state.page2.birthDate.replace('-', '').replace('-', '')
+    state.auth.password = state.page1.firstName[0] + state.page1.secondName + birth_date
+    sendData()
+    console.log(state.auth.password)
   }
+
   // Verifier que les données ne sont pas déjà utilisées pour un autre compte
   console.log('TODO: Envoyer les données au back')
 }
@@ -96,7 +120,7 @@ const checkFields = (page: string) => {
         </div>
         <div class="secondDiv">
           <input class="secondFields" type="email" placeholder="Mail" v-model="state.page1.mail" />
-          <input
+          <!-- <input
             class="secondFields"
             type="password"
             placeholder="Mot de passe"
@@ -107,7 +131,7 @@ const checkFields = (page: string) => {
             type="password"
             placeholder="Confirmer le mot de passe"
             v-model="state.page1.confirmPassword"
-          />
+          /> -->
         </div>
       </form>
       <div class="buttons">
