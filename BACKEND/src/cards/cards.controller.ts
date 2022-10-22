@@ -1,5 +1,3 @@
-import { CardsInterceptor } from './cards.interceptor';
-import { CardsMiddleware } from './cards.middleware';
 import {
   Controller,
   Get,
@@ -10,6 +8,8 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { imageFileFilter, editFileName } from './image.middleware';
@@ -17,6 +17,7 @@ import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Cards } from './cards.decorator';
 // import { diskStorage } from 'multer';
 
 @Controller('cards')
@@ -54,15 +55,16 @@ export class CardsController {
     FileInterceptor('file', {
       storage: diskStorage({
         destination: function (req, file, cb) {
-          cb(null, 'images/cards');
+          cb(null, 'public/images/cards');
         },
         filename: editFileName,
       }),
       fileFilter: imageFileFilter,
     }),
   )
-  uploadImage(@UploadedFile() file) {
-    return this.cardsService.uploadImage(file);
+  uploadImage(@UploadedFile() file, @Cards() req) {
+    console.log('card decorateur --- ', req);
+    return this.cardsService.uploadImage(req, file);
   }
 
   @Post('upload')

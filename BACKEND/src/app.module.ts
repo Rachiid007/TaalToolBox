@@ -4,11 +4,13 @@ import {
   RequestMethod,
   MiddlewareConsumer,
 } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { MulterModule } from '@nestjs/platform-express';
+import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ActivitiesModule } from './activities/activities.module';
 import { CardsModule } from './cards/cards.module';
-import { CardsMiddleware } from './cards/cards.middleware';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CategoryModule } from './category/category.module';
@@ -33,6 +35,12 @@ import { LearnDomainModule } from './learn_domain/learn_domain.module';
       autoLoadEntities: true,
       synchronize: true, // ! SET TO FALSE IN PRODUCTION
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
+    MulterModule.register({
+      dest: join(__dirname, '..', 'public/images'),
+    }),
     CategoryModule,
     LangModule,
     RoleModule,
@@ -46,13 +54,14 @@ import { LearnDomainModule } from './learn_domain/learn_domain.module';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(CardsMiddleware)
+      .apply(/**Middleware function
+       */)
       .exclude(
         { path: 'cards', method: RequestMethod.GET },
         { path: 'cards', method: RequestMethod.PATCH },
         { path: 'cards', method: RequestMethod.DELETE },
         'cards/(.*)',
       )
-      .forRoutes('cards');
+      .forRoutes('cards/upload');
   }
 }
