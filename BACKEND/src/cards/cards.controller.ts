@@ -11,6 +11,8 @@ import {
   UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
+import { diskStorage } from 'multer';
+import { imageFileFilter, editFileName } from './image.middleware';
 import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
@@ -44,6 +46,23 @@ export class CardsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.cardsService.remove(+id);
+  }
+
+  //Apply a middleware on image and store the server link in db
+  @Post('image')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: function (req, file, cb) {
+          cb(null, 'images/cards');
+        },
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+  uploadImage(@UploadedFile() file) {
+    return this.cardsService.uploadImage(file);
   }
 
   @Post('upload')
