@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as XLSX from 'xlsx';
 import { Card } from './entities/card.entity';
-
+import multer from "multer"
 @Injectable()
 export class CardsService {
   constructor(
@@ -44,6 +44,12 @@ export class CardsService {
   async remove(id: number) {
     const card = await this.findOne(id);
     return this.cardsRepository.remove(card);
+  }
+
+  async uploadImage(file) {
+    console.log(file);
+
+
   }
 
   async uploadFile(file) {
