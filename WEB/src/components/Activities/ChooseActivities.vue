@@ -9,10 +9,19 @@
             <p class="underline"></p>
         </div>
         <div class="content">
-            <div class="typeActi">Photo activité</div>
+            <div class="typeActi">
+               <img src="../../assets/logo/dalcard.svg" class="carteDal">
+               <img src="../../assets/logo/flashcards.svg" class="carteFlash">  
+            </div>
             <div class="description">
                <div class="descrTitle">Type sélectionné:</div>
                <div class="actiName">FlashCards</div>
+               <div class="textDescrip">
+                <p>Activité dans laquelle l'étudiant doit trouver de mots et doit s'autoevaluer. Les mots
+                    sont representé sous forme de carte. Un systeme de poids est mise en place pour que les
+                    cartes plus dure de l'élève réaparaissent le plus souvent.
+                </p>
+               </div>
                <div>
                 <button class="button">Créer une activité</button>
                </div>
@@ -31,6 +40,15 @@
  
 .title {
 }
+
+.carteDal{
+   border: 2px solid grey; 
+   border-radius: 15px;
+   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.10) 0px 8px 10px;
+   padding: 19px;
+   margin-bottom: 17px;
+    
+}
 hr.ligne{
   /* border: 4px solid green;
   border-radius: 5px;   */
@@ -45,12 +63,20 @@ hr.ligne{
 .content{
     gap: 100px;
     display: flex;
-    flex-direction: row;
+    flex-direction:row;
     align-items: center;
+    justify-content: center;
 }
 .typeActi{
-    border: 1px solid black;
-   padding: 5em;
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: center;
+    border: 1px black solid;
+    width: 800px;
+    height: 445px;
+    padding: 4px;
 }
 
 .descrTitle{
@@ -59,26 +85,39 @@ hr.ligne{
 }
 
 .description{
-    border: 1px solid black;
-    padding: 5vmax;
+    border: solid 1px black;
+    /* width: 20%; */
+    padding: 7px 5.5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 250px;
+    height: 445px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
 }
 .actiName{
     font-size: 1.2em;
     color: grey;
 }
 .button{
+    background-color: green;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 150px;
-    height: 30px;
-    background-color: green;
-    border-radius: 5px;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
     cursor: pointer;
-    /* transition: all 0.2s ease-in-out; */
-    font-size: 15px;
-    font-weight: bold;
-    color: #fff;
-    padding-bottom:20px;
+    border-radius: 5px;
+}
+.textDescrip{
+    text-align: center;
+    /* font-family:monospace; */
 }
 </style>
