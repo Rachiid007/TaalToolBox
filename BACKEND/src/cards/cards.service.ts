@@ -61,6 +61,8 @@ export class CardsService {
     // console.log(file);
     // console.log(url_image)
     // console.log(card_id)
+    
+    this.update(parseInt(card_id), {image : url_image})
   }
 
   async uploadFile(file) {

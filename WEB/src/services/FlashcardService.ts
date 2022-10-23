@@ -19,9 +19,11 @@ const apiClientForm = axios.create({
 interface Flashcard {
   word: string
   translation: string
+}
+interface FlashcardImage {
+  id: string
   image: any
 }
-
 export default {
   getFlashcards() {
     return apiClient.get('/cards')
@@ -30,19 +32,10 @@ export default {
     return apiClient.get('/cards/' + id)
   },
   postFlashcard(flashcard: Flashcard) {
-    // formData.append('file', flashcard.image)
-
     // for (var key of formData.entries()) {
     //   console.log(key[0] + ', ' + key[1])
     // }
-    // return axios.post(
-    //   'http://localhost:3000/cards',
-    //   {
-    //     word: flashcard.word,
-    //     translation: flashcard.translation
-    //   },
-    //   { headers: { 'Content-Type': 'Application.json' } }
-    // )
+
     return apiClient.post('/cards', { word: flashcard.word, translation: flashcard.translation })
   },
   // putFlashcard(flashcard: Flashcard) {
@@ -51,9 +44,10 @@ export default {
   deleteFlashcard(id: string) {
     return apiClient.delete('/cards/' + id)
   },
-  uploadImage(image: File) {
+  uploadImage(flashcardimage: FlashcardImage) {
     let formData = new FormData()
-    formData.append('file', image)
-    return apiClientForm.post('/cards/upload', formData)
+    formData.append('id', flashcardimage.id)
+    formData.append('file', flashcardimage.image)
+    return apiClientForm.post('/cards/image', formData)
   }
 }
