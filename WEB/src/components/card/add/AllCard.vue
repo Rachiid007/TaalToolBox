@@ -4,18 +4,17 @@
   import FlashcardService from '@/services/FlashcardService'
   const store = useCardStore()
   const sendToApi = () => {
-    store.flashcardList.forEach((flashcard) => {
-      FlashcardService.postFlashcard({
+    store.flashcardList.forEach(async (flashcard) => {
+      const flashcardRequest = await FlashcardService.postFlashcard({
         word: flashcard.word,
-        translation: flashcard.translation,
+        translation: flashcard.translation
+      })
+      // console.log(flashcardRequest.data)
+      const flashcardImageRequest = await FlashcardService.uploadImage({
+        id: flashcardRequest.data.id,
         image: flashcard.image
       })
-        .then((rep) => {
-          console.log(rep)
-        })
-        .catch((err) => {
-          console.error(err)
-        })
+      console.log(flashcardImageRequest)
     })
     // ! TODO: send image to api
     store.flashcardList = []
