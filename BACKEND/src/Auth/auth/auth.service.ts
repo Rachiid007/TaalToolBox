@@ -36,9 +36,9 @@ export class AuthService {
   }
 
   async register(data) {
-   // data.password = await bcrypt.hash(data.password, 10);
+    // data.password = await bcrypt.hash(data.password, 10);
     const response = await this.userService.create(data);
-   // console.log(data);
+    // console.log(data);
     if (response) {
       const { password, ...result } = response;
       return result;
