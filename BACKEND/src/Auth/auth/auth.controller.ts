@@ -13,8 +13,14 @@ export class AuthController {
     return this.authService.login(req);
   }
 
+  @Get('classroom')
+  getClassroom(@Req() req) {
+    return req.classroom;
+  }
+
   @Post('register')
   async register(@Body() data: any) {
+    console.log(data);
     return this.authService.register(data);
   }
 

@@ -11,6 +11,8 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  // ATTENTION: PROBLÈMES DE SÉCU POTENTIEL AVEC LES CORS
+  app.enableCors();
   await app.listen(3000);
 }
 bootstrap();
