@@ -1,5 +1,13 @@
 <script setup lang="ts">
 
+import { ref, onMounted } from 'vue'
+
+const details = ref()
+
+const listActivities = {
+    flashCards: "FlashCards", 
+    DragAndLearn: "DragAndLearn"}
+
 </script>
 <template>
     <div class="main">
@@ -10,8 +18,12 @@
         </div>
         <div class="content">
             <div class="typeActi">
+              <div>
                <img src="../../assets/logo/dalcard.svg" class="carteDal">
+              </div>
+              <div>
                <img src="../../assets/logo/flashcards.svg" class="carteFlash">  
+              </div>
             </div>
             <div class="description">
                <div class="descrTitle">Type sélectionné:</div>
@@ -61,7 +73,7 @@ hr.ligne{
     color: grey;
 }
 .content{
-    gap: 100px;
+    gap:50px;
     display: flex;
     flex-direction:row;
     align-items: center;
@@ -74,9 +86,10 @@ hr.ligne{
     align-items: flex-start;
     text-align: center;
     border: 1px black solid;
+    border-radius: 5px;
     width: 800px;
     height: 445px;
-    padding: 4px;
+    padding: 20px;
 }
 
 .descrTitle{
@@ -87,15 +100,16 @@ hr.ligne{
 .description{
     border: solid 1px black;
     /* width: 20%; */
-    padding: 7px 5.5px;
-    padding-left: 20px;
-    padding-right: 20px;
+    border-radius: 5px;
+    padding: 25px 10px;
+    padding-left: 30px;
+    padding-right: 30px;
     width: 250px;
     height: 445px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
 }
 .actiName{
     font-size: 1.2em;
