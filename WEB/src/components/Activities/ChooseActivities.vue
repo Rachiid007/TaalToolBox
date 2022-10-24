@@ -18,11 +18,11 @@ const listActivities = {
         </div>
         <div class="content">
             <div class="typeActi">
-              <div>
-               <img src="../../assets/logo/dalcard.svg" class="carteDal">
+              <div class="carte">
+               <img src="../../assets/logo/dalcard.svg" class="logo">
               </div>
-              <div>
-               <img src="../../assets/logo/flashcards.svg" class="carteFlash">  
+              <div class="carte">
+               <img src="../../assets/logo/flashcards.svg" class="logo">  
               </div>
             </div>
             <div class="description">
@@ -44,7 +44,7 @@ const listActivities = {
 <style scoped>
 .main{
      gap: 20px;
-     padding:   40px;
+     padding:40px;
      display: flex;
      flex-direction: column;
      align-items: center;
@@ -53,14 +53,20 @@ const listActivities = {
 .title {
 }
 
-.carteDal{
+.carte{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 18%;
+   height: 45%;
    border: 2px solid grey; 
    border-radius: 15px;
    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.10) 0px 8px 10px;
-   padding: 19px;
+   padding: 5px;
    margin-bottom: 17px;
     
 }
+
 hr.ligne{
   /* border: 4px solid green;
   border-radius: 5px;   */
@@ -73,22 +79,28 @@ hr.ligne{
     color: grey;
 }
 .content{
-    gap:50px;
+    gap:5%;
+    /* width: 90%;
+    height: 50%; */
     display: flex;
     flex-direction:row;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
+    width: 100%;
+    height: 100vh;
+    
 }
 .typeActi{
-    gap: 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    text-align: center;
+    gap: 3%;
+    height: 60%;
+    display: flex; 
+    flex-direction: row; 
+    /* align-items: flex-start; */
     border: 1px black solid;
     border-radius: 5px;
-    width: 800px;
-    height: 445px;
+   
+    width: 65%;
+     
     padding: 20px;
 }
 
@@ -104,12 +116,12 @@ hr.ligne{
     padding: 25px 10px;
     padding-left: 30px;
     padding-right: 30px;
-    width: 250px;
-    height: 445px;
+    width: 20%;
+    height: 60%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 40px;
 }
 .actiName{
     font-size: 1.2em;
@@ -133,5 +145,9 @@ hr.ligne{
 .textDescrip{
     text-align: center;
     /* font-family:monospace; */
+}
+.logo{
+    width:90%;
+    height: auto;
 }
 </style>
