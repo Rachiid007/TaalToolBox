@@ -180,7 +180,7 @@
 
 <style scoped>
   .main {
-    margin-top: 75px;
+    margin-top: 35px;
     max-width: 1600px;
     width: 100vw;
     display: flex;
@@ -246,7 +246,7 @@
     height: max-content;
     max-height: 240px;
     min-height: 50px;
-    background-color: rgb(112, 112, 112, 0.05);
+    background-color: rgb(112, 112, 112, 0.08);
     border: 1px solid #707070;
     border-radius: 5px;
     padding: 15px;
