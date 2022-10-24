@@ -24,6 +24,10 @@
 
   const selectedDivContent = ref('')
 
+  //Ces deux refs sont utilisées pour afficher les erreurs quand le professeur souhaite sauvegarder l'activité
+  const alertDiv = ref(false)
+  const alertNoDiv = ref(false)
+
   // Les valeurs de position pour les divs quand on utilise le drag and drop
   const positions = ref({
     pos1: 0,
@@ -134,6 +138,7 @@
     selectedDivHeight.value = newValue
   }
 
+  // Cette fonction permet de changer le contenu d'un champ
   const setDivContent = (newContent: string) => {
     let element: any = document.getElementById(selectedId.value)
     element.innerText = newContent
@@ -158,6 +163,24 @@
       selectedDivLeft.value = calc
     }
   }
+
+  const saveConfig = () => {
+    alertDiv.value = false
+    alertNoDiv.value = true
+    console.log(background.value.childNodes)
+    for (let div in background.value.childNodes) {
+      if (background.value.childNodes[div].id) {
+        console.log(background.value.childNodes[div])
+        alertNoDiv.value = false
+        if (background.value.childNodes[div].innerText) {
+          console.log(background.value.childNodes[div].innerText)
+        } else {
+          alertDiv.value = true
+        }
+      }
+      console.log(background.value.childNodes[div].id)
+    }
+  }
 </script>
 <template>
   <div class="main">
@@ -172,15 +195,6 @@
           alt="image for the exercice"
           ref="image"
         />
-        <!-- <input
-          value=""
-          placeholder="Valeur du champ"
-          type="text"
-          v-for="item in fieldList"
-          class="fields"
-          :id="item"
-          @click="clicked"
-        /> -->
         <div
           v-for="item in fieldList"
           class="fields"
@@ -189,121 +203,142 @@
           @mousedown="dragMouseDown"
         ></div>
       </div>
-      <div class="controlPanel">
-        <h1 class="infoHeader">Informations:</h1>
-        <button
-          @click="addField"
-          class="addField"
-        >
-          + Ajouter un champ
-        </button>
-        <div>
-          <p
-            class="infoHeaderSub"
-            v-show="selectedId"
+      <div class="controlPanelContainer">
+        <div class="controlPanel">
+          <h1 class="infoHeader">Informations:</h1>
+          <button
+            @click="addField"
+            class="addField"
           >
-            Positions:
-          </p>
+            <b>+</b> Ajouter un champ
+          </button>
+          <div>
+            <p
+              class="infoHeaderSub"
+              v-show="selectedId"
+            >
+              Positions:
+            </p>
+            <div
+              class="positionInfo"
+              v-show="selectedId"
+            >
+              <p
+                class="commands"
+                @click="setDivTop(-1)"
+              >
+                <img
+                  src="@/assets/logo/minus_logo.svg"
+                  alt="minus logo"
+                />
+              </p>
+              <p class="coordinates">Y: {{ selectedDivTop }}</p>
+              <p
+                class="commands"
+                @click="setDivTop(1)"
+              >
+                <img
+                  src="@/assets/logo/plus_logo.svg"
+                  alt="plus logo"
+                />
+              </p>
+            </div>
+            <div
+              class="positionInfo"
+              v-show="selectedId"
+            >
+              <p
+                class="commands"
+                @click="setDivLeft(-1)"
+              >
+                <img
+                  src="@/assets/logo/minus_logo.svg"
+                  alt="minus logo"
+                />
+              </p>
+              <p class="coordinates">X: {{ selectedDivLeft }}</p>
+              <p
+                class="commands"
+                @click="setDivLeft(1)"
+              >
+                <img
+                  src="@/assets/logo/plus_logo.svg"
+                  alt="plus logo"
+                />
+              </p>
+            </div>
+          </div>
           <div
-            class="positionInfo"
+            class="dimensionSettings"
             v-show="selectedId"
           >
-            <p
-              class="commands"
-              @click="setDivTop(-1)"
-            >
-              <img
-                src="@/assets/logo/minus_logo.svg"
-                alt="minus logo"
+            <p class="infoHeaderSub">Largeur:</p>
+            <div class="dimensionContainer">
+              <div
+                class="triangleLeft"
+                @click="changeSelectedWidth(selectedDivWidth - 1)"
+              ></div>
+              <input
+                class="dimensionInput"
+                type="number"
+                v-model="selectedDivWidth"
+                @change="changeSelectedWidth(selectedDivWidth)"
               />
-            </p>
-            <p class="coordinates">Y: {{ selectedDivTop }}</p>
-            <p
-              class="commands"
-              @click="setDivTop(1)"
-            >
-              <img
-                src="@/assets/logo/plus_logo.svg"
-                alt="plus logo"
+              <div
+                class="triangleRight"
+                @click="changeSelectedWidth(selectedDivWidth + 1)"
+              ></div>
+            </div>
+            <p class="infoHeaderSub">Hauteur:</p>
+            <div class="dimensionContainer">
+              <div
+                class="triangleLeft"
+                @click="changeSelectedHeight(selectedDivHeight - 1)"
+              ></div>
+              <input
+                class="dimensionInput"
+                type="number"
+                v-model="selectedDivHeight"
+                @change="changeSelectedHeight(selectedDivHeight)"
               />
-            </p>
+              <div
+                class="triangleRight"
+                @click="changeSelectedHeight(selectedDivHeight + 1)"
+              ></div>
+            </div>
           </div>
           <div
-            class="positionInfo"
+            class="divContentSetter"
             v-show="selectedId"
           >
-            <p
-              class="commands"
-              @click="setDivLeft(-1)"
-            >
-              <img
-                src="@/assets/logo/minus_logo.svg"
-                alt="minus logo"
-              />
-            </p>
-            <p class="coordinates">X: {{ selectedDivLeft }}</p>
-            <p
-              class="commands"
-              @click="setDivLeft(1)"
-            >
-              <img
-                src="@/assets/logo/plus_logo.svg"
-                alt="plus logo"
-              />
-            </p>
-          </div>
-        </div>
-        <div
-          class="dimensionSettings"
-          v-show="selectedId"
-        >
-          <p class="infoHeaderSub">Largeur:</p>
-          <div class="dimensionContainer">
-            <div
-              class="triangleLeft"
-              @click="changeSelectedWidth(selectedDivWidth - 1)"
-            ></div>
+            <p class="infoHeaderSub">Valeur du champ:</p>
             <input
-              class="dimensionInput"
-              type="number"
-              v-model="selectedDivWidth"
-              @change="changeSelectedWidth(selectedDivWidth)"
+              class="divContentInput"
+              v-model="selectedDivContent"
+              type="text"
+              @change="setDivContent(selectedDivContent)"
+              placeholder="Insérer la valeur du champ"
             />
-            <div
-              class="triangleRight"
-              @click="changeSelectedWidth(selectedDivWidth + 1)"
-            ></div>
           </div>
-          <p class="infoHeaderSub">Hauteur:</p>
-          <div class="dimensionContainer">
-            <div
-              class="triangleLeft"
-              @click="changeSelectedHeight(selectedDivHeight - 1)"
-            ></div>
-            <input
-              class="dimensionInput"
-              type="number"
-              v-model="selectedDivHeight"
-              @change="changeSelectedHeight(selectedDivHeight)"
-            />
-            <div
-              class="triangleRight"
-              @click="changeSelectedHeight(selectedDivHeight + 1)"
-            ></div>
+          <button
+            class="saveButton"
+            @click="saveConfig"
+            v-show="selectedId"
+          >
+            Enregistrer l'activité
+          </button>
+          <div
+            class="alert"
+            v-show="alertDiv"
+          >
+            Un champ n'a pas de valeur!
           </div>
-        </div>
-        <div
-          class="divContentSetter"
-          v-show="selectedId"
-        >
-          <p class="infoHeaderSub">Valeur du champ:</p>
-          <input
-            class="divContentInput"
-            v-model="selectedDivContent"
-            type="text"
-            @change="setDivContent(selectedDivContent)"
-            placeholder="Insérer la valeur du champ"
-          />
+          <div
+            class="alert"
+            v-show="alertNoDiv"
+          >
+            Veuillez insérer minimum 1 champ!
+          </div>
         </div>
       </div>
     </div>
@@ -325,7 +360,7 @@
     max-width: 100%;
     width: 95%;
     justify-content: center;
-    /* align-items: center; */
+    align-items: flex-start;
     /* width: 100%; */
     flex-direction: row;
     /* outline: 1px solid red; */
@@ -357,20 +392,34 @@
     border: 2px dashed #00307e;
     width: 150px;
     height: 30px;
-    top: 0;
-    left: 0;
+    /* top: 0;
+    left: 0; */
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 130%;
     font-weight: bold;
     background-color: white;
     cursor: move;
     animation: divSpawning 0.5s ease;
   }
+  .controlPanelContainer {
+    display: flex;
+    height: 100vh;
+    min-width: 22%;
+    max-width: 25%;
+    justify-content: center;
+    overflow: visible;
+    /* border: 2px solid red; */
+  }
   .controlPanel {
+    width: 22%;
+    position: fixed;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
-    height: max-content;
+    justify-content: center;
+    height: fit-content;
     min-height: 50px;
     background-color: rgb(112, 112, 112, 0.05);
     border: 1px solid #00307e;
@@ -380,11 +429,12 @@
     text-align: center;
   }
   .infoHeader {
-    font-size: 1.3em;
+    font-size: 1.5em;
     color: #00307e;
     text-align: center;
     padding-bottom: 5px;
     font-weight: 600;
+    border-bottom: 1px solid grey;
   }
   .addField {
     background-color: #00307e;
@@ -399,13 +449,13 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    width: 30%;
+    width: 50px;
   }
   .positionInfo {
     display: flex;
     justify-content: center;
     flex-direction: row;
-    gap: 0px;
+    gap: 25px;
   }
   .commands {
     border: 1px solid black;
@@ -418,7 +468,7 @@
   .dimensionSettings {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    /* gap: 5px; */
   }
   .infoHeaderSub {
     color: #00307e;
@@ -433,7 +483,7 @@
     justify-content: center;
     text-align: center;
     gap: 10%;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
   }
   .dimensionInput {
     text-decoration: none;
@@ -470,6 +520,49 @@
     display: flex;
   }
 
+  .saveButton {
+    background-color: #00307e;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    gap: 3%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    padding: 10px 45px;
+    border-radius: 5px;
+    color: white;
+    transition: 1s ease;
+  }
+  .saveButton::before {
+    height: 100%;
+    width: 20%;
+    left: -20%;
+    position: absolute;
+    content: '';
+    background-image: url('./src/assets/logo/save_logo.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 40%;
+    transition: 0.5s linear;
+    opacity: 0;
+  }
+  .saveButton:hover {
+    box-shadow: inset 0 0 5px #0252d3, rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transition: 1s ease;
+  }
+  .saveButton:hover::before {
+    /* animation: swipeToRight 0.5s ease both; */
+    left: 0;
+    opacity: 1;
+    transition: ease 0.5s;
+  }
+  .alert {
+    color: red;
+    font-size: 1em;
+    font-weight: bold;
+  }
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     appearance: none;
@@ -478,10 +571,16 @@
 
   @keyframes divSpawning {
     0% {
-      border: 10px solid #00307e;
+      border: 8px dashed rgb(0, 78, 203, 0.8);
     }
     100% {
       border: 2px dashed #00307e;
+    }
+  }
+  @keyframes swipeToRight {
+    100% {
+      transform: translateX(100%);
+      /* opacity: 100%; */
     }
   }
 </style>
