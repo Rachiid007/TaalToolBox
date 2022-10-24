@@ -20,7 +20,16 @@ const state = reactive({
 })
 
 const sendData = () => {
-  let payload = { ...state.page1, ...state.page2, ...state.auth }
+  let payload = {
+    name: state.page1.firstName,
+    surname: state.page1.secondName,
+    email: state.page1.mail,
+    password: state.auth.password,
+    birthdate: state.page2.birthDate,
+    telephone: state.page2.phoneNumber,
+    role: '1',
+    class: '1'
+  }
   console.log(payload)
   // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
   // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
