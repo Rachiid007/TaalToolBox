@@ -11,7 +11,8 @@
       description:
         "Activité dans laquelle l'étudiant doit trouver de mots et doit s'auto-évaluer. Les mots" +
         '            sont representé sous forme de carte. Un systeme de poids est mise en place pour que les' +
-        "            cartes plus dure de l'élève réaparaissent le plus souvent."
+        "            cartes plus dure de l'élève réaparaissent le plus souvent.",
+      link:"/add-card"
     },
     {
       activity_name: 'DragAndLearn',
@@ -19,7 +20,8 @@
       description:
         "Activité dans laquelle l'étudiant doit trouver de mots et doit s'auto-évaluer. Les mots" +
         '            sont representé sous forme de carte. Un systeme de poids est mise en place pour que les' +
-        "            cartes plus dure de l'élève réaparaissent le plus souvent."
+        "            cartes plus dure de l'élève réaparaissent le plus souvent.",
+      link:"/hello "
     }
   ]
 
@@ -65,7 +67,11 @@
           </p>
         </div>
         <div>
-          <button class="button">Créer une activité</button>
+          <router-link v-show="isThereAnyActivitySelected" 
+              :to = "isThereAnyActivitySelected ? listActivities[selectedActivity].link : ''"
+              class="button">
+              Créer une activité
+          </router-link>
         </div>
       </div>
     </div>
