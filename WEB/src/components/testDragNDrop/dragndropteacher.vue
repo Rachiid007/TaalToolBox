@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { ref } from 'vue'
+  import jsonfile from '@/assets/levelData/dragndrop.json'
   //   const image = ref('')
   //   const file = ref(null)
   //   const changeImage = (e: any) => {
@@ -27,6 +28,8 @@
   //Ces deux refs sont utilisées pour afficher les erreurs quand le professeur souhaite sauvegarder l'activité
   const alertDiv = ref(false)
   const alertNoDiv = ref(false)
+
+  const dataSended = ref(false)
 
   // Les valeurs de position pour les divs quand on utilise le drag and drop
   const positions = ref({
@@ -164,21 +167,78 @@
     }
   }
 
-  const saveConfig = () => {
+  const checkFields = () => {
     alertDiv.value = false
     alertNoDiv.value = true
-    console.log(background.value.childNodes)
     for (let div in background.value.childNodes) {
       if (background.value.childNodes[div].id) {
-        console.log(background.value.childNodes[div])
         alertNoDiv.value = false
-        if (background.value.childNodes[div].innerText) {
-          console.log(background.value.childNodes[div].innerText)
-        } else {
+        if (!background.value.childNodes[div].innerText) {
           alertDiv.value = true
+          return 0
         }
       }
-      console.log(background.value.childNodes[div].id)
+    }
+    return 1
+  }
+
+  const saveConfig = () => {
+    if (checkFields() && alertNoDiv && !dataSended.value) {
+      console.log('Ok to send data !!')
+      // let payload = {"fields": [], "backImage": }
+      let payload = { fields: [], backImage: '' }
+      if (image.value.src) {
+        payload['backImage'] = image.value.src
+      } else {
+        alert("Une erreur s'est produite !")
+        return 0
+      }
+      for (let div in background.value.childNodes) {
+        if (background.value.childNodes[div].id) {
+          let currentDiv = background.value.childNodes[div]
+
+          let currentDivHeightPorc = (
+            (parseInt(getComputedStyle(currentDiv).height) /
+              parseInt(getComputedStyle(image.value).height)) *
+            100
+          ).toFixed(2)
+          let currentDivWidthPorc = (
+            (parseInt(getComputedStyle(currentDiv).width) /
+              parseInt(getComputedStyle(image.value).width)) *
+            100
+          ).toFixed(2)
+
+          let currentDivTopPorc = (
+            (parseInt(getComputedStyle(currentDiv).top) /
+              parseInt(getComputedStyle(image.value).height)) *
+            100
+          ).toFixed(2)
+
+          let currentDivLeftPorc = (
+            (parseInt(getComputedStyle(currentDiv).left) /
+              parseInt(getComputedStyle(image.value).width)) *
+            100
+          ).toFixed(2)
+
+          let currentDivInfo = {
+            test: currentDiv.id.match(/(\d+)/)[0],
+            number: parseInt(currentDiv.id.match(/(\d+)/)),
+            top: currentDivTopPorc.toString() + '%',
+            left: currentDivLeftPorc.toString() + '%',
+            width: currentDivWidthPorc.toString() + '%',
+            height: currentDivHeightPorc.toString() + '%',
+            rightValue: currentDiv.innerText
+          }
+          // console.log(currentDivInfo)
+          payload.fields.push(currentDivInfo)
+        }
+      }
+
+      let baseDatas = jsonfile
+      baseDatas.push(payload)
+      let finalDatas = JSON.stringify(baseDatas)
+      dataSended.value = true
+      console.log(finalDatas)
     }
   }
 </script>
@@ -316,7 +376,7 @@
               class="divContentInput"
               v-model="selectedDivContent"
               type="text"
-              @change="setDivContent(selectedDivContent)"
+              @input="setDivContent(selectedDivContent)"
               placeholder="Insérer la valeur du champ"
             />
           </div>
@@ -423,7 +483,7 @@
     min-height: 50px;
     background-color: rgb(112, 112, 112, 0.05);
     border: 1px solid #00307e;
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 15px;
     gap: 15px;
     text-align: center;
@@ -444,6 +504,11 @@
     text-align: center;
     width: max-content;
     align-self: center;
+    transition: 0.5s ease;
+  }
+  .addField:hover {
+    box-shadow: inset 0 0 5px #0252d3, rgba(149, 157, 165, 0.15) 0px 8px 24px;
+    transition: 0.5s ease;
   }
   .coordinates {
     display: flex;
@@ -482,7 +547,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    gap: 10%;
+    gap: 5%;
     margin-bottom: 5px;
   }
   .dimensionInput {
@@ -490,6 +555,7 @@
     width: 45%;
     border: 1px solid #00307e;
     text-align: center;
+    border-radius: 2px;
   }
   .triangleLeft {
     width: 0;
@@ -498,6 +564,7 @@
     border-right: 20px solid #555;
     border-bottom: 10px solid transparent;
     cursor: pointer;
+    transform: scale(0.8);
   }
   .triangleRight {
     width: 0;
@@ -506,6 +573,7 @@
     border-left: 20px solid #555;
     border-bottom: 10px solid transparent;
     cursor: pointer;
+    transform: scale(0.8);
   }
   .divContentSetter {
     display: flex;
@@ -518,6 +586,7 @@
     width: 90%;
     padding: 2px 5px;
     display: flex;
+    border-radius: 2px;
   }
 
   .saveButton {
@@ -529,6 +598,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    text-align: center;
     align-self: center;
     padding: 10px 45px;
     border-radius: 5px;
@@ -538,24 +608,24 @@
   .saveButton::before {
     height: 100%;
     width: 20%;
-    left: -20%;
+    left: 0%;
     position: absolute;
     content: '';
     background-image: url('./src/assets/logo/save_logo.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: 40%;
-    transition: 0.5s linear;
+    transition: 0.5s ease;
+    transform: scale(0);
     opacity: 0;
   }
   .saveButton:hover {
-    box-shadow: inset 0 0 5px #0252d3, rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    transition: 1s ease;
+    box-shadow: inset 0 0 5px #0252d3, rgba(149, 157, 165, 0.15) 0px 8px 24px;
+    transition: 0.5s ease;
   }
   .saveButton:hover::before {
-    /* animation: swipeToRight 0.5s ease both; */
-    left: 0;
     opacity: 1;
+    transform: scale(1);
     transition: ease 0.5s;
   }
   .alert {
@@ -575,12 +645,6 @@
     }
     100% {
       border: 2px dashed #00307e;
-    }
-  }
-  @keyframes swipeToRight {
-    100% {
-      transform: translateX(100%);
-      /* opacity: 100%; */
     }
   }
 </style>

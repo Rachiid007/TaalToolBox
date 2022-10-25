@@ -180,7 +180,7 @@
 
 <style scoped>
   .main {
-    margin-top: 35px;
+    margin-top: 5px;
     max-width: 1600px;
     width: 100vw;
     display: flex;
