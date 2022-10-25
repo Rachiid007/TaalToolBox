@@ -56,7 +56,7 @@
     max-width: 1600px;
     width: 100vw;
     gap: 0px;
-    margin-top: 70px;
+    /* margin-top: 0px; */
     font-family: NotoSans-Regular;
     color: #707070;
     z-index: 1;

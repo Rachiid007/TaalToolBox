@@ -1,5 +1,7 @@
 <script setup lang="ts">
   import addCardForm from '@/components/card/add/addCardForm.vue'
+  import MainHeader from '@/components/headers/MainHeader.vue'
+
   // import LittleCard from '@/components/LittleCard.vue'
   // import LeCheval from '@/assets/images/cheval.svg'
 
@@ -17,6 +19,7 @@
     :translation="translation"
     :image="LeCheval"
   /> -->
+  <MainHeader />
   <div class="container-view">
     <add-card-form id="add-card-form" />
     <all-card id="all-card" />
@@ -30,7 +33,7 @@
     max-width: 1400px;
     height: auto;
     gap: 0 20px;
-    margin: 0 auto;
+    margin: 30px auto 0;
   }
 
   #add-card-form {
