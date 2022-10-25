@@ -3,9 +3,15 @@
   import ChooseActivities from '@/components/Activities/ChooseActivities.vue'
 </script>
 <template>
-  <div class="main">
-    <MainHeader />
-    <ChooseActivities />
+  <div class="page">
+     <MainHeader /> 
+     <ChooseActivities /> 
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>

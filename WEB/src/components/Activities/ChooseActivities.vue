@@ -5,13 +5,14 @@
   const isThereAnyActivitySelected = ref(false)
 
   const listActivities = [
-    {
+    { 
       activity_name: 'FlashCards',
       url: '/src/assets/logo/flashcards.svg',
       description:
         "Activité dans laquelle l'étudiant doit trouver de mots et doit s'auto-évaluer. Les mots" +
         '            sont representé sous forme de carte. Un systeme de poids est mise en place pour que les' +
-        "            cartes plus dure de l'élève réaparaissent le plus souvent."
+        "            cartes plus dure de l'élève réaparaissent le plus souvent.",
+      link:"/add-card"
     },
     {
       activity_name: 'DragAndLearn',
@@ -19,7 +20,8 @@
       description:
         "Activité dans laquelle l'étudiant doit trouver de mots et doit s'auto-évaluer. Les mots" +
         '            sont representé sous forme de carte. Un systeme de poids est mise en place pour que les' +
-        "            cartes plus dure de l'élève réaparaissent le plus souvent."
+        "            cartes plus dure de l'élève réaparaissent le plus souvent.",
+      link:"/dadteachertest"
     }
   ]
 
@@ -49,7 +51,13 @@
         </div>
       </div>
       <div class="description">
-        <div class="descrTitle">Type sélectionné:</div>
+        <div 
+        v-if = isThereAnyActivitySelected
+        class="descrTitle"
+        >  
+        Type sélectionné: 
+      </div>
+      <div v-else class="descrTitle"> Choisissez l'activité en cliquant sur la carte ! </div>
         <div
           class="actiName"
           v-show="isThereAnyActivitySelected"
@@ -65,7 +73,11 @@
           </p>
         </div>
         <div>
-          <button class="button">Créer une activité</button>
+          <router-link v-show="isThereAnyActivitySelected" 
+              :to = "isThereAnyActivitySelected ? listActivities[selectedActivity].link : ''"
+              class="button">
+              Créer une activité
+          </router-link>
         </div>
       </div>
     </div>
@@ -73,26 +85,24 @@
 </template>
 <style scoped>
   .main {
-    gap: 50px;
-    padding-top: 75px;
+    gap: 25px;
+    padding-top: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
-    width: 100%;
+    height: 100%;
+    width: 90%;
     max-width: 1600px;
   }
 
-  .title {
-    padding-top: 25px;
-  }
+ 
 
   .carte {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20%;
-    height: 48%;
+    width: 17vh;
+    height: 22vh;
     border: 2px solid grey;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.1) 0px 8px 10px;
@@ -114,8 +124,8 @@
   }
   .content {
     gap: 5%;
-    width: 90%;
-    height: 70%;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     /* align-items: center; */
@@ -129,29 +139,36 @@
     /* align-items: flex-start; */
     border: 2px grey solid;
     border-radius: 5px;
-    width: 60%;
+    /* width: 100vh;
+    height: 68vh; */
+    width: 100%;
+    height: 100%;
     padding: 20px;
   }
 
   .descrTitle {
+    padding-bottom: 2%;
     color: green;
-    font-size: 1.4em;
+    font-size: 150%;
+    display: contents;
   }
 
   .description {
     border: solid 2px grey;
-    /* width: 20%; */
+    color: grey;
     border-radius: 5px;
-    padding: 10px 10px;
-    width: 22%;
-    height: 100%;
+    padding: 2% 2%;
+    /* width: 35vh;
+    height: 68vh; */
+    width: 30%;
+    height: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 10px;
   }
   .actiName {
-    font-size: 1.4em;
+    font-size: 150%;
     color: grey;
     font-weight: bold;
   }
@@ -165,7 +182,7 @@
     padding: 8px 12px;
     text-align: center;
     display: inline-block;
-    font-size: 16px;
+    font-size: 20px;
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 5px;
@@ -173,6 +190,7 @@
   .textDescrip {
     text-align: center;
     font-style: italic;
+    font-size: 120%;
     /* font-family:monospace; */
   }
   .logo {
@@ -180,3 +198,5 @@
     height: auto;
   }
 </style>
+
+ 
