@@ -44,7 +44,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     margin: 0 auto;
     width: 100%;
     height: 100vh;
@@ -79,8 +79,7 @@
   .card {
     /* border: solid red 1px; */
     margin-left: 16%;
-    padding: 5px ;
-  
+    padding: 5px;
   }
   @media (max-width: 768px) {
     .container {

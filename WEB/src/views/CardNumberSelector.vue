@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <MainHeader />
+  <!-- <MainHeader /> -->
   <div class="page">
     <TheHeader />
     <CardNumber />
