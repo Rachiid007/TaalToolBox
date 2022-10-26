@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import logo from '@/assets/logo/logo.svg'
+
   const showTab = () => {
     document.getElementsByClassName('rightTab')[0].style.display = 'inline'
   }
@@ -16,7 +18,7 @@
       <div class="logo_img">
         <img
           class="main_logo"
-          src="@/assets/logo/logo.svg"
+          :src="logo"
         />
       </div>
       <p class="logo_title">TaalToolBox</p>
@@ -102,7 +104,7 @@
 <style scoped>
   .main {
     width: 100vw;
-    max-width: 1600px;
+    max-width: 1500px;
     border-bottom: 1px solid #707070;
     height: 70px;
     display: flex;

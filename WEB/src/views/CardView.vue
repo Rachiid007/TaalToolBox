@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import Card from '@/components/card/Card.vue'
+  import MainCard from '@/components/card/MainCard.vue'
   import RemainingCard from '@/components/card/RemainingCard.vue'
   import ButtonValidation from '@/components/card/ButtonValidation.vue'
   import TheHeader from '@/components/TheHeader.vue'
@@ -32,7 +32,7 @@
       </div>
       <div class="play-card">
         <div class="card">
-          <Card />
+          <MainCard />
         </div>
         <!-- <div class="answer">inside answer card</div> -->
         <div class="validation-button">

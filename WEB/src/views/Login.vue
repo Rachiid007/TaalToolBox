@@ -1,27 +1,27 @@
 <script lang="ts">
-  import Login from "../components/Login.vue"
-  import MainHeader from "../components/MainHeader.vue"
+  import Login from '@/components/Login.vue'
+  import MainHeader from '@/components/MainHeader.vue'
 
   export default {
-    name: "login",
+    name: 'login',
     components: {
-        Login,
-        MainHeader
+      Login,
+      MainHeader
     }
   }
 </script>
 
 <template>
-    <div class="HomePage">
-      <MainHeader />
-      <Login />
-    </div>
+  <div class="HomePage">
+    <MainHeader />
+    <Login />
+  </div>
 </template>
 
 <style scoped>
-   .HomePage{
+  .HomePage {
     display: flex;
     flex-direction: column;
     align-items: center;
-   }
+  }
 </style>
