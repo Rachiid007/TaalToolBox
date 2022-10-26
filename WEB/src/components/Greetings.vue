@@ -41,8 +41,8 @@
           src="@/assets/images/gamemodes.svg"
         />
         <p>
-          Profitez de notre large gamme de jeux pour améliorer votre maîtrise de langue. Pour chaque
-          jeu, des thèmes et des difficultés différentes vous sont proposés.
+          Profitez de notre large gamme de jeux pour améliorer votre maîtrise de la langue. Pour
+          chaque jeu, des thèmes et des difficultés différentes vous sont proposés.
         </p>
       </div>
     </div>

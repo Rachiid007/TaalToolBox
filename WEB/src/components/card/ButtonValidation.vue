@@ -5,41 +5,38 @@
   const store = useCardStore()
   const storeShow = useShowStore()
 
-  const switchCorrectCard = () => {
-    console.log('inside switch card')
-
-    //Enlever la carte qu'il a répondu du tableau
+  const correctAndAlmostAnswer = () => {
+    // Enlever la carte trouvé ou presque trouvé
     store.removeCorrectCard(store.getActualCard())
+
+    //Remplacer la carte par une autre
     const card = computed(() => store.getCard())
-    //mettre a jour le deck avec les cartes restantes
     store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
-    console.log(store.getActualCard())
-  }
-  const decreaseRemaining = () => {
+    // console.log(store.getActualCard())
+
+    //decrémenter le nombre de carte restantes
     store.decrement()
+
+    //switcher les boutons
+    storeShow.setShowButtonReveal(true)
+    storeShow.setShowAnswer(false)
+    storeShow.setShowButtonValidation(false)
   }
 
-  const getAnswer = () => {
-    console.log('getAnswer')
+  const falseAnswer = () => {
+    //Remplacer la carte par une autre
+    const card = computed(() => store.getCard())
+    store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
+    // console.log(store.getActualCard())
 
-    store.incrementGoodAnswers()
+    //switcher les boutons
+    storeShow.setShowButtonReveal(true)
+    storeShow.setShowAnswer(false)
+    storeShow.setShowButtonValidation(false)
 
-    decreaseRemaining()
-  }
-
-  const almost = () => {
-    console.log('almost')
-
-    store.incrementAlmostGoodAnswers()
-
-    decreaseRemaining()
-  }
-
-  const noAnswer = () => {
-    console.log('noAnswer')
+    //Incrémenter son cota de carte raté
+    //TODO: Le poids de la carte doit augmenter
     store.incrementWrongAnswers()
-
-    decreaseRemaining()
   }
 </script>
 
@@ -51,11 +48,11 @@
       id="getAnswer"
       @click="
         () => {
-          getAnswer()
-          switchCorrectCard()
-          storeShow.setShowButtonReveal(true)
-          storeShow.setShowAnswer(false)
-          storeShow.setShowButtonValidation(false)
+          correctAndAlmostAnswer()
+
+          //Incrémenter son cota de réponse correct
+          //TODOLe poids de la carte doit diminuer
+          store.incrementGoodAnswers()
         }
       "
     >
@@ -64,14 +61,25 @@
     <button
       id="almost"
       class="btn"
-      @click="almost"
+      @click="
+        () => {
+          correctAndAlmostAnswer()
+
+          //incrémenter son cota de réponse presque trouvé(todo : faire une liaison avec le poids)
+          //TODOLe poids de la carte doit rester le même
+          // Le poids devra être lié a la carte de l'utilisateur
+          // --> table avec l'id primaire de la carte et l'id de l'utilisateur + le poids de la carte
+          //TODO : Récupérer l'id user et card qui constituront la clé primaire de la table
+          store.incrementAlmostGoodAnswers()
+        }
+      "
     >
       J'y étais presque
     </button>
     <button
       id="noAnswer"
       class="btn"
-      @click="noAnswer"
+      @click="falseAnswer"
     >
       Je ne savais pas
     </button>

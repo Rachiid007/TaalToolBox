@@ -2,12 +2,11 @@ import { flashcardsData } from './../data/animalFlashcards'
 import { defineStore } from 'pinia'
 import { ref, reactive, computed } from 'vue'
 import type Flashcard from '@/types/Flashcard'
-import type { Ref } from 'vue'
 
 interface FlashCardData {
   id: number
-  question: string
-  answer: string
+  word: string
+  translation: string
   image: string
   category: string
 }
@@ -19,7 +18,7 @@ export const useCardStore = defineStore('card', () => {
   const almostGoodAnswers = ref(0)
   const wrongAnswers = ref(0)
   const tableCard = ref<FlashCardData[]>([])
-  let actualCard = ref<FlashCardData>({ id: 0, question: '', answer: '', image: '', category: '' }) //{ id: 0, question: '', answer: '', image: '', category: '' }
+  let actualCard = ref<FlashCardData>({ id: 0, word: '', translation: '', image: '', category: '' }) //{ id: 0, question: '', translation: '', image: '', category: '' }
   const goodAnswerPercentage = computed(() => {
     return Math.round((goodAnswers.value / totalQuestions.value) * 100)
   })
