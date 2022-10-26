@@ -21,7 +21,7 @@
         "Activité dans laquelle l'étudiant doit trouver de mots et doit s'auto-évaluer. Les mots" +
         '            sont representé sous forme de carte. Un systeme de poids est mise en place pour que les' +
         "            cartes plus dure de l'élève réaparaissent le plus souvent.",
-      link:"/hello "
+      link:"/hello-World "
     }
   ]
 
@@ -146,7 +146,9 @@
 
   .description {
     border: solid 2px grey;
+    color: grey;
     /* width: 20%; */
+    font-size: 1.1em;
     border-radius: 5px;
     padding: 10px 10px;
     width: 22%;
@@ -154,7 +156,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
   }
   .actiName {
     font-size: 1.4em;
@@ -186,3 +188,5 @@
     height: auto;
   }
 </style>
+
+ 
