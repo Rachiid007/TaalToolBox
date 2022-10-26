@@ -1,4 +1,12 @@
-import { Module } from '@nestjs/common';
+import {
+  Module,
+  NestModule,
+  RequestMethod,
+  MiddlewareConsumer,
+} from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { MulterModule } from '@nestjs/platform-express';
+import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ActivitiesModule } from './activities/activities.module';
@@ -9,6 +17,13 @@ import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './Auth/auth/auth.module';
+import { CategoryModule } from './category/category.module';
+import { LangModule } from './lang/lang.module';
+import { RoleModule } from './role/role.module';
+import { AnswerModule } from './answer/answer.module';
+import { LearnDomainModule } from './learn_domain/learn_domain.module';
+// import { RewardModule } from './reward/reward.module';
+
 
 @Module({
   imports: [
@@ -27,8 +42,33 @@ import { AuthModule } from './Auth/auth/auth.module';
     }),
     UsersModule,
     AuthModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
+    MulterModule.register({
+      dest: join(__dirname, '..', 'public/images'),
+    }),
+    CategoryModule,
+    LangModule,
+    RoleModule,
+    AnswerModule,
+    LearnDomainModule,
+    // RewardModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, UsersService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(/**Middleware function
+       */)
+      .exclude(
+        { path: 'cards', method: RequestMethod.GET },
+        { path: 'cards', method: RequestMethod.PATCH },
+        { path: 'cards', method: RequestMethod.DELETE },
+        'cards/(.*)',
+      )
+      .forRoutes('cards/upload');
+  }
+}

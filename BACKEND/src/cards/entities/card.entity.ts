@@ -1,3 +1,4 @@
+import { IsOptional } from 'class-validator';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
@@ -6,11 +7,11 @@ export class Card {
   id: number;
 
   @Column()
-  title: string;
+  word: string;
 
   @Column()
-  description: string;
+  translation: string;
 
-  @Column('json', { nullable: true })
-  answers: string[];
+  @Column({ default: null })
+  image: string;
 }
