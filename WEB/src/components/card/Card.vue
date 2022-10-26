@@ -2,6 +2,8 @@
   import { useCardStore } from '@/stores/card'
   import { useShowStore } from '@/stores/show'
   import { ref, computed, onMounted, onUpdated, getCurrentInstance } from 'vue'
+  import cheval from '@/assets/images/card/cheval.svg'
+
   const store = useCardStore()
   const storeShow = useShowStore()
   const showAnswer = computed(() => storeShow.getShowAnswer())
@@ -16,7 +18,7 @@
       store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
       return store.getActualCard()
     }
-    return { question: 'cheval', answer: 'horse', image: 'src/assets/images/card/cheval.svg' }
+    return { question: 'cheval', answer: 'horse', image: cheval }
   })
 
   onMounted(() => {

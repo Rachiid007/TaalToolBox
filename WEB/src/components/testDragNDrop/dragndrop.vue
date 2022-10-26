@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { onMounted, reactive, ref } from 'vue'
   import jsonfile from '@/assets/levelData/dragndrop.json'
+  import form4 from '@/assets/images/form4.png'
   const background = ref()
   const wordList = ref()
 
@@ -118,7 +119,7 @@
         class="back"
       >
         <img
-          :src="state.backImage"
+          :src="form4"
           alt="image for the exercice"
         />
         <div
