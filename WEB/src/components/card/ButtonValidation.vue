@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { useCardStore } from '@/stores/card'
   import { useShowStore } from '@/stores/show'
-  import {useWeightCardStore} from "@/stores/weightCard"
+  import { useWeightCardStore } from '@/stores/weightCard'
   import { computed } from 'vue'
   const store = useCardStore()
   const storeShow = useShowStore()
@@ -11,7 +11,7 @@
     store.removeCorrectCard(store.getActualCard())
 
     //Remplacer la carte par une autre
-    const card = computed(() => store.getCard())
+    const card = computed(() => store.getCurrentDeck())
     store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
     // console.log(store.getActualCard())
 
@@ -26,7 +26,7 @@
 
   const falseAnswer = () => {
     //Remplacer la carte par une autre
-    const card = computed(() => store.getCard())
+    const card = computed(() => store.getCurrentDeck())
     store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
     // console.log(store.getActualCard())
 

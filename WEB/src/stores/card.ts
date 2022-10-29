@@ -1,49 +1,53 @@
-import { flashcardsData } from './../data/animalFlashcards'
 import { defineStore } from 'pinia'
 import { ref, reactive, computed } from 'vue'
 import type Flashcard from '@/types/Flashcard'
-
-interface FlashCardData {
-  id: number
-  word: string
-  translation: string
-  image: string
-  category: string
-}
-
+import FlashcardService from '@/services/FlashcardService'
+import { flashcardsData } from '@/data/animalFlashcards'
 export const useCardStore = defineStore('card', () => {
   const remaining = ref(0)
   const totalQuestions = ref(0)
   const goodAnswers = ref(0)
   const almostGoodAnswers = ref(0)
   const wrongAnswers = ref(0)
-  const tableCard = ref<FlashCardData[]>([])
-  let actualCard = ref<FlashCardData>({ id: 0, word: '', translation: '', image: '', category: '' }) //{ id: 0, question: '', translation: '', image: '', category: '' }
+  const tableCard = reactive<Flashcard[]>([])
+  let actualCard = ref<Flashcard>({ id: 0, word: '', translation: '', image: '' }) //{ id: 0, question: '', translation: '', image: '', category: '' }
   const goodAnswerPercentage = computed(() => {
     return Math.round((goodAnswers.value / totalQuestions.value) * 100)
   })
-  const setCard = (card: number) => {
+  const setCard = async (card: number) => {
+    //get all card in db
+    const flashcards = await getCard()
+
+    //Insert necessary number of card
     if (totalQuestions.value) {
-      for (let i = 0; i < card; i++) {
-        tableCard.value.push(flashcardsData[i])
+      if (flashcards.length > 5) {
+        for (let i = 0; i < card; i++) {
+          tableCard.push(flashcards[i])
+        }
+        // return { tableCard }
+      } else {
+        for (let i = 0; i < card; i++) {
+          tableCard.push(flashcardsData[i])
+        }
       }
-      console.log(tableCard.value)
-      // return { tableCard }
     }
   }
-  const removeCorrectCard = (card: FlashCardData) => {
-    tableCard.value.splice(tableCard.value.indexOf(card), 1)
-    console.log(tableCard)
+  const removeCorrectCard = (card: Flashcard) => {
+    tableCard.splice(tableCard.indexOf(card), 1)
   }
-  const setActualCard = (card: FlashCardData) => {
+  const setActualCard = (card: Flashcard) => {
     actualCard.value = card
   }
-  const getActualCard = (): FlashCardData => {
+  const getActualCard = (): Flashcard => {
     return actualCard.value
   }
-  const getCard = () => {
-    console.log(tableCard.value)
-    return tableCard.value
+  const getCard = async (): Promise<Flashcard[]> => {
+    const flashcardRequest = await FlashcardService.getFlashcards()
+    return flashcardRequest.data
+  }
+
+  const getCurrentDeck = () => {
+    return tableCard
   }
 
   // POUR LE NOMBRE DE CARTE RESTANT
@@ -101,7 +105,7 @@ export const useCardStore = defineStore('card', () => {
     setRemaining,
     setCard,
     setActualCard,
-    getCard,
+    getCurrentDeck,
     getActualCard,
     removeCorrectCard,
     decrement,
