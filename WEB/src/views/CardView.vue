@@ -14,7 +14,7 @@
   const showButtonReveal = computed(() => storeShow.getShowButtonReveal())
   const showAnswer = computed(() => storeShow.getShowAnswer())
   const remaining = computed(() => store.remaining)
-  const card = computed(() => store.getCard())
+  const card = computed(() => store.getCurrentDeck())
 </script>
 <!-- Est ce qu'il yaura ou pas un header -->
 <template>
@@ -36,7 +36,9 @@
         </div>
         <!-- <div class="answer">inside answer card</div> -->
         <div class="validation-button">
-          <ButtonValidation v-show="showButtonValidation" />
+          <Suspense>
+            <ButtonValidation v-show="showButtonValidation" />
+          </Suspense>
         </div>
       </div>
       <div></div>

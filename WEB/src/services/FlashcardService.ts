@@ -36,7 +36,7 @@ export default {
     //   console.log(key[0] + ', ' + key[1])
     // }
 
-    return apiClient.post('/cards', { word: flashcard.word, translation: flashcard.translation })
+    return apiClient.post('/cards', flashcard)
   },
   // putFlashcard(flashcard: Flashcard) {
   //   return apiClient.put('/cards/' + flashcard.id, flashcard)

@@ -24,170 +24,184 @@ import crocodile from '@/assets/images/card/crocodile.svg'
 
 export const flashcardsData: {
   id: number
-  question: string
-  answer: string
+  word: string
+  translation: string
   image: string
   category: string
 }[] = [
   {
     id: 1,
-    question: 'Cheval',
-    answer: 'Horse',
+    word: 'Cheval',
+    translation: 'Horse',
     image: cheval,
     category: 'animals'
   },
   {
     id: 2,
-    question: 'Chien',
-    answer: 'Dog',
+    word: 'Chien',
+    translation: 'Dog',
     image: chien,
     category: 'animals'
   },
   {
     id: 3,
-    question: 'Chat',
-    answer: 'Cat',
+    word: 'Chat',
+    translation: 'Cat',
     image: chat,
     category: 'animals'
   },
   {
     id: 4,
-    question: 'Cochon',
-    answer: 'Pig',
+    word: 'Cochon',
+    translation: 'Pig',
     category: 'animals',
     image: cochon
   },
   {
     id: 5,
-    question: 'Mouton',
-    answer: 'Sheep',
+    word: 'Mouton',
+    translation: 'Sheep',
     category: 'animals',
     image: mouton
   },
   {
     id: 6,
-    question: 'Canard',
-    answer: 'Duck',
+    word: 'Canard',
+    translation: 'Duck',
     category: 'animals',
     image: canard
   },
   {
     id: 7,
-    question: 'Lapin',
-    answer: 'Rabbit',
+    word: 'Lapin',
+    translation: 'Rabbit',
     category: 'animals',
     image: lapin
   },
   {
     id: 8,
-    question: 'Poulet',
-    answer: 'Chicken',
+    word: 'Poulet',
+    translation: 'Chicken',
     category: 'animals',
     image: poulet
   },
   {
     id: 9,
-    question: 'Vache',
-    answer: 'Cow',
+    word: 'Vache',
+    translation: 'Cow',
     category: 'animals',
     image: vache
   },
   {
     id: 10,
-    question: 'Oiseau',
-    answer: 'Bird',
+    word: 'Oiseau',
+    translation: 'Bird',
     category: 'animals',
     image: oiseau
   },
   {
     id: 11,
-    question: 'Poisson',
-    answer: 'Fish',
+    word: 'Poisson',
+    translation: 'Fish',
     category: 'animals',
     image: poisson
   },
   {
     id: 12,
-    question: 'Serpent',
-    answer: 'Snake',
+    word: 'Serpent',
+    translation: 'Snake',
     category: 'animals',
     image: serpent
   },
   {
     id: 13,
-    question: 'Lion',
-    answer: 'Lion',
+    word: 'Lion',
+    translation: 'Lion',
     category: 'animals',
     image: lion
   },
   {
     id: 14,
-    question: 'Tigre',
-    answer: 'Tiger',
+    word: 'Tigre',
+    translation: 'Tiger',
     category: 'animals',
     image: tigre
   },
   {
     id: 15,
-    question: 'Eléphant',
-    answer: 'Elephant',
+    word: 'Eléphant',
+    translation: 'Elephant',
     category: 'animals',
     image: elephant
   },
   {
     id: 16,
-    question: 'Singe',
-    answer: 'Monkey',
+    word: 'Singe',
+    translation: 'Monkey',
     category: 'animals',
     image: singe
   },
   {
     id: 17,
-    question: 'Girafe',
-    answer: 'Giraffe',
+    word: 'Girafe',
+    translation: 'Giraffe',
     category: 'animals',
     image: girafe
   },
   {
     id: 18,
-    question: 'Zèbre',
-    answer: 'Zebra',
+    word: 'Zèbre',
+    translation: 'Zebra',
     category: 'animals',
     image: zebre
   },
   {
     id: 19,
-    question: 'Chèvre',
-    answer: 'Goat',
+    word: 'Chèvre',
+    translation: 'Goat',
     category: 'animals',
     image: chevre
   },
   {
     id: 20,
-    question: 'Kangourou',
-    answer: 'Kangaroo',
+    word: 'Kangourou',
+    translation: 'Kangaroo',
     category: 'animals',
     image: kangourou
   },
   {
     id: 21,
-    question: 'Panda',
-    answer: 'Panda',
+    word: 'Panda',
+    translation: 'Panda',
     category: 'animals',
     image: panda
   },
   {
     id: 22,
-    question: 'Ours',
-    answer: 'Bear',
+    word: 'Ours',
+    translation: 'Bear',
     category: 'animals',
     image: ours
   },
   {
     id: 23,
-    question: 'Crocodile',
-    answer: 'Crocodile',
+    word: 'Crocodile',
+    translation: 'Crocodile',
     category: 'animals',
     image: crocodile
   }
+  // {
+  //   id: 24,
+  //   word: 'Hippopotame',
+  //   translation: 'Hippopotamus',
+  //   category: 'animals',
+  //   image: hip
+  // },
+  // {
+  //   id: 25,
+  //   word: 'Rhinocéros',
+  //   translation: 'Rhino',
+  //   category: 'animals',
+  //   image: 'src/assets/images/card/rhinocéros.svg'
+  // }
 ]

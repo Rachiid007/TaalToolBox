@@ -2,9 +2,10 @@ const MIME_TYPES = {
   'image/jpeg': 'jpg',
   'image/jpg': 'jpg',
   'image/png': 'png',
+  'image/svg+xml': 'svg',
 };
 export const imageFileFilter = (req, file, callback) => {
-  if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+  if (!file.originalname.match(/\.(jpg|jpeg|png|svg)$/)) {
     return callback(new Error('Only image files are allowed!'), false);
   }
   callback(null, true);
