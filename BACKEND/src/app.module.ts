@@ -20,6 +20,10 @@ import { AnswerModule } from './answer/answer.module';
 import { LearnDomainModule } from './learn_domain/learn_domain.module';
 // import { RewardModule } from './reward/reward.module';
 import { WeightCardModule } from './weight_card/weight_card.module';
+import { UsersController } from './users/users.controller';
+import { UsersService } from './users/users.service';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './Auth/auth/auth.module';
 
 @Module({
   imports: [
@@ -29,7 +33,7 @@ import { WeightCardModule } from './weight_card/weight_card.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5432,
+      port: 5433,
       username: 'postgres',
       password: process.env.POSTGRES_PASSWORD,
       database: 'language_project',
@@ -49,9 +53,11 @@ import { WeightCardModule } from './weight_card/weight_card.module';
     LearnDomainModule,
     WeightCardModule,
     // RewardModule,
+    UsersModule,
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, UsersController],
+  providers: [AppService, UsersService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

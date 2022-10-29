@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import logo from '@/assets/logo/logo.svg'
-
   const showTab = () => {
     document.getElementsByClassName('rightTab')[0].style.display = 'inline'
   }
@@ -18,7 +16,7 @@
       <div class="logo_img">
         <img
           class="main_logo"
-          :src="logo"
+          src="@/assets/logo/logo.svg"
         />
       </div>
       <p class="logo_title">TaalToolBox</p>
@@ -31,13 +29,13 @@
       >
       <router-link
         class="tabs_element"
-        to="/map"
+        to="/"
         >Carte</router-link
       >
       <router-link
-        to="/add-card"
+        to="/"
         class="tabs_element"
-        >Ajouter</router-link
+        >Jeux</router-link
       >
       <router-link
         to="/"
@@ -45,7 +43,6 @@
         >Classe</router-link
       >
     </div>
-
     <router-link
       class="conreg"
       to="/login"
@@ -82,9 +79,9 @@
           >Carte</router-link
         >
         <router-link
-          to="/add-card"
+          to="/"
           class="right_tab_element"
-          >Ajouter</router-link
+          >Jeux</router-link
         >
         <router-link
           to="/"
@@ -92,7 +89,7 @@
           >Classe</router-link
         >
         <router-link
-          to="/"
+          to="/login"
           style="margin-top: 60vh; align-self: center"
           >Se connecter</router-link
         >
@@ -104,17 +101,18 @@
 <style scoped>
   .main {
     width: 100vw;
-    max-width: 1500px;
+    max-width: 1600px;
     border-bottom: 1px solid #707070;
     height: 70px;
     display: flex;
+    flex-direction: row;
+    justify-content: left;
     align-items: center;
     gap: 10%;
     font-family: NotoSans-Regular;
-    position: sticky;
+    position: fixed;
     background-color: white;
     z-index: 3;
-    margin: 0 auto;
   }
   .logo {
     height: 100%;
@@ -143,7 +141,7 @@
     text-align: left;
     /* outline: 1px solid blue; */
     color: #026b30;
-    font-family: Didno;
+    font-family: Segoe print;
   }
   .tabs {
     display: flex;
@@ -213,7 +211,6 @@
   .hamburger {
     display: none;
   }
-
   .build {
     width: 30px;
     height: 0px;
@@ -302,7 +299,6 @@
   .right_tab_element:hover::after {
     width: 10px;
   }
-
   @media (min-width: 701px) {
     .rightTab {
       visibility: hidden;

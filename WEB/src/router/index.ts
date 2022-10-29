@@ -10,6 +10,8 @@ import addCardFormView from '@/views/add-card/addCardFormView.vue'
 import choiceHowToAddCardView from '@/views/add-card/choiceHowToAddCardView.vue'
 import DadTestView from '@/views/DadTestView.vue'
 import DadTestTeacherView from '@/views/DadTestTeacherView.vue'
+import Login from '@/views/Login.vue'
+import SignIn from '@/views/SignIn.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,8 +40,8 @@ const router = createRouter({
       path: '/Profile',
       name: 'Profile',
       component: ProfileView
-      },
-      {
+    },
+    {
       path: '/add-card',
       name: 'add-card',
       component: choiceHowToAddCardView
@@ -63,6 +65,16 @@ const router = createRouter({
       path: '/dadteachertest',
       name: 'dadteachertest',
       component: DadTestTeacherView
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/signIn',
+      name: 'signIn',
+      component: SignIn
     }
   ]
 })
