@@ -11,6 +11,8 @@ import { RoleModule } from './role/role.module';
 import { AnswerModule } from './answer/answer.module';
 import { LearnDomainModule } from './learn_domain/learn_domain.module';
 import { RewardModule } from './reward/reward.module';
+import { UserResponseModule } from './user_response/user_response.module';
+import { ProficiencyModule } from './proficiency/proficiency.module';
 
 @Module({
   imports: [
@@ -33,6 +35,8 @@ import { RewardModule } from './reward/reward.module';
       autoLoadEntities: true,
       synchronize: true, // ! SET TO FALSE IN PRODUCTION
     }),
+    UserResponseModule,
+    ProficiencyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
