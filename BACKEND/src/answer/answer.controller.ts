@@ -29,12 +29,12 @@ export class AnswerController {
   findOne(@Param('id') id: string) {
     return this.answerService.findOne(+id);
   }
-
+/*
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAnswerDto: UpdateAnswerDto) {
     return this.answerService.update(+id, updateAnswerDto);
   }
-
+*/
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.answerService.remove(+id);

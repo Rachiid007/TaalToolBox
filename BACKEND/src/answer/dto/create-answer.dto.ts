@@ -1,9 +1,12 @@
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
 export class CreateAnswerDto {
   @IsString()
-  readonly name: string;
+  name: string;
 
   @IsString()
-  readonly description?: string;
+  description?: string;
+
+  @IsNumber()
+  weight: number;
 }
