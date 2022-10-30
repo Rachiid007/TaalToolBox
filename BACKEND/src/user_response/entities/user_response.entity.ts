@@ -24,4 +24,7 @@ export class UserResponse {
 
   @Column()
   id_answer: number;
+
+  @Column()
+  id_proficiency: number;
 }
