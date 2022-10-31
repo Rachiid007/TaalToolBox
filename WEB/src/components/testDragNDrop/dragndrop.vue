@@ -1,6 +1,11 @@
 <script setup lang="ts">
   import { onMounted, reactive, ref } from 'vue'
-  import jsonfile from '@/assets/levelData/dragndrop.json'
+  // import jsonfile from '@/assets/levelData/dragndrop.json'
+  import { useDadLevels } from '@/stores/dadLevels'
+
+  const store = useDadLevels()
+  const dataFromStore = store.getData()
+
   const background = ref()
   const wordList = ref()
 
@@ -13,7 +18,7 @@
   const goodFields = ref(0)
   // On stocke le nombre de mauvaises réponses
   const badFields = ref(0)
-  const state = reactive(jsonfile[1])
+  const state = reactive(dataFromStore[store.getLevel()])
 
   // fonction appellée quand on drop le mot dans la div
   const dropped = (event: any) => {
@@ -79,6 +84,8 @@
   onMounted(() => {
     //La fonction shuffle va prendre les mots qui sont dans l'objet principal (state) et les mettres dans un ordre aléatoire
     // CE CODE VIENS D INTERNET ET DOIS ENCORE ETRE COMPRIS
+
+    console.log(store.getData())
     const shuffle = () => {
       let array = []
       for (let item in state.fields) {

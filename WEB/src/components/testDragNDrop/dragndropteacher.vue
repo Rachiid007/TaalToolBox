@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { ref } from 'vue'
-  import jsonfile from '@/assets/levelData/dragndrop.json'
+  import { useDadLevels } from '@/stores/dadLevels'
   //   const image = ref('')
   //   const file = ref(null)
   //   const changeImage = (e: any) => {
@@ -8,6 +8,11 @@
   //     file.value = e.target.file[0]
   //     console.log(image.value, file.value)
   //   }
+  const store = useDadLevels()
+  const addDataToStore = (data: any) => {
+    store.addData(data)
+    console.log(store.getData())
+  }
 
   const numberField = ref(0)
   const fieldList = ref([])
@@ -233,12 +238,8 @@
           payload.fields.push(currentDivInfo)
         }
       }
-
-      let baseDatas = jsonfile
-      baseDatas.push(payload)
-      let finalDatas = JSON.stringify(baseDatas)
       dataSended.value = true
-      console.log(finalDatas)
+      addDataToStore(payload)
     }
   }
 </script>
@@ -403,6 +404,7 @@
       </div>
     </div>
   </div>
+  <RouterLink to="/dadselector">Test</RouterLink>
 </template>
 <style scoped>
   .main {
