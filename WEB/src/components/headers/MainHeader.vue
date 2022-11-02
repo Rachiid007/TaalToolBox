@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import logo from '@/assets/logo/logo.svg'
+
   const showTab = () => {
     document.getElementsByClassName('rightTab')[0].style.display = 'inline'
   }
@@ -16,7 +18,7 @@
       <div class="logo_img">
         <img
           class="main_logo"
-          src="@/assets/logo/logo.svg"
+          :src="logo"
         />
       </div>
       <p class="logo_title">TaalToolBox</p>
@@ -43,7 +45,12 @@
         >Classe</router-link
       >
     </div>
-    <div class="conreg">S'inscrire/Se connecter</div>
+
+    <router-link
+      class="conreg"
+      to="/login"
+      >Se connecter</router-link
+    >
     <div
       class="hamburger"
       @click="showTab"
@@ -87,7 +94,7 @@
         <router-link
           to="/"
           style="margin-top: 60vh; align-self: center"
-          >Se connecter/S'inscrire</router-link
+          >Se connecter</router-link
         >
       </div>
     </div>
@@ -97,18 +104,17 @@
 <style scoped>
   .main {
     width: 100vw;
-    max-width: 1600px;
+    max-width: 1500px;
     border-bottom: 1px solid #707070;
     height: 70px;
     display: flex;
-    flex-direction: row;
-    justify-content: left;
     align-items: center;
     gap: 10%;
     font-family: NotoSans-Regular;
-    position: fixed;
+    position: sticky;
     background-color: white;
     z-index: 3;
+    margin: 0 auto;
   }
   .logo {
     height: 100%;

@@ -1,11 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
+import { Request } from 'express';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as XLSX from 'xlsx';
 import { Card } from './entities/card.entity';
-
+import multer from 'multer';
 @Injectable()
 export class CardsService {
   constructor(
@@ -67,6 +69,23 @@ export class CardsService {
   async remove(id: number) {
     const card = await this.findOne(id);
     return this.cardsRepository.remove(card);
+  }
+
+  async uploadImage(req, file) {
+    //req -- id est dans req.body.id
+    const card_id = req.body.id
+
+    const url_prev = `${req.protocol}://${req.get('host')}`;
+
+    //creation de l'url vers l'image
+    const url_image = `${url_prev}/public/images/cards/${req.file.filename}`
+
+
+    // console.log(file);
+    // console.log(url_image)
+    // console.log(card_id)
+    
+    this.update(parseInt(card_id), {image : url_image})
   }
 
   async uploadFile(file) {

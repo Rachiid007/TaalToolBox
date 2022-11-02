@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional } from 'class-validator';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
@@ -17,9 +18,10 @@ export class Card {
   @Column()
   translation: string;
 
+
   @ApiProperty({
     description: 'Path of the image',
   })
-  @Column()
-  image?: string;
+  @Column({ default: null })
+  image: string;
 }

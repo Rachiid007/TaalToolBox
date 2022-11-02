@@ -15,6 +15,8 @@
   import { Control, defaults as defaultControls } from 'ol/control'
   import { defaults as defaultInteractions } from 'ol/interaction.js'
 
+  import geoCoderSvg from '@/assets/images/geo-marker.svg'
+
   //
   //
   // TODO: Essayer de régler ce typeScript de m*rde
@@ -29,6 +31,8 @@
   const levelName = ref('')
   // Cette ref permet de stocker le numéro du niveau à ensuite afficher
   const levelNumber = ref(1)
+  // Pour changer le type de partie on utilise gamemode
+  const gamemode = ref(1)
   // Ici on stocke les différents points que l'on va afficher sur la map
   const pointState = reactive({
     points: [
@@ -82,7 +86,7 @@
         anchor: [10, 10],
         anchorXUnits: 'pixels',
         anchorYUnits: 'pixels',
-        src: 'src/assets/images/geo-marker.svg',
+        src: geoCoderSvg,
         displacement: [-5, 25],
         scale: 1
       })
@@ -95,25 +99,6 @@
         }
       }
     })
-    // const ISJFeature = new Feature({
-    //   geometry: new Point(fromLonLat([4.39064, 50.83756])), //[4.39064, 50.83756],
-    //   name: 'Institut Saint Joseph',
-    //   id: 1
-    // })
-    // const IDBFeature = new Feature({
-    //   geometry: new Point(fromLonLat([4.42537, 50.83826])), //[4.39064, 50.83756]
-    //   name: 'Institut Don Bosco',
-    //   id: 2
-    // })
-    // const ICMFeature = new Feature({
-    //   geometry: new Point(fromLonLat([4.37576, 50.87358])), //[4.39064, 50.83756]
-    //   name: 'Institut Cardinal Mercier',
-    //   id: 3
-    // })
-
-    // ISJFeature.setStyle(iconStyle)
-    // IDBFeature.setStyle(iconStyle)
-    // ICMFeature.setStyle(iconStyle)
 
     const map = new Map({
       layers: [
@@ -180,6 +165,16 @@
         setNotActive()
       })
     })
+    map.on('pointermove', function (evt) {
+      var touche = this.forEachFeatureAtPixel(evt.pixel, function () {
+        return true
+      })
+      if (touche) {
+        this.getTargetElement().style.cursor = 'pointer'
+      } else {
+        this.getTargetElement().style.cursor = ''
+      }
+    })
   })
 </script>
 
@@ -194,28 +189,68 @@
     id="popup"
     class="ol-popup"
   >
+    <div
+      class="swipper_right"
+      @click="gamemode = 0"
+    >
+      {{ '>' }}
+    </div>
+    <div
+      class="swipper_left"
+      @click="gamemode = 1"
+    >
+      {{ '<' }}
+    </div>
     <a
       href="#"
       id="popup-closer"
       class="ol-popup-closer"
       @click="onCloserClick"
     ></a>
-    <div
-      id="popup-content"
-      class="popup-content"
-    >
-      <p class="popup-title">{{ levelName }}</p>
-      <p class="level-details">Quizz Flashcard {{ levelNumber }}</p>
-      <img
-        class="gamemode-image"
-        src="@/assets/logo/flashcards.svg"
-        alt="flashcards gamemode logo"
-      />
-      <router-link
-        to="/CardNumberSelector"
-        class="playButton"
-        >PLAY</router-link
-      >
+    <div class="popup-content">
+      <Transition>
+        <div
+          id="popup-content"
+          class="sub_content"
+          v-if="gamemode"
+        >
+          <p class="popup-title">{{ levelName }}</p>
+          <p class="level-details">Quizz Flashcard {{ levelNumber }}</p>
+          <img
+            class="gamemode-image"
+            src="@/assets/logo/flashcards.svg"
+            alt="flashcards gamemode logo"
+          />
+          <router-link
+            to="/CardNumberSelector"
+            class="playButton"
+            >PLAY</router-link
+          >
+        </div>
+        <div
+          class="sub_content"
+          v-else
+        >
+          <p
+            class="popup-title"
+            id="levelDad"
+          >
+            {{ levelName }}
+          </p>
+          <p class="level-details">Quizz Drag&Learn {{ levelNumber }}</p>
+          <img
+            class="gamemode-image-dal"
+            src="@/assets/logo/dalcard.svg"
+            alt="flashcards gamemode logo"
+          />
+          <router-link
+            to="/dadtest"
+            class="playButton"
+            id="buttonDad"
+            >PLAY</router-link
+          >
+        </div>
+      </Transition>
     </div>
   </div>
 </template>
@@ -233,7 +268,8 @@
     border: 1px solid #cccccc;
     bottom: 12px;
     left: -50px;
-    min-width: 200px;
+    min-width: 220px;
+    min-height: 300px;
     display: flex;
     flex-direction: column;
     gap: 45px;
@@ -261,12 +297,21 @@
     margin-left: -11px;
   }
   .popup-content {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    overflow: hidden;
+    /* border: 1px solid red; */
+  }
+  .sub_content {
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    /* position: absolute; */
   }
+
   .popup-title {
     color: #026b30;
     font-size: 1.2em;
@@ -282,6 +327,15 @@
     width: 50%;
     height: auto;
   }
+  .gamemode-image-dal {
+    margin-top: 15px;
+    width: 47%;
+    padding: 10px 5px 10px 5px;
+    border: 2px solid grey;
+    border-radius: 5px;
+    height: auto;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 6px 0px;
+  }
   .playButton {
     margin-top: 15px;
     background: #026b30;
@@ -289,6 +343,24 @@
     border-radius: 5px;
     padding: 5px;
     width: 80%;
+  }
+  .swipper_right {
+    position: absolute;
+    left: 85%;
+    top: 42%;
+    font-weight: bold;
+    font-size: 1.5em;
+    z-index: 5;
+    cursor: pointer;
+  }
+  .swipper_left {
+    position: absolute;
+    right: 85%;
+    top: 42%;
+    font-weight: bold;
+    font-size: 1.5em;
+    z-index: 5;
+    cursor: pointer;
   }
   .ol-popup-closer {
     text-decoration: none;
@@ -298,5 +370,21 @@
   }
   .ol-popup-closer:after {
     content: '✖';
+  }
+  #buttonDad {
+    background-color: #00307e;
+  }
+  #levelDad {
+    color: #00307e;
+  }
+  .v-enter-from {
+    opacity: 0;
+    display: none;
+  }
+  .v-enter-active {
+    opacity: 0;
+  }
+  .v-enter-to {
+    opacity: 0;
   }
 </style>

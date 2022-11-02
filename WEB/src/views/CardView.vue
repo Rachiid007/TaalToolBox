@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import Card from '@/components/card/Card.vue'
+  import MainCard from '@/components/card/MainCard.vue'
   import RemainingCard from '@/components/card/RemainingCard.vue'
   import ButtonValidation from '@/components/card/ButtonValidation.vue'
   import TheHeader from '@/components/TheHeader.vue'
@@ -14,23 +14,31 @@
   const showButtonReveal = computed(() => storeShow.getShowButtonReveal())
   const showAnswer = computed(() => storeShow.getShowAnswer())
   const remaining = computed(() => store.remaining)
-  const card = computed(() => store.getCard())
+  const card = computed(() => store.getCurrentDeck())
 </script>
 <!-- Est ce qu'il yaura ou pas un header -->
 <template>
   <div class="big-container">
-    <TheHeader />
+    <TheHeader>
+      <div class="title">
+        <p class="activity_name">Flash</p>
+        <img src="@/assets/logo/lightning.svg" />
+        <p class="activity_name">Cards</p>
+      </div>
+    </TheHeader>
     <div class="container">
       <div class="rest-card">
         <RemainingCard />
       </div>
       <div class="play-card">
         <div class="card">
-          <Card />
+          <MainCard />
         </div>
         <!-- <div class="answer">inside answer card</div> -->
         <div class="validation-button">
-          <ButtonValidation v-show="showButtonValidation" />
+          <Suspense>
+            <ButtonValidation v-show="showButtonValidation" />
+          </Suspense>
         </div>
       </div>
       <div></div>
@@ -44,7 +52,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     margin: 0 auto;
     width: 100%;
     height: 100vh;
@@ -79,8 +87,7 @@
   .card {
     /* border: solid red 1px; */
     margin-left: 16%;
-    padding: 5px ;
-  
+    padding: 5px;
   }
   @media (max-width: 768px) {
     .container {
@@ -94,5 +101,21 @@
     .play-card {
       flex: 0.8;
     }
+  }
+  .title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .activity_name {
+    font-family: 'Courier New', monospace;
+    font-family: microsan_A;
+    color: #026b30;
+    font-weight: 500;
+    font-size: 2em;
+  }
+  img {
+    height: auto;
+    width: 10%;
   }
 </style>

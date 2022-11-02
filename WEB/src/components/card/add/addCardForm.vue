@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { reactive } from 'vue'
+  import { reactive, ref } from 'vue'
   import { useCardStore } from '@/stores/card'
   import type Flashcard from '@/types/Flashcard'
 
@@ -18,21 +18,36 @@
     dataForm.image = e.target.files[0]
   }
 
-  const onSubmit = () => {
-    const copyDataForm: Flashcard = {
-      id: dataForm.id,
-      word: dataForm.word,
-      translation: dataForm.translation,
-      image: dataForm.image,
-      url: dataForm.url
+  const handleFormValidation = () => {
+    if (dataForm.word === '' || dataForm.translation === '' || dataForm.image === null) {
+      return false
+    } else {
+      return true
     }
+  }
 
-    store.addFlashcard(copyDataForm)
-    dataForm.id++
-    dataForm.word = ''
-    dataForm.translation = ''
-    dataForm.image = null
-    dataForm.url = ''
+  const showErrorMessage = ref(false)
+
+  const onSubmit = () => {
+    if (handleFormValidation()) {
+      const copyDataForm: Flashcard = {
+        id: dataForm.id,
+        word: dataForm.word,
+        translation: dataForm.translation,
+        image: dataForm.image,
+        url: dataForm.url
+      }
+
+      store.addFlashcard(copyDataForm)
+      dataForm.id++
+      dataForm.word = ''
+      dataForm.translation = ''
+      dataForm.image = null
+      dataForm.url = ''
+      showErrorMessage.value = false
+    } else {
+      showErrorMessage.value = true
+    }
   }
 </script>
 
@@ -68,6 +83,12 @@
       />
       <button type="submit">Ajouter</button>
     </form>
+    <p
+      class="error-msg"
+      v-show="showErrorMessage"
+    >
+      Veuillez remplir tous les champs
+    </p>
 
     <div class="preview">
       <img
@@ -137,5 +158,11 @@
 
   button:hover {
     background-color: #000;
+  }
+
+  .error-msg {
+    color: red;
+    font-weight: bold;
+    text-align: center;
   }
 </style>
