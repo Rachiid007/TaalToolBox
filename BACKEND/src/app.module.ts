@@ -18,6 +18,8 @@ import { LangModule } from './lang/lang.module';
 import { RoleModule } from './role/role.module';
 import { AnswerModule } from './answer/answer.module';
 import { LearnDomainModule } from './learn_domain/learn_domain.module';
+import { UserResponseModule } from './user_response/user_response.module';
+import { ProficiencyModule } from './proficiency/proficiency.module';
 // import { RewardModule } from './reward/reward.module';
 import { WeightCardModule } from './weight_card/weight_card.module';
 import { UsersController } from './users/users.controller';
@@ -28,8 +30,6 @@ import { AuthModule } from './Auth/auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    ActivitiesModule,
-    CardsModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -46,6 +46,9 @@ import { AuthModule } from './Auth/auth/auth.module';
     MulterModule.register({
       dest: join(__dirname, '..', 'public/images'),
     }),
+    ActivitiesModule,
+    CardsModule,
+    LangModule,
     CategoryModule,
     LangModule,
     RoleModule,
@@ -55,6 +58,8 @@ import { AuthModule } from './Auth/auth/auth.module';
     // RewardModule,
     UsersModule,
     AuthModule,
+    UserResponseModule,
+    ProficiencyModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, UsersService],

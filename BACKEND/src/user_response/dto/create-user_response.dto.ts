@@ -1,27 +1,25 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-export class Card {
+export class CreateUserResponseDto {
   @ApiProperty({
-    description: 'Unique card ID',
+    description: 'Unique response ID',
   })
   @PrimaryGeneratedColumn()
-  id: number;
+  id_user_response: number;
 
   @ApiProperty()
   @Column()
-  word: string;
+  date_response: Date;
 
   @ApiProperty()
   @Column()
-  translation: string;
-
+  id_user: number;
 
   @ApiProperty({
-    description: 'Path of the image',
+    description: 'id_answer',
   })
-  @Column({ default: null })
-  image: string;
+  @Column()
+  id_answer: number;
 }

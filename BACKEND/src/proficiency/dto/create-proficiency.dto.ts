@@ -1,6 +1,6 @@
 import { IsNumber, IsString } from 'class-validator';
 
-export class CreateAnswerDto {
+export class CreateProficiencyDto {
   @IsString()
   name: string;
 

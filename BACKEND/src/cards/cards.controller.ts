@@ -17,6 +17,7 @@ import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiParam } from '@nestjs/swagger';
 import { Cards } from './cards.decorator';
 // import { diskStorage } from 'multer';
 
@@ -35,8 +36,29 @@ export class CardsController {
   }
 
   @Get(':id')
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'Should be an id of a card that exists in the database',
+    type: Number,
+  })
   findOne(@Param('id') id: string) {
     return this.cardsService.findOne(+id);
+  }
+
+  @Get(':id_user/:nbrcards')
+  @ApiParam({
+    name: 'id_user',
+    required: true,
+    description:
+      'Should be an id of a user that exists in the database and has an active session',
+    type: Number,
+  })
+  findMany(
+    @Param('id_user') id_user: number,
+    @Param('nbrcards') nbrcards: number,
+  ) {
+    return this.cardsService.findMany(+id_user, +nbrcards);
   }
 
   @Patch(':id')
