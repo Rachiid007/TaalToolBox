@@ -2,12 +2,16 @@
   import { onMounted, reactive, ref } from 'vue'
   // import jsonfile from '@/assets/levelData/dragndrop.json'
   import { useDadLevels } from '@/stores/dadLevels'
+  import { RouterLink } from 'vue-router'
 
   const store = useDadLevels()
   const dataFromStore = store.getData()
 
   const background = ref()
   const wordList = ref()
+
+  // On utilise cette ref pour stocker un boolean qui nous indique si l'utilisateur est sur un mobile ou pas
+  const isNotMobile = ref(false)
 
   // Cette ref est utilisée pour stocker la liste de mots rangée d'une manière aléatoire
   const wordsToGen = ref([])
@@ -81,6 +85,18 @@
     score.value = localScore
   }
 
+  let mobileNav = false
+
+  //On regarde si l'utilisateur est sur un mobile ou pas grace à son os
+  if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/iPhone/i)) {
+    mobileNav = true
+  }
+
+  //On regarde si l'utilisateur est sur un mobile ou pas grace à l'option touch screen
+  'ontouchstart' in document.documentElement || mobileNav
+    ? (isNotMobile.value = false)
+    : (isNotMobile.value = true)
+
   onMounted(() => {
     //La fonction shuffle va prendre les mots qui sont dans l'objet principal (state) et les mettres dans un ordre aléatoire
     // CE CODE VIENS D INTERNET ET DOIS ENCORE ETRE COMPRIS
@@ -118,6 +134,7 @@
       class="playground"
       :ondrop="dropped"
       :ondragover="draggedOver"
+      v-if="isNotMobile"
     >
       <div
         ref="background"
@@ -181,6 +198,18 @@
           </div>
         </div>
       </div>
+    </div>
+    <div
+      v-else
+      class="mobileOn"
+    >
+      <p class="sadFace">😢</p>
+      Désoler, cette version de Drag&Learn n'est pas accessible en version mobile.
+      <RouterLink
+        to="/"
+        class="backToHome"
+        >Retrour à l'acceuil</RouterLink
+      >
     </div>
   </div>
 </template>
@@ -334,5 +363,31 @@
   }
   .badAnswers {
     color: red;
+  }
+
+  .mobileOn {
+    margin-top: 25px;
+    display: flex;
+    max-width: 100%;
+    width: 95%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1;
+    font-size: 1.8em;
+    text-align: center;
+    color: #00307e;
+  }
+  .sadFace {
+    font-size: 3.2em;
+  }
+  .backToHome {
+    background: #00307e;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 30px;
   }
 </style>

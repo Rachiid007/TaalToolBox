@@ -11,6 +11,7 @@ import choiceHowToAddCardView from '@/views/add-card/choiceHowToAddCardView.vue'
 import DadTestView from '@/views/DadTestView.vue'
 import DadTestTeacherView from '@/views/DadTestTeacherView.vue'
 import LevelSelectorView from '@/views/DadSelector.vue'
+import DadTestMobileView from '@/views/DadTestMobileView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -69,6 +70,11 @@ const router = createRouter({
       path: '/dadselector',
       name: 'dadlevelselector',
       component: LevelSelectorView
+    },
+    {
+      path: '/dadtestmobile',
+      name: 'dadtestmobile',
+      component: DadTestMobileView
     }
   ]
 })

@@ -426,7 +426,7 @@
     /* width: 100%; */
     flex-direction: row;
     /* outline: 1px solid red; */
-    gap: 45px;
+    gap: 5%;
     z-index: 1;
   }
   .back {

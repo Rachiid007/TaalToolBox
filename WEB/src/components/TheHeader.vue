@@ -11,7 +11,9 @@
       />
       <p class="comeBackP">Accueil</p>
     </RouterLink>
-    <slot></slot>
+    <div class="imageLogo">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -80,5 +82,18 @@
     width: 0%;
     left: -50%;
     transition: 0.5s ease;
+  }
+
+  @media (max-width: 600px) {
+    .main {
+      gap: 15%;
+    }
+    .comeBack {
+      position: relative;
+    }
+    .imageLogo {
+      padding-right: 15px;
+      /* align-items: flex-end; */
+    }
   }
 </style>

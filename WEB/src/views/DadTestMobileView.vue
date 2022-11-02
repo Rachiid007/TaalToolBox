@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import Dragndrop from '@/components/testDragNDrop/dragndrop.vue'
+  import DragndropMobile from '@/components/testDragNDrop/dragndropmobile.vue'
   import TheHeader from '@/components/TheHeader.vue'
   import { ref } from 'vue'
 
@@ -31,7 +31,7 @@
           />
         </div>
       </TheHeader>
-      <Dragndrop />
+      <DragndropMobile />
     </div>
   </div>
 </template>
@@ -49,7 +49,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    width: fit-content;
   }
   .headerLogo {
     height: 40px;
@@ -126,6 +126,18 @@
     }
     100% {
       width: 0%;
+    }
+  }
+  @media (max-width: 600px) {
+    .loadingLogo {
+      border: 2px solid grey;
+      padding: 10px 2px 10px 2px;
+      border-radius: 10px;
+      height: auto;
+      width: 12%;
+      background-color: white;
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 6px 0px;
+      animation: fadeIn 1.5s ease 0s;
     }
   }
 </style>
