@@ -14,24 +14,38 @@ export const useCardStore = defineStore('card', () => {
   const goodAnswerPercentage = computed(() => {
     return Math.round((goodAnswers.value / totalQuestions.value) * 100)
   })
-  const setCard = async (card: number) => {
-    //get all card in db
-    const flashcards = await getCard()
 
-    //Insert necessary number of card
-    if (totalQuestions.value) {
-      if (flashcards.length > 5) {
-        for (let i = 0; i < card; i++) {
-          tableCard.push(flashcards[i])
-        }
-        // return { tableCard }
-      } else {
-        for (let i = 0; i < card; i++) {
-          tableCard.push(flashcardsData[i])
-        }
-      }
-    }
+  //Get all card in DB
+  const getCard = async (): Promise<Flashcard[]> => {
+    const flashcardRequest = await FlashcardService.getFlashcards()
+    return flashcardRequest.data
   }
+
+  //Take a cardNumber  of card in a random position inside the flashcardTable table
+  const shuffledCard = (flashcardTable: Flashcard[], cardNumber: number) => {
+    // unsort table
+    const shuffled = [...flashcardTable].sort(() => 0.5 - Math.random())
+
+    //push card(number) item
+    tableCard.push(...shuffled.slice(0, cardNumber))
+  }
+  const setCard = async (card: number) => {
+    //TODO Need to check connexion before getCard in other to go faster
+
+    getCard()
+      .then((data) => {
+        if (totalQuestions.value) {
+          //If we have the number of card in DB else take card in front
+          data.length >= card ? shuffledCard(data, card) : shuffledCard(flashcardsData, card)
+        }
+      })
+      .catch((err) => {
+        // Take card in front or display some message
+        shuffledCard(flashcardsData, card)
+      })
+  }
+
+  // If user choose the correct card remove it to the deck
   const removeCorrectCard = (card: Flashcard) => {
     tableCard.splice(tableCard.indexOf(card), 1)
   }
@@ -40,10 +54,6 @@ export const useCardStore = defineStore('card', () => {
   }
   const getActualCard = (): Flashcard => {
     return actualCard.value
-  }
-  const getCard = async (): Promise<Flashcard[]> => {
-    const flashcardRequest = await FlashcardService.getFlashcards()
-    return flashcardRequest.data
   }
 
   const getCurrentDeck = () => {
