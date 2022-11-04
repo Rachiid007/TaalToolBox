@@ -5,7 +5,7 @@
   const isThereAnyActivitySelected = ref(false)
 
   const listActivities = [
-    {
+    { 
       activity_name: 'FlashCards',
       url: '/src/assets/logo/flashcards.svg',
       description:
@@ -51,7 +51,13 @@
         </div>
       </div>
       <div class="description">
-        <div class="descrTitle">Type sélectionné:</div>
+        <div 
+        v-if = isThereAnyActivitySelected
+        class="descrTitle"
+        >  
+        Type sélectionné: 
+      </div>
+      <div v-else class="descrTitle"> Choisissez l'activité en cliquant sur la carte ! </div>
         <div
           class="actiName"
           v-show="isThereAnyActivitySelected"
@@ -79,7 +85,7 @@
 </template>
 <style scoped>
   .main {
-    gap: 50px;
+    gap: 5vh;
     padding-top: 75px;
     display: flex;
     flex-direction: column;
@@ -97,8 +103,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20%;
-    height: 48%;
+    width: 17vh;
+    height: 22vh;
     border: 2px solid grey;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.1) 0px 8px 10px;
@@ -121,7 +127,7 @@
   .content {
     gap: 5%;
     width: 90%;
-    height: 70%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     /* align-items: center; */
@@ -135,31 +141,36 @@
     /* align-items: flex-start; */
     border: 2px grey solid;
     border-radius: 5px;
-    width: 60%;
+    /* width: 100vh;
+    height: 68vh; */
+    width: 100%;
+    height: 90%;
     padding: 20px;
   }
 
   .descrTitle {
+    padding-bottom: 2%;
     color: green;
-    font-size: 1.4em;
+    font-size: 2.6vh;
+    display: contents;
   }
 
   .description {
     border: solid 2px grey;
     color: grey;
-    /* width: 20%; */
-    font-size: 1.1em;
     border-radius: 5px;
-    padding: 10px 10px;
-    width: 22%;
-    height: 100%;
+    padding: 2% 2%;
+    /* width: 35vh;
+    height: 68vh; */
+    width: 30%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
+    gap: 2%;
   }
   .actiName {
-    font-size: 1.4em;
+    font-size: 3vh;
     color: grey;
     font-weight: bold;
   }
@@ -173,7 +184,7 @@
     padding: 8px 12px;
     text-align: center;
     display: inline-block;
-    font-size: 16px;
+    font-size: 2vh;
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 5px;
@@ -181,6 +192,7 @@
   .textDescrip {
     text-align: center;
     font-style: italic;
+    font-size: 2.3vh;
     /* font-family:monospace; */
   }
   .logo {
