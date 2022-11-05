@@ -302,14 +302,15 @@
     left: 28%; */
     background-color: white;
     overflow: hidden;
-    p {
-      color: #707070;
-      width: 100%;
-      font-size: 100%;
-      font-weight: bold;
-      border: none;
-      background: white;
-    }
+  }
+
+  .container p {
+    color: #707070;
+    width: 100%;
+    font-size: 100%;
+    font-weight: bold;
+    border: none;
+    background: white;
   }
   .text {
     font-family: 'NotoSans-Regular';

@@ -12,7 +12,7 @@
       <p class="comeBackP">Accueil</p>
     </RouterLink>
     <div class="imageLogo">
-      <slot></slot>
+      <slot class="gamemodeImage"></slot>
     </div>
   </div>
 </template>
@@ -84,12 +84,19 @@
     transition: 0.5s ease;
   }
 
+  .imageLogo {
+    width: 35%;
+    display: flex;
+    justify-content: center;
+  }
+
   @media (max-width: 600px) {
     .main {
       gap: 15%;
     }
     .comeBack {
       position: relative;
+      padding-left: 0;
     }
     .imageLogo {
       padding-right: 15px;

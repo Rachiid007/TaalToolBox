@@ -31,7 +31,7 @@
     justify-content: center;
   }
   .headerLogo {
-    height: 40px;
+    height: 60px;
     width: auto;
   }
 </style>
