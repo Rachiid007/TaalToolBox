@@ -1,13 +1,16 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Classroom } from './class.entity';
-import { Role } from './roles.entity';
-
+// import { Classroom } from './class.entity';
+import { Role } from '../../role/entities/role.entity';
+import { Schoolclass } from 'src/schoolclass/entities/schoolclass.entity';
+import { Lang } from '../../lang/entities/lang.entity';
 @Entity()
 export class Users {
   @PrimaryGeneratedColumn('increment')
@@ -29,13 +32,18 @@ export class Users {
   birthdate: string;
 
   @Column('character varying')
-  telephone: string;
+  phone: string;
 
+  // Make a relation with table role and Schoolclass
   @ManyToMany(() => Role)
   @JoinTable()
   role: Role[];
 
-  @ManyToMany(() => Classroom)
+  @ManyToMany(() => Schoolclass)
   @JoinTable()
-  class: Classroom[];
+  schoolclass: Schoolclass[];
+
+  @OneToOne(() => Lang)
+  @JoinColumn()
+  lang: Lang;
 }

@@ -25,7 +25,9 @@ import { WeightCardModule } from './weight_card/weight_card.module';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
-import { AuthModule } from './Auth/auth/auth.module';
+// import { AuthModule } from './Auth/auth/auth.module';
+import { SchoolclassModule } from './schoolclass/schoolclass.module';
+import { SchoolModule } from './school/school.module';
 
 @Module({
   imports: [
@@ -56,8 +58,10 @@ import { AuthModule } from './Auth/auth/auth.module';
     LearnDomainModule,
     WeightCardModule,
     // RewardModule,
+    SchoolModule,
+    SchoolclassModule,
     UsersModule,
-    AuthModule,
+    // AuthModule,
     UserResponseModule,
     ProficiencyModule,
   ],
