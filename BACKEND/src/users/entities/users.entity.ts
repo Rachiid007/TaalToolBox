@@ -4,13 +4,14 @@ import {
   JoinColumn,
   JoinTable,
   ManyToMany,
-  OneToOne,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-// import { Classroom } from './class.entity';
 import { Role } from '../../role/entities/role.entity';
 import { Schoolclass } from 'src/schoolclass/entities/schoolclass.entity';
 import { Lang } from '../../lang/entities/lang.entity';
+import { UserResponseCard } from 'src/user_response_card/entities/user_response_card.entity';
 @Entity()
 export class Users {
   @PrimaryGeneratedColumn('increment')
@@ -34,7 +35,6 @@ export class Users {
   @Column('character varying')
   phone: string;
 
-  // Make a relation with table role and Schoolclass
   @ManyToMany(() => Role)
   @JoinTable()
   role: Role[];
@@ -43,7 +43,11 @@ export class Users {
   @JoinTable()
   schoolclass: Schoolclass[];
 
-  @OneToOne(() => Lang)
-  @JoinColumn()
+  //chaque utilisateur possède une seule langue
+  @ManyToOne(() => Lang, (lang) => lang.users)
   lang: Lang;
+
+  //Une utilisateur peut avoir plusieurs solution
+  @OneToMany(() => UserResponseCard, (response_card) => response_card.user)
+  response_card: UserResponseCard[];
 }

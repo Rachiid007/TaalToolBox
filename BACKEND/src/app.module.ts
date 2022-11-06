@@ -28,6 +28,7 @@ import { UsersModule } from './users/users.module';
 // import { AuthModule } from './Auth/auth/auth.module';
 import { SchoolclassModule } from './schoolclass/schoolclass.module';
 import { SchoolModule } from './school/school.module';
+import { UserResponseCardModule } from './user_response_card/user_response_card.module';
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import { SchoolModule } from './school/school.module';
     // AuthModule,
     UserResponseModule,
     ProficiencyModule,
+    UserResponseCardModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, UsersService],
