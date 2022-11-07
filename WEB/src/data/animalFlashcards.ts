@@ -1,183 +1,207 @@
+import cheval from '@/assets/images/card/cheval.svg'
+import chien from '@/assets/images/card/chien.svg'
+import chat from '@/assets/images/card/chat.svg'
+import cochon from '@/assets/images/card/cochon.svg'
+import mouton from '@/assets/images/card/mouton.svg'
+import canard from '@/assets/images/card/canard.svg'
+import lapin from '@/assets/images/card/lapin.svg'
+import poulet from '@/assets/images/card/poulet.svg'
+import vache from '@/assets/images/card/vache.svg'
+import oiseau from '@/assets/images/card/oiseau.svg'
+import poisson from '@/assets/images/card/poisson.svg'
+import serpent from '@/assets/images/card/serpent.svg'
+import lion from '@/assets/images/card/lion.svg'
+import tigre from '@/assets/images/card/tigre.svg'
+import elephant from '@/assets/images/card/elephant.svg'
+import singe from '@/assets/images/card/singe.svg'
+import girafe from '@/assets/images/card/girafe.svg'
+import zebre from '@/assets/images/card/zebre.svg'
+import chevre from '@/assets/images/card/chevre.svg'
+import kangourou from '@/assets/images/card/kangourou.svg'
+import panda from '@/assets/images/card/panda.svg'
+import ours from '@/assets/images/card/ours.svg'
+import crocodile from '@/assets/images/card/crocodile.svg'
+
 export const flashcardsData: {
   id: number
-  question: string
-  answer: string
+  word: string
+  translation: string
   image: string
   category: string
 }[] = [
   {
     id: 1,
-    question: 'Cheval',
-    answer: 'Horse',
-    image: 'src/assets/images/card/cheval.svg',
+    word: 'Cheval',
+    translation: 'Horse',
+    image: cheval,
     category: 'animals'
   },
   {
     id: 2,
-    question: 'Chien',
-    answer: 'Dog',
-    image: 'src/assets/images/card/chien.svg',
+    word: 'Chien',
+    translation: 'Dog',
+    image: chien,
     category: 'animals'
   },
   {
     id: 3,
-    question: 'Chat',
-    answer: 'Cat',
-    image: 'src/assets/images/card/chat.svg',
+    word: 'Chat',
+    translation: 'Cat',
+    image: chat,
     category: 'animals'
   },
   {
     id: 4,
-    question: 'Cochon',
-    answer: 'Pig',
+    word: 'Cochon',
+    translation: 'Pig',
     category: 'animals',
-    image: 'src/assets/images/card/cochon.svg'
+    image: cochon
   },
   {
     id: 5,
-    question: 'Mouton',
-    answer: 'Sheep',
+    word: 'Mouton',
+    translation: 'Sheep',
     category: 'animals',
-    image: 'src/assets/images/card/mouton.svg'
+    image: mouton
   },
   {
     id: 6,
-    question: 'Canard',
-    answer: 'Duck',
+    word: 'Canard',
+    translation: 'Duck',
     category: 'animals',
-    image: 'src/assets/images/card/canard.svg'
+    image: canard
   },
   {
     id: 7,
-    question: 'Lapin',
-    answer: 'Rabbit',
+    word: 'Lapin',
+    translation: 'Rabbit',
     category: 'animals',
-    image: 'src/assets/images/card/lapin.svg'
+    image: lapin
   },
   {
     id: 8,
-    question: 'Poulet',
-    answer: 'Chicken',
+    word: 'Poulet',
+    translation: 'Chicken',
     category: 'animals',
-    image: 'src/assets/images/card/poulet.svg'
+    image: poulet
   },
   {
     id: 9,
-    question: 'Vache',
-    answer: 'Cow',
+    word: 'Vache',
+    translation: 'Cow',
     category: 'animals',
-    image: 'src/assets/images/card/vache.svg'
+    image: vache
   },
   {
     id: 10,
-    question: 'Oiseau',
-    answer: 'Bird',
+    word: 'Oiseau',
+    translation: 'Bird',
     category: 'animals',
-    image: 'src/assets/images/card/oiseau.svg'
+    image: oiseau
   },
   {
     id: 11,
-    question: 'Poisson',
-    answer: 'Fish',
+    word: 'Poisson',
+    translation: 'Fish',
     category: 'animals',
-    image: 'src/assets/images/card/poisson.svg'
+    image: poisson
   },
   {
     id: 12,
-    question: 'Serpent',
-    answer: 'Snake',
+    word: 'Serpent',
+    translation: 'Snake',
     category: 'animals',
-    image: 'src/assets/images/card/serpent.svg'
+    image: serpent
   },
   {
     id: 13,
-    question: 'Lion',
-    answer: 'Lion',
+    word: 'Lion',
+    translation: 'Lion',
     category: 'animals',
-    image: 'src/assets/images/card/lion.svg'
+    image: lion
   },
   {
     id: 14,
-    question: 'Tigre',
-    answer: 'Tiger',
+    word: 'Tigre',
+    translation: 'Tiger',
     category: 'animals',
-    image: 'src/assets/images/card/tigre.svg'
+    image: tigre
   },
   {
     id: 15,
-    question: 'Eléphant',
-    answer: 'Elephant',
+    word: 'Eléphant',
+    translation: 'Elephant',
     category: 'animals',
-    image: 'src/assets/images/card/éléphant.svg'
+    image: elephant
   },
   {
     id: 16,
-    question: 'Singe',
-    answer: 'Monkey',
+    word: 'Singe',
+    translation: 'Monkey',
     category: 'animals',
-    image: 'src/assets/images/card/singe.svg'
+    image: singe
   },
   {
     id: 17,
-    question: 'Girafe',
-    answer: 'Giraffe',
+    word: 'Girafe',
+    translation: 'Giraffe',
     category: 'animals',
-    image: 'src/assets/images/card/girafe.svg'
+    image: girafe
   },
   {
     id: 18,
-    question: 'Zèbre',
-    answer: 'Zebra',
+    word: 'Zèbre',
+    translation: 'Zebra',
     category: 'animals',
-    image: 'src/assets/images/card/zèbre.svg'
+    image: zebre
   },
   {
     id: 19,
-    question: 'Chèvre',
-    answer: 'Goat',
+    word: 'Chèvre',
+    translation: 'Goat',
     category: 'animals',
-    image: 'src/assets/images/card/chèvre.svg'
+    image: chevre
   },
   {
     id: 20,
-    question: 'Kangourou',
-    answer: 'Kangaroo',
+    word: 'Kangourou',
+    translation: 'Kangaroo',
     category: 'animals',
-    image: 'src/assets/images/card/kangourou.svg'
+    image: kangourou
   },
   {
     id: 21,
-    question: 'Panda',
-    answer: 'Panda',
+    word: 'Panda',
+    translation: 'Panda',
     category: 'animals',
-    image: 'src/assets/images/card/panda.svg'
+    image: panda
   },
   {
     id: 22,
-    question: 'Ours',
-    answer: 'Bear',
+    word: 'Ours',
+    translation: 'Bear',
     category: 'animals',
-    image: 'src/assets/images/card/ours.svg'
+    image: ours
   },
   {
     id: 23,
-    question: 'Crocodile',
-    answer: 'Crocodile',
+    word: 'Crocodile',
+    translation: 'Crocodile',
     category: 'animals',
-    image: 'src/assets/images/card/crocodile.svg'
-  },
-  {
-    id: 24,
-    question: 'Hippopotame',
-    answer: 'Hippopotamus',
-    category: 'animals',
-    image: 'src/assets/images/card/hippopotame.svg'
-  },
-  {
-    id: 25,
-    question: 'Rhinocéros',
-    answer: 'Rhino',
-    category: 'animals',
-    image: 'src/assets/images/card/rhinocéros.svg'
+    image: crocodile
   }
+  // {
+  //   id: 24,
+  //   word: 'Hippopotame',
+  //   translation: 'Hippopotamus',
+  //   category: 'animals',
+  //   image: hip
+  // },
+  // {
+  //   id: 25,
+  //   word: 'Rhinocéros',
+  //   translation: 'Rhino',
+  //   category: 'animals',
+  //   image: 'src/assets/images/card/rhinocéros.svg'
+  // }
 ]

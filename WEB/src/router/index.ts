@@ -1,14 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 // import HomeView from '../views/HomeView.vue'
-
 import MapView from '@/views/MapView.vue'
 import CardView from '@/views/CardView.vue'
 import CardNumberSelector from '@/views/CardNumberSelector.vue'
 import HomeView from '@/views/HomeView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 import addCardExcelView from '@/views/add-card/addCardExcelView.vue'
 import addCardFormView from '@/views/add-card/addCardFormView.vue'
 import choiceHowToAddCardView from '@/views/add-card/choiceHowToAddCardView.vue'
 import ChooseActivities from '@/views/chooseActivities/MultipleActivities.vue'
+import DadTestView from '@/views/DadTestView.vue'
+import DadTestTeacherView from '@/views/DadTestTeacherView.vue'
+import Login from '@/views/Login.vue'
+import SignIn from '@/views/SignIn.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +38,11 @@ const router = createRouter({
       component: CardNumberSelector
     },
     {
+      path: '/Profile',
+      name: 'Profile',
+      component: ProfileView
+    },
+    {
       path: '/add-card',
       name: 'add-card',
       component: choiceHowToAddCardView
@@ -52,6 +61,26 @@ const router = createRouter({
       path: '/chooseActivities',
       name: 'chooseActivities',
       component: ChooseActivities
+     },
+     {
+      path: '/dadtest',
+      name: 'dadtest',
+      component: DadTestView
+    },
+    {
+      path: '/dadteachertest',
+      name: 'dadteachertest',
+      component: DadTestTeacherView
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/signIn',
+      name: 'signIn',
+      component: SignIn
     }
   ]
 })

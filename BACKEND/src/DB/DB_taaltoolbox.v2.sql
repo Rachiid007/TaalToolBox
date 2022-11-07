@@ -1,3 +1,5 @@
+-- permet de conserver sa dernière session/activité
+
 CREATE SCHEMA IF NOT EXISTS "Taaltoolbox"
     AUTHORIZATION postgres;
 
@@ -64,10 +66,10 @@ CREATE TABLE "Taaltoolbox"."card" (
   description varchar(120) NOT NULL,
   img varchar(45) , 
   sound varchar(45),
-  lang char(2),										-- EN,NL,FR
   id_activity int, 
   id_learn_domain int, 
-  id_category int, 								
+  id_category int, 
+  lang char(2),										-- EN,NL,FR
   PRIMARY KEY (id_card),
   FOREIGN KEY (id_activity)
   REFERENCES "Taaltoolbox"."activity" (id_activity),
@@ -77,10 +79,6 @@ CREATE TABLE "Taaltoolbox"."card" (
   REFERENCES "Taaltoolbox"."category" (id_category)
 );
 
-CONSTRAINT id_role FOREIGN KEY (id_role)
-        REFERENCES "Taaltoolbox".role (id_role) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 
 drop table "Taaltoolbox"."users"
 CREATE TABLE "Taaltoolbox"."users" (
@@ -89,12 +87,18 @@ CREATE TABLE "Taaltoolbox"."users" (
   surname varchar(45) NOT NULL,
   birth_date DATE,
   password varchar (45) NOT NULL,
+  starting_point varchar (45), 
   id_role int NOT NULL,
+  id_lang int NOT NULL,
   PRIMARY KEY (id_user),
   CONSTRAINT id_role FOREIGN KEY (id_role)
         REFERENCES "Taaltoolbox".role (id_role) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION 
+        ON DELETE NO ACTION,
+CONSTRAINT id_lang FOREIGN KEY (id_lang)
+        REFERENCES "Taaltoolbox".lang (id_lang) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION 		
 );
 
 -- ex: le user 1 repond "j'ai trouvé" à la carte 1
@@ -111,20 +115,23 @@ CREATE TABLE "Taaltoolbox"."user_response" (
   FOREIGN KEY (id_answer)
   REFERENCES "Taaltoolbox"."answer" (id_answer),
   FOREIGN KEY (id_user)
-  REFERENCES "Taaltoolbox"."users" (id_user)   
+  REFERENCES "Taaltoolbox"."users" (id_user)  MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION     
 );
 
 -- permet de conserver sa dernière session/activité
+drop table "Taaltoolbox"."current_session" ;
 CREATE TABLE "Taaltoolbox"."current_session" (
   id_session SERIAL,
   date_session DATE,
   id_user INT,
   id_card INT,
   PRIMARY KEY (id_session),
-  FOREIGN KEY (id_user)
-  REFERENCES "Taaltoolbox"."users" (id_user),
-  FOREIGN KEY (id_card)
-  REFERENCES "Taaltoolbox"."card" (id_card)  
+  CONSTRAINT id_user FOREIGN KEY (id_user)
+        REFERENCES "Taaltoolbox".users (id_user),
+ CONSTRAINT id_card FOREIGN KEY (id_card)
+        REFERENCES "Taaltoolbox".card (id_card)   
 );
 
 
@@ -137,7 +144,19 @@ CREATE TABLE "Taaltoolbox"."progress" (
   id_user INT NOT NULL,
   PRIMARY KEY (id_progress),
   FOREIGN KEY (id_user)
-  REFERENCES "Taaltoolbox"."users" (id_user),
+  REFERENCES "Taaltoolbox"."users" (id_user) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
   FOREIGN KEY (id_reward)
-  REFERENCES "Taaltoolbox"."reward" (id_reward)      
+  REFERENCES "Taaltoolbox"."reward" (id_reward) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION        
 );
+
+	FOREIGN KEY (id_card)
+    REFERENCES "Taaltoolbox".card (id_card) 
+
+CONSTRAINT id_card FOREIGN KEY (id_card)
+        REFERENCES "Taaltoolbox".card (id_card) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION   

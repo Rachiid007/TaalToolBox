@@ -1,51 +1,63 @@
-import { flashcardsData } from './../data/animalFlashcards'
 import { defineStore } from 'pinia'
 import { ref, reactive, computed } from 'vue'
 import type Flashcard from '@/types/Flashcard'
-import type { Ref } from 'vue'
-// const animal = flashcardsData
-// console.log(animal)
-interface FlashCardData {
-  id: number
-  question: string
-  answer: string
-  image: string
-  category: string
-}
-
+import FlashcardService from '@/services/FlashcardService'
+import { flashcardsData } from '@/data/animalFlashcards'
 export const useCardStore = defineStore('card', () => {
   const remaining = ref(0)
   const totalQuestions = ref(0)
   const goodAnswers = ref(0)
   const almostGoodAnswers = ref(0)
   const wrongAnswers = ref(0)
-  const tableCard = ref<FlashCardData[]>([])
-  let actualCard = ref<FlashCardData>({ id: 0, question: '', answer: '', image: '', category: '' }) //{ id: 0, question: '', answer: '', image: '', category: '' }
+  const tableCard = reactive<Flashcard[]>([])
+  let actualCard = ref<Flashcard>({ id: 0, word: '', translation: '', image: '' }) //{ id: 0, question: '', translation: '', image: '', category: '' }
   const goodAnswerPercentage = computed(() => {
     return Math.round((goodAnswers.value / totalQuestions.value) * 100)
   })
-  const setCard = (card: number) => {
-    if (totalQuestions.value) {
-      for (let i = 0; i < card; i++) {
-        tableCard.value.push(flashcardsData[i])
-      }
-      console.log(tableCard.value)
-      // return { tableCard }
-    }
+
+  //Get all card in DB
+  const getCard = async (): Promise<Flashcard[]> => {
+    const flashcardRequest = await FlashcardService.getFlashcards()
+    return flashcardRequest.data
   }
-  const removeCorrectCard = (card: FlashCardData) => {
-    tableCard.value.splice(tableCard.value.indexOf(card), 1)
-    console.log(tableCard)
+
+  //Take a cardNumber  of card in a random position inside the flashcardTable table
+  const shuffledCard = (flashcardTable: Flashcard[], cardNumber: number) => {
+    // unsort table
+    const shuffled = [...flashcardTable].sort(() => 0.5 - Math.random())
+
+    //push card(number) item
+    tableCard.push(...shuffled.slice(0, cardNumber))
   }
-  const setActualCard = (card: FlashCardData) => {
+  const setCard = async (card: number) => {
+    //TODO Need to check connexion before getCard in other to go faster
+
+    getCard()
+      .then((data) => {
+        if (totalQuestions.value) {
+          //If we have the number of card in DB else take card in front
+          data.length >= card ? shuffledCard(data, card) : shuffledCard(flashcardsData, card)
+        }
+      })
+      .catch((err) => {
+        // Take card in front or display some message
+        shuffledCard(flashcardsData, card)
+      })
+  }
+
+  // If user choose the correct card remove it to the deck
+  const removeCorrectCard = (card: Flashcard) => {
+    tableCard.splice(tableCard.indexOf(card), 1)
+  }
+  const setActualCard = (card: Flashcard) => {
     actualCard.value = card
   }
-  const getActualCard = (): FlashCardData => {
+  const getActualCard = (): Flashcard => {
     return actualCard.value
   }
-  const getCard = () => {
-    console.log(tableCard.value)
-    return tableCard.value
+
+  const getCurrentDeck = () => {
+    return tableCard
   }
 
   // POUR LE NOMBRE DE CARTE RESTANT
@@ -77,6 +89,7 @@ export const useCardStore = defineStore('card', () => {
   const flashcardList = reactive([]) as Flashcard[]
 
   const addFlashcard = (flashcard: Flashcard) => {
+    console.log(flashcard)
     flashcardList.push(flashcard)
   }
 
@@ -102,7 +115,7 @@ export const useCardStore = defineStore('card', () => {
     setRemaining,
     setCard,
     setActualCard,
-    getCard,
+    getCurrentDeck,
     getActualCard,
     removeCorrectCard,
     decrement,

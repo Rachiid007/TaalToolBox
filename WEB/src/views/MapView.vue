@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Map from '../components/Map.vue'
+  import Map from '@/components/Map.vue'
 
   export default {
     name: 'App',

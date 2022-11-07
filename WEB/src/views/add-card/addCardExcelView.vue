@@ -1,4 +1,5 @@
 <template>
+  <MainHeader />
   <div>
     <FileDrop
       class="container-drop"
@@ -10,6 +11,8 @@
 <script setup lang="ts">
   import { defineAsyncComponent } from 'vue'
   import axios from 'axios'
+  import MainHeader from '@/components/headers/MainHeader.vue'
+
   const sendFileToNest = (file: File) => {
     const formData = new FormData()
     formData.append('file', file)

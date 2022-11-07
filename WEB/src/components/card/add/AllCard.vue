@@ -2,19 +2,21 @@
   import { useCardStore } from '@/stores/card'
   import LittleCard from '@/components/card/add/LittleCard.vue'
   import FlashcardService from '@/services/FlashcardService'
-
   const store = useCardStore()
-
   const sendToApi = () => {
-    store.flashcardList.forEach((flashcard) => {
-      FlashcardService.postFlashcard({
+    store.flashcardList.forEach(async (flashcard) => {
+      const flashcardRequest = await FlashcardService.postFlashcard({
         word: flashcard.word,
         translation: flashcard.translation
       })
+      // console.log(flashcardRequest.data)
+      const flashcardImageRequest = await FlashcardService.uploadImage({
+        id: flashcardRequest.data.id,
+        image: flashcard.image
+      })
+      console.log(flashcardImageRequest)
     })
-
     // ! TODO: send image to api
-
     store.flashcardList = []
   }
 </script>
@@ -63,7 +65,6 @@
     gap: 20px;
     outline: 1px solid gray;
   }
-
   .title {
     font-size: 1.5rem;
     font-weight: bold;
@@ -72,7 +73,6 @@
     color: white;
     width: 100%;
   }
-
   .container {
     display: flex;
     flex-wrap: wrap;
@@ -80,7 +80,6 @@
     height: auto;
     gap: 10px;
   }
-
   #notAdd {
     display: flex;
     justify-content: center;
@@ -89,18 +88,15 @@
     height: 100px;
     font-size: 1.5rem;
   }
-
   #emoji {
     font-size: 2.5rem;
   }
-
   .card {
     width: 150px;
     height: 200px;
     border: 1px solid black;
     border-radius: 10px;
   }
-
   .btn {
     display: flex;
     justify-content: center;
@@ -116,7 +112,6 @@
     width: max-content;
     height: 40px;
   }
-
   .btn:hover {
     background-color: #000;
   }

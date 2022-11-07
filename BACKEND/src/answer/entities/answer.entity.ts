@@ -10,4 +10,7 @@ export class Answer {
 
   @Column()
   description: string;
+
+  @Column()
+  weight: number;
 }

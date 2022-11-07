@@ -1,12 +1,12 @@
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class CreateCardDto {
   @IsString()
-  readonly word: string;
+  word: string;
 
   @IsString()
-  readonly translation: string;
+  translation: string;
 
-  @IsString()
-  readonly image?: string;
+  // @IsString()
+  // readonly image?: string;
 }

@@ -2,11 +2,7 @@
 
 <template>
   <div class="main">
-    <div class="title">
-      <p class="activity_name">Flash</p>
-      <img src="@/assets/logo/lightning.svg" />
-      <p class="activity_name">Cards</p>
-    </div>
+    <slot></slot>
   </div>
 </template>
 
@@ -20,21 +16,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  .title {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  .activity_name {
-    /* font-family: 'Courier New', monospace; */
-    font-family: microsan_A;
-    color: #026b30;
-    font-weight: 500;
-    font-size: 2em;
-  }
-  img {
-    height: auto;
-    width: 10%;
   }
 </style>
