@@ -324,8 +324,11 @@
   }
   .gamemode-image {
     margin-top: 15px;
+    border-radius: 5px;
+    padding: 35px 3px 35px 3px;
     width: 50%;
     height: auto;
+    border: 2px solid grey;
   }
   .gamemode-image-dal {
     margin-top: 15px;

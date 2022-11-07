@@ -35,7 +35,7 @@
         >Carte</router-link
       >
       <router-link
-        to="/add-card"
+        to="/chooseActivities"
         class="tabs_element"
         >Ajouter</router-link
       >

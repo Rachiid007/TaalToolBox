@@ -21,7 +21,7 @@
         "Activité dans laquelle l'étudiant doit trouver de mots et doit s'auto-évaluer. Les mots" +
         '            sont representé sous forme de carte. Un systeme de poids est mise en place pour que les' +
         "            cartes plus dure de l'élève réaparaissent le plus souvent.",
-      link:"/hello-World "
+      link:"/dadteachertest"
     }
   ]
 
@@ -85,19 +85,17 @@
 </template>
 <style scoped>
   .main {
-    gap: 5vh;
-    padding-top: 75px;
+    gap: 25px;
+    padding-top: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
-    width: 100%;
+    height: 100%;
+    width: 90%;
     max-width: 1600px;
   }
 
-  .title {
-    padding-top: 25px;
-  }
+ 
 
   .carte {
     display: flex;
@@ -126,7 +124,7 @@
   }
   .content {
     gap: 5%;
-    width: 90%;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: row;
@@ -144,14 +142,14 @@
     /* width: 100vh;
     height: 68vh; */
     width: 100%;
-    height: 90%;
+    height: 100%;
     padding: 20px;
   }
 
   .descrTitle {
     padding-bottom: 2%;
     color: green;
-    font-size: 2.6vh;
+    font-size: 150%;
     display: contents;
   }
 
@@ -163,14 +161,14 @@
     /* width: 35vh;
     height: 68vh; */
     width: 30%;
-    height: 90%;
+    height: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2%;
+    gap: 10px;
   }
   .actiName {
-    font-size: 3vh;
+    font-size: 150%;
     color: grey;
     font-weight: bold;
   }
@@ -184,7 +182,7 @@
     padding: 8px 12px;
     text-align: center;
     display: inline-block;
-    font-size: 2vh;
+    font-size: 20px;
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 5px;
@@ -192,7 +190,7 @@
   .textDescrip {
     text-align: center;
     font-style: italic;
-    font-size: 2.3vh;
+    font-size: 120%;
     /* font-family:monospace; */
   }
   .logo {
