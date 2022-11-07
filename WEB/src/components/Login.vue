@@ -71,7 +71,7 @@
 </template>
 
 <style scoped>
-  .container2 {
+ .container2 {
     padding: 38px;
   }
   .main {
@@ -145,7 +145,6 @@
   padding: 4px;
   margin-right: 100px;
 } */
-
   input::placeholder {
     color: #026b30;
   }
@@ -200,3 +199,4 @@
     background-color: #026b30;
   }
 </style>
+

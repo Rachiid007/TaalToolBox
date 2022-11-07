@@ -33,7 +33,7 @@ import { AuthModule } from './Auth/auth/auth.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5432,
+      port: 5433,
       username: 'postgres',
       password: process.env.POSTGRES_PASSWORD,
       database: 'language_project',
