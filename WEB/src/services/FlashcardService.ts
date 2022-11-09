@@ -1,20 +1,4 @@
-import axios from 'axios'
-
-const apiClient = axios.create({
-  baseURL: 'http://localhost:3000',
-  withCredentials: false,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  }
-})
-
-const apiClientForm = axios.create({
-  baseURL: 'http://localhost:3000',
-  headers: {
-    'Content-Type': 'multipart/form-data'
-  }
-})
+import { apiClient, apiClientForm } from './apiClient'
 
 interface Flashcard {
   word: string
