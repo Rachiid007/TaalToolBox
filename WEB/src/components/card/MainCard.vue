@@ -2,21 +2,21 @@
   import { useCardStore } from '@/stores/card'
   import { useShowStore } from '@/stores/show'
   import { ref, computed, onMounted, onUpdated, getCurrentInstance } from 'vue'
+  import cheval from '@/assets/images/card/cheval.svg'
+
   const store = useCardStore()
   const storeShow = useShowStore()
-  const showAnswer = computed(() => storeShow.getShowAnswer())
+
   //Get the number of card choose by user
-  const card = computed(() => store.getCard())
-  // console.log(card.value[0])
+  const card = computed(() => store.getCurrentDeck())
+
   //choose random card inside the user deck
-  console.log(showAnswer)
-  // const actualCard = computed(() => store.getActualCard())
   const actualCard = computed(() => {
     if (card.value.length > 0) {
       store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
       return store.getActualCard()
     }
-    return { question: 'cheval', answer: 'horse', image: 'src/assets/images/card/cheval.svg' }
+    return { id: 1, word: 'cheval', translation: 'horse', image: cheval }
   })
 
   onMounted(() => {
@@ -41,8 +41,8 @@
     <div class="card">
       <!-- Réponse de la carte avec une image éventuelle -->
       <div class="word-answer">
-        <p v-if="storeShow.getShowAnswer()">{{ actualCard.answer }}</p>
-        <p v-else>{{ actualCard.question }}</p>
+        <p v-if="storeShow.getShowAnswer()">{{ actualCard.translation }}</p>
+        <p v-else>{{ actualCard.word }}</p>
       </div>
       <div class="image-answer">
         <img

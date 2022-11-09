@@ -12,6 +12,8 @@ import DadTestView from '@/views/DadTestView.vue'
 import DadTestTeacherView from '@/views/DadTestTeacherView.vue'
 import LevelSelectorView from '@/views/DadSelector.vue'
 import DadTestMobileView from '@/views/DadTestMobileView.vue'
+import Login from '@/views/Login.vue'
+import SignIn from '@/views/SignIn.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -75,6 +77,16 @@ const router = createRouter({
       path: '/dadtestmobile',
       name: 'dadtestmobile',
       component: DadTestMobileView
+     },
+     {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/signIn',
+      name: 'signIn',
+      component: SignIn
     }
   ]
 })

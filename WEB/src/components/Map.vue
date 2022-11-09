@@ -15,6 +15,8 @@
   import { Control, defaults as defaultControls } from 'ol/control'
   import { defaults as defaultInteractions } from 'ol/interaction.js'
 
+  import geoCoderSvg from '@/assets/images/geo-marker.svg'
+
   //
   //
   // TODO: Essayer de régler ce typeScript de m*rde
@@ -104,7 +106,7 @@
         anchor: [10, 10],
         anchorXUnits: 'pixels',
         anchorYUnits: 'pixels',
-        src: 'src/assets/images/geo-marker.svg',
+        src: geoCoderSvg,
         displacement: [-5, 25],
         scale: 1
       })

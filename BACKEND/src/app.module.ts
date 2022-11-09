@@ -18,17 +18,18 @@ import { LangModule } from './lang/lang.module';
 import { RoleModule } from './role/role.module';
 import { AnswerModule } from './answer/answer.module';
 import { LearnDomainModule } from './learn_domain/learn_domain.module';
-<<<<<<< HEAD
+import { UserResponseModule } from './user_response/user_response.module';
+import { ProficiencyModule } from './proficiency/proficiency.module';
 // import { RewardModule } from './reward/reward.module';
-=======
-import { RewardModule } from './reward/reward.module';
->>>>>>> a4dbfc2 ( [ADD] reward)
+import { WeightCardModule } from './weight_card/weight_card.module';
+import { UsersController } from './users/users.controller';
+import { UsersService } from './users/users.service';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './Auth/auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    ActivitiesModule,
-    CardsModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -45,19 +46,23 @@ import { RewardModule } from './reward/reward.module';
     MulterModule.register({
       dest: join(__dirname, '..', 'public/images'),
     }),
+    ActivitiesModule,
+    CardsModule,
+    LangModule,
     CategoryModule,
     LangModule,
     RoleModule,
     AnswerModule,
     LearnDomainModule,
-<<<<<<< HEAD
+    WeightCardModule,
     // RewardModule,
-=======
-    RewardModule,
->>>>>>> a4dbfc2 ( [ADD] reward)
+    UsersModule,
+    AuthModule,
+    UserResponseModule,
+    ProficiencyModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, UsersController],
+  providers: [AppService, UsersService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

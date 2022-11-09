@@ -65,7 +65,7 @@
         "rightValue": "Allemand"
       }
     ],
-    "backImage": "/src/assets/images/form3.png"
+    "backImage": "@/assets/images/form3.png"
   },
   {
     "fields": [

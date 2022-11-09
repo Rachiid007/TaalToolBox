@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import Card from '@/components/card/Card.vue'
+  import MainCard from '@/components/card/MainCard.vue'
   import RemainingCard from '@/components/card/RemainingCard.vue'
   import ButtonValidation from '@/components/card/ButtonValidation.vue'
   import TheHeader from '@/components/TheHeader.vue'
@@ -14,7 +14,7 @@
   const showButtonReveal = computed(() => storeShow.getShowButtonReveal())
   const showAnswer = computed(() => storeShow.getShowAnswer())
   const remaining = computed(() => store.remaining)
-  const card = computed(() => store.getCard())
+  const card = computed(() => store.getCurrentDeck())
 </script>
 <!-- Est ce qu'il yaura ou pas un header -->
 <template>
@@ -32,11 +32,13 @@
       </div>
       <div class="play-card">
         <div class="card">
-          <Card />
+          <MainCard />
         </div>
         <!-- <div class="answer">inside answer card</div> -->
         <div class="validation-button">
-          <ButtonValidation v-show="showButtonValidation" />
+          <Suspense>
+            <ButtonValidation v-show="showButtonValidation" />
+          </Suspense>
         </div>
       </div>
       <div></div>
