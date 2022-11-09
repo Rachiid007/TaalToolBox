@@ -2,12 +2,12 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Role {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column()
+  @Column('character varying')
   name: string;
 
-  @Column()
+  @Column('character varying', { default: null })
   description: string;
 }
