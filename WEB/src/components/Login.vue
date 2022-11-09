@@ -1,7 +1,10 @@
 <script setup lang="ts">
   import { reactive } from 'vue'
   import logo from '@/assets/logo/logo.svg'
+  import { useUserStore } from '@/stores/user'
+  import { computed } from 'vue'
 
+  const store = useUserStore()
   const state = reactive({
     mail: '',
     password: ''
@@ -10,7 +13,7 @@
     error: ''
   })
 
-  const checkFields = () => {
+  const checkFields = async () => {
     for (let key in state) {
       if (state[key] == '') {
         manage.error = 'Veuillez compléter tous les champs !'
@@ -18,7 +21,7 @@
         return 1
       }
       //TODO: Envoyer les données au back pour tenter connecter
-      console.log('Envoyer les données au back pour tenter de se connecter')
+      const user = await store.getUser(state.mail, state.password)
     }
   }
 </script>

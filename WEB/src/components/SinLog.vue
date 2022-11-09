@@ -2,7 +2,9 @@
   import Login from '@/components/Login.vue'
   import SignIn from '@/components/SignIn.vue'
   import { ref, reactive } from 'vue'
+  import { useUserStore } from '@/stores/user';
 
+  const store = useUserStore()
   const state = reactive({ connection: 'connection1', inscription: 'inscription1' })
   const showConnection = ref(true)
 
