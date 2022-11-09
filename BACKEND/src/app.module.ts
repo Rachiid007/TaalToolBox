@@ -20,8 +20,6 @@ import { LearnDomainModule } from './learn_domain/learn_domain.module';
 import { ProficiencyModule } from './proficiency/proficiency.module';
 // import { RewardModule } from './reward/reward.module';
 import { WeightCardModule } from './weight_card/weight_card.module';
-import { UsersController } from './users/users.controller';
-import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
 // import { AuthModule } from './Auth/auth/auth.module';
 import { SchoolclassModule } from './schoolclass/schoolclass.module';
@@ -44,6 +42,7 @@ import { ActivityModule } from './activity/activity.module';
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
+      serveRoot: '/',
     }),
     MulterModule.register({
       dest: join(__dirname, '..', 'public/images'),
@@ -65,20 +64,13 @@ import { ActivityModule } from './activity/activity.module';
     UserResponseCardModule,
     ActivityModule,
   ],
-  controllers: [AppController, UsersController],
-  providers: [AppService, UsersService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(/**Middleware function
-       */)
-      .exclude(
-        { path: 'cards', method: RequestMethod.GET },
-        { path: 'cards', method: RequestMethod.PATCH },
-        { path: 'cards', method: RequestMethod.DELETE },
-        'cards/(.*)',
-      )
+      .apply()
       .forRoutes('cards/upload');
   }
 }
