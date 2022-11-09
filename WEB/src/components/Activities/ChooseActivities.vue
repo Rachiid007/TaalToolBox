@@ -84,25 +84,27 @@
   </div>
 </template>
 <style scoped>
-  .main {
-    gap: 25px;
-    padding-top: 25px;
+.main {
+    gap: 4%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
-    width: 90%;
+    height: 100vh;
+    width: 100%;
     max-width: 1600px;
   }
 
- 
+  .title {
+    padding-top: 20px;
+  }
 
   .carte {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 17vh;
-    height: 22vh;
+    width: auto;
+    height: 50%;
+    flex: 0.2;
     border: 2px solid grey;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.1) 0px 8px 10px;
@@ -117,17 +119,18 @@
     transform: scale(1.1);
   }
   .text {
-    font-size: 1.8em;
+    font-size: 28px;
     color: grey;
     border-bottom: 2px solid green;
     font-weight: 600;
   }
   .content {
     gap: 5%;
-    width: 100%;
+    width: 90%;
     height: 100%;
     display: flex;
     flex-direction: row;
+    max-height: 700px;
     /* align-items: center; */
     justify-content: center;
   }
@@ -142,14 +145,14 @@
     /* width: 100vh;
     height: 68vh; */
     width: 100%;
-    height: 100%;
+    height: 80%;
     padding: 20px;
   }
 
   .descrTitle {
     padding-bottom: 2%;
     color: green;
-    font-size: 150%;
+    font-size: 25px;
     display: contents;
   }
 
@@ -161,14 +164,16 @@
     /* width: 35vh;
     height: 68vh; */
     width: 30%;
-    height: 70%;
+    height: 80%;
+    max-height: 700px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 2%;
+    overflow-y: auto;
   }
   .actiName {
-    font-size: 150%;
+    font-size: 23px;
     color: grey;
     font-weight: bold;
   }
@@ -190,7 +195,7 @@
   .textDescrip {
     text-align: center;
     font-style: italic;
-    font-size: 120%;
+    font-size: 1.35em;
     /* font-family:monospace; */
   }
   .logo {
@@ -198,5 +203,6 @@
     height: auto;
   }
 </style>
+ 
 
  
