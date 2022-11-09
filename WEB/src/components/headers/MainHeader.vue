@@ -76,7 +76,7 @@
         >
         <router-link
           class="right_tab_element"
-          to="/"
+          to="/map"
           >Carte</router-link
         >
         <router-link
@@ -229,7 +229,7 @@
     position: absolute;
     z-index: 2;
     border-left: 1px solid grey;
-    padding-left: 20px;
+    padding-left: 10px;
   }
   .content {
     display: flex;
@@ -268,6 +268,7 @@
     font-size: 1em;
     text-align: left;
     width: 100%;
+    padding-left: 10px;
   }
   .right_tab_element:hover {
     color: #026b30;
@@ -275,16 +276,14 @@
     cursor: pointer;
   }
   .right_tab_element::before {
-    content: '';
+    content: '>';
     position: absolute;
-    width: 0px;
-    left: -15px;
-    top: 50%;
+    width: 10px;
+    left: 0;
+    top: 0;
     height: 5%;
-    transform: rotate(45deg);
-    background-color: #026b30;
   }
-  .right_tab_element::after {
+  /* .right_tab_element::after {
     content: '';
     position: absolute;
     width: 0px;
@@ -293,13 +292,13 @@
     height: 5%;
     transform: rotate(-45deg);
     background-color: #026b30;
-  }
+  } */
   .right_tab_element:hover::before {
-    width: 10px;
+    color: green;
   }
-  .right_tab_element:hover::after {
+  /* .right_tab_element:hover::after {
     width: 10px;
-  }
+  } */
 
   @media (min-width: 701px) {
     .rightTab {

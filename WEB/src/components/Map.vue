@@ -25,6 +25,8 @@
   const popup = ref(null)
 
   const map = ref()
+
+  const isMobile = ref(false)
   // On utilise cet état pour afficher ou désafficher le popup
   const popupVisibility = ref(false)
   // Cette ref permet de stocker le nom du niveau à ensuite afficher
@@ -67,6 +69,18 @@
   }
 
   onMounted(() => {
+    let mobileNav = false
+
+    //On regarde si l'utilisateur est sur un mobile ou pas grace à son os
+    if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/iPhone/i)) {
+      mobileNav = true
+    }
+
+    //On regarde si l'utilisateur est sur un mobile ou pas grace à l'option touch screen
+    'ontouchstart' in document.documentElement || mobileNav
+      ? (isMobile.value = true)
+      : (isMobile.value = false)
+
     function setActive() {
       for (let intercation in map.value.getInteractions().getArray()) {
         let template = map.value.getInteractions().getArray()
@@ -249,6 +263,14 @@
             alt="flashcards gamemode logo"
           />
           <router-link
+            v-if="isMobile"
+            to="/dadtestmobile"
+            class="playButton"
+            id="buttonDad"
+            >PLAY</router-link
+          >
+          <router-link
+            v-else
             to="/dadtest"
             class="playButton"
             id="buttonDad"
