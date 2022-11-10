@@ -18,9 +18,8 @@
       activity_name: 'DragAndLearn',
       url: '/src/assets/logo/dalcard.svg',
       description:
-        "Activité dans laquelle l'étudiant doit trouver de mots et doit s'auto-évaluer. Les mots" +
-        '            sont representé sous forme de carte. Un systeme de poids est mise en place pour que les' +
-        "            cartes plus dure de l'élève réaparaissent le plus souvent.",
+         "Activité dans laquelle l'étudiant doit placer des mots qui lui seront proposer dans la zone de jeu." +
+         " Dans cette zone de jeu les mots devrons être placés dans des champs et la zone de jeu comportera une image de background.",
       link:"/dadteachertest"
     }
   ]
@@ -51,11 +50,11 @@
         </div>
       </div>
       <div class="description">
-        <div 
+        <div
         v-if = isThereAnyActivitySelected
         class="descrTitle"
         >  
-        Type sélectionné: 
+        <p>Type sélectionné:</p> 
       </div>
       <div v-else class="descrTitle"> Choisissez l'activité en cliquant sur la carte ! </div>
         <div
@@ -109,6 +108,7 @@
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.1) 0px 8px 10px;
     padding: 5px;
+    transition: 0.1s ease;
   }
 
   .carte:hover {
@@ -152,8 +152,9 @@
   .descrTitle {
     padding-bottom: 2%;
     color: green;
-    font-size: 25px;
+    font-size: 20px;
     display: contents;
+    text-align: center;
   }
 
   .description {
@@ -173,7 +174,7 @@
     overflow-y: auto;
   }
   .actiName {
-    font-size: 23px;
+    font-size: 25px;
     color: grey;
     font-weight: bold;
   }
@@ -195,13 +196,21 @@
   .textDescrip {
     text-align: center;
     font-style: italic;
-    font-size: 1.35em;
+    font-size: 1.1em;
     /* font-family:monospace; */
   }
   .logo {
     width: 90%;
     height: auto;
   }
+  @media (max-width: 1400px){ 
+    .actiName{
+      font-size: 15px;
+    }
+   .descrTitle{
+    font-size: 15px;
+   }
+}
 </style>
  
 
