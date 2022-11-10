@@ -20,7 +20,6 @@ export class UsersService {
     email: string,
     password: string,
   ): Promise<UserData | undefined> {
-    console.log(email, password);
     if (!email || !password) {
       throw new NotFoundException();
     }
@@ -47,7 +46,6 @@ export class UsersService {
     return userData;
   }
   async create(data: CreateUserDto): Promise<any> {
-    console.log(data);
     return await this.userRepository
       .save(data)
       .then((res) => res)
