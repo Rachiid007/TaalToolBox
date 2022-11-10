@@ -4,5 +4,5 @@ export interface UserData {
   email: string;
   birthdate: string;
   phone: string;
-  role: string;
+  role: string[];
 }

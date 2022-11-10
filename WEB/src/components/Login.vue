@@ -2,8 +2,7 @@
   import { reactive } from 'vue'
   import logo from '@/assets/logo/logo.svg'
   import { useUserStore } from '@/stores/user'
-  import { computed } from 'vue'
-
+  import router from '@/router'
   const store = useUserStore()
   const state = reactive({
     mail: '',
@@ -20,8 +19,21 @@
         console.log(key)
         return 1
       }
-      //TODO: Envoyer les données au back pour tenter connecter
+      // Récupérer l'utilisateur
       const user = await store.getUser(state.mail, state.password)
+
+      //Muter le state initiale du user
+      store.$patch({ user: user })
+      //Redirection vers la page
+      localStorage.setItem('user', JSON.stringify(user))
+
+      if (store.user.role) {
+        console.log(store.user.role)
+        // window.location.pathname = '/'
+        router.push('/')
+      } else {
+        manage.error = "Nom d'utilisateur ou mot de passe incorrect"
+      }
     }
   }
 </script>

@@ -1,9 +1,9 @@
+import { UserData } from './../types/index';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Users } from './entities/users.entity';
-
 @Injectable()
 export class UsersService {
   constructor(
@@ -15,7 +15,10 @@ export class UsersService {
     return await this.userRepository.findOne(data);
   }
   // Get the user in database and her role
-  async loginUser(email: string, password: string): Promise<Users | undefined> {
+  async loginUser(
+    email: string,
+    password: string,
+  ): Promise<UserData | undefined> {
     console.log(email, password);
     if (!email || !password) {
       throw new NotFoundException();
@@ -30,8 +33,19 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException();
     }
-
-    return user;
+    console.log(user);
+    const userData = {
+      name: user.name,
+      surname: user.surname,
+      role: user.role.map((x) => {
+        return x.name;
+      }),
+      email: user.email,
+      birthdate: user.birthdate,
+      phone: user.phone,
+    };
+    console.log(userData);
+    return userData;
   }
   async create(data: CreateUserDto): Promise<any> {
     console.log(data);
