@@ -1,5 +1,13 @@
 <template>
-  <MainHeader />
+  <div v-if="!userStore.user.role.length">
+    <GuestHeader />
+  </div>
+  <div v-else-if="'Administrateur' in userStore.user.role">
+    <MainHeader />
+  </div>
+  <div v-else-if="'Elève' in userStore.user.role">
+    <StudentHeader />
+  </div>
   <div>
     <FileDrop
       class="container-drop"
@@ -12,7 +20,11 @@
   import { defineAsyncComponent } from 'vue'
   import axios from 'axios'
   import MainHeader from '@/components/headers/MainHeader.vue'
+  import GuestHeader from '@/components/headers/GuestHeader.vue'
+  import StudentHeader from '@/components/headers/StudentHeader.vue'
+  import { useUserStore } from '@/stores/user'
 
+  const userStore = useUserStore()
   const sendFileToNest = (file: File) => {
     const formData = new FormData()
     formData.append('file', file)

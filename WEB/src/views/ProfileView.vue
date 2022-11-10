@@ -4,37 +4,37 @@
   import Success from '@/components/profile/Success.vue'
   import MainHeader from '@/components/headers/MainHeader.vue'
   import { ref } from 'vue'
+  import { useUserStore } from '@/stores/user'
   //const store = useCardStore()
   //const remaining = computed(() => store.remaining)
+  const userStore = useUserStore()
   const comp = ref(0)
 
-  function changeComp(nb: number){
-    comp.value = nb;
+  function changeComp(nb: number) {
+    comp.value = nb
   }
 
-  function logOut(){
+  function logOut() {
     //à completer
   }
 </script>
 
 <template>
-  <div>
-    <MainHeader />
-  </div>
+  <div v-if="!userStore.user.role.length">
+      <GuestHeader />
+    </div>
+    <div v-else-if="'Administrateur' in userStore.user.role">
+      <MainHeader />
+    </div>
+    <div v-else-if="'Elève' in userStore.user.role">
+      <StudentHeader />
+    </div>
   <div class="contents">
     <div class="buttons">
-      <button @click="changeComp(0)">
-        Profil
-      </button>
-      <button @click="changeComp(1)">
-        Classe
-      </button>
-      <button @click="changeComp(2)">
-        Succès
-      </button>
-      <button @click="logOut">
-        Log out
-      </button>
+      <button @click="changeComp(0)">Profil</button>
+      <button @click="changeComp(1)">Classe</button>
+      <button @click="changeComp(2)">Succès</button>
+      <button @click="logOut">Log out</button>
     </div>
     <div class="compP">
       <div v-if="comp == 0">
@@ -51,7 +51,7 @@
 </template>
 
 <style scoped>
-  .contents{
+  .contents {
     display: flex;
     flex-direction: row;
   }
@@ -75,11 +75,11 @@
   button:hover {
     background-color: green;
   }
-  .buttons{
+  .buttons {
     float: left;
     margin-top: 5%;
   }
-  .compP{
+  .compP {
     border: ridge 5px #cccccc;
     height: 20em;
     margin-top: 6%;

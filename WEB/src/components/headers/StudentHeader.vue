@@ -34,28 +34,8 @@
         to="/map"
         >Carte</router-link
       >
-      <router-link
-        to="/add-card"
-        class="tabs_element"
-        >Ajouter</router-link
-      >
-      <router-link
-        to="/add-card"
-        class="tabs_element"
-        >Ajouter Prof</router-link
-      >
-      <router-link
-        to="/add-card"
-        class="tabs_element"
-        >Ajouter Elève</router-link
-      >
-      <router-link
-        to="/"
-        class="tabs_element"
-        >Classe</router-link
-      >
     </div>
-
+    <!-- Dont show connection button when user is connect -->
     <router-link
       class="conreg"
       to="/login"
@@ -88,18 +68,8 @@
         >
         <router-link
           class="right_tab_element"
-          to="/"
+          to="/map"
           >Carte</router-link
-        >
-        <router-link
-          to="/add-card"
-          class="right_tab_element"
-          >Ajouter</router-link
-        >
-        <router-link
-          to="/"
-          class="right_tab_element"
-          >Classe</router-link
         >
         <router-link
           to="/"

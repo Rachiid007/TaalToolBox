@@ -1,7 +1,10 @@
 <script setup lang="ts">
   import addCardForm from '@/components/card/add/addCardForm.vue'
   import MainHeader from '@/components/headers/MainHeader.vue'
+  import AllCard from '@/components/card/add/AllCard.vue'
+  import { useUserStore } from '@/stores/user'
 
+  const userStore = useUserStore()
   // import LittleCard from '@/components/LittleCard.vue'
   // import LeCheval from '@/assets/images/cheval.svg'
 
@@ -9,8 +12,6 @@
 
   // const word = ref('Le cheval')
   // const translation = ref('Het paard')
-
-  import AllCard from '@/components/card/add/AllCard.vue'
 </script>
 
 <template>
@@ -19,7 +20,15 @@
     :translation="translation"
     :image="LeCheval"
   /> -->
-  <MainHeader />
+  <div v-if="!userStore.user.role.length">
+    <GuestHeader />
+  </div>
+  <div v-else-if="'Administrateur' in userStore.user.role">
+    <MainHeader />
+  </div>
+  <div v-else-if="'Elève' in userStore.user.role">
+    <StudentHeader />
+  </div>
   <div class="container-view">
     <add-card-form id="add-card-form" />
     <all-card id="all-card" />

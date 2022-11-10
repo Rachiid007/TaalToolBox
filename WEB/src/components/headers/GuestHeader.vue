@@ -29,31 +29,6 @@
         to="/"
         >Acceuil</router-link
       >
-      <router-link
-        class="tabs_element"
-        to="/map"
-        >Carte</router-link
-      >
-      <router-link
-        to="/add-card"
-        class="tabs_element"
-        >Ajouter</router-link
-      >
-      <router-link
-        to="/add-card"
-        class="tabs_element"
-        >Ajouter Prof</router-link
-      >
-      <router-link
-        to="/add-card"
-        class="tabs_element"
-        >Ajouter Elève</router-link
-      >
-      <router-link
-        to="/"
-        class="tabs_element"
-        >Classe</router-link
-      >
     </div>
 
     <router-link
@@ -86,21 +61,7 @@
           to="/"
           >Acceuil</router-link
         >
-        <router-link
-          class="right_tab_element"
-          to="/"
-          >Carte</router-link
-        >
-        <router-link
-          to="/add-card"
-          class="right_tab_element"
-          >Ajouter</router-link
-        >
-        <router-link
-          to="/"
-          class="right_tab_element"
-          >Classe</router-link
-        >
+
         <router-link
           to="/"
           style="margin-top: 60vh; align-self: center"
