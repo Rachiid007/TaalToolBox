@@ -4,5 +4,5 @@ export default interface User {
   email: string
   birthdate: string
   phone: string
-  role: string
+  role: string[]
 }
