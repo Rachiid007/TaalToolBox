@@ -1,7 +1,8 @@
 <script setup lang="ts">
-  import Dragndrop from '@/components/testDragNDrop/dragndrop.vue'
+  import DragndropMobile from '@/components/testDragNDrop/dragndropmobile.vue'
   import TheHeader from '@/components/TheHeader.vue'
   import { ref } from 'vue'
+  import Intro from '@/components/intro/Intro.vue'
 
   const loading = ref()
   setTimeout(function () {
@@ -15,11 +16,7 @@
       ref="loading"
       class="showup"
     >
-      <img
-        class="loadingLogo"
-        src="@/assets/logo/dalcard.svg"
-      />
-      <p class="loading">Chargement de l'activité ...</p>
+      <Intro />
     </div>
     <div>
       <TheHeader>
@@ -31,7 +28,7 @@
           />
         </div>
       </TheHeader>
-      <Dragndrop />
+      <DragndropMobile />
     </div>
   </div>
 </template>
@@ -49,10 +46,10 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    width: fit-content;
   }
   .headerLogo {
-    height: 60px;
+    height: 50px;
     width: auto;
   }
   .showup {
@@ -69,31 +66,6 @@
     animation: fadeOut 2s ease 2.5s;
     animation-fill-mode: forwards;
     z-index: 10;
-  }
-  .loadingLogo {
-    border: 3px solid grey;
-    padding: 22px 15px 22px 15px;
-    border-radius: 15px;
-    height: auto;
-    width: 15%;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 6px 0px;
-    animation: fadeIn 1.5s ease 0s;
-  }
-  .loading {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #00307e;
-    position: relative;
-  }
-  .loading::after {
-    content: '';
-    position: absolute;
-    height: 100%;
-    width: 9%;
-    right: 0%;
-    background: white;
-    animation: horizontalSequence 1.5s ease 2;
   }
   @keyframes fadeIn {
     0% {
@@ -126,6 +98,18 @@
     }
     100% {
       width: 0%;
+    }
+  }
+  @media (max-width: 750px) {
+    .loadingLogo {
+      border: 2px solid grey;
+      padding: 10px 5px 10px 5px;
+      border-radius: 10px;
+      height: auto;
+      width: 40%;
+      background-color: white;
+      box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 6px 0px;
+      animation: fadeIn 1.5s ease 0s;
     }
   }
 </style>

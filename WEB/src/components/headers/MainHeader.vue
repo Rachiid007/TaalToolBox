@@ -4,9 +4,6 @@
   import { useUserStore } from '@/stores/user'
   import StudentHeader from '@/components/headers/StudentHeader.vue'
   const userStore = useUserStore()
-  console.log(userStore.user.role)
-  console.log(userStore.user.role.length)
-  console.log(userStore.user.role.includes("Administrateur"))
 </script>
 <template>
   <div v-if="userStore.user.role.includes('Administrateur')">
