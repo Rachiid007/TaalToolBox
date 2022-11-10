@@ -1,9 +1,17 @@
 <script setup lang="ts">
   import { onMounted, reactive, ref } from 'vue'
-  import jsonfile from '@/assets/levelData/dragndrop.json'
-  import form4 from '@/assets/images/form4.png'
+  // import jsonfile from '@/assets/levelData/dragndrop.json'
+  import { useDadLevels } from '@/stores/dadLevels'
+  import { RouterLink } from 'vue-router'
+
+  const store = useDadLevels()
+  const dataFromStore = store.getData()
+
   const background = ref()
   const wordList = ref()
+
+  // On utilise cette ref pour stocker un boolean qui nous indique si l'utilisateur est sur un mobile ou pas
+  const isNotMobile = ref(false)
 
   // Cette ref est utilisée pour stocker la liste de mots rangée d'une manière aléatoire
   const wordsToGen = ref([])
@@ -14,7 +22,7 @@
   const goodFields = ref(0)
   // On stocke le nombre de mauvaises réponses
   const badFields = ref(0)
-  const state = reactive(jsonfile[1])
+  const state = reactive(dataFromStore[store.getLevel()])
 
   // fonction appellée quand on drop le mot dans la div
   const dropped = (event: any) => {
@@ -77,9 +85,23 @@
     score.value = localScore
   }
 
+  let mobileNav = false
+
+  //On regarde si l'utilisateur est sur un mobile ou pas grace à son os
+  if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/iPhone/i)) {
+    mobileNav = true
+  }
+
+  //On regarde si l'utilisateur est sur un mobile ou pas grace à l'option touch screen
+  'ontouchstart' in document.documentElement || mobileNav
+    ? (isNotMobile.value = false)
+    : (isNotMobile.value = true)
+
   onMounted(() => {
     //La fonction shuffle va prendre les mots qui sont dans l'objet principal (state) et les mettres dans un ordre aléatoire
     // CE CODE VIENS D INTERNET ET DOIS ENCORE ETRE COMPRIS
+
+    console.log(store.getData())
     const shuffle = () => {
       let array = []
       for (let item in state.fields) {
@@ -112,6 +134,7 @@
       class="playground"
       :ondrop="dropped"
       :ondragover="draggedOver"
+      v-if="isNotMobile"
     >
       <div
         ref="background"
@@ -176,12 +199,24 @@
         </div>
       </div>
     </div>
+    <div
+      v-else
+      class="mobileOn"
+    >
+      <p class="sadFace">😢</p>
+      Désoler, cette version de Drag&Learn n'est pas accessible en version mobile.
+      <RouterLink
+        to="/"
+        class="backToHome"
+        >Retrour à l'acceuil</RouterLink
+      >
+    </div>
   </div>
 </template>
 
 <style scoped>
   .main {
-    margin-top: 35px;
+    margin-top: 5px;
     max-width: 1600px;
     width: 100vw;
     display: flex;
@@ -267,14 +302,15 @@
     left: 28%; */
     background-color: white;
     overflow: hidden;
-    p {
-      color: #707070;
-      width: 100%;
-      font-size: 100%;
-      font-weight: bold;
-      border: none;
-      background: white;
-    }
+  }
+
+  .container p {
+    color: #707070;
+    width: 100%;
+    font-size: 100%;
+    font-weight: bold;
+    border: none;
+    background: white;
   }
   .text {
     font-family: 'NotoSans-Regular';
@@ -328,5 +364,31 @@
   }
   .badAnswers {
     color: red;
+  }
+
+  .mobileOn {
+    margin-top: 25px;
+    display: flex;
+    max-width: 100%;
+    width: 95%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1;
+    font-size: 1.8em;
+    text-align: center;
+    color: #00307e;
+  }
+  .sadFace {
+    font-size: 3.2em;
+  }
+  .backToHome {
+    background: #00307e;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 30px;
   }
 </style>

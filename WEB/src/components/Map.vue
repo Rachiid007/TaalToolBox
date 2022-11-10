@@ -25,6 +25,10 @@
 
   // Cette ref correspond à la div du popup
   const popup = ref(null)
+
+  const map = ref()
+
+  const isMobile = ref(false)
   // On utilise cet état pour afficher ou désafficher le popup
   const popupVisibility = ref(false)
   // Cette ref permet de stocker le nom du niveau à ensuite afficher
@@ -59,20 +63,36 @@
   const onCloserClick = () => {
     popupVisibility.value = false
     // closer.style.display = 'none'
+    for (let intercation in map.value.getInteractions().getArray()) {
+      let template = map.value.getInteractions().getArray()
+      template[intercation].setActive(true)
+    }
     return false
   }
 
   onMounted(() => {
+    let mobileNav = false
+
+    //On regarde si l'utilisateur est sur un mobile ou pas grace à son os
+    if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/iPhone/i)) {
+      mobileNav = true
+    }
+
+    //On regarde si l'utilisateur est sur un mobile ou pas grace à l'option touch screen
+    'ontouchstart' in document.documentElement || mobileNav
+      ? (isMobile.value = true)
+      : (isMobile.value = false)
+
     function setActive() {
-      for (let intercation in map.getInteractions().getArray()) {
-        let template = map.getInteractions().getArray()
+      for (let intercation in map.value.getInteractions().getArray()) {
+        let template = map.value.getInteractions().getArray()
         template[intercation].setActive(true)
       }
     }
 
     function setNotActive() {
-      for (let intercation in map.getInteractions().getArray()) {
-        let template = map.getInteractions().getArray()
+      for (let intercation in map.value.getInteractions().getArray()) {
+        let template = map.value.getInteractions().getArray()
         template[intercation].setActive(false)
       }
     }
@@ -100,7 +120,7 @@
       }
     })
 
-    const map = new Map({
+    map.value = new Map({
       layers: [
         new TileLayer({
           source: new OSM()
@@ -126,6 +146,7 @@
         // mouseWheelZoom: allowControls.value
       })
     })
+    console.log(map.value)
 
     // ---------------------------------------------------------------
     // On génère les points sur la map à partir de la liste des objets
@@ -145,15 +166,15 @@
         })
       })
       // On ajoute la nouvelle feature à la fin de la liste des layers de la map
-      map.getLayers().extend([vector])
+      map.value.getLayers().extend([vector])
     }
 
-    map.on('singleclick', function (evt) {
+    map.value.on('singleclick', function (evt) {
       // Si on click autre part que sur un point, le popup se désaffiche
       popupVisibility.value = false
       setActive()
-      console.log(map.getInteractions().getArray())
-      map.forEachFeatureAtPixel(evt.pixel, function (feature, layer: any) {
+      console.log(map.value.getInteractions().getArray())
+      map.value.forEachFeatureAtPixel(evt.pixel, function (feature, layer: any) {
         // On attribue les valeurs de nom de niveau et de numéro de niveau
         levelName.value = feature.getProperties().name
         levelNumber.value = feature.getId()
@@ -165,7 +186,7 @@
         setNotActive()
       })
     })
-    map.on('pointermove', function (evt) {
+    map.value.on('pointermove', function (evt: any) {
       var touche = this.forEachFeatureAtPixel(evt.pixel, function () {
         return true
       })
@@ -244,6 +265,14 @@
             alt="flashcards gamemode logo"
           />
           <router-link
+            v-if="isMobile"
+            to="/dadtestmobile"
+            class="playButton"
+            id="buttonDad"
+            >PLAY</router-link
+          >
+          <router-link
+            v-else
             to="/dadtest"
             class="playButton"
             id="buttonDad"

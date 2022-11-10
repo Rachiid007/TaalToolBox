@@ -10,6 +10,8 @@ import addCardFormView from '@/views/add-card/addCardFormView.vue'
 import choiceHowToAddCardView from '@/views/add-card/choiceHowToAddCardView.vue'
 import DadTestView from '@/views/DadTestView.vue'
 import DadTestTeacherView from '@/views/DadTestTeacherView.vue'
+import LevelSelectorView from '@/views/DadSelector.vue'
+import DadTestMobileView from '@/views/DadTestMobileView.vue'
 import Login from '@/views/Login.vue'
 import SignIn from '@/views/SignIn.vue'
 
@@ -67,6 +69,16 @@ const router = createRouter({
       component: DadTestTeacherView
     },
     {
+      path: '/dadselector',
+      name: 'dadlevelselector',
+      component: LevelSelectorView
+    },
+    {
+      path: '/dadtestmobile',
+      name: 'dadtestmobile',
+      component: DadTestMobileView
+     },
+     {
       path: '/login',
       name: 'login',
       component: Login
