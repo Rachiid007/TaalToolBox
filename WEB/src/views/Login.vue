@@ -1,14 +1,10 @@
-<script lang="ts">
+<script setup lang="ts">
   import Login from '@/components/Login.vue'
-  import MainHeader from '@/components/MainHeader.vue'
+  import MainHeader from '@/components/headers/MainHeader.vue'
+  import { useUserStore } from '@/stores/user';
 
-  export default {
-    name: 'login',
-    components: {
-      Login,
-      MainHeader
-    }
-  }
+  const userStore = useUserStore()
+
 </script>
 
 <template>

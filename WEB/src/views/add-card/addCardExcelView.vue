@@ -12,7 +12,9 @@
   import { defineAsyncComponent } from 'vue'
   import axios from 'axios'
   import MainHeader from '@/components/headers/MainHeader.vue'
+  import { useUserStore } from '@/stores/user';
 
+  const userStore = useUserStore()
   const sendFileToNest = (file: File) => {
     const formData = new FormData()
     formData.append('file', file)

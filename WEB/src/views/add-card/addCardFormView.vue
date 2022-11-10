@@ -1,7 +1,10 @@
 <script setup lang="ts">
   import addCardForm from '@/components/card/add/addCardForm.vue'
   import MainHeader from '@/components/headers/MainHeader.vue'
+  import AllCard from '@/components/card/add/AllCard.vue'
+  import { useUserStore } from '@/stores/user';
 
+  const userStore = useUserStore()
   // import LittleCard from '@/components/LittleCard.vue'
   // import LeCheval from '@/assets/images/cheval.svg'
 
@@ -10,7 +13,6 @@
   // const word = ref('Le cheval')
   // const translation = ref('Het paard')
 
-  import AllCard from '@/components/card/add/AllCard.vue'
 </script>
 
 <template>
