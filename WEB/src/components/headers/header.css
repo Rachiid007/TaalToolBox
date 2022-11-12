@@ -1,118 +1,16 @@
-<script setup lang="ts">
-  const showTab = () => {
-    document.getElementsByClassName('rightTab')[0].style.display = 'inline'
-  }
-  const hideTab = () => {
-    document.getElementsByClassName('rightTab')[0].style.display = 'none'
-  }
-</script>
-
-<template>
-  <div class="main">
-    <router-link
-      class="logo"
-      to="/"
-    >
-      <div class="logo_img">
-        <img
-          class="main_logo"
-          src="@/assets/logo/logo.svg"
-        />
-      </div>
-      <p class="logo_title">TaalToolBox</p>
-    </router-link>
-    <div class="tabs">
-      <router-link
-        class="tabs_element"
-        to="/"
-        >Acceuil</router-link
-      >
-      <router-link
-        class="tabs_element"
-        to="/"
-        >Carte</router-link
-      >
-      <router-link
-        to="/"
-        class="tabs_element"
-        >Jeux</router-link
-      >
-      <router-link
-        to="/"
-        class="tabs_element"
-        >Classe</router-link
-      >
-    </div>
-    <router-link
-      class="conreg"
-      to="/login"
-      >Se connecter</router-link
-    >
-    <div
-      class="hamburger"
-      @click="showTab"
-    >
-      <!-- On construit le hamburger -->
-      <div class="build"></div>
-      <div class="build"></div>
-      <div class="build"></div>
-    </div>
-    <div class="rightTab">
-      <div class="content">
-        <div
-          class="hamburger_deploid"
-          @click="hideTab"
-        >
-          <!-- On construit le hamburger -->
-          <div class="build_deploid"></div>
-          <div class="build_deploid"></div>
-          <div class="build_deploid"></div>
-        </div>
-        <router-link
-          class="right_tab_element"
-          to="/"
-          >Acceuil</router-link
-        >
-        <router-link
-          class="right_tab_element"
-          to="/"
-          >Carte</router-link
-        >
-        <router-link
-          to="/"
-          class="right_tab_element"
-          >Jeux</router-link
-        >
-        <router-link
-          to="/"
-          class="right_tab_element"
-          >Classe</router-link
-        >
-        <router-link
-          to="/login"
-          style="margin-top: 60vh; align-self: center"
-          >Se connecter</router-link
-        >
-      </div>
-    </div>
-  </div>
-</template>
-
-<style scoped>
-  .main {
+.main {
     width: 100vw;
-    max-width: 1600px;
-    border-bottom: 1px solid #707070;
+    max-width: 1500px;
+    border-bottom: 1px solid #707 ;
     height: 70px;
     display: flex;
-    flex-direction: row;
-    justify-content: left;
     align-items: center;
     gap: 10%;
     font-family: NotoSans-Regular;
-    position: fixed;
+    position: sticky;
     background-color: white;
     z-index: 3;
+    margin: 0 auto;
   }
   .logo {
     height: 100%;
@@ -141,7 +39,7 @@
     text-align: left;
     /* outline: 1px solid blue; */
     color: #026b30;
-    font-family: Segoe print;
+    font-family: Didno;
   }
   .tabs {
     display: flex;
@@ -211,6 +109,7 @@
   .hamburger {
     display: none;
   }
+
   .build {
     width: 30px;
     height: 0px;
@@ -299,6 +198,7 @@
   .right_tab_element:hover::after {
     width: 10px;
   }
+
   @media (min-width: 701px) {
     .rightTab {
       visibility: hidden;
@@ -346,4 +246,3 @@
       font-size: 4vw;
     }
   }
-</style>

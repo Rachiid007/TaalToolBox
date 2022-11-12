@@ -85,7 +85,6 @@ export class CardsController {
     }),
   )
   uploadImage(@UploadedFile() file, @Cards() req) {
-    console.log('card decorateur --- ', req);
     return this.cardsService.uploadImage(req, file);
   }
 
