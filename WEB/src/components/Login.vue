@@ -209,4 +209,6 @@ input::placeholder {
   color: white;
   background-color: #026b30;
 }
+
 </style>
+
