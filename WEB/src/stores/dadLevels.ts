@@ -1,11 +1,12 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import dalService from '@/services/dalService'
 // import Dadleveldata from '@/types/Dadleveldata'
 
 export const useDadLevels = defineStore('dadlevels', () => {
   const levelSelector = ref(0)
-  const levelData = ref<any[]>([])
-  levelData.value.push(
+  const DalDataList = ref<any[]>([])
+  DalDataList.value.push(
     {
       fields: [
         {
@@ -108,10 +109,10 @@ export const useDadLevels = defineStore('dadlevels', () => {
     }
   )
   const addData = (data: any) => {
-    levelData.value.push(data)
+    DalDataList.value.push(data)
   }
   const getData = () => {
-    return levelData.value
+    return DalDataList.value
   }
   const setLevel = (level: number) => {
     levelSelector.value = level
@@ -119,5 +120,20 @@ export const useDadLevels = defineStore('dadlevels', () => {
   const getLevel = () => {
     return levelSelector.value
   }
-  return { levelData, addData, getData, setLevel, getLevel }
+
+  const getDragAndLearn = async () => {
+    const DalList = await dalService.getDragAndLearn().catch((error) => {
+      console.log(error)
+    })
+    DalDataList.value = DalList
+  }
+  const addDragAndLearn = (newDragAndLearnExercice: any) => {
+    dalService.postDragAndLearn(newDragAndLearnExercice).catch((error) => {
+      console.log(error)
+      return 1
+    })
+    DalDataList.value.push(newDragAndLearnExercice)
+  }
+
+  return { DalDataList, addData, getData, setLevel, getLevel, getDragAndLearn, addDragAndLearn }
 })
