@@ -143,7 +143,7 @@
         class="back"
       >
         <img
-          :src="form4"
+          :src="state.backImage"
           alt="image for the exercice"
         />
         <div
