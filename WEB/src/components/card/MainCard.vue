@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { useCardStore } from '@/stores/card'
   import { useShowStore } from '@/stores/show'
-  import { ref, computed, onMounted, onUpdated, getCurrentInstance } from 'vue'
+  import { ref, computed, onMounted, onUpdated } from 'vue'
   import cheval from '@/assets/images/card/cheval.svg'
 
   const store = useCardStore()

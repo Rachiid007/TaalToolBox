@@ -41,7 +41,7 @@
           :id="card.id"
           :word="card.word"
           :translation="card.translation"
-          :url="card.url"
+          :url="card.url!"
         />
       </div>
     </div>

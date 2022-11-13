@@ -5,11 +5,7 @@
 
   const store = useCardStore()
 
-  interface SecondDataForm extends Flashcard {
-    url: string
-  }
-
-  const dataForm = reactive<SecondDataForm>({
+  const dataForm = reactive<Flashcard>({
     id: 0,
     word: '',
     translation: '',
@@ -34,7 +30,7 @@
 
   const onSubmit = () => {
     if (handleFormValidation()) {
-      const copyDataForm: SecondDataForm = {
+      const copyDataForm: Flashcard = {
         id: dataForm.id,
         word: dataForm.word,
         translation: dataForm.translation,
@@ -89,15 +85,18 @@
     </form>
     <p
       class="error-msg"
-      v-show="showErrorMessage"
+      v-if="showErrorMessage"
     >
       Veuillez remplir tous les champs
     </p>
 
-    <div class="preview">
+    <div
+      v-if="dataForm.url"
+      class="preview"
+    >
       <img
         v-show="dataForm.url"
-        :src="dataForm.url"
+        :src="dataForm.url!"
         alt="preview"
       />
     </div>
