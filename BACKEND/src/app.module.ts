@@ -26,6 +26,7 @@ import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './Auth/auth/auth.module';
+import {DragModule} from './drag_and_drop/drag_and_drop.module'
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { AuthModule } from './Auth/auth/auth.module';
     AuthModule,
     UserResponseModule,
     ProficiencyModule,
+    DragModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, UsersService],
