@@ -8,7 +8,6 @@ import ProfileView from '@/views/ProfileView.vue'
 import addCardExcelView from '@/views/add-card/addCardExcelView.vue'
 import addCardFormView from '@/views/add-card/addCardFormView.vue'
 import choiceHowToAddCardView from '@/views/add-card/choiceHowToAddCardView.vue'
-import ChooseActivities from '@/views/chooseActivities/MultipleActivities.vue'
 import DadTestView from '@/views/DadTestView.vue'
 import DadTestTeacherView from '@/views/DadTestTeacherView.vue'
 import LevelSelectorView from '@/views/DadSelector.vue'
@@ -64,8 +63,8 @@ const router = createRouter({
       path: '/chooseActivities',
       name: 'chooseActivities',
       component: ChooseActivities
-     },
-     {
+    },
+    {
       path: '/dadtest',
       name: 'dadtest',
       component: DadTestView
@@ -84,8 +83,8 @@ const router = createRouter({
       path: '/dadtestmobile',
       name: 'dadtestmobile',
       component: DadTestMobileView
-     },
-     {
+    },
+    {
       path: '/login',
       name: 'login',
       component: Login
