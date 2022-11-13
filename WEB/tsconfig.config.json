@@ -3,7 +3,6 @@
   "include": ["vite.config.*", "vitest.config.*", "cypress.config.*"],
   "compilerOptions": {
     "composite": true,
-    "types": ["node"],
-    "typeRoots": ["./node_modules/@types", "./src/types/"]
+    "types": ["node", "happy-dom", "vitest/globals"]
   }
 }

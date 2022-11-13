@@ -5,7 +5,11 @@
 
   const store = useCardStore()
 
-  const dataForm = reactive<Flashcard>({
+  interface SecondDataForm extends Flashcard {
+    url: string
+  }
+
+  const dataForm = reactive<SecondDataForm>({
     id: 0,
     word: '',
     translation: '',
@@ -30,7 +34,7 @@
 
   const onSubmit = () => {
     if (handleFormValidation()) {
-      const copyDataForm: Flashcard = {
+      const copyDataForm: SecondDataForm = {
         id: dataForm.id,
         word: dataForm.word,
         translation: dataForm.translation,
