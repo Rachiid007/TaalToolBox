@@ -34,8 +34,8 @@ Pour éviter les erreurs, veuillez installer l'extension [Vue Volar](https://mar
 
 ## Démarrage
 
-Rendez-vous dans le répertoire _frontend_, ouvrez une console et lancez la commande `npm install` pour installer les dépendances et `npm run dev` pour lancer le serveur.
+Rendez-vous dans le répertoire _WEB_, ouvrez une console et lancez la commande `npm install` pour installer les dépendances et `npm run dev` pour lancer le serveur.
 
-En ce qui concerne le répertoire _backend_, ouvrez une console et lancez la commande `npm install` pour installer les dépendances et `npm run start:dev` pour lancer le serveur.
+En ce qui concerne le répertoire _BACKEND_, ouvrez une console et lancez la commande `npm install` pour installer les dépendances et `npm run start:dev` pour lancer le serveur.
 
 Veillez garder les deux fenêtres des consoles ouvertes.
