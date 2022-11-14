@@ -110,7 +110,7 @@
       v-if="manage.firstPage"
     >
       <div class="title">
-        <p class="inscrit">Inscription</p>
+        <p class="inscrit">Ajouter un Utilisateur</p>
       </div>
       <div class="title-image">
         <img

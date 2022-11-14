@@ -29,8 +29,8 @@
 
       if (store.user.role) {
         console.log(store.user.role)
-        // window.location.pathname = '/'
-        router.push('/')
+        window.location.pathname = '/'
+        // router.push('/')
       } else {
         manage.error = "Nom d'utilisateur ou mot de passe incorrect"
       }
