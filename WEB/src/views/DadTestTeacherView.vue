@@ -7,6 +7,7 @@
     <TheHeader>
       <div class="title">
         <img
+          class="headerLogo"
           src="@/assets/logo/dragandlearn.svg"
           alt="drag and drop gamemode logo"
         />
@@ -29,8 +30,8 @@
     align-items: center;
     justify-content: center;
   }
-  img {
-    height: auto;
-    width: 50%;
+  .headerLogo {
+    height: 60px;
+    width: auto;
   }
 </style>

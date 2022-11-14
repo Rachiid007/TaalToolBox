@@ -10,8 +10,11 @@ import addCardFormView from '@/views/add-card/addCardFormView.vue'
 import choiceHowToAddCardView from '@/views/add-card/choiceHowToAddCardView.vue'
 import DadTestView from '@/views/DadTestView.vue'
 import DadTestTeacherView from '@/views/DadTestTeacherView.vue'
+import LevelSelectorView from '@/views/DadSelector.vue'
+import DadTestMobileView from '@/views/DadTestMobileView.vue'
 import Login from '@/views/Login.vue'
 import SignIn from '@/views/SignIn.vue'
+import ChooseActivities from '@/views/chooseActivities/MultipleActivities.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,6 +60,11 @@ const router = createRouter({
       component: addCardFormView
     },
     {
+      path: '/chooseActivities',
+      name: 'chooseActivities',
+      component: ChooseActivities
+    },
+    {
       path: '/dadtest',
       name: 'dadtest',
       component: DadTestView
@@ -67,6 +75,16 @@ const router = createRouter({
       component: DadTestTeacherView
     },
     {
+      path: '/dadselector',
+      name: 'dadlevelselector',
+      component: LevelSelectorView
+    },
+    {
+      path: '/dadtestmobile',
+      name: 'dadtestmobile',
+      component: DadTestMobileView
+    },
+    {
       path: '/login',
       name: 'login',
       component: Login
@@ -75,6 +93,11 @@ const router = createRouter({
       path: '/signIn',
       name: 'signIn',
       component: SignIn
+    },
+    {
+      path: '/chooseActivities',
+      name: 'chooseActivities',
+      component: ChooseActivities
     }
   ]
 })

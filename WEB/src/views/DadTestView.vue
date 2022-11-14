@@ -52,8 +52,8 @@
     justify-content: center;
   }
   .headerLogo {
-    height: auto;
-    width: 50%;
+    height: 60px;
+    width: auto;
   }
   .showup {
     position: absolute;
@@ -75,7 +75,7 @@
     padding: 22px 15px 22px 15px;
     border-radius: 15px;
     height: auto;
-    width: 12%;
+    width: 15%;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 6px 0px;
     animation: fadeIn 1.5s ease 0s;

@@ -1,12 +1,5 @@
-<script lang="ts">
+<script setup lang="ts">
   import Map from '@/components/Map.vue'
-
-  export default {
-    name: 'App',
-    components: {
-      Map
-    }
-  }
 </script>
 
 <template>

@@ -20,7 +20,6 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() data: any) {
-    console.log(data);
     return this.authService.register(data);
   }
 

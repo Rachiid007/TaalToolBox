@@ -3,7 +3,9 @@
   import Class from '@/components/profile/Class.vue'
   import Success from '@/components/profile/Success.vue'
   import MainHeader from '@/components/headers/MainHeader.vue'
+  import { useUserStore } from '@/stores/user'
   import { ref } from 'vue'
+  const userStore = useUserStore()
   //const store = useCardStore()
   //const remaining = computed(() => store.remaining)
   const comp = ref(0)
