@@ -4,6 +4,7 @@
   import { ref } from 'vue'
 
   const userStore = useUserStore()
+  const role = userStore.user.role
   const right_tab: any = ref(null)
   const hamburger: any = ref(null)
   const isShown: any = ref(false)
@@ -19,7 +20,18 @@
       isShown.value = true
     }
   }
-  const role = ref(userStore.user.role)
+    const staticRole = {
+      admin : 'Administrateur',
+      creator :  'Créateur',
+      teacher : 'Professeur',
+      student : 'Elève'
+    }
+    // const role = userStore.user.role
+   const handleDisconnection = ()=>{
+     localStorage.removeItem("user")
+     userStore.$reset
+    window.location.pathname = "/login"
+  }
 </script>
 
 <template>
@@ -40,45 +52,46 @@
       <router-link
         class="tabs_element"
         to="/"
-        >Accueil</router-link
+        >Acceuil</router-link
       >
       <router-link
-        v-show="role"
         class="tabs_element"
         to="/map"
+        v-show="Object.values(staticRole).some(x=>{return role.includes(x)}) "
         >Carte</router-link
       >
       <router-link
-        v-show="role.includes('Administrateur') || role.includes('Créateur')"
-        to="/add-card"
-        class="tabs_element"
-        >Ajouter</router-link
+      to="/add-user"
+      class="tabs_element"
+      v-show="[staticRole.admin , staticRole.teacher].some(x=>{return role.includes(x)})"
+      >
+        <div   v-if="role.includes(staticRole.admin)">
+          Ajouter Prof/Elève
+        </div>
+        <div v-else >
+          Ajouter Elève
+        </div>
+      </router-link
       >
       <router-link
-        v-show="role.includes('Administrateur')"
-        to="/add-card"
+        to="/chooseActivities"
         class="tabs_element"
-        >Ajouter Prof</router-link
+        v-show="[staticRole.admin , staticRole.creator].some(x=>{return role.includes(x)})"
+        >Ajouter Activités</router-link
       >
       <router-link
-        v-show="role.includes('Administrateur') || role.includes('Professeur')"
-        to="/add-card"
+        to="#"
         class="tabs_element"
-        >Ajouter Elève</router-link
-      >
-      <router-link
-        v-show="role.includes('Administrateur') || role.includes('Professeur')"
-        to="/"
-        class="tabs_element"
-        >Classe</router-link
+        v-show="role.includes(staticRole.admin)"
+        >Ajouter Classes</router-link
       >
     </div>
-
     <router-link
-      v-if="role"
+      v-if="userStore.user.role.length"
       class="conreg"
       to="/login"
-      >Se déconnecter</router-link
+      @click="handleDisconnection()"
+      >Se deconnecter</router-link
     >
     <router-link
       v-else
@@ -104,48 +117,51 @@
         <router-link
           class="right_tab_element"
           to="/"
-          >Accueil</router-link
+         
+          >Acceuil</router-link
         >
         <router-link
-          v-show="role"
+          v-show="Object.values(staticRole).some(x=>{return role.includes(x)}) "
           class="right_tab_element"
           to="/map"
-          >Carte</router-link
+          >Carte </router-link
         >
         <router-link
-          v-show="role.includes('Administrateur') || role.includes('Créateur')"
-          to="/add-card"
+          v-show="[staticRole.admin , staticRole.teacher].some(x=>{return role.includes(x)})"
+          to="/add-user"
           class="right_tab_element"
-          >Ajouter</router-link
+        >
+          <div   v-if="role.includes(staticRole.admin)">
+            Ajouter Prof/Elève
+          </div>
+          <div v-else >
+            Ajouter Elève
+          </div>
+        </router-link
         >
         <router-link
-          v-show="role.includes('Administrateur')"
-          to="/add-card"
+          v-show="[staticRole.admin , staticRole.creator].some(x=>{return role.includes(x)})"
+          to="/chooseActivities"
           class="right_tab_element"
-          >Ajouter Prof</router-link
+          >Ajouter Activités</router-link
         >
         <router-link
-          v-show="role.includes('Administrateur') || role.includes('Professeur')"
-          to="/add-card"
-          class="right_tab_element"
-          >Ajouter Elève</router-link
-        >
+            to="#"
+            class="right_tab_element"
+            v-show="role.includes(staticRole.admin)"
+            >Ajouter Classes</router-link
+          >
         <router-link
-          v-show="role.includes('Administrateur') || role.includes('Professeur')"
-          to="/"
-          class="right_tab_element"
-          >Classe</router-link
-        >
-        <router-link
-          v-if="role"
-          to="/"
+          v-if="userStore.user.role.length"
           class="hamburger_connreg"
-          >Se déconnecter</router-link
+          to="/login"
+          @click="handleDisconnection()"
+          >Se deconnecter</router-link
         >
         <router-link
           v-else
-          to="/"
           class="hamburger_connreg"
+          to="/login"
           >Se connecter</router-link
         >
       </div>
@@ -268,7 +284,6 @@
     z-index: 10;
     transition: 0.5s ease;
   }
-
   .build {
     width: 30px;
     height: 0px;
@@ -342,7 +357,6 @@
   .right_tab_element:hover::before {
     content: '>';
   }
-
   .hamburger_connreg {
     position: absolute;
     top: 90%;
@@ -355,7 +369,6 @@
   .hamburger_connreg:hover {
     border-bottom: 1px solid #026b30;
   }
-
   @media (min-width: 701px) {
     .rightTab {
       visibility: hidden;
