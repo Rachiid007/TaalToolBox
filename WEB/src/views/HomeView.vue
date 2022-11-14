@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import MainHeader from '@/components/headers/MainHeader.vue'
   import Greetings from '@/components/Greetings.vue'
-  import { useUserStore } from '@/stores/user';
+  import { useUserStore } from '@/stores/user'
 
   const userStore = useUserStore()
 </script>
@@ -20,5 +20,6 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: 50px;
+    padding-top: 80px;
   }
 </style>
