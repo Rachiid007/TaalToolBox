@@ -2,18 +2,20 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class dragAndDrop {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    leveldata: JSON;
+  //   @Column('simple-json')
+  //   levelData: {
+  //     positions: [];
+  //     imgLink: string;
+  //   };
+  @Column()
+  leveldata: string;
 
-    @Column()
-    levelname: string;
+  @Column()
+  levelname: string;
 
-    @Column()
-    creator: string;
-
+  @Column()
+  creator: string;
 }
-
-

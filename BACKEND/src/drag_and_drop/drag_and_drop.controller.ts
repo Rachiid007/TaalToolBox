@@ -1,9 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DragService } from './drag_and_drop.service';
 import { CreateDragDto } from './dto/create-drag_and_drop.dto';
-import { UpdateDragDto } from './dto/update-drag_and_drop.dto';
+// import { UpdateDragDto } from './dto/update-drag_and_drop.dto';
 
-@Controller('role')
+@Controller('drag_and_drop')
 export class DragController {
   constructor(private readonly dragService: DragService) {}
 
