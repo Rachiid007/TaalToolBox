@@ -1,15 +1,24 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateDragDto } from './dto/create-drag_and_drop.dto';
-import { UpdateLangDto } from './dto/update-drag_and_drop.dto';
+import { Repository } from 'typeorm';
+import { dragAndDrop } from './entities/drag_and_drop.entity';
+// import { UpdateLangDto } from './dto/update-drag_and_drop.dto';
 
 @Injectable()
 export class DragService {
+  constructor(
+    @InjectRepository(dragAndDrop)
+    private drag_and_dropRepository: Repository<dragAndDrop>,
+  ) {}
+
   create(createDragDto: CreateDragDto) {
-    return 'This action adds a new drag-and-drop ex';
+    return this.drag_and_dropRepository.save(createDragDto);
   }
 
   findAll() {
-    return `This action returns all drag-and-drops`;
+    // return `This action returns all drag-and-drops`;
+    return this.drag_and_dropRepository.find();
   }
 
   findOne(id: number) {
