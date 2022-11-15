@@ -81,48 +81,113 @@ function get_pourcentage(a: any, b: any) {
 
 <template>
   <div class="success">
-    <div class="title">SUCCES</div>
-        <div class="success_card">
-        <div
+    <div class="title">SUCCESS</div>
+    <div class="success_card">
+      <div
         class="card"
         v-for="data in data_test"
       >
-        <p class="card_title">{{ data.Titre }}</p>
-        
-
-        <progress :value="parseFloat(get_pourcentage(user_stat[data.Target], data.Resultat).toString()).toFixed(2)"
-            
-           max="100">  {{
-            parseFloat(get_pourcentage(user_stat[data.Target], data.Resultat).toString()).toFixed(2)
-          }}</progress>
-        <img :src="data.image" />
-        <p class="card_description">{{ data.Description }}</p>
+        <p class="card_title">{{ data.titre }}</p>
+        <p>
+          {{
+            parseFloat(get_pourcentage(user_stat[data.target], data.resultat).toString()).toFixed(2)
+          }}
+        </p>
+        <img :src="data.img" />
+        <p class="card_description">{{ data.description }}</p>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-  .success{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import type { Ref } from 'vue'
+  function get_pourcentage(a: any, b: any) {
+    return (a / b) * 100
+  }
+  const user_stat: Ref<any> = ref({
+    nombre_parties_flashcards: 1,
+    nombre_parties_drag: 5
+  })
+  const data_test = ref([
+    {
+      titre: 'Flashcard',
+      description: 'Jouer 50 parties de flashcards',
+      resultat: 50,
+      target: 'nombre_parties_flashcards',
+      img: '/src/assets/images/50.svg'
+    },
+    {
+      titre: 'Flashcard',
+      description: 'Jouer 100 parties de flashcards',
+      resultat: 100,
+      target: 'nombre_parties_flashcards',
+      img: '/src/assets/images/100.svg'
+    },
+    {
+      titre: 'Flashcard',
+      description: 'Jouer 150 parties de flashcards',
+      resultat: 150,
+      target: 'nombre_parties_flashcards',
+      img: '/src/assets/images/150.svg'
+    },
+    {
+      titre: 'Flashcard',
+      description: 'Jouer 300 parties de flashcards',
+      resultat: 300,
+      target: 'nombre_parties_flashcards',
+      img: '/src/assets/images/300.svg'
+    },
+    {
+      titre: 'DragAndDrop',
+      description: 'Jouer 50 parties de Draganddrop',
+      resultat: 50,
+      target: 'nombre_parties_drag',
+      img: '/src/assets/images/300.svg'
+    }
+  ])
+</script>
+<style>
+  .success {
     height: 100%;
     width: 100%;
-    gap: 40px;
-    font-family: NotoSans-Regular;
-    
   }
-
-  .title{
+  .success_card {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 80%;
+    gap: 2%;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    max-width: 14%;
     text-align: center;
-    color: #026b30;
+    font-size: 20px;
+    padding: 5px;
+    height: 55%;
+    flex-grow: 2;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    background-color: #e5e5e5;
+  }
+  .card_title {
     font-weight: bold;
-    font-size: larger;
-    
-   
+    color: #026b30;
+  }
+  .card_description {
+    font-size: 16px;
+  }
+  img {
+    width: 30%;
+    height: auto;
   }
   .success_card {
     display: flex;
