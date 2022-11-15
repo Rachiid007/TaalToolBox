@@ -4,22 +4,16 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
-<<<<<<< HEAD
-=======
   OneToMany,
   OneToOne,
->>>>>>> cd0a472 (accomplissement service created)
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Role } from '../../role/entities/role.entity';
 import { Schoolclass } from '../../schoolclass/entities/schoolclass.entity';
 import { Lang } from '../../lang/entities/lang.entity';
-<<<<<<< HEAD
-=======
 import { UserResponseCard } from 'src/user_response_card/entities/user_response_card.entity';
 import { Statistic } from 'src/statistic/entities/statistic.entity'
 
->>>>>>> cd0a472 (accomplissement service created)
 @Entity()
 export class Users {
   @PrimaryGeneratedColumn('increment')

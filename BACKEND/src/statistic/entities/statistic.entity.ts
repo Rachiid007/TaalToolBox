@@ -1,4 +1,3 @@
-import { profile } from 'console';
 import { Users } from 'src/users/entities/users.entity';
 import {
   Column,
@@ -20,4 +19,8 @@ export class Statistic {
   nombre_parties_flashcards: number;
   @Column()
   nombre_parties_drag: number;
+
+  @OneToOne(() => Users)
+  @JoinColumn()
+  user_id: Users;
 }
