@@ -16,7 +16,8 @@ export const useUserStore = defineStore('user', () => {
     schoolEmail: '',
     schoolClass: [],
     school: '',
-    sex: ''
+    sex: '',
+    infos: ''
   })
   // const refreshStore = () => {
   if (localStorage.getItem('user')) {
