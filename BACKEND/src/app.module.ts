@@ -26,6 +26,7 @@ import { SchoolclassModule } from './schoolclass/schoolclass.module';
 import { SchoolModule } from './school/school.module';
 import { UserResponseCardModule } from './user_response_card/user_response_card.module';
 import { ActivityModule } from './activity/activity.module';
+import { StatisticModule } from './statistic/statistic.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { ActivityModule } from './activity/activity.module';
     ProficiencyModule,
     UserResponseCardModule,
     ActivityModule,
+    StatisticModule,
   ],
   controllers: [AppController],
   providers: [AppService],
