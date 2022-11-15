@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Statistic } from './entities/statistic.entity';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { UsersService } from 'src/users/users.service';
 import { UsersModule } from 'src/users/users.module';
 import { UsersController } from 'src/users/users.controller';
@@ -32,5 +33,12 @@ import { UsersController } from 'src/users/users.controller';
   providers: [StatisticService, UsersService],
   exports: [StatisticService],
 >>>>>>> c8ce166 (get statistics service)
+=======
+
+@Module({
+  imports: [TypeOrmModule.forFeature([Users, Statistic])],
+  controllers: [StatisticController],
+  providers: [StatisticService],
+>>>>>>> b5c54a6 (statistic resources created)
 })
 export class StatisticModule {}

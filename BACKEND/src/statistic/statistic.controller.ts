@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Controller,
   Get,
@@ -8,6 +9,9 @@ import {
   Delete,
 } from '@nestjs/common';
 
+=======
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+>>>>>>> b5c54a6 (statistic resources created)
 import { StatisticService } from './statistic.service';
 import { CreateStatisticDto } from './dto/create-statistic.dto';
 import { UpdateStatisticDto } from './dto/update-statistic.dto';
@@ -25,11 +29,15 @@ export class StatisticController {
   findAll() {
     return this.statisticService.findAll();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b5c54a6 (statistic resources created)
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.statisticService.findOne(+id);
+<<<<<<< HEAD
 =======
   }*/
   @Get(':id')
@@ -43,6 +51,12 @@ export class StatisticController {
     @Param('id') id: string,
     @Body() updateStatisticDto: UpdateStatisticDto,
   ) {
+=======
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateStatisticDto: UpdateStatisticDto) {
+>>>>>>> b5c54a6 (statistic resources created)
     return this.statisticService.update(+id, updateStatisticDto);
   }
 
