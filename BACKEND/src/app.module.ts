@@ -22,6 +22,7 @@ import { DragModule } from './drag_and_drop/drag_and_drop.module';
 import { CardsThemeModule } from './cards_theme/cards_theme.module';
 import { LevelMapModule } from './level_map/level_map.module';
 import { LevelDifficultyModule } from './level_difficulty/level_difficulty.module';
+import { StatisticModule } from './statistic/statistic.module';
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { LevelDifficultyModule } from './level_difficulty/level_difficulty.modul
     DragModule,
     LevelMapModule,
     UserResponseModule,
+    StatisticModule,
   ],
   controllers: [AppController],
   providers: [AppService],

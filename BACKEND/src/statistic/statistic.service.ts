@@ -23,13 +23,13 @@ export class StatisticService {
   /*create(createStatisticDto: CreateStatisticDto) {
     return 'This action adds a new statistic';
   }*/
-  /*
+/*
   findAll() {
     return `This action returns all statistic`;
   }*/
-  // recuperer les stats d'un users
+// recuperer les stats d'un users
 
-  /*async Get_User_stat(id: number): Promise<object | undefined> {
+/*async Get_User_stat(id: number): Promise<object | undefined> {
     const stat = await this.userStatRepository
       .createQueryBuilder('statistics')
       .innerJoinAndSelect('statistics.user', 'user')
@@ -53,15 +53,14 @@ export class StatisticService {
     return `This action returns a #${id} statistic`;
   }*/
 
-  /* update(id: number, updateStatisticDto: UpdateStatisticDto) {
+/* update(id: number, updateStatisticDto: UpdateStatisticDto) {
     return `This action updates a #${id} statistic`;
   }*/
 
-  /*remove(id: number) {
+/*remove(id: number) {
     return `This action removes a #${id} statistic`;
   }*/
 
 /*function inject() {
   throw new Error('Function not implemented.');
-}
-*/
+}*/
