@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import {ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import loginService from '@/services/loginService'
 import type User from '@/types/user'
@@ -16,16 +16,17 @@ export const useUserStore = defineStore('user', () => {
   })
   // const refreshStore = () => {
   if (localStorage.getItem('user')) {
-    const userStorage = localStorage.getItem('user')
-    user = JSON.parse(userStorage)
+    const userStorage:any = localStorage.getItem('user')
+    if (JSON.parse(userStorage)) {
+      user = JSON.parse(userStorage)
+    }
   }
   // }
   const getUser = async (email: string, password: string) => {
     const userRequest = await loginService.getUsers(email, password).catch((err) => {
       console.log(err)
     })
-    if (userRequest) {
-      console.log(userRequest.data)
+    if (userRequest.data) {
       return userRequest.data
     }
   }

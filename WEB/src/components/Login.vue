@@ -16,7 +16,6 @@
     for (let key in state) {
       if (state[key] == '') {
         manage.error = 'Veuillez compléter tous les champs !'
-        console.log(key)
         return 1
       }
       // Récupérer l'utilisateur
@@ -25,12 +24,11 @@
       //Muter le state initiale du user
       store.$patch({ user: user })
       //Redirection vers la page
-      localStorage.setItem('user', JSON.stringify(user))
-
-      if (store.user.role) {
-        console.log(store.user.role)
-        window.location.pathname = '/'
-        // router.push('/')
+      if(user){
+        localStorage.setItem('user', JSON.stringify(user))
+        if (store.user) {
+          window.location.pathname = '/'
+        }
       } else {
         manage.error = "Nom d'utilisateur ou mot de passe incorrect"
       }

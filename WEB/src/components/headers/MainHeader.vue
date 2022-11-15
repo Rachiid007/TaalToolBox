@@ -4,7 +4,7 @@
   import { ref } from 'vue'
 
   const userStore = useUserStore()
-  const role = userStore.user.role
+  const role:string[] = userStore.user.role
   const right_tab: any = ref(null)
   const hamburger: any = ref(null)
   const isShown: any = ref(false)
@@ -87,7 +87,7 @@
       >
     </div>
     <router-link
-      v-if="userStore.user.role.length"
+      v-if="role.length"
       class="conreg"
       to="/login"
       @click="handleDisconnection()"
@@ -152,7 +152,7 @@
             >Ajouter Classes</router-link
           >
         <router-link
-          v-if="userStore.user.role.length"
+          v-if="role.length"
           class="hamburger_connreg"
           to="/login"
           @click="handleDisconnection()"
