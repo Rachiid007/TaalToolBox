@@ -66,9 +66,13 @@ export class Users {
   response_card: UserResponseCard[];
   nombre_de_parties_flashcards: any;
   nombre_de_parties_drag: any;
+<<<<<<< HEAD
 
   @OneToOne(() => Statistic)
   @JoinColumn()
   statistic: Statistic;
 >>>>>>> cd0a472 (accomplissement service created)
+=======
+>>>>>>> c8ce166 (get statistics service)
+>>>>>>> de881d2 (get statistics service)
 }
