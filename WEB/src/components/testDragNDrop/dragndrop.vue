@@ -3,6 +3,7 @@
   // import jsonfile from '@/assets/levelData/dragndrop.json'
   import { useDadLevels } from '@/stores/dadLevels'
   import { RouterLink } from 'vue-router'
+  import axios from 'axios'
   import form4 from '@/assets/images/form4.png'
 
   const store = useDadLevels()
@@ -24,6 +25,18 @@
   // On stocke le nombre de mauvaises réponses
   const badFields = ref(0)
   const state = reactive(dataFromStore[store.getLevel()])
+  const dataFromDb: any = ref()
+
+  const getData = async () => {
+    dataFromDb.value = await axios
+      .get('http://localhost:3000/drag_and_drop', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
+        }
+      })
+      .then((response) => console.log(response))
+  }
 
   // fonction appellée quand on drop le mot dans la div
   const dropped = (event: any) => {
@@ -126,6 +139,7 @@
       }
     }
     shuffle()
+    getData()
   })
 </script>
 

@@ -125,7 +125,8 @@ export const useDadLevels = defineStore('dadlevels', () => {
     const DalList = await dalService.getDragAndLearn().catch((error) => {
       console.log(error)
     })
-    DalDataList.value = DalList
+    console.log(DalList)
+    // DalDataList.value.push(DalList);
   }
   const addDragAndLearn = (newDragAndLearnExercice: any) => {
     dalService.postDragAndLearn(newDragAndLearnExercice).catch((error) => {
