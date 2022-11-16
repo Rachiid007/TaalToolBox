@@ -7,6 +7,7 @@ import { Statistic } from './entities/statistic.entity';
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { UsersService } from 'src/users/users.service';
 import { UsersModule } from 'src/users/users.module';
 import { UsersController } from 'src/users/users.controller';
@@ -34,11 +35,21 @@ import { UsersController } from 'src/users/users.controller';
   exports: [StatisticService],
 >>>>>>> c8ce166 (get statistics service)
 =======
+=======
+import { UsersService } from 'src/users/users.service';
+import { UsersModule } from 'src/users/users.module';
+import { UsersController } from 'src/users/users.controller';
+>>>>>>> de881d2 (get statistics service)
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Users, Statistic])],
+  imports: [TypeOrmModule.forFeature([Users, Statistic]), UsersModule],
   controllers: [StatisticController],
+<<<<<<< HEAD
   providers: [StatisticService],
 >>>>>>> b5c54a6 (statistic resources created)
+=======
+  providers: [StatisticService, UsersService],
+  exports: [StatisticService],
+>>>>>>> de881d2 (get statistics service)
 })
 export class StatisticModule {}

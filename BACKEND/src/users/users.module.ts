@@ -9,12 +9,17 @@ import { UsersService } from './users.service';
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { Statistic } from 'src/statistic/entities/statistic.entity';
 =======
 import { Statistic } from 'src/statistic/entities/statistic.entity';
 import { StatisticService } from 'src/statistic/statistic.service';
 >>>>>>> c8ce166 (get statistics service)
+
+>>>>>>> de881d2 (get statistics service)
+=======
+import { Statistic } from 'src/statistic/entities/statistic.entity';
 
 >>>>>>> de881d2 (get statistics service)
 import { SchoolModule } from '../school/school.module';
@@ -24,6 +29,9 @@ import { RoleModule } from '../role/role.module';
   imports: [
     TypeOrmModule.forFeature([Users, Schoolclass, Lang, Role, Statistic]),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> de881d2 (get statistics service)
     SchoolModule,
     SchoolclassModule,
     RoleModule,

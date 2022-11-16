@@ -63,6 +63,7 @@ export class Users {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> cd0a472 (accomplissement service created)
 
@@ -78,4 +79,7 @@ export class Users {
 >>>>>>> c8ce166 (get statistics service)
 =======
 >>>>>>> cd0a472 (accomplissement service created)
+=======
+>>>>>>> c8ce166 (get statistics service)
+>>>>>>> de881d2 (get statistics service)
 }

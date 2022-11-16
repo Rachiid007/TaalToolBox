@@ -2,7 +2,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*import {
+=======
+import {
+>>>>>>> de881d2 (get statistics service)
 =======
 import {
 >>>>>>> de881d2 (get statistics service)
@@ -36,12 +40,13 @@ export class StatisticService {
   /*create(createStatisticDto: CreateStatisticDto) {
     return 'This action adds a new statistic';
   }*/
-/*
+  /*
   findAll() {
     return `This action returns all statistic`;
   }*/
-// recuperer les stats d'un users
+  // recuperer les stats d'un users
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -63,6 +68,9 @@ export class StatisticService {
 =======
 /*async Get_User_stat(id: number): Promise<object | undefined> {
 >>>>>>> b5c54a6 (statistic resources created)
+=======
+  /*async Get_User_stat(id: number): Promise<object | undefined> {
+>>>>>>> de881d2 (get statistics service)
     const stat = await this.userStatRepository
       .createQueryBuilder('statistics')
       .innerJoinAndSelect('statistics.user', 'user')
@@ -86,16 +94,17 @@ export class StatisticService {
     return `This action returns a #${id} statistic`;
   }*/
 
-/* update(id: number, updateStatisticDto: UpdateStatisticDto) {
+  /* update(id: number, updateStatisticDto: UpdateStatisticDto) {
     return `This action updates a #${id} statistic`;
   }*/
 
-/*remove(id: number) {
+  /*remove(id: number) {
     return `This action removes a #${id} statistic`;
   }*/
 <<<<<<< HEAD
 <<<<<<< HEAD
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*function inject() {
 =======
@@ -204,6 +213,8 @@ export class StatisticService {
     return `This action removes a #${id} statistic`;
   }*/
 
+=======
+>>>>>>> de881d2 (get statistics service)
   async getStatisticsForUser(userId: number): Promise<any> {
     // Utilisez ici le répository pour récupérer les statistiques d'un utilisateur spécifique à partir de la base de données
     const stat = await this.userStatRepository.findOneBy({
@@ -228,8 +239,12 @@ export class StatisticService {
 function inject() {
   throw new Error('Function not implemented.');
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 >>>>>>> 59a1eb5 (statistic resources created)
 =======
 }*/
 >>>>>>> b5c54a6 (statistic resources created)
+=======
+}
+>>>>>>> de881d2 (get statistics service)
