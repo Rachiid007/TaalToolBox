@@ -38,9 +38,13 @@ export class UsersService {
   async findOneUser(data: number | any): Promise<Users | undefined> {
     return await this.userRepository.findOne(data);
   }
+<<<<<<< HEAD
   async findByEmail(email: string): Promise<Users> {
     return await this.userRepository.findOne({ where: { email: email } });
   }
+=======
+
+>>>>>>> 124eca4 (get statistics service)
   // Get the user in database and her role
   async loginUser(email: string, password: string) {
     let userData: UserData;
@@ -48,8 +52,15 @@ export class UsersService {
     if (!email) {
       throw new NotFoundException();
     }
+<<<<<<< HEAD
     // await this.roleService.findOne(wh:
     const role = await this.userRepository
+=======
+    //Decrypter le mot de passe du user
+    //Get the users and here role
+   
+    const user = await this.userRepository
+>>>>>>> 124eca4 (get statistics service)
       .createQueryBuilder('users')
       .innerJoinAndSelect('users.role', 'role')
       .where({ email: email })
