@@ -10,10 +10,10 @@ import AddCardFormView from '@/views/add-card/AddCardFormView.vue'
 import ChoiceHowToAddCardView from '@/views/add-card/ChoiceHowToAddCardView.vue'
 import ChoiceHowToAddUserView from '@/views/add-card/ChoiceHowToAddCardView.vue'
 import ChooseActivities from '@/views/chooseActivities/MultipleActivities.vue'
-import DadTestView from '@/views/DadTestView.vue'
-import DadTestTeacherView from '@/views/DadTestTeacherView.vue'
+import DadView from '@/views/DadView.vue'
+import DadTeacherView from '@/views/DadTeacherView.vue'
 import LevelSelectorView from '@/views/DadSelector.vue'
-import DadTestMobileView from '@/views/DadTestMobileView.vue'
+import DadMobileView from '@/views/DadMobileView.vue'
 import Login from '@/views/Login.vue'
 import SignIn from '@/views/SignIn.vue'
 
@@ -71,14 +71,14 @@ const router = createRouter({
       component: ChooseActivities
     },
     {
-      path: '/dadtest',
-      name: 'dadtest',
-      component: DadTestView
+      path: '/dad',
+      name: 'dad',
+      component: DadView
     },
     {
-      path: '/dadteachertest',
-      name: 'dadteachertest',
-      component: DadTestTeacherView
+      path: '/dadteacher',
+      name: 'dadteacher',
+      component: DadTeacherView
     },
     {
       path: '/dadselector',
@@ -86,9 +86,9 @@ const router = createRouter({
       component: LevelSelectorView
     },
     {
-      path: '/dadtestmobile',
-      name: 'dadtestmobile',
-      component: DadTestMobileView
+      path: '/dadmobile',
+      name: 'dadmobile',
+      component: DadMobileView
     },
     {
       path: '/login',
