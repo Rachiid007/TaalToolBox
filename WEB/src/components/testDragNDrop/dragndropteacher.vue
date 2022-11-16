@@ -81,7 +81,7 @@
       })
       .catch((err) => {
         console.log(err)
-        alertNoName.value = "Une erreur c'est produite, veuillez réessayé ultérieurement !"
+        alertNoName.value = "Une erreur c'est produite! Veuillez réessayer ultérieurement."
         badResponse = true
       })
       .then((response) => {
@@ -470,7 +470,7 @@
       </div>
     </div>
   </div>
-  <RouterLink to="/dadselector">Test</RouterLink>
+  <!-- <RouterLink to="/dadselector">Test</RouterLink> -->
   <div
     class="popup"
     v-show="popupDisplay"
@@ -594,7 +594,7 @@
   }
   .controlPanelContainer {
     display: flex;
-    height: 100vh;
+    height: 100%;
     min-width: 22%;
     max-width: 25%;
     justify-content: center;
