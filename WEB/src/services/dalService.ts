@@ -7,10 +7,10 @@ interface DragAndLearn {
 
 export default {
   getDragAndLearn() {
-    return apiClient.get(`/draganddrop`)
+    return apiClient.get(`/drag_and_drop`)
   },
   postDragAndLearn(newExerciceData: DragAndLearn) {
-    return apiClientForm.post('/draganddrop', {
+    return apiClientForm.post('/drag_and_drop', {
       params: {
         data: newExerciceData.data,
         img: newExerciceData.imgLink

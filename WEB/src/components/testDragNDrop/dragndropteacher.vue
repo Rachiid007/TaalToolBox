@@ -1,6 +1,9 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { onMounted, ref } from 'vue'
   import { useDadLevels } from '@/stores/dadLevels'
+  import { useUserStore } from '@/stores/user'
+  import axios from 'axios'
+  import router from '@/router'
   //   const image = ref('')
   //   const file = ref(null)
   //   const changeImage = (e: any) => {
@@ -9,8 +12,11 @@
   //     console.log(image.value, file.value)
   //   }
   const store = useDadLevels()
+  const userStore = useUserStore()
   const addDataToStore = (data: any) => {
     store.addData(data)
+    console.log(store.getData())
+    console.log(store.getDragAndLearn())
     console.log(store.getData())
   }
 
@@ -34,7 +40,14 @@
   const alertDiv = ref(false)
   const alertNoDiv = ref(false)
 
-  const dataSended = ref(false)
+  //erreur lors du choix du nom de l'activité
+  const alertNoName = ref('')
+
+  // Pour savoir si la requête à réussie ou pas
+  const goodRequest = ref(false)
+
+  //Pour savoir si les données on déjà été envoyées => empêche de spam le bouton
+  // const dataSended = ref(false)
 
   // Les valeurs de position pour les divs quand on utilise le drag and drop
   const positions = ref({
@@ -43,6 +56,42 @@
     pos3: 0,
     pos4: 0
   })
+
+  const popupDisplay = ref(false)
+
+  // On va stocker ici le nom du nouveau niveau
+  const levelName = ref('')
+
+  const postData = (payload: any) => {
+    console.log(payload)
+    console.log(userStore.user.name, userStore.user.surname)
+    let levelData = JSON.stringify(payload)
+    let badResponse = false
+    let dataToSend = {
+      leveldata: levelData,
+      levelname: levelName.value,
+      creator: userStore.user.name + userStore.user.surname
+    }
+    axios
+      .post('http://localhost:3000/drag_and_drop', dataToSend, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        alertNoName.value = "Une erreur c'est produite, veuillez réessayé ultérieurement !"
+        badResponse = true
+      })
+      .then((response) => {
+        if (!badResponse) {
+          console.log(response)
+          goodRequest.value = true
+        }
+        // router.push('/')
+      })
+  }
 
   const addField = () => {
     // On push un nombre dans l'array pour ajouter une div avec le v-for
@@ -189,61 +238,76 @@
     return 1
   }
 
-  const saveConfig = () => {
-    if (checkFields() && alertNoDiv && !dataSended.value) {
+  const openPopup = () => {
+    if (checkFields() && alertNoDiv) {
       console.log('Ok to send data !!')
-      // let payload = {"fields": [], "backImage": }
-      let payload = { fields: [], backImage: '' }
-      if (image.value.src) {
-        payload['backImage'] = image.value.src
-      } else {
-        alert("Une erreur s'est produite !")
-        return 0
-      }
-      for (let div in background.value.childNodes) {
-        if (background.value.childNodes[div].id) {
-          let currentDiv = background.value.childNodes[div]
-
-          let currentDivHeightPorc = (
-            (parseInt(getComputedStyle(currentDiv).height) /
-              parseInt(getComputedStyle(image.value).height)) *
-            100
-          ).toFixed(2)
-          let currentDivWidthPorc = (
-            (parseInt(getComputedStyle(currentDiv).width) /
-              parseInt(getComputedStyle(image.value).width)) *
-            100
-          ).toFixed(2)
-
-          let currentDivTopPorc = (
-            (parseInt(getComputedStyle(currentDiv).top) /
-              parseInt(getComputedStyle(image.value).height)) *
-            100
-          ).toFixed(2)
-
-          let currentDivLeftPorc = (
-            (parseInt(getComputedStyle(currentDiv).left) /
-              parseInt(getComputedStyle(image.value).width)) *
-            100
-          ).toFixed(2)
-
-          let currentDivInfo = {
-            test: currentDiv.id.match(/(\d+)/)[0],
-            number: parseInt(currentDiv.id.match(/(\d+)/)),
-            top: currentDivTopPorc.toString() + '%',
-            left: currentDivLeftPorc.toString() + '%',
-            width: currentDivWidthPorc.toString() + '%',
-            height: currentDivHeightPorc.toString() + '%',
-            rightValue: currentDiv.innerText
-          }
-          // console.log(currentDivInfo)
-          payload.fields.push(currentDivInfo)
-        }
-      }
-      dataSended.value = true
-      addDataToStore(payload)
+      popupDisplay.value = true
     }
   }
+
+  const saveConfig = () => {
+    alertNoName.value = ''
+    if (levelName) {
+      console.log(levelName.value.length, levelName.value)
+      if (levelName.value.length >= 5) {
+        // let payload = {"fields": [], "backImage": }
+        let payload = { fields: [], backImage: '' }
+        if (image.value.src) {
+          payload['backImage'] = image.value.src
+        } else {
+          alert("Une erreur s'est produite !")
+          return 0
+        }
+        for (let div in background.value.childNodes) {
+          if (background.value.childNodes[div].id) {
+            let currentDiv = background.value.childNodes[div]
+
+            let currentDivHeightPorc = (
+              (parseInt(getComputedStyle(currentDiv).height) /
+                parseInt(getComputedStyle(image.value).height)) *
+              100
+            ).toFixed(2)
+            let currentDivWidthPorc = (
+              (parseInt(getComputedStyle(currentDiv).width) /
+                parseInt(getComputedStyle(image.value).width)) *
+              100
+            ).toFixed(2)
+
+            let currentDivTopPorc = (
+              (parseInt(getComputedStyle(currentDiv).top) /
+                parseInt(getComputedStyle(image.value).height)) *
+              100
+            ).toFixed(2)
+
+            let currentDivLeftPorc = (
+              (parseInt(getComputedStyle(currentDiv).left) /
+                parseInt(getComputedStyle(image.value).width)) *
+              100
+            ).toFixed(2)
+
+            let currentDivInfo = {
+              test: currentDiv.id.match(/(\d+)/)[0],
+              number: parseInt(currentDiv.id.match(/(\d+)/)),
+              top: currentDivTopPorc.toString() + '%',
+              left: currentDivLeftPorc.toString() + '%',
+              width: currentDivWidthPorc.toString() + '%',
+              height: currentDivHeightPorc.toString() + '%',
+              rightValue: currentDiv.innerText
+            }
+            // console.log(currentDivInfo)
+            payload.fields.push(currentDivInfo)
+          }
+        }
+        addDataToStore(payload)
+        postData(payload)
+      } else {
+        alertNoName.value = "Le nom de l'exercice doit contenir au moins 5 caractères."
+      }
+    } else {
+      alertNoName.value = "Veuillez entrer un nom pour l'activité."
+    }
+  }
+  onMounted(() => {})
 </script>
 <template>
   <div class="main">
@@ -385,7 +449,7 @@
           </div>
           <button
             class="saveButton"
-            @click="saveConfig"
+            @click="openPopup"
             v-show="selectedId"
           >
             Enregistrer l'activité
@@ -407,6 +471,66 @@
     </div>
   </div>
   <RouterLink to="/dadselector">Test</RouterLink>
+  <div
+    class="popup"
+    v-show="popupDisplay"
+  >
+    <div
+      class="popup_content"
+      v-if="!goodRequest"
+    >
+      <h1 style="color: #00307e">Veuillez entrer un nom pour ce nouvel exercice</h1>
+      <input
+        type="text"
+        class="exercice_name"
+        maxlength="20"
+        v-model="levelName"
+      />
+      <p
+        class="alert"
+        style="font-size: 0.7em"
+        v-show="alertNoName"
+      >
+        {{ alertNoName }}
+      </p>
+      <div class="button_container">
+        <button
+          class="final_save_button"
+          @click="saveConfig"
+        >
+          Sauvegarder
+        </button>
+        <button
+          class="cancel_button"
+          @click="
+            () => {
+              popupDisplay = false
+            }
+          "
+        >
+          Annuler
+        </button>
+      </div>
+    </div>
+    <div
+      class="popup_content"
+      v-else
+    >
+      <h1 style="color: green">L'exercice à bien été enregistré dans la base de données !</h1>
+      <div class="button_container">
+        <button
+          class="final_save_button"
+          @click="
+            () => {
+              router.push('/')
+            }
+          "
+        >
+          Accueil
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 <style scoped>
   .main {
@@ -643,9 +767,84 @@
     margin: 0;
   }
 
+  .popup {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 20;
+    background: rgb(220, 220, 220, 0.1);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .popup_content {
+    min-width: 35vw;
+    border: 1px solid #00307e;
+    background-color: white;
+    text-align: center;
+    font-size: 1.4em;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .button_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15%;
+    width: 100%;
+    padding-top: 3%;
+  }
+  .final_save_button {
+    background-color: #00307e;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    align-self: center;
+    padding: 10px 35px;
+    border-radius: 5px;
+    color: white;
+    transition: 1s ease;
+  }
+  .final_save_button:hover {
+    box-shadow: inset 0 0 5px #0252d3, rgba(149, 157, 165, 0.15) 0px 8px 24px;
+    transition: 0.5s ease;
+  }
+
+  .cancel_button {
+    outline: 1px solid red;
+    padding: 10px 25px;
+    border-radius: 5px;
+  }
+  .cancel_button:hover {
+    outline: 2px solid red;
+  }
+
+  .cancel_button:active {
+    transform: scale(0.9);
+  }
+
+  .exercice_name {
+    border: #555 1px solid;
+    text-align: center;
+    margin-top: 10px;
+    max-height: 35px;
+  }
+
   @keyframes divSpawning {
     0% {
-      border: 8px dashed rgb(0, 78, 203, 0.8);
+      border: 8px dashed #004ecbcc;
     }
     100% {
       border: 2px dashed #00307e;

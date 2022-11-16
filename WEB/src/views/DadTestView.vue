@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import Dragndrop from '@/components/testDragNDrop/dragndrop.vue'
+  import Dragndrop from '@/components/testDragNDrop/DragNDrop.vue'
   import TheHeader from '@/components/TheHeader.vue'
   import { ref } from 'vue'
 
