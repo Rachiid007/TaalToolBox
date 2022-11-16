@@ -1,6 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { REQUEST } from '@nestjs/core';
-import { Request } from 'express';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { InjectRepository } from '@nestjs/typeorm';
