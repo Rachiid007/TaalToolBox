@@ -69,8 +69,6 @@ import { ActivityModule } from './activity/activity.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply()
-      .forRoutes('cards/upload');
+    consumer.apply().forRoutes('cards/upload');
   }
 }
