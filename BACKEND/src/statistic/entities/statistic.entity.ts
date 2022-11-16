@@ -1,3 +1,4 @@
+import { profile } from 'console';
 import { Users } from 'src/users/entities/users.entity';
 import {
   Column,
@@ -20,7 +21,7 @@ export class Statistic {
   @Column()
   nombre_parties_drag: number;
 
-  @OneToOne(() => Users)
-  @JoinColumn()
-  user_id: Users;
+  @OneToOne(() => Users, { cascade: true })
+  @JoinColumn({ name: 'id' })
+  user: Users;
 }

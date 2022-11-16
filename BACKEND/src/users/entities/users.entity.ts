@@ -61,6 +61,7 @@ export class Users {
   nombre_de_parties_flashcards: any;
   nombre_de_parties_drag: any;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   @OneToOne(() => Statistic)
   @JoinColumn()
@@ -69,4 +70,6 @@ export class Users {
 =======
 >>>>>>> c8ce166 (get statistics service)
 >>>>>>> de881d2 (get statistics service)
+=======
+>>>>>>> c8ce166 (get statistics service)
 }
