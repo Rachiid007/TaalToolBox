@@ -39,9 +39,13 @@ export class UsersService {
     return await this.userRepository.findOne(data);
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
   async findByEmail(email: string): Promise<Users> {
     return await this.userRepository.findOne({ where: { email: email } });
   }
+=======
+
+>>>>>>> 124eca4 (get statistics service)
 =======
 
 >>>>>>> 124eca4 (get statistics service)
@@ -131,6 +135,7 @@ export class UsersService {
     }
     return userData;
   }
+<<<<<<< HEAD
   public async createUser(payload: UserFormData) {
     // Normalement en front on doit récupérer toutes les écoles
     //
@@ -248,6 +253,8 @@ export class UsersService {
       });
     console.log(userRole);
   }
+=======
+>>>>>>> 124eca4 (get statistics service)
 
   async create(data: CreateUserDto): Promise<any> {
     return await this.userRepository
