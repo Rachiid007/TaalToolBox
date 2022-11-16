@@ -266,14 +266,14 @@
           />
           <router-link
             v-if="isMobile"
-            to="/dadtestmobile"
+            to="/dadmobile"
             class="playButton"
             id="buttonDad"
             >PLAY</router-link
           >
           <router-link
             v-else
-            to="/dadtest"
+            to="/dad"
             class="playButton"
             id="buttonDad"
             >PLAY</router-link

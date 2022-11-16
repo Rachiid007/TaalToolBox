@@ -6,22 +6,22 @@
   const isThereAnyActivitySelected = ref(false)
 
   const listActivities = [
-    { 
+    {
       activity_name: 'FlashCards',
       url: '/src/assets/logo/flashcards.svg',
       description:
         "Activité dans laquelle l'étudiant doit trouver de mots et doit s'auto-évaluer. Les mots" +
         '            sont representé sous forme de carte. Un systeme de poids est mise en place pour que les' +
         "            cartes plus dure de l'élève réaparaissent le plus souvent.",
-      link:"/add-card"
+      link: '/add-card'
     },
     {
       activity_name: 'DragAndLearn',
       url: '/src/assets/logo/dalcard.svg',
       description:
-         "Activité dans laquelle l'étudiant doit placer des mots qui lui seront proposer dans la zone de jeu." +
-         " Dans cette zone de jeu les mots devrons être placés dans des champs et la zone de jeu comportera une image de background.",
-      link:"/dadteachertest"
+        "Activité dans laquelle l'étudiant doit placer des mots qui lui seront proposer dans la zone de jeu." +
+        ' Dans cette zone de jeu les mots devrons être placés dans des champs et la zone de jeu comportera une image de background.',
+      link: '/dadteacher'
     }
   ]
 
@@ -52,12 +52,17 @@
       </div>
       <div class="description">
         <div
-        v-if = isThereAnyActivitySelected
-        class="descrTitle"
-        >  
-        <p>Type sélectionné:</p> 
-      </div>
-      <div v-else class="descrTitle"> Choisissez l'activité en cliquant sur la carte ! </div>
+          v-if="isThereAnyActivitySelected"
+          class="descrTitle"
+        >
+          <p>Type sélectionné:</p>
+        </div>
+        <div
+          v-else
+          class="descrTitle"
+        >
+          Choisissez l'activité en cliquant sur la carte !
+        </div>
         <div
           class="actiName"
           v-show="isThereAnyActivitySelected"
@@ -73,10 +78,12 @@
           </p>
         </div>
         <div>
-          <router-link v-show="isThereAnyActivitySelected" 
-              :to = "isThereAnyActivitySelected ? listActivities[selectedActivity].link : ''"
-              class="button">
-              Créer une activité
+          <router-link
+            v-show="isThereAnyActivitySelected"
+            :to="isThereAnyActivitySelected ? listActivities[selectedActivity].link : ''"
+            class="button"
+          >
+            Créer une activité
           </router-link>
         </div>
       </div>
@@ -84,7 +91,7 @@
   </div>
 </template>
 <style scoped>
-.main {
+  .main {
     gap: 4%;
     display: flex;
     flex-direction: column;
@@ -204,15 +211,12 @@
     width: 90%;
     height: auto;
   }
-  @media (max-width: 1400px){ 
-    .actiName{
+  @media (max-width: 1400px) {
+    .actiName {
       font-size: 15px;
     }
-   .descrTitle{
-    font-size: 15px;
-   }
-}
+    .descrTitle {
+      font-size: 15px;
+    }
+  }
 </style>
- 
-
- 

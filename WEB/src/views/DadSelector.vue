@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import LevelSelector from '@/components/testDragNDrop/levelSelector.vue'
+  import LevelSelector from '@/components/dragndrop/LevelSelector.vue'
 </script>
 
 <template>

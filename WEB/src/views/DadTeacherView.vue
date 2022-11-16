@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import DragndropTeacher from '@/components/testDragNDrop/DragNDropTeacher.vue'
+  import DragndropTeacher from '@/components/dragndrop/DragNDropTeacher.vue'
   import TheHeader from '@/components/TheHeader.vue'
 </script>
 <template>
