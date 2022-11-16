@@ -4,7 +4,7 @@ TaalToolBox App est une application web et mobile axée sur l'apprentissage des 
 
 Cette application est développée dans le cadre du cours "Projet d'intégration" du bachelier Technologie de l'informatique à l'EPHEC.
 
-Ce projet utilise la Framework [Vue.js 3](https://vuejs.org/) pour le Frontend, l'environnement
+Ce projet utilise le Framework [Vue.js 3](https://vuejs.org/) pour le Frontend, l'environnement
 d'exécution NodeJS pour le backend et une base de données PostgreSQL pour la persistance des données.
 
 ### Pré-requis

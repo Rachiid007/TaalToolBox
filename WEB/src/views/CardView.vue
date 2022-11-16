@@ -3,18 +3,10 @@
   import RemainingCard from '@/components/card/RemainingCard.vue'
   import ButtonValidation from '@/components/card/ButtonValidation.vue'
   import TheHeader from '@/components/TheHeader.vue'
-  import { useCardStore } from '@/stores/card'
   import { useShowStore } from '@/stores/show'
-  import { computed, ref } from 'vue'
-  const store = useCardStore()
+  import { computed } from 'vue'
   const storeShow = useShowStore()
   const showButtonValidation = computed(() => storeShow.getShowButtonValidation())
-
-  //pour faire remonter l'état au composant parent
-  const showButtonReveal = computed(() => storeShow.getShowButtonReveal())
-  const showAnswer = computed(() => storeShow.getShowAnswer())
-  const remaining = computed(() => store.remaining)
-  const card = computed(() => store.getCurrentDeck())
 </script>
 <!-- Est ce qu'il yaura ou pas un header -->
 <template>
@@ -65,9 +57,6 @@
     max-width: 1600px;
     height: auto;
   }
-  .rest-card {
-    /* border: solid green 1px; */
-  }
   .validation-button {
     /* display: none; */
     margin-top: 15px;
@@ -76,7 +65,6 @@
   .play-card {
     /* border: solid red 1px; */
     flex: 0.7;
-
     /* margin: 0 auto; */
     display: flex;
     flex-direction: column;
@@ -89,6 +77,7 @@
     margin-left: 16%;
     padding: 5px;
   }
+
   @media (max-width: 768px) {
     .container {
       padding: 10px;
