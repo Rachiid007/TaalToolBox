@@ -6,12 +6,14 @@ import { Schoolclass } from '../schoolclass/entities/schoolclass.entity';
 import { Users } from './entities/users.entity';
 import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { Statistic } from 'src/statistic/entities/statistic.entity';
+
 import { SchoolModule } from '../school/school.module';
 import { SchoolclassModule } from '../schoolclass/schoolclass.module';
 import { RoleModule } from '../role/role.module';
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Users, Schoolclass, Lang, Role]),
+    TypeOrmModule.forFeature([Users, Schoolclass, Lang, Role, Statistic]),
     SchoolModule,
     SchoolclassModule,
     RoleModule,

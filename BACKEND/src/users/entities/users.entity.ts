@@ -46,4 +46,13 @@ export class Users {
   //chaque utilisateur possède une seule langue
   @ManyToOne(() => Lang, (lang) => lang.users)
   lang: Lang;
+<<<<<<< HEAD
+=======
+
+  //Une utilisateur peut avoir plusieurs solution
+  @OneToMany(() => UserResponseCard, (response_card) => response_card.user)
+  response_card: UserResponseCard[];
+  nombre_de_parties_flashcards: any;
+  nombre_de_parties_drag: any;
+>>>>>>> c8ce166 (get statistics service)
 }
