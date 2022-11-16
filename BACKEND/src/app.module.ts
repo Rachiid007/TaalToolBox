@@ -18,14 +18,10 @@ import { UsersModule } from './users/users.module';
 import { SchoolclassModule } from './schoolclass/schoolclass.module';
 import { SchoolModule } from './school/school.module';
 import { ActivityModule } from './activity/activity.module';
-<<<<<<< HEAD
 import { DragModule } from './drag_and_drop/drag_and_drop.module';
 import { CardsThemeModule } from './cards_theme/cards_theme.module';
 import { LevelMapModule } from './level_map/level_map.module';
 import { LevelDifficultyModule } from './level_difficulty/level_difficulty.module';
-=======
-import { StatisticModule } from './statistic/statistic.module';
->>>>>>> 59a1eb5 (statistic resources created)
 
 @Module({
   imports: [
