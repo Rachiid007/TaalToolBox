@@ -85,15 +85,18 @@
     </form>
     <p
       class="error-msg"
-      v-show="showErrorMessage"
+      v-if="showErrorMessage"
     >
       Veuillez remplir tous les champs
     </p>
 
-    <div class="preview">
+    <div
+      v-if="dataForm.url"
+      class="preview"
+    >
       <img
         v-show="dataForm.url"
-        :src="dataForm.url"
+        :src="dataForm.url!"
         alt="preview"
       />
     </div>

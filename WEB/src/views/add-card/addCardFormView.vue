@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import addCardForm from '@/components/card/add/addCardForm.vue'
+  import AddCardForm from '@/components/card/add/AddCardForm.vue'
   import MainHeader from '@/components/headers/MainHeader.vue'
   import AllCard from '@/components/card/add/AllCard.vue'
   import { useUserStore } from '@/stores/user';

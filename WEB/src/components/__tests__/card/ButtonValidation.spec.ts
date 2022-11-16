@@ -1,9 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
-import { useCardStore } from '@/stores/card'
 
-import RemainingCard from '@/components/card/RemainingCard.vue'
+import ButtonValidation from '@/components/card/ButtonValidation.vue'
 
 describe('RemainingCard.vue Test with empty data store', () => {
   let wrapper = null
@@ -11,7 +10,7 @@ describe('RemainingCard.vue Test with empty data store', () => {
   // SETUP - run prior to each unit test
   beforeEach(() => {
     // render the component
-    wrapper = shallowMount(RemainingCard, {
+    wrapper = shallowMount(ButtonValidation, {
       global: {
         plugins: [
           createTestingPinia({
@@ -28,8 +27,8 @@ describe('RemainingCard.vue Test with empty data store', () => {
   })
 
   it('initializes with zero elements displayed', () => {
-    expect(wrapper.findAll('div').length).toEqual(3)
+    expect(wrapper.findAll('div').length).toEqual(1)
 
-    expect(wrapper.findAll('p').length).toEqual(1)
+    expect(wrapper.findAll('button').length).toEqual(3)
   })
 })

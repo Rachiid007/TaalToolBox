@@ -20,17 +20,17 @@
       isShown.value = true
     }
   }
-    const staticRole = {
-      admin : 'Administrateur',
-      creator :  'Créateur',
-      teacher : 'Professeur',
-      student : 'Elève'
-    }
-    // const role = userStore.user.role
-   const handleDisconnection = ()=>{
-     localStorage.removeItem("user")
-     userStore.$reset
-    window.location.pathname = "/login"
+  const staticRole = {
+    admin: 'Administrateur',
+    creator: 'Créateur',
+    teacher: 'Professeur',
+    student: 'Elève'
+  }
+  // const role = userStore.user.role
+  const handleDisconnection = () => {
+    localStorage.removeItem('user')
+    userStore.$reset
+    window.location.pathname = '/login'
   }
 </script>
 
@@ -57,26 +57,33 @@
       <router-link
         class="tabs_element"
         to="/map"
-        v-show="Object.values(staticRole).some(x=>{return role.includes(x)}) "
+        v-show="
+          Object.values(staticRole).some((x) => {
+            return role.includes(x)
+          })
+        "
         >Carte</router-link
       >
       <router-link
-      to="/add-user"
-      class="tabs_element"
-      v-show="[staticRole.admin , staticRole.teacher].some(x=>{return role.includes(x)})"
+        to="/add-user"
+        class="tabs_element"
+        v-show="
+          [staticRole.admin, staticRole.teacher].some((x) => {
+            return role.includes(x)
+          })
+        "
       >
-        <div   v-if="role.includes(staticRole.admin)">
-          Ajouter Prof/Elève
-        </div>
-        <div v-else >
-          Ajouter Elève
-        </div>
-      </router-link
-      >
+        <div v-if="role.includes(staticRole.admin)">Ajouter Prof/Elève</div>
+        <div v-else>Ajouter Elève</div>
+      </router-link>
       <router-link
         to="/chooseActivities"
         class="tabs_element"
-        v-show="[staticRole.admin , staticRole.creator].some(x=>{return role.includes(x)})"
+        v-show="
+          [staticRole.admin, staticRole.creator].some((x) => {
+            return role.includes(x)
+          })
+        "
         >Ajouter Activités</router-link
       >
       <router-link
@@ -117,40 +124,46 @@
         <router-link
           class="right_tab_element"
           to="/"
-         
           >Acceuil</router-link
         >
         <router-link
-          v-show="Object.values(staticRole).some(x=>{return role.includes(x)}) "
+          v-show="
+            Object.values(staticRole).some((x) => {
+              return role.includes(x)
+            })
+          "
           class="right_tab_element"
           to="/map"
-          >Carte </router-link
-        >
+          >Carte
+        </router-link>
         <router-link
-          v-show="[staticRole.admin , staticRole.teacher].some(x=>{return role.includes(x)})"
+          v-show="
+            [staticRole.admin, staticRole.teacher].some((x) => {
+              return role.includes(x)
+            })
+          "
           to="/add-user"
           class="right_tab_element"
         >
-          <div   v-if="role.includes(staticRole.admin)">
-            Ajouter Prof/Elève
-          </div>
-          <div v-else >
-            Ajouter Elève
-          </div>
-        </router-link
-        >
+          <div v-if="role.includes(staticRole.admin)">Ajouter Prof/Elève</div>
+          <div v-else>Ajouter Elève</div>
+        </router-link>
         <router-link
-          v-show="[staticRole.admin , staticRole.creator].some(x=>{return role.includes(x)})"
+          v-show="
+            [staticRole.admin, staticRole.creator].some((x) => {
+              return role.includes(x)
+            })
+          "
           to="/chooseActivities"
           class="right_tab_element"
           >Ajouter Activités</router-link
         >
         <router-link
-            to="#"
-            class="right_tab_element"
-            v-show="role.includes(staticRole.admin)"
-            >Ajouter Classes</router-link
-          >
+          to="#"
+          class="right_tab_element"
+          v-show="role.includes(staticRole.admin)"
+          >Ajouter Classes</router-link
+        >
         <router-link
           v-if="userStore.user.role.length"
           class="hamburger_connreg"

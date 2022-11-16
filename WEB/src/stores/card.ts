@@ -3,16 +3,20 @@ import { ref, reactive, computed } from 'vue'
 import type Flashcard from '@/types/Flashcard'
 import FlashcardService from '@/services/FlashcardService'
 import { flashcardsData } from '@/data/animalFlashcards'
+
 export const useCardStore = defineStore('card', () => {
+  const resultGame = reactive({
+    totalQuestions: 0,
+    goodAnswers: 0,
+    almostGoodAnswers: 0,
+    wrongAnswers: 0
+  })
   const remaining = ref(0)
-  const totalQuestions = ref(0)
-  const goodAnswers = ref(0)
-  const almostGoodAnswers = ref(0)
-  const wrongAnswers = ref(0)
   const tableCard = reactive<Flashcard[]>([])
-  let actualCard = ref<Flashcard>({ id: 0, word: '', translation: '', image: '' }) //{ id: 0, question: '', translation: '', image: '', category: '' }
+  let actualCard = ref<Flashcard>() //{ id: 0, question: '', translation: '', image: '', category: '' }
+
   const goodAnswerPercentage = computed(() => {
-    return Math.round((goodAnswers.value / totalQuestions.value) * 100)
+    return Math.round((resultGame.goodAnswers / resultGame.totalQuestions) * 100)
   })
 
   //Get all card in DB
@@ -21,7 +25,8 @@ export const useCardStore = defineStore('card', () => {
     return flashcardRequest.data
   }
 
-  //Take a cardNumber  of card in a random position inside the flashcardTable table
+  // prend nombre de card et les melange et les met dans tableCard
+  //Take a cardNumber of card in a random position inside the flashcardTable table
   const shuffledCard = (flashcardTable: Flashcard[], cardNumber: number) => {
     // unsort table
     const shuffled = [...flashcardTable].sort(() => 0.5 - Math.random())
@@ -34,7 +39,7 @@ export const useCardStore = defineStore('card', () => {
 
     getCard()
       .then((data) => {
-        if (totalQuestions.value) {
+        if (resultGame.totalQuestions) {
           //If we have the number of card in DB else take card in front
           data.length >= card ? shuffledCard(data, card) : shuffledCard(flashcardsData, card)
         }
@@ -62,7 +67,7 @@ export const useCardStore = defineStore('card', () => {
 
   // POUR LE NOMBRE DE CARTE RESTANT
   const setRemaining = (nbrOfCards: number) => {
-    totalQuestions.value = nbrOfCards
+    resultGame.totalQuestions = nbrOfCards
     remaining.value = nbrOfCards
   }
 
@@ -73,15 +78,15 @@ export const useCardStore = defineStore('card', () => {
   }
 
   const incrementGoodAnswers = () => {
-    goodAnswers.value++
+    resultGame.goodAnswers
   }
 
   const incrementAlmostGoodAnswers = () => {
-    almostGoodAnswers.value++
+    resultGame.almostGoodAnswers
   }
 
   const incrementWrongAnswers = () => {
-    wrongAnswers.value++
+    resultGame.wrongAnswers
   }
 
   // ADD CARD FORM
@@ -89,7 +94,6 @@ export const useCardStore = defineStore('card', () => {
   const flashcardList = reactive([]) as Flashcard[]
 
   const addFlashcard = (flashcard: Flashcard) => {
-    console.log(flashcard)
     flashcardList.push(flashcard)
   }
 
@@ -99,17 +103,12 @@ export const useCardStore = defineStore('card', () => {
         flashcardList.splice(index, 1)
         return
       }
-
-      console.log("PROBLEME D'ID -> carte pas trouvé dans le store")
     })
   }
 
   return {
     remaining,
-    totalQuestions,
-    goodAnswers,
-    almostGoodAnswers,
-    wrongAnswers,
+    resultGame,
     goodAnswerPercentage,
     tableCard,
     setRemaining,

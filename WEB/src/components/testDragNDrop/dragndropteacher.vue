@@ -58,6 +58,7 @@
       let element: any = document.getElementById(selectedId.value)
       element.style.border = '2px dashed #00307e'
     }
+
     selectedId.value = e.target.id
     let element: any = document.getElementById(selectedId.value)
     element.style.border = '2px dashed red'
@@ -65,6 +66,7 @@
     selectedDivHeight.value = parseInt(getComputedStyle(element).height)
     selectedDivTop.value = element.offsetTop
     selectedDivLeft.value = element.offsetLeft
+
     if (element.innerText) {
       selectedDivContent.value = element.innerText
     } else {
