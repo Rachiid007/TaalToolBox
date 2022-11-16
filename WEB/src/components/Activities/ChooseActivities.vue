@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// il n'ya que ceux ayant le profil créateur qui peuvent ajouter des activités
+  // il n'ya que ceux ayant le profil créateur qui peuvent ajouter des activités
   import { ref, onMounted } from 'vue'
 
   const selectedActivity = ref(0)
@@ -45,6 +45,7 @@
           @click="handleClick(key)"
         >
           <img
+            class="logo"
             :src="value.url"
             alt="Gamemode logo"
           />
@@ -99,6 +100,7 @@
     height: 100vh;
     width: 100%;
     max-width: 1600px;
+    text-align: center;
   }
 
   .title {
@@ -162,7 +164,6 @@
     color: green;
     font-size: 20px;
     display: contents;
-    text-align: center;
   }
 
   .description {
@@ -194,21 +195,19 @@
     border: none;
     color: white;
     padding: 8px 12px;
-    text-align: center;
     display: inline-block;
     font-size: 20px;
-    margin: 4px 2px;
+    margin: 20px 2px;
     cursor: pointer;
     border-radius: 5px;
   }
   .textDescrip {
-    text-align: center;
     font-style: italic;
     font-size: 1.1em;
     /* font-family:monospace; */
   }
   .logo {
-    width: 90%;
+    width: 85%;
     height: auto;
   }
   @media (max-width: 1400px) {
@@ -217,6 +216,10 @@
     }
     .descrTitle {
       font-size: 15px;
+    }
+    .logo {
+      width: 75%;
+      height: auto;
     }
   }
 </style>

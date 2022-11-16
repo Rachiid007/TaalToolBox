@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  import AddCardForm from '@/components/card/add/AddCardForm.vue'
+  import AddCardForm from '@/components/card/add/addCardForm.vue'
   import MainHeader from '@/components/headers/MainHeader.vue'
   import AllCard from '@/components/card/add/AllCard.vue'
-  import { useUserStore } from '@/stores/user';
+  import { useUserStore } from '@/stores/user'
 
   const userStore = useUserStore()
   // import LittleCard from '@/components/LittleCard.vue'
@@ -12,7 +12,6 @@
 
   // const word = ref('Le cheval')
   // const translation = ref('Het paard')
-
 </script>
 
 <template>
@@ -21,14 +20,24 @@
     :translation="translation"
     :image="LeCheval"
   /> -->
-  <MainHeader />
-  <div class="container-view">
-    <add-card-form id="add-card-form" />
-    <all-card id="all-card" />
+  <div class="page">
+    <MainHeader />
+    <div class="container-view">
+      <add-card-form id="add-card-form" />
+      <all-card id="all-card" />
+    </div>
   </div>
 </template>
 
 <style scoped>
+  .page {
+    /* border : solid red 1px ;  */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+    padding-top: 80px;
+  }
   .container-view {
     display: flex;
     width: 100%;
