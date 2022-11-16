@@ -358,6 +358,7 @@
     width: 50%;
     height: auto;
     border: 2px solid grey;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 6px 0px;
   }
   .gamemode-image-dal {
     margin-top: 15px;

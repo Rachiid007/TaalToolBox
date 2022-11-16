@@ -1,12 +1,14 @@
 <script setup lang="ts">
   import MainHeader from '@/components/headers/MainHeader.vue'
-  import ChoiceHowToAddCard from '@/components/card/add/ChoiceHowToAddCard.vue'
+  import ChoiceHowToAddCard from '@/components/card/add/choiceHowToAddCard.vue'
 </script>
 
 <template>
-  <MainHeader />
-  <ChoiceHowToAddCard />
-  <RouterView />
+  <div class="page">
+    <MainHeader />
+    <ChoiceHowToAddCard />
+    <RouterView />
+  </div>
 </template>
 
 <style scoped>
