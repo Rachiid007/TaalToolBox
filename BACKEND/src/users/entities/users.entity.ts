@@ -50,4 +50,6 @@ export class Users {
   //Une utilisateur peut avoir plusieurs solution
   @OneToMany(() => UserResponseCard, (response_card) => response_card.user)
   response_card: UserResponseCard[];
+  nombre_de_parties_flashcards: any;
+  nombre_de_parties_drag: any;
 }

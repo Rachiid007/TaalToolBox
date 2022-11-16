@@ -71,8 +71,6 @@ import { StatisticModule } from './statistic/statistic.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply()
-      .forRoutes('cards/upload');
+    consumer.apply().forRoutes('cards/upload');
   }
 }
