@@ -15,6 +15,7 @@ export class UsersService {
   async findOneUser(data: number | any): Promise<Users | undefined> {
     return await this.userRepository.findOne(data);
   }
+
   // Get the user in database and her role
   async loginUser(
     email: string,
@@ -25,6 +26,7 @@ export class UsersService {
     }
     //Decrypter le mot de passe du user
     //Get the users and here role
+   
     const user = await this.userRepository
       .createQueryBuilder('users')
       .innerJoinAndSelect('users.role', 'role')
@@ -45,6 +47,7 @@ export class UsersService {
     };
     return userData;
   }
+
   async create(data: CreateUserDto): Promise<any> {
     return await this.userRepository
       .save(data)
