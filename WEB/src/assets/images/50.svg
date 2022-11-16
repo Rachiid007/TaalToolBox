@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100.782" height="100.782" viewBox="0 0 100.782 100.782">
+  <g id="Calque_2" data-name="Calque 2" transform="translate(-7.51)">
+    <g id="Calque_1" data-name="Calque 1" transform="translate(8.01 0.5)">
+      <circle id="Ellipse_12" data-name="Ellipse 12" cx="49.891" cy="49.891" r="49.891" fill="#006d31" stroke="#727070" stroke-miterlimit="10" stroke-width="1"/>
+      <circle id="Ellipse_13" data-name="Ellipse 13" cx="39.014" cy="39.014" r="39.014" transform="translate(10.877 10.877)" fill="#fff" stroke="#727070" stroke-miterlimit="10" stroke-width="1"/>
+      <path id="svgexport-5_7_" data-name="svgexport-5 (7)" d="M142.091,1.339,106.035,34.625h14.273l-17.763,27.6L138.6,28.937H124.328Z" transform="translate(-72.431 18.11)" fill="#fff700" stroke="#707070" stroke-width="1" opacity="0.5"/>
+      <rect id="Rectangle_206" data-name="Rectangle 206" width="79.835" height="20.172" transform="translate(9.97 56.148)" fill="#fff" stroke="#717070" stroke-miterlimit="10" stroke-width="0.75"/>
+      <text id="Succes" transform="translate(17.364 72.25)" fill="#006d31" font-size="19" font-family="Rockwell"><tspan x="0" y="0">Succes</tspan></text>
+      <text id="_50" data-name="50" transform="translate(31.06 45.062)" fill="#006c31" stroke="rgba(124,124,124,0)" stroke-width="1" font-size="32" font-family="Rockwell-Bold, Rockwell" font-weight="700"><tspan x="0" y="0">50</tspan></text>
+    </g>
+  </g>
+</svg>
