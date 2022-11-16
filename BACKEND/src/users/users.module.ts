@@ -6,6 +6,7 @@ import { Schoolclass } from '../schoolclass/entities/schoolclass.entity';
 import { Users } from './entities/users.entity';
 import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
+<<<<<<< HEAD
 import { SchoolModule } from '../school/school.module';
 import { SchoolclassModule } from '../schoolclass/schoolclass.module';
 import { RoleModule } from '../role/role.module';
@@ -15,6 +16,14 @@ import { RoleModule } from '../role/role.module';
     SchoolModule,
     SchoolclassModule,
     RoleModule,
+=======
+import { Statistic } from 'src/statistic/entities/statistic.entity';
+import { StatisticService } from 'src/statistic/statistic.service';
+
+@Module({
+  imports: [
+    TypeOrmModule.forFeature([Users, Schoolclass, Lang, Role, Statistic]),
+>>>>>>> c8ce166 (get statistics service)
   ],
   controllers: [UsersController],
   providers: [UsersService],

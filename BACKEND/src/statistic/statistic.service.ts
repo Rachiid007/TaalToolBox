@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 /*import {
   forwardRef,
   Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+=======
+import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
+>>>>>>> c8ce166 (get statistics service)
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/users/entities/users.entity';
 import { UsersService } from 'src/users/users.service';
@@ -29,7 +33,11 @@ export class StatisticService {
   }*/
   // recuperer les stats d'un users
 
+<<<<<<< HEAD
   /*async Get_User_stat(id: number): Promise<object | undefined> {
+=======
+  async Get_User_stat(id: number): Promise<object | undefined> {
+>>>>>>> c8ce166 (get statistics service)
     const stat = await this.userStatRepository
       .createQueryBuilder('statistics')
       .innerJoinAndSelect('statistics.user', 'user')
@@ -60,8 +68,13 @@ export class StatisticService {
   /*remove(id: number) {
     return `This action removes a #${id} statistic`;
   }*/
+<<<<<<< HEAD
 
 /*function inject() {
+=======
+}
+function inject() {
+>>>>>>> c8ce166 (get statistics service)
   throw new Error('Function not implemented.');
 }
 */
