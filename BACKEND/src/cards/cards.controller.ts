@@ -24,6 +24,7 @@ export class CardsController {
 
   @Post()
   create(@Body() createCardDto: CreateCardDto) {
+    console.log('Controller : ', createCardDto);
     return this.cardsService.create(createCardDto);
   }
 

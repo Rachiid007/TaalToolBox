@@ -10,6 +10,7 @@
         translation: flashcard.translation
       })
       // console.log(flashcardRequest.data)
+      // une fois la reponse reçu, on peut envoyer l'image
       const flashcardImageRequest = await FlashcardService.uploadImage({
         id: flashcardRequest.data.id,
         image: flashcard.image
@@ -39,7 +40,7 @@
       >
         <LittleCard
           :id="card.id"
-          :word="card.word"
+          :word="card.word!"
           :translation="card.translation"
           :url="card.url!"
         />

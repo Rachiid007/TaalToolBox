@@ -1,30 +1,15 @@
 <script setup lang="ts">
-  import AddCardForm from '@/components/card/add/addCardForm.vue'
+  import AddCardForm from '@/components/card/add/AddCardForm.vue'
   import MainHeader from '@/components/headers/MainHeader.vue'
-  import AllCard from '@/components/card/add/AllCard.vue'
-  import { useUserStore } from '@/stores/user'
-
-  const userStore = useUserStore()
-  // import LittleCard from '@/components/LittleCard.vue'
-  // import LeCheval from '@/assets/images/cheval.svg'
-
-  // import { ref } from 'vue'
-
-  // const word = ref('Le cheval')
-  // const translation = ref('Het paard')
+  import AllCard from '@/components/card/add/ListLittleCard.vue'
 </script>
 
 <template>
-  <!-- <little-card
-    :word="word"
-    :translation="translation"
-    :image="LeCheval"
-  /> -->
   <div class="page">
     <MainHeader />
     <div class="container-view">
-      <add-card-form id="add-card-form" />
-      <all-card id="all-card" />
+      <AddCardForm id="add-card-form" />
+      <AllCard id="all-card" />
     </div>
   </div>
 </template>

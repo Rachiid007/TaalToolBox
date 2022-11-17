@@ -7,14 +7,14 @@ Cette application est développée dans le cadre du cours "Projet d'intégration
 Ce projet utilise le Framework [Vue.js 3](https://vuejs.org/) pour le Frontend, l'environnement
 d'exécution NodeJS pour le backend et une base de données PostgreSQL pour la persistance des données.
 
-### Pré-requis
+### Pré-requis :traffic_light:
 
 - NodeJS & npm
 - PostgreSQL
 
 Ou la plateforme `Docker` pour le lancement de ces applications dans un container.
 
-### Installation
+### Installation :arrow_down:
 
 Clonez le Github :
 

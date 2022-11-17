@@ -1,6 +1,6 @@
 <script setup lang="ts">
   // il n'ya que ceux ayant le profil créateur qui peuvent ajouter des activités
-  import { ref, onMounted } from 'vue'
+  import { ref } from 'vue'
 
   const selectedActivity = ref(0)
   const isThereAnyActivitySelected = ref(false)

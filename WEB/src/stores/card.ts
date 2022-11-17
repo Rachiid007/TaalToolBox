@@ -54,9 +54,11 @@ export const useCardStore = defineStore('card', () => {
   const removeCorrectCard = (card: Flashcard) => {
     tableCard.splice(tableCard.indexOf(card), 1)
   }
+
   const setActualCard = (card: Flashcard) => {
     actualCard.value = card
   }
+
   const getActualCard = (): Flashcard => {
     return actualCard.value
   }

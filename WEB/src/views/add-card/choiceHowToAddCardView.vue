@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import MainHeader from '@/components/headers/MainHeader.vue'
-  import ChoiceHowToAddCard from '@/components/card/add/choiceHowToAddCard.vue'
+  import ChoiceHowToAddCard from '@/components/card/add/ChoiceHowToAddCard.vue'
 </script>
 
 <template>

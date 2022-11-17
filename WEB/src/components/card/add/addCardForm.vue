@@ -3,6 +3,8 @@
   import { useCardStore } from '@/stores/card'
   import type Flashcard from '@/types/Flashcard'
 
+  import FlashcardService from '@/services/FlashcardService'
+
   const store = useCardStore()
 
   const dataForm = reactive<Flashcard>({
@@ -39,6 +41,19 @@
       }
 
       store.addFlashcard(copyDataForm)
+
+      const responseMoii = FlashcardService.postFlashcard({
+        word: copyDataForm.word,
+        translation: copyDataForm.translation
+      })
+
+      console.log('responseMoii', responseMoii)
+
+      // FlashcardService.uploadImage({
+      //   id: copyDataForm.id.toString(),
+      //   image: copyDataForm.image
+      // })
+
       dataForm.id++
       dataForm.word = ''
       dataForm.translation = ''
