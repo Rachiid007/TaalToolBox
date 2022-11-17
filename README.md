@@ -1,41 +1,41 @@
-# TaalToolBox App
+# TaalToolBox TODO
 
-TaalToolBox App est une application web et mobile axée sur l'apprentissage des langues.
+## Prioritaire 
+ 1. Arriver à la création complète d'une nouvelle activités sur la carte (créateur 1 2 4)
+ 2. Améliorer le drag and learn afin pouvoir créer les activités pour les versions web et mobile (créateur 5)
+ 3. Ajouter les mots dans la liste de vocabulaire (via excel ou via le formulaire : check si le mot est déjà présent et demander s'il souhaite l'écraser) (créateur 3)
+ 4. Rendre accessible uniquement l'activité principal lorsque l'utilisateur se rend pour la première fois sur le jeu (Elève 1 3 4)
+ 5. Débloquer de nouvelle activité lorsque l'élève fini l'activité principal (Elève 2)
+    
+## Créateur (le prof ne crée pas de nouvelles activités)
+    
+ 1. Lorsqu'il souhaite souhaite crée une nouvelles activités il accède tout d'abord à la map puis entre l'adresse de l'endroit ou il veut crée l'activité
+ 2. Lorsqu'on a l'endroit ou on veut crée l'activité, le créateur sera invité à entrer les informations pour la création d'une nouvelle activité
+ 3. Le créateur doit pouvoir ajouter des mots dans la liste de vocabulaire globale (chaque mot à un poids de départ et évolue dans une table situé entre l'élève et la liste de vocabulaire)
+ 4. Chacune des activités est lié à la liste de vocabulaire
+ 5. Faire en sorte de pouvoir rajouter des activités sur le drag and learn pour les versions mobile et web
+    
+## Elève 
 
-Cette application est développée dans le cadre du cours "Projet d'intégration" du bachelier Technologie de l'informatique à l'EPHEC.
+ 1. Montrer l'activité principal lorsque l'utilisateur commence pour la première fois le jeu (Présentation de son école et de la plateforme)
+ 2. Lorsque l'utilisateur complète l'activité principal les premier jeux sur la map sont débloquer (flashcards et draganddrop)
+ 3. L'activité principal est différentes pour les écoles (et est afficher à l'élève en fonction de son école) après le reste des activités est commun pour tous les élèves
+ 4. Lorsque l'utilisateur survole la carte, il voit quel jeux s'est(flashcards ou drag and learn ) puis lorqu'il clique sur la point de la carte, on lui montre les informations du jeux
+ ex : si c'est le flahcard on lui montre le thème du deck(menuiserie, outillage) , le niveau du jeux, le nombre de fois qu'il a déjà effectué l'activité(s'il l'a déja fait) et le nombre de carte qu'il ne connait pas. 
 
-Ce projet utilise le Framework [Vue.js 3](https://vuejs.org/) pour le Frontend, l'environnement
-d'exécution NodeJS pour le backend et une base de données PostgreSQL pour la persistance des données.
+## Administrateur
+ 1. Faire en sorte que l'administrateur puisse rajouter des utilsateurs avec un role via un formulaire(backend à completer)
+ 2. Faire en sorte que l'administrateur puisse rajouter des classes via un formulaire (front et back à faire)
+    
+    
+## Professeurs
 
-### Pré-requis :traffic_light:
+ 1. Faire en sorte que le professeur puisse rajouter des élèves via un formulaire ou un excel 
 
-- NodeJS & npm
-- PostgreSQL
 
-Ou la plateforme `Docker` pour le lancement de ces applications dans un container.
-
-### Installation :arrow_down:
-
-Clonez le Github :
-
-```
-git clone https://github.com/Rachiid007/projet-integration
-```
-
-Déplacer vous vers le dossier :
-
-```
-cd projet-integration
-```
-
-## Setup VScode
-
-Pour éviter les erreurs, veuillez installer l'extension [Vue Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) et [activer le mode Takeover](https://vuejs.org/guide/typescript/overview.html#volar-takeover-mode) uniquement sur l'espace de travail !
-
-## Démarrage
-
-Rendez-vous dans le répertoire _WEB_, ouvrez une console et lancez la commande `npm install` pour installer les dépendances et `npm run dev` pour lancer le serveur.
-
-En ce qui concerne le répertoire _BACKEND_, ouvrez une console et lancez la commande `npm install` pour installer les dépendances et `npm run start:dev` pour lancer le serveur.
-
-Veillez garder les deux fenêtres des consoles ouvertes.
+## Autre
+ 1. Faire en sorte qu'un utilisateur puisse se connecter sur la plateforme avec plusieurs roles. 
+ 2. Fixer le style de la page ajouter des flashcards lorsqu'on ajouter une carte
+ - Intégration de traitement de signal au projet(comparer la réponse de l'utililisateur avec les sons qu'on a entré dans le projet)
+ - Rapport de sécurité concernant le site (RGPD, Chiffrage et sallage des informations de l'utilisateur en front) 
+    
