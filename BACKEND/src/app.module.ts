@@ -38,7 +38,7 @@ import { UserResponseModule } from './user_response/user_response.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: '1234',
+      password: process.env.POSTGRES_PASSWORD,
       database: 'language_project',
       autoLoadEntities: true,
       synchronize: true, // ! SET TO FALSE IN PRODUCTION
