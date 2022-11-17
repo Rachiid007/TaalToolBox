@@ -34,7 +34,7 @@
 <template>
   <div class="main">
     <div class="title">
-      <p class="text">Choisissez le type d'activité</p>
+      <h1 class="text">Choisissez le type d'activité</h1>
     </div>
     <div class="content">
       <div class="typeActi">

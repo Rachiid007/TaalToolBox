@@ -21,7 +21,9 @@
   }
 
   const numberField = ref(0)
-  const fieldList = ref([])
+  // array avec des nombre dedans, ce nbr permet de savoir le nbr de DIV
+  // utilisé pour générer les champs
+  const fieldList = ref<number[]>([])
   const background = ref()
   const image = ref()
 
@@ -325,7 +327,7 @@
         <div
           v-for="item in fieldList"
           class="fields"
-          :id="'id' + parseInt(item).toString()"
+          :id="'id' + item"
           @click="clicked"
           @mousedown="dragMouseDown"
         ></div>

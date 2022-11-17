@@ -31,5 +31,9 @@ describe('MainCard.vue Test with empty data store', () => {
     expect(wrapper.findAll('div').length).toEqual(5)
 
     expect(wrapper.findAll('button').length).toEqual(1)
+
+    expect(wrapper.findAll('img').length).toEqual(1)
+
+    expect(wrapper.findAll('p').length).toEqual(2)
   })
 })

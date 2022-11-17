@@ -64,20 +64,6 @@
     >
       Réveler
     </button>
-    <!-- <div class="answer">
-      <ul>
-        <li class="response">
-          <label><input type="radio" name="answer" value="trouve" /> Trouvé</label>
-        </li>
-        <li class="response">
-          <input type="radio" name="answer" value="presque" />
-          <label for="reponse-1">J'y suis presque</label>
-        </li>
-        <li class="response">
-          <label><input type="radio" name="answer" value="rate" /> Raté</label>
-        </li>
-      </ul>
-    </div> -->
   </div>
 </template>
 
