@@ -31,5 +31,11 @@ describe('DragNDropTeacher.vue Test with empty data store', () => {
     expect(wrapper.findAll('div').length).toEqual(21)
 
     expect(wrapper.findAll('p').length).toEqual(11)
+
+    expect(wrapper.findAll('button').length).toEqual(4)
+
+    expect(wrapper.findAll('img').length).toEqual(5)
+
+    expect(wrapper.findAll('input').length).toEqual(4)
   })
 })
