@@ -28,6 +28,7 @@ import { UserResponseCardModule } from './user_response_card/user_response_card.
 import { ActivityModule } from './activity/activity.module';
 import { AuthModule } from './Auth/auth/auth.module';
 import { DragModule } from './drag_and_drop/drag_and_drop.module';
+import { UserResponseModule } from './user_response/user_response.module';
 
 @Module({
   imports: [
@@ -37,7 +38,7 @@ import { DragModule } from './drag_and_drop/drag_and_drop.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: process.env.POSTGRES_PASSWORD,
+      password: '1234',
       database: 'language_project',
       autoLoadEntities: true,
       synchronize: true, // ! SET TO FALSE IN PRODUCTION
@@ -66,6 +67,7 @@ import { DragModule } from './drag_and_drop/drag_and_drop.module';
     UserResponseCardModule,
     ActivityModule,
     DragModule,
+    UserResponseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
