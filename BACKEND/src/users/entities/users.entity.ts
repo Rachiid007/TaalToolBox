@@ -9,6 +9,7 @@ import {
 import { Role } from '../../role/entities/role.entity';
 import { Schoolclass } from '../../schoolclass/entities/schoolclass.entity';
 import { Lang } from '../../lang/entities/lang.entity';
+import { UserResponseCard } from '../../user_response_card/entities/user_response_card.entity';
 @Entity()
 export class Users {
   @PrimaryGeneratedColumn('increment')

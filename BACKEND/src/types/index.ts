@@ -9,3 +9,9 @@ export interface UserData {
   phone: string;
   role: string[];
 }
+export interface Card {
+  id: number;
+  word: string;
+  translation: string;
+  image: string;
+}

@@ -6,6 +6,7 @@ import { ModuleMocker, MockFunctionMetadata } from 'jest-mock';
 
 const moduleMocker = new ModuleMocker(global);
 
+import type { Card } from 'src/types';
 describe('CardsController', () => {
   let controller: CardsController;
 
@@ -52,8 +53,25 @@ describe('CardsController', () => {
     controller = moduleRef.get<CardsController>(CardsController);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  it('should be get all card in db', async () => {
+    const result: Card[] = [
+      {
+        id: 1,
+        word: 'Cheval',
+        translation: 'Horse',
+        image: 'cheval',
+      },
+      {
+        id: 2,
+        word: 'Chien',
+        translation: 'Dog',
+        image: 'chien',
+      },
+    ];
+    //Simuler un appel du service spyOn
+    // jest.spyOn(service, 'findAll').mockImplementation(()=>result);
+    //Associer la reponse du controller
+    expect(await controller.findAll()).toBe(result);
   });
 
   describe('findAll', () => {
