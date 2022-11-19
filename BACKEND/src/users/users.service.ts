@@ -34,6 +34,7 @@ export class UsersService {
       throw new NotFoundException();
     }
     const userData = {
+      id: user.id,
       name: user.name,
       surname: user.surname,
       role: user.role.map((x) => {
