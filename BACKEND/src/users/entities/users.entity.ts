@@ -9,9 +9,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Role } from '../../role/entities/role.entity';
-import { Schoolclass } from 'src/schoolclass/entities/schoolclass.entity';
+import { Schoolclass } from '../../schoolclass/entities/schoolclass.entity';
 import { Lang } from '../../lang/entities/lang.entity';
-import { UserResponseCard } from 'src/user_response_card/entities/user_response_card.entity';
 @Entity()
 export class Users {
   @PrimaryGeneratedColumn('increment')
@@ -46,8 +45,4 @@ export class Users {
   //chaque utilisateur possède une seule langue
   @ManyToOne(() => Lang, (lang) => lang.users)
   lang: Lang;
-
-  //Une utilisateur peut avoir plusieurs solution
-  @OneToMany(() => UserResponseCard, (response_card) => response_card.user)
-  response_card: UserResponseCard[];
 }
