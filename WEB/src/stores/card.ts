@@ -28,6 +28,7 @@ export const useCardStore = defineStore('card', () => {
   })
 
   //Get athe number of required cards
+  //Get the required cards
   const getCard = async (cardNumber: number): Promise<Flashcard[]> => {
     const flashcardRequest = await FlashcardService.getFlashcards(cardNumber)
     return flashcardRequest.data
