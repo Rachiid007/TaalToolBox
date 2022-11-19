@@ -27,7 +27,11 @@ export const useCardStore = defineStore('card', () => {
     return Math.round((resultGame.goodAnswers / resultGame.totalQuestions) * 100)
   })
 
+<<<<<<< HEAD
   //Get athe number of required cards
+=======
+  //Get the required cards
+>>>>>>> f392d3e ([UPD] add iduser to user type and update get API endpoint for cards)
   const getCard = async (cardNumber: number): Promise<Flashcard[]> => {
     const flashcardRequest = await FlashcardService.getFlashcards(cardNumber)
     return flashcardRequest.data
