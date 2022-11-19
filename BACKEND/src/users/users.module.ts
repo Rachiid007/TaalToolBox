@@ -1,6 +1,6 @@
 import { UsersController } from './users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Role } from 'src/role/entities/role.entity';
+import { Role } from '../role/entities/role.entity';
 import { Lang } from '../lang/entities/lang.entity';
 import { Schoolclass } from '../schoolclass/entities/schoolclass.entity';
 import { Users } from './entities/users.entity';
