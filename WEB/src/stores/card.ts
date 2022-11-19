@@ -19,9 +19,9 @@ export const useCardStore = defineStore('card', () => {
     return Math.round((resultGame.goodAnswers / resultGame.totalQuestions) * 100)
   })
 
-  //Get all card in DB
-  const getCard = async (): Promise<Flashcard[]> => {
-    const flashcardRequest = await FlashcardService.getFlashcards()
+  //Get the required cards
+  const getCard = async (cardNumber: number): Promise<Flashcard[]> => {
+    const flashcardRequest = await FlashcardService.getFlashcards(cardNumber)
     return flashcardRequest.data
   }
 
@@ -37,7 +37,7 @@ export const useCardStore = defineStore('card', () => {
   const setCard = async (card: number) => {
     //TODO Need to check connexion before getCard in other to go faster
 
-    getCard()
+    getCard(card)
       .then((data) => {
         if (resultGame.totalQuestions) {
           //If we have the number of card in DB else take card in front
