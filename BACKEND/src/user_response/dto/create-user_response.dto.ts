@@ -3,12 +3,6 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class CreateUserResponseDto {
-  @ApiProperty({
-    description: 'Unique response ID',
-  })
-  @PrimaryGeneratedColumn()
-  id_user_response: number;
-
   @ApiProperty()
   @Column()
   date_response: Date;
