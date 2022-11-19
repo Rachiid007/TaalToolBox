@@ -13,7 +13,8 @@ export class UserResponseService {
   ) {}
 
   create(createUserResponseDto: CreateUserResponseDto) {
-    return 'This action adds a new userResponse';
+    const card = this.updateUserResponseDto.create(createUserResponseDto);
+    return this.updateUserResponseDto.save(card);
   }
 
   findAll() {
@@ -35,14 +36,21 @@ export class UserResponseService {
           id_card: userResponse[i]['id_card'],
         },
       });
-      //Erreur si pas de donnée trouvée
+      //Insérer une nouvelle réponse
       if (!user_response) {
-        console.error(
-          "user_response doesn't exist iduser=" +
-            iduser +
-            ' id_card=' +
-            userResponse[i]['id_card'],
-        );
+        let id_proficiency;
+        userResponse[i]['id_answer'] == 1
+          ? (id_proficiency = 2)
+          : (id_proficiency = 1);
+        const newuser_response = {
+          date_response: new Date(),
+          id_user: iduser,
+          id_card: userResponse[i]['id_card'],
+          id_answer: userResponse[i]['id_answer'],
+          id_proficiency: id_proficiency,
+        };
+
+        await this.create(newuser_response);
       } else {
         //changer date de réponse pour mettre la date actuelle
         user_response.date_response = new Date();
@@ -57,8 +65,8 @@ export class UserResponseService {
           if ([3, 4, 6, 7].includes(user_response.id_proficiency))
             user_response.id_proficiency -= 2;
         }
+        await this.updateUserResponseDto.save(user_response);
       }
-      await this.updateUserResponseDto.save(user_response);
     }
 
     return userResponse.length;

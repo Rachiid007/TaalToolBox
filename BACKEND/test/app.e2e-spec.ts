@@ -52,13 +52,20 @@ describe('AppController (e2e)', () => {
       .expect(201);
   });
 
-  it('get random cards (Get)', async () => {
-    const result = {
-      word: 'électricité2',
-      translation: 'elektriciteit2',
-      image: 'nom féminin',
-    };
-
+  it('get cards as per the wight (Get)', async () => {
     return request(app.getHttpServer()).get('/cards/1/10').expect(200);
+  });
+
+  it('Add user Response (Post)', async () => {
+    const user_response = {
+      id_card: 1,
+      id_answer: 1,
+    };
+    return request(app.getHttpServer())
+      .post('/user-response/1/cards')
+      .set('Accept', 'application/json')
+      .send(user_response)
+      .expect(201)
+      .expect(1);
   });
 });

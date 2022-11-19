@@ -22,12 +22,7 @@ export class UserResponseController {
     return this.userResponseService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserResponseDto: UpdateUserResponseDto) {
-    return this.userResponseService.update(+id, updateUserResponseDto);
-  }
-
-  @Patch(':id_user/:cards')
+  @Post(':id_user/cards')
   updateMany(
     @Param('id_user') id_user: number,
     @Body() userResponse: object[],
