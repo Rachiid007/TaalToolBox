@@ -1,4 +1,4 @@
-import { School } from 'src/school/entities/school.entity';
+import { School } from '../school/entities/school.entity';
 import { Injectable } from '@nestjs/common';
 import { OnApplicationBootstrap } from '@nestjs/common';
 import { CreateSchoolDto } from './dto/create-school.dto';

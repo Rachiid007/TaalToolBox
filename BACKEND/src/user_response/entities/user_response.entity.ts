@@ -10,7 +10,7 @@ import {
   
   @Entity()
   export class UserResponse {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('increment')
     id_user_response: number;
   
     @Column()
