@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { ref } from 'vue'
+  import * as XLSX from 'xlsx'
 
   const file = ref<File | null>(null)
 
@@ -8,8 +9,21 @@
     const files = target.files
     if (files) {
       file.value = files[0]
-      console.log(file.value)
+      excelToArray(file.value)
     }
+  }
+
+  const excelToArray = (file: File) => {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const data = e.target?.result
+      const workbook = XLSX.read(data, { type: 'binary' })
+      const firstSheetName = workbook.SheetNames[0]
+      const worksheet = workbook.Sheets[firstSheetName]
+      const json = XLSX.utils.sheet_to_json(worksheet)
+      console.log(json)
+    }
+    reader.readAsBinaryString(file)
   }
 </script>
 
@@ -18,7 +32,6 @@
   <div>
     <input
       type="file"
-      ref="file"
       name="file"
       accept=".xlsx, .xls"
       @change="handleFileChange($event)"
