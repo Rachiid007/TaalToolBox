@@ -29,5 +29,5 @@
 </template>
 
 <style scoped>
-@import "./choiceHowToAdd.css";
+  @import '@/components/card/add/choiceHowToAdd.css';
 </style>

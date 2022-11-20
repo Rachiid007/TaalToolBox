@@ -21,6 +21,8 @@
     "lib": ["ESNext", "DOM", "dom.iterable", "ScriptHost"]
   },
 
+  "exclude": ["node_modules", "dist"],
+
   "references": [
     {
       "path": "./tsconfig.config.json"

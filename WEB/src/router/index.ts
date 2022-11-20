@@ -16,6 +16,7 @@ import LevelSelectorView from '@/views/DadSelector.vue'
 import DadMobileView from '@/views/DadMobileView.vue'
 import Login from '@/views/Login.vue'
 import SignIn from '@/views/SignIn.vue'
+import AddUserExcelView from '@/views/add-user/AddUserExcelView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -54,6 +55,11 @@ const router = createRouter({
       path: '/add-user',
       name: 'add-user',
       component: ChoiceHowToAddUserView
+    },
+    {
+      path: '/add-user/excel',
+      name: 'add-user-excel',
+      component: AddUserExcelView
     },
     {
       path: '/add-card/excel',

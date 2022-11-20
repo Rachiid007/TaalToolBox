@@ -14,6 +14,7 @@
 </script>
 
 <template>
+  <h1 class="title">Add users Excel</h1>
   <div>
     <input
       type="file"
@@ -24,3 +25,10 @@
     />
   </div>
 </template>
+
+<style scoped>
+  .title {
+    margin: 100px 0;
+    color: red;
+  }
+</style>
