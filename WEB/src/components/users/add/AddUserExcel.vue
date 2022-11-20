@@ -30,8 +30,6 @@
 
   const rows = ref<UserFromExcelFR[]>([])
 
-  const firstRow = ref<unknown | null>(null)
-
   const excelToArray = (file: File) => {
     // check if the file is a xlsx file
     if (file.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
@@ -49,11 +47,23 @@
         /* get first worksheet */
         const firstSheet = workbook.Sheets[workbook.SheetNames[0]]
 
-        //  get the first row from the first sheet to get the headers
-        firstRow.value = utils.sheet_to_json(firstSheet, { range: 1, header: 1 })[0]
-
-        //  get the data from the first sheet
-        rows.value = utils.sheet_to_json(firstSheet, { range: 2, header: firstRow.value })
+        // if the first row correspond to the interface
+        if (
+          firstSheet.A1.v === 'Nom' &&
+          firstSheet.B1.v === 'Prénom' &&
+          firstSheet.C1.v === 'Email' &&
+          firstSheet.D1.v === 'Date de Naissance' &&
+          firstSheet.E1.v === 'Classe' &&
+          firstSheet.F1.v === "Date d'inscription"
+        ) {
+          rows.value = utils.sheet_to_json<UserFromExcelFR>(firstSheet)
+          rows.value.forEach((row) => {
+            row.birdthdate_convert = formatDate(row['Date de Naissance'])
+            row.inscriptiondate_convert = formatDate(row["Date d'inscription"])
+          })
+        } else {
+          console.log('The first row of the excel file does not correspond to the interface')
+        }
       }
     }
     reader.readAsBinaryString(file)
@@ -84,49 +94,45 @@
     const year = date.getFullYear()
     return `${day}/${month}/${year}`
   }
-
-  const expectedData = [
-    'Nom',
-    'Prénom',
-    'Email',
-    'Date de Naissance',
-    'Classe',
-    'Sexe',
-    'Matricule'
-  ]
 </script>
 
 <template>
   <div class="container">
     <h1 class="title">Add users Excel</h1>
+    <!-- Comment doit etre le fichier Excel -->
+    <h2>Merci de respectez cette convention dans votre fichier Excel</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th>Date de Naissance</th>
+          <th>Classe</th>
+          <th>Date d'inscription</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>String</td>
+          <td>String</td>
+          <td>String</td>
+          <td>Date</td>
+          <td>String</td>
+          <td>Date</td>
+        </tr>
+      </tbody>
+    </table>
     <input
       type="file"
       name="file"
       accept=".xlsx, .xls"
       @change="handleFileChange($event)"
     />
-    <div class="table-container">
-      <!-- Convertir les cellules -->
-      <div class="convert-cell">
-        <h2>Convertir les cellules</h2>
-        <div
-          v-for="(row, index) in expectedData"
-          :key="index"
-        >
-          <label>{{ row }}</label>
-          <select>
-            <option
-              v-for="(cell, index) in firstRow"
-              :key="index"
-              :value="cell"
-            >
-              {{ cell }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <!-- Fin : convertir les cellules -->
-
+    <div
+      v-show="rows.length > 0"
+      class="table-container"
+    >
       <table>
         <thead>
           <tr>
