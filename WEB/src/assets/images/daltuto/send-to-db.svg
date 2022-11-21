@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="252.536" height="80.677" viewBox="0 0 252.536 80.677">
+  <defs>
+    <filter id="path932-3" x="0" y="47.029" width="86.557" height="33.648" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Groupe_181" data-name="Groupe 181" transform="translate(-1359.464 -701.186)">
+    <g id="layer1" transform="translate(1354.449 687.188)">
+      <path id="path932" d="M80.572,27.527c0,6.367-14.452,11.528-32.279,11.528S16.015,33.894,16.015,27.527,30.467,16,48.293,16,80.572,21.16,80.572,27.527Z" transform="translate(0 0)" fill="none" stroke="#5e5d5d" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+      <g transform="matrix(1, 0, 0, 1, 5.01, 14)" filter="url(#path932-3)">
+        <path id="path932-3-2" data-name="path932-3" d="M80.572,199.974c0,4.119-6.152,7.924-16.139,9.984a85.1,85.1,0,0,1-32.279,0c-9.987-2.059-16.139-5.865-16.139-9.984" transform="translate(-5.01 -144.94)" fill="none" stroke="#5e5d5d" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+      </g>
+      <path id="path932-3-5" d="M80.572,151.981c0,4.119-6.152,7.924-16.139,9.984a85.1,85.1,0,0,1-32.279,0c-9.987-2.059-16.139-5.865-16.139-9.984" transform="translate(0 -96.787)" fill="none" stroke="#5e5d5d" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+      <path id="path932-3-5-6" d="M80.572,103.987c0,4.119-6.152,7.924-16.139,9.984a85.1,85.1,0,0,1-32.279,0c-9.987-2.059-16.139-5.865-16.139-9.984" transform="translate(0 -62.626)" fill="none" stroke="#5e5d5d" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+      <path id="path979" d="M16.015,55.994v41.5" transform="translate(0 -28.467)" fill="none" stroke="#5e5d5d" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+      <path id="path981" d="M239.985,55.994v41.5" transform="translate(-159.413 -28.467)" fill="none" stroke="#5e5d5d" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+    </g>
+    <g id="file-svgrepo-com" transform="matrix(0.966, -0.259, 0.259, 0.966, 1524.979, 715.854)">
+      <path id="Tracé_8622" data-name="Tracé 8622" d="M41.221,11.015,30.523.318a1.072,1.072,0,0,0-.8-.318H1.075A1.075,1.075,0,0,0,0,1.075V50.663a1.075,1.075,0,0,0,1.075,1.075h39.39a1.075,1.075,0,0,0,1.075-1.075V11.78A1.048,1.048,0,0,0,41.221,11.015ZM37.869,10.7H30.835V3.67ZM39.39,49.587H2.15V2.15H28.684v9.63a1.075,1.075,0,0,0,1.075,1.075H39.39V49.587Z" transform="translate(0 0)"/>
+      <path id="Tracé_8623" data-name="Tracé 8623" d="M0,5.7,7.574,9.273V6.967l-5-2.369,5-2.306V0L0,3.569Z" transform="translate(7.258 22.975)"/>
+      <path id="Tracé_8624" data-name="Tracé 8624" d="M0,14.292H2.2L8.743,0H6.53Z" transform="translate(16.406 21.214)"/>
+      <path id="Tracé_8625" data-name="Tracé 8625" d="M0,2.291,5,4.6,0,6.967V9.273L7.574,5.7V3.569L0,0Z" transform="translate(26.708 22.975)"/>
+    </g>
+    <g id="icons8-image-file-480" transform="matrix(0.966, 0.259, -0.259, 0.966, 1571.444, 707.098)">
+      <path id="Tracé_8629" data-name="Tracé 8629" d="M41.987,52.674H0V0H28.866l13.12,12.54Z" transform="translate(0 0)" fill="#90caf9"/>
+      <path id="Tracé_8630" data-name="Tracé 8630" d="M10.839,10.839H0V0Z" transform="translate(29.436 1.711)" fill="#e1f5fe"/>
+      <path id="Tracé_8631" data-name="Tracé 8631" d="M7.986,0,0,11.408H15.972Z" transform="translate(8.671 25.79)" fill="#1565c0"/>
+      <path id="Tracé_8632" data-name="Tracé 8632" d="M5.7,3.879,0,11.408H11.408ZM9.7,0a1.711,1.711,0,1,0,1.71,1.712h0A1.711,1.711,0,0,0,9.7,0Z" transform="translate(20.848 25.79)" fill="#1976d2"/>
+    </g>
+    <g id="Polygone_9" data-name="Polygone 9" transform="translate(1487.5 747.473) rotate(-90)" fill="#fff">
+      <path d="M 19 13 L 2 13 L 10.5 1.666667103767395 L 19 13 Z" stroke="none"/>
+      <path d="M 10.5 3.333333969116211 L 4 12 L 17 12 L 10.5 3.333333969116211 M 10.5 9.5367431640625e-07 L 21 14 L 0 14 L 10.5 9.5367431640625e-07 Z" stroke="none" fill="#002f80"/>
+    </g>
+    <g id="Polygone_10" data-name="Polygone 10" transform="translate(1473.5 744.973) rotate(-90)" fill="#fff">
+      <path d="M 15.01810932159424 10.5 L 0.981889545917511 10.5 L 7.999999523162842 0.8500992059707642 L 15.01810932159424 10.5 Z" stroke="none"/>
+      <path d="M 7.999999523162842 1.700187683105469 L 1.963771820068359 10 L 14.03622627258301 10 L 7.999999523162842 1.700187683105469 M 7.999999523162842 9.5367431640625e-07 L 16 11 L -9.5367431640625e-07 11 L 7.999999523162842 9.5367431640625e-07 Z" stroke="none" fill="#5e5d5d"/>
+    </g>
+    <g id="Polygone_11" data-name="Polygone 11" transform="translate(1458.5 744.973) rotate(-90)" fill="#fff">
+      <path d="M 15.01810932159424 10.5 L 0.981889545917511 10.5 L 7.999999523162842 0.8500992059707642 L 15.01810932159424 10.5 Z" stroke="none"/>
+      <path d="M 7.999999523162842 1.700187683105469 L 1.963771820068359 10 L 14.03622627258301 10 L 7.999999523162842 1.700187683105469 M 7.999999523162842 9.5367431640625e-07 L 16 11 L -9.5367431640625e-07 11 L 7.999999523162842 9.5367431640625e-07 Z" stroke="none" fill="#5e5d5d"/>
+    </g>
+  </g>
+</svg>
