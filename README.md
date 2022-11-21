@@ -26,7 +26,7 @@
 
 ## Administrateur
 
-1.  Faire en sorte que l'administrateur puisse rajouter des utilsateurs avec un role via un formulaire(backend à completer) => **Rachid**
+1.  Faire en sorte que l'administrateur puisse rajouter des utilsateurs avec un role via un formulaire(backend à completer) => **Aymar** et **Brice**
 2.  Faire en sorte que l'administrateur puisse rajouter des classes via un formulaire (front et back à faire) => **Aymar** et **Brice**
 
 ## Professeurs
