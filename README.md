@@ -10,7 +10,7 @@
 
 ## Créateur (le prof ne crée pas de nouvelles activités)
 
-1.  Lorsqu'il souhaite souhaite crée une nouvelles activités il accède tout d'abord à la map puis entre l'adresse de l'endroit ou il veut crée l'activité => **Louis**
+1.  Lorsqu'il souhaite crée une nouvelles activités il accède tout d'abord à la map puis entre l'adresse de l'endroit ou il veut crée l'activité => **Louis**
 2.  Lorsqu'on a l'endroit ou on veut crée l'activité, le créateur sera invité à entrer les informations pour la création d'une nouvelle activité => **Aymar**
 3.  Le créateur doit pouvoir ajouter des mots dans la liste de vocabulaire globale (chaque mot à un poids de départ et évolue dans une table situé entre l'élève et la liste de vocabulaire) => **Brice**
 4.  Chacune des activités est lié à la liste de vocabulaire
@@ -23,6 +23,7 @@
 3.  L'activité principal est différentes pour les écoles (et est afficher à l'élève en fonction de son école) après le reste des activités est commun pour tous les élèves => **Rachid**
 4.  Lorsque l'utilisateur survole la carte, il voit quel jeux s'est(flashcards ou drag and learn ) puis lorqu'il clique sur la point de la carte, on lui montre les informations du jeux => **Michaël**
     ex : si c'est le flahcard on lui montre le thème du deck(menuiserie, outillage) , le niveau du jeux, le nombre de fois qu'il a déjà effectué l'activité(s'il l'a déja fait) et le nombre de carte qu'il ne connait pas.
+5.  La liste de vocabulaire est visible pour l'élève où il pourra voir sa progression dans celle-ci. => **Ikram**
 
 ## Administrateur
 
@@ -32,6 +33,7 @@
 ## Professeurs
 
 1.  Faire en sorte que le professeur puisse rajouter des élèves via un formulaire ou un excel => **Rachid**
+2.  L'enseignant pourra regarder la maîtrise de la liste de vocabulaires élève par élève et classe par classe. => **Ikram**
 
 ## Autre
 
