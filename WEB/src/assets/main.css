@@ -1,5 +1,11 @@
 @import './reset.css';
 
+:root {
+  --main-flashcard-color: #026b30;
+  --main-dal-color: #00307e;
+  --second-color: #707070;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   overflow-x: hidden;

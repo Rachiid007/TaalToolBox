@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="336.917" height="168.471" viewBox="0 0 336.917 168.471">
+  <defs>
+    <filter id="Tracé_8613" x="0" y="0" width="336.917" height="168.471" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Groupe_182" data-name="Groupe 182" transform="translate(-425 -666.236)">
+    <g id="Groupe_179" data-name="Groupe 179">
+      <g transform="matrix(1, 0, 0, 1, 425, 666.24)" filter="url(#Tracé_8613)">
+        <g id="Tracé_8613-2" data-name="Tracé 8613" transform="translate(9 6)" fill="#fff" stroke-linecap="round">
+          <path d="M 317.91748046875 149.4707336425781 L 0.9999902248382568 149.4707336425781 L 0.9999902248382568 1.000018239021301 L 317.91748046875 1.000018239021301 L 317.91748046875 149.4707336425781 Z" stroke="none"/>
+          <path d="M 2 1.999969482421875 L 2 148.4706878662109 L 316.91748046875 148.4706878662109 L 316.91748046875 1.999969482421875 L 2 1.999969482421875 M 0 -3.0517578125e-05 L 318.91748046875 -3.0517578125e-05 L 318.91748046875 150.4706878662109 L 0 150.4706878662109 L 0 -3.0517578125e-05 Z" stroke="none" fill="#5e5d5d"/>
+        </g>
+      </g>
+      <g id="Groupe_177" data-name="Groupe 177" transform="translate(-39 21.362)">
+        <g id="Rectangle_214" data-name="Rectangle 214" transform="translate(487 673)" fill="#fff" stroke="#707070" stroke-width="1">
+          <rect width="127" height="23" rx="2" stroke="none"/>
+          <rect x="0.5" y="0.5" width="126" height="22" rx="1.5" fill="none"/>
+        </g>
+      </g>
+      <g id="Groupe_176" data-name="Groupe 176" transform="translate(15.5 -3.87)">
+        <g id="Rectangle_215" data-name="Rectangle 215" transform="translate(506 756.311)" fill="#fff" stroke="#707070" stroke-width="1">
+          <rect width="79" height="16" rx="2" stroke="none"/>
+          <rect x="0.5" y="0.5" width="78" height="15" rx="1.5" fill="none"/>
+        </g>
+      </g>
+      <path id="Tracé_8617" data-name="Tracé 8617" d="M0,0H100" transform="translate(451 736.363)" fill="none" stroke="#5e5d5d" stroke-linecap="round" stroke-width="5"/>
+      <path id="Tracé_8618" data-name="Tracé 8618" d="M0,0H80" transform="translate(561 736.363)" fill="none" stroke="#5e5d5d" stroke-linecap="round" stroke-width="5"/>
+      <path id="Tracé_8619" data-name="Tracé 8619" d="M0,0H60" transform="translate(451 760.363)" fill="none" stroke="#5e5d5d" stroke-linecap="round" stroke-width="5"/>
+      <path id="Tracé_8620" data-name="Tracé 8620" d="M0,0H60" transform="translate(611 760.363)" fill="none" stroke="#5e5d5d" stroke-linecap="round" stroke-width="5"/>
+      <path id="Tracé_8621" data-name="Tracé 8621" d="M0,0H120" transform="translate(452 788.363)" fill="none" stroke="#5e5d5d" stroke-linecap="round" stroke-width="5"/>
+      <g id="Groupe_178" data-name="Groupe 178" transform="translate(82.5 23.13)">
+        <g id="Rectangle_215-2" data-name="Rectangle 215" transform="translate(506 756.311)" fill="#fff" stroke="#707070" stroke-width="1">
+          <rect width="43.61" height="16" rx="2" stroke="none"/>
+          <rect x="0.5" y="0.5" width="42.61" height="15" rx="1.5" fill="none"/>
+        </g>
+      </g>
+      <path id="Tracé_8626" data-name="Tracé 8626" d="M0,0H100" transform="translate(461 705.863)" fill="none" stroke="#002f80" stroke-linecap="round" stroke-width="5"/>
+      <path id="Tracé_8627" data-name="Tracé 8627" d="M0,0H50" transform="translate(535 760.363)" fill="none" stroke="#002f80" stroke-linecap="round" stroke-width="5"/>
+      <path id="Tracé_8628" data-name="Tracé 8628" d="M0,0H20" transform="translate(600.11 787.441)" fill="none" stroke="#002f80" stroke-linecap="round" stroke-width="5"/>
+      <g id="Groupe_163" data-name="Groupe 163" transform="translate(661.459 762.98)">
+        <g id="Groupe_163-2" data-name="Groupe 163" transform="translate(-68 18)">
+          <path id="Tracé_8598" data-name="Tracé 8598" d="M221.216,145.158l-.93-3.721a11.114,11.114,0,0,0-1.163-2.787c-.465-1.163-.7-1.628-1.163-2.788-.233-.7-.93-2.325-1.163-3.256a3.606,3.606,0,0,1,.465-2.787,4.166,4.166,0,0,1,3.256-.93,4.09,4.09,0,0,1,2.091,1.861,12.3,12.3,0,0,1,1.631,3.481,18.763,18.763,0,0,1,1.394,5.116l.233,1.163v-2.788a65.12,65.12,0,0,1,0-6.744c0-.233.233-1.394.233-1.628a2.942,2.942,0,0,1,1.628-2.325,3.962,3.962,0,0,1,3.256,0,2.941,2.941,0,0,1,1.628,2.325c0,.233.233,2.325.233,2.558v8.6c.233-1.628.233-7.442.7-9.07a3.3,3.3,0,0,1,1.861-2.09,3.267,3.267,0,0,1,3.256.465,5.1,5.1,0,0,1,1.163,2.787v8.141a11.326,11.326,0,0,1,.7-1.628,7.157,7.157,0,0,1,.93-2.091,13.342,13.342,0,0,1,.931-1.628A4.73,4.73,0,0,1,244,134a2.419,2.419,0,0,1,3.024,1.394,9.25,9.25,0,0,1,0,2.558,28.484,28.484,0,0,1-.931,3.721,20.961,20.961,0,0,0-.7,3.721,27.038,27.038,0,0,1-.93,4.187,14.131,14.131,0,0,1-1.626,3.256s-2.558,2.787-2.787,4.186a9.634,9.634,0,0,0-.233,2.325,12.843,12.843,0,0,0,.233,2.089H223.541s.465-2.325-.464-3.256l-2.559-2.559-1.861-2.09c-.7-.93-1.394-2.558-2.788-4.652-.7-1.163-2.325-2.558-3.024-3.721a4.861,4.861,0,0,1-.465-3.024,2.725,2.725,0,0,1,3.256-1.861,4.289,4.289,0,0,1,2.787,1.163c.465.465,1.394,1.163,1.861,1.628s.465.7.93,1.163v.93" transform="translate(-212.313 -126.675)" fill="#fff" stroke="#002f80" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

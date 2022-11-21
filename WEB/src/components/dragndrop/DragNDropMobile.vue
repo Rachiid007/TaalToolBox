@@ -151,7 +151,7 @@
 <style scoped>
   .main {
     margin-top: 5px;
-    max-width: 1600px;
+    max-width: 1000px;
     width: 100vw;
     display: flex;
     flex-direction: column;
