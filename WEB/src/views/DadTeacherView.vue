@@ -1,6 +1,12 @@
 <script setup lang="ts">
   import DragndropTeacher from '@/components/dragndrop/DragNDropTeacher.vue'
   import TheHeader from '@/components/TheHeader.vue'
+  import HowToAddDad from '@/components/dragndrop/HowToAddDad.vue'
+  import { ref } from 'vue'
+  import { useDadLevels } from '@/stores/dadLevels'
+
+  const imageSelected = ref(false)
+  const dadStore = useDadLevels()
 </script>
 <template>
   <div class="page">
@@ -13,7 +19,8 @@
         />
       </div>
     </TheHeader>
-    <DragndropTeacher />
+    <DragndropTeacher v-if="imageSelected" />
+    <HowToAddDad v-else />
   </div>
 </template>
 <style scoped>
