@@ -6,6 +6,7 @@ import dalService from '@/services/dalService'
 export const useDadLevels = defineStore('dadlevels', () => {
   const levelSelector = ref(0)
   const DalDataList = ref<any[]>([])
+  const selectedImage = ref('')
   DalDataList.value.push(
     {
       fields: [
@@ -108,6 +109,7 @@ export const useDadLevels = defineStore('dadlevels', () => {
       backImage: '/src/assets/images/form2mobile.png'
     }
   )
+
   const addData = (data: any) => {
     DalDataList.value.push(data)
   }
@@ -136,5 +138,24 @@ export const useDadLevels = defineStore('dadlevels', () => {
     DalDataList.value.push(newDragAndLearnExercice)
   }
 
-  return { DalDataList, addData, getData, setLevel, getLevel, getDragAndLearn, addDragAndLearn }
+  const getImageUrl = () => {
+    return selectedImage.value
+  }
+
+  const addImageUrl = (url: string) => {
+    selectedImage.value = url
+  }
+
+  return {
+    selectedImage,
+    DalDataList,
+    addData,
+    getData,
+    setLevel,
+    getLevel,
+    getDragAndLearn,
+    addDragAndLearn,
+    getImageUrl,
+    addImageUrl
+  }
 })
