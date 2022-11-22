@@ -312,224 +312,222 @@
   onMounted(() => {})
 </script>
 <template>
-  <div class="main">
-    <div class="playground">
-      <div
-        ref="background"
-        id="back"
-        class="back"
-      >
-        <img
-          src="@/assets/images/form.png"
-          alt="image for the exercice"
-          ref="image"
-        />
+  <div class="global_content">
+    <div class="main">
+      <div class="playground">
         <div
-          v-for="item in fieldList"
-          class="fields"
-          :id="'id' + item"
-          @click="clicked"
-          @mousedown="dragMouseDown"
-        ></div>
-      </div>
-      <div class="controlPanelContainer">
-        <div class="controlPanel">
-          <h1 class="infoHeader">Informations:</h1>
-          <button
-            @click="addField"
-            class="addField"
-          >
-            <b>+</b> Ajouter un champ
-          </button>
-          <div>
-            <p
-              class="infoHeaderSub"
-              v-show="selectedId"
+          ref="background"
+          id="back"
+          class="back"
+        >
+          <img
+            src="@/assets/images/form.png"
+            alt="image for the exercice"
+            ref="image"
+          />
+          <div
+            v-for="item in fieldList"
+            class="fields"
+            :id="'id' + item"
+            @click="clicked"
+            @mousedown="dragMouseDown"
+          ></div>
+        </div>
+        <div class="controlPanelContainer">
+          <div class="controlPanel">
+            <h1 class="infoHeader">Informations:</h1>
+            <button
+              @click="addField"
+              class="addField"
             >
-              Positions:
-            </p>
+              <b>+</b> Ajouter un champ
+            </button>
+            <div>
+              <p
+                class="infoHeaderSub"
+                v-show="selectedId"
+              >
+                Positions:
+              </p>
+              <div
+                class="positionInfo"
+                v-show="selectedId"
+              >
+                <p
+                  class="commands"
+                  @click="setDivTop(-1)"
+                >
+                  <img
+                    src="@/assets/logo/minus_logo.svg"
+                    alt="minus logo"
+                  />
+                </p>
+                <p class="coordinates">Y: {{ selectedDivTop }}</p>
+                <p
+                  class="commands"
+                  @click="setDivTop(1)"
+                >
+                  <img
+                    src="@/assets/logo/plus_logo.svg"
+                    alt="plus logo"
+                  />
+                </p>
+              </div>
+              <div
+                class="positionInfo"
+                v-show="selectedId"
+              >
+                <p
+                  class="commands"
+                  @click="setDivLeft(-1)"
+                >
+                  <img
+                    src="@/assets/logo/minus_logo.svg"
+                    alt="minus logo"
+                  />
+                </p>
+                <p class="coordinates">X: {{ selectedDivLeft }}</p>
+                <p
+                  class="commands"
+                  @click="setDivLeft(1)"
+                >
+                  <img
+                    src="@/assets/logo/plus_logo.svg"
+                    alt="plus logo"
+                  />
+                </p>
+              </div>
+            </div>
             <div
-              class="positionInfo"
+              class="dimensionSettings"
               v-show="selectedId"
             >
-              <p
-                class="commands"
-                @click="setDivTop(-1)"
-              >
-                <img
-                  src="@/assets/logo/minus_logo.svg"
-                  alt="minus logo"
+              <p class="infoHeaderSub">Largeur:</p>
+              <div class="dimensionContainer">
+                <div
+                  class="triangleLeft"
+                  @click="changeSelectedWidth(selectedDivWidth - 1)"
+                ></div>
+                <input
+                  class="dimensionInput"
+                  type="number"
+                  v-model="selectedDivWidth"
+                  @change="changeSelectedWidth(selectedDivWidth)"
                 />
-              </p>
-              <p class="coordinates">Y: {{ selectedDivTop }}</p>
-              <p
-                class="commands"
-                @click="setDivTop(1)"
-              >
-                <img
-                  src="@/assets/logo/plus_logo.svg"
-                  alt="plus logo"
+                <div
+                  class="triangleRight"
+                  @click="changeSelectedWidth(selectedDivWidth + 1)"
+                ></div>
+              </div>
+              <p class="infoHeaderSub">Hauteur:</p>
+              <div class="dimensionContainer">
+                <div
+                  class="triangleLeft"
+                  @click="changeSelectedHeight(selectedDivHeight - 1)"
+                ></div>
+                <input
+                  class="dimensionInput"
+                  type="number"
+                  v-model="selectedDivHeight"
+                  @change="changeSelectedHeight(selectedDivHeight)"
                 />
-              </p>
+                <div
+                  class="triangleRight"
+                  @click="changeSelectedHeight(selectedDivHeight + 1)"
+                ></div>
+              </div>
             </div>
             <div
-              class="positionInfo"
+              class="divContentSetter"
               v-show="selectedId"
             >
-              <p
-                class="commands"
-                @click="setDivLeft(-1)"
-              >
-                <img
-                  src="@/assets/logo/minus_logo.svg"
-                  alt="minus logo"
-                />
-              </p>
-              <p class="coordinates">X: {{ selectedDivLeft }}</p>
-              <p
-                class="commands"
-                @click="setDivLeft(1)"
-              >
-                <img
-                  src="@/assets/logo/plus_logo.svg"
-                  alt="plus logo"
-                />
-              </p>
-            </div>
-          </div>
-          <div
-            class="dimensionSettings"
-            v-show="selectedId"
-          >
-            <p class="infoHeaderSub">Largeur:</p>
-            <div class="dimensionContainer">
-              <div
-                class="triangleLeft"
-                @click="changeSelectedWidth(selectedDivWidth - 1)"
-              ></div>
+              <p class="infoHeaderSub">Valeur du champ:</p>
               <input
-                class="dimensionInput"
-                type="number"
-                v-model="selectedDivWidth"
-                @change="changeSelectedWidth(selectedDivWidth)"
+                class="divContentInput"
+                v-model="selectedDivContent"
+                type="text"
+                @input="setDivContent(selectedDivContent)"
+                placeholder="Insérer la valeur du champ"
               />
-              <div
-                class="triangleRight"
-                @click="changeSelectedWidth(selectedDivWidth + 1)"
-              ></div>
             </div>
-            <p class="infoHeaderSub">Hauteur:</p>
-            <div class="dimensionContainer">
-              <div
-                class="triangleLeft"
-                @click="changeSelectedHeight(selectedDivHeight - 1)"
-              ></div>
-              <input
-                class="dimensionInput"
-                type="number"
-                v-model="selectedDivHeight"
-                @change="changeSelectedHeight(selectedDivHeight)"
-              />
-              <div
-                class="triangleRight"
-                @click="changeSelectedHeight(selectedDivHeight + 1)"
-              ></div>
+            <button
+              class="saveButton"
+              @click="openPopup"
+              v-show="selectedId"
+            >
+              Enregistrer l'activité
+            </button>
+            <div
+              class="alert"
+              v-show="alertDiv"
+            >
+              Un champ n'a pas de valeur!
             </div>
-          </div>
-          <div
-            class="divContentSetter"
-            v-show="selectedId"
-          >
-            <p class="infoHeaderSub">Valeur du champ:</p>
-            <input
-              class="divContentInput"
-              v-model="selectedDivContent"
-              type="text"
-              @input="setDivContent(selectedDivContent)"
-              placeholder="Insérer la valeur du champ"
-            />
-          </div>
-          <button
-            class="saveButton"
-            @click="openPopup"
-            v-show="selectedId"
-          >
-            Enregistrer l'activité
-          </button>
-          <div
-            class="alert"
-            v-show="alertDiv"
-          >
-            Un champ n'a pas de valeur!
-          </div>
-          <div
-            class="alert"
-            v-show="alertNoDiv"
-          >
-            Veuillez insérer minimum 1 champ!
+            <div
+              class="alert"
+              v-show="alertNoDiv"
+            >
+              Veuillez insérer minimum 1 champ!
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- <RouterLink to="/dadselector">Test</RouterLink> -->
-  <div
-    class="popup"
-    v-show="popupDisplay"
-  >
+    <!-- <RouterLink to="/dadselector">Test</RouterLink> -->
     <div
-      class="popup_content"
-      v-if="!goodRequest"
+      class="popup"
+      v-show="popupDisplay"
     >
-      <h1 style="color: #00307e">Veuillez entrer un nom pour ce nouvel exercice</h1>
-      <input
-        type="text"
-        class="exercice_name"
-        maxlength="20"
-        v-model="levelName"
-      />
-      <p
-        class="alert"
-        style="font-size: 0.7em"
-        v-show="alertNoName"
+      <div
+        class="popup_content"
+        v-if="!goodRequest"
       >
-        {{ alertNoName }}
-      </p>
-      <div class="button_container">
-        <button
-          class="final_save_button"
-          @click="saveConfig"
+        <h1 style="color: #00307e">Veuillez entrer un nom pour ce nouvel exercice</h1>
+        <input
+          type="text"
+          class="exercice_name"
+          maxlength="20"
+          v-model="levelName"
+        />
+        <p
+          class="alert"
+          style="font-size: 0.7em"
+          v-show="alertNoName"
         >
-          Sauvegarder
-        </button>
-        <button
-          class="cancel_button"
-          @click="
-            () => {
-              popupDisplay = false
-            }
-          "
-        >
-          Annuler
-        </button>
+          {{ alertNoName }}
+        </p>
+        <div class="button_container">
+          <button
+            class="final_save_button"
+            @click="saveConfig"
+          >
+            Sauvegarder
+          </button>
+          <button
+            class="cancel_button"
+            @click="
+              () => {
+                popupDisplay = false
+              }
+            "
+          >
+            Annuler
+          </button>
+        </div>
       </div>
-    </div>
-    <div
-      class="popup_content"
-      v-else
-    >
-      <h1 style="color: green">L'exercice à bien été enregistré dans la base de données !</h1>
-      <div class="button_container">
-        <button
-          class="final_save_button"
-          @click="
-            () => {
-              router.push('/')
-            }
-          "
-        >
-          Accueil
-        </button>
+      <div
+        class="popup_content"
+        v-else
+      >
+        <h1 style="color: green">L'exercice à bien été enregistré dans la base de données !</h1>
+        <div class="button_container">
+          <button
+            class="final_save_button"
+            @click="$emit('change-page', 2)"
+          >
+            Accueil
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -595,7 +593,9 @@
     animation: divSpawning 0.5s ease;
   }
   .controlPanelContainer {
+    position: relative;
     display: flex;
+    min-height: 400px;
     height: 100%;
     min-width: 22%;
     max-width: 25%;
@@ -605,6 +605,7 @@
   }
   .controlPanel {
     width: 22%;
+    max-width: 400px;
     position: fixed;
     display: flex;
     flex-direction: column;
