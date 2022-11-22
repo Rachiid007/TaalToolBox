@@ -67,7 +67,12 @@
           alt="Adapt your exercice into a mobile version"
         />
       </div>
-      <button class="start_button">Créer une activité Drag And Learn</button>
+      <button
+        class="start_button"
+        @click="$emit('change-page', 1)"
+      >
+        Créer une activité Drag And Learn
+      </button>
     </div>
   </div>
 </template>

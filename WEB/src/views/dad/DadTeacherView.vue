@@ -2,11 +2,16 @@
   import DragndropTeacher from '@/components/dragndrop/DragNDropTeacher.vue'
   import TheHeader from '@/components/TheHeader.vue'
   import HowToAddDad from '@/components/dragndrop/HowToAddDad.vue'
+  import SelectDragNDropImage from '@/components/dragndrop/SelectDragNDropImage.vue'
   import { ref } from 'vue'
   import { useDadLevels } from '@/stores/dadLevels'
 
-  const imageSelected = ref(false)
+  const actualPage = ref(0)
   const dadStore = useDadLevels()
+
+  const changeActualPage = (nbrPage: number) => {
+    actualPage.value = nbrPage
+  }
 </script>
 <template>
   <div class="page">
@@ -19,8 +24,18 @@
         />
       </div>
     </TheHeader>
-    <DragndropTeacher v-if="imageSelected" />
-    <HowToAddDad v-else />
+    <HowToAddDad
+      v-show="!actualPage"
+      @change-page="(nbr: number) => changeActualPage(nbr)"
+    />
+    <DragndropTeacher
+      v-show="actualPage == 1"
+      @change-page="(nbr: number) => changeActualPage(nbr)"
+    />
+    <SelectDragNDropImage
+      v-show="actualPage == 2"
+      @change-page="(nbr: number) => changeActualPage(nbr)"
+    />
   </div>
 </template>
 <style scoped>
