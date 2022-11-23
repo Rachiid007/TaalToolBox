@@ -4,7 +4,7 @@
   import { ref } from 'vue'
 
   const userStore = useUserStore()
-  const role:string[] = userStore.user.role
+  const role: string[] = userStore.user.role
   const right_tab: any = ref(null)
   const hamburger: any = ref(null)
   const isShown: any = ref(false)
@@ -191,7 +191,7 @@
     align-items: center;
     gap: 10%;
     font-family: NotoSans-Regular;
-    position: fixed;
+    position: sticky;
     background-color: white;
     z-index: 5;
     margin: 0 auto;
@@ -313,7 +313,7 @@
     position: absolute;
     z-index: -1;
     /* border-left: 1px solid grey; */
-    padding-top: 70px;
+    /* padding-top: 70px; */
     transition: 0.5s ease;
   }
   .content {

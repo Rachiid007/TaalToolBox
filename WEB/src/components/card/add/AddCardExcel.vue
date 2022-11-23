@@ -1,21 +1,25 @@
 <script setup lang="ts">
   import axios from 'axios'
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0]
-    const formData = new FormData()
-    formData.append('file', file)
-    axios
-      .post('http://localhost:3000/cards/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      .then((res) => {
-        console.log(res)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+  const handleFileUpload = (e: Event) => {
+    const target = e.target as HTMLInputElement
+    const files = target.files
+    if (files) {
+      const file = files[0]
+      const formData = new FormData()
+      formData.append('file', file)
+      axios
+        .post('/api/cards/excel', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   }
 </script>
 
@@ -23,7 +27,9 @@
   <div>
     <input
       type="file"
-      @change="handleFileUpload"
+      name="file"
+      accept=".xlsx, .xls"
+      @change="handleFileUpload($event)"
     />
   </div>
 </template>

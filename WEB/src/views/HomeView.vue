@@ -20,6 +20,5 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: 50px;
-    padding-top: 80px;
   }
 </style>
