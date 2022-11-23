@@ -16,10 +16,7 @@ export class UsersService {
     return await this.userRepository.findOne(data);
   }
   // Get the user in database and her role
-  async loginUser(
-    email: string,
-    password: string,
-  ): Promise<UserData | undefined> {
+  async loginUser(email: string, password: string) {
     if (!email || !password) {
       throw new NotFoundException();
     }
@@ -34,21 +31,19 @@ export class UsersService {
       throw new NotFoundException();
     }
     const userData = {
-      name: user.name,
+      last_name: user.last_name,
+      first_name: user.first_name,
       surname: user.surname,
       role: user.role.map((x) => {
         return x.name;
       }),
       email: user.email,
       birthdate: user.birthdate,
-      phone: user.phone,
     };
     return userData;
   }
-  async create(data: CreateUserDto): Promise<any> {
-    return await this.userRepository
-      .save(data)
-      .then((res) => res)
-      .catch((e) => console.log(e));
+
+  async create(userData: CreateUserDto) {
+    return await this.userRepository.save(userData);
   }
 }

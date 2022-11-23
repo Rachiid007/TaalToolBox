@@ -1,7 +1,6 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -18,7 +17,10 @@ export class Users {
   id: number;
 
   @Column('character varying')
-  name: string;
+  last_name: string;
+
+  @Column()
+  first_name: string;
 
   @Column('character varying')
   surname: string;
@@ -32,12 +34,12 @@ export class Users {
   @Column('date')
   birthdate: string;
 
-  @Column('character varying')
-  phone: string;
-
   @ManyToMany(() => Role)
   @JoinTable()
   role: Role[];
+
+  @Column('date')
+  registration_date: string;
 
   @ManyToMany(() => Schoolclass)
   @JoinTable()
@@ -47,7 +49,7 @@ export class Users {
   @ManyToOne(() => Lang, (lang) => lang.users)
   lang: Lang;
 
-  //Une utilisateur peut avoir plusieurs solution
+  //Un utilisateur peut avoir plusieurs solution
   @OneToMany(() => UserResponseCard, (response_card) => response_card.user)
   response_card: UserResponseCard[];
 }

@@ -66,8 +66,19 @@
     rows.value.splice(index, 1)
   }
 
-  const addUsers = () => {
-    UserService.postUsers(rows.value)
+  const addUsers = async () => {
+    const users = rows.value.map((row) => {
+      return {
+        firstName: row['Prénom'],
+        lastName: row['Nom'],
+        email: row['Email'],
+        birthdate: row['Date de Naissance'],
+        class: row['Classe'],
+        registrationDate: row["Date d'inscription"]
+      }
+    })
+    console.log(users)
+    await UserService.postUsers(users)
   }
 </script>
 
@@ -132,12 +143,12 @@
 <style scoped>
   .container {
     margin: 0 auto;
-    max-width: 800px;
+    max-width: 1000px;
   }
 
   .title {
     font-size: 2rem;
-    margin: 30px auto;
+    margin: 15px auto;
     text-align: center;
     position: relative;
   }
@@ -154,8 +165,8 @@
   }
 
   .table-container {
-    margin: 30px auto;
-    max-width: 800px;
+    margin: 20px auto;
+    max-width: 900px;
     overflow-x: auto;
   }
 

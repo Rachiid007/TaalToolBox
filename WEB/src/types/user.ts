@@ -1,8 +1,10 @@
 export default interface User {
-  name: string
-  surname: string
-  email: string
-  birthdate: string
-  phone: string
-  role: string[]
+  firstName: string
+  lastName: string
+  // surname: string | null
+  email: string | null
+  birthdate: string | null
+  class: string
+  // role: string[] | null
+  registrationDate: string | null
 }

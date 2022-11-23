@@ -1,16 +1,8 @@
-import { apiClient, apiClientForm } from './apiClient'
-
-interface UserFromExcel {
-  firstName: string | null
-  lastName: string | null
-  email: string | null
-  birthDate: string | null
-  classes: string | null
-  registrationDate: string | null
-}
+import { apiClient } from './apiClient'
+import type User from '@/types/user'
 
 export default {
-  postUsers(users: UserFromExcel[]) {
+  postUsers(users: User[]) {
     return apiClient.post('/users', users)
   },
   getUsers() {
