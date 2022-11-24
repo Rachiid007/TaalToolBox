@@ -1,22 +1,27 @@
 <script setup lang="ts">
+  import 'ol-popup/src/ol-popup.css'
+  import 'ol/ol.css'
   import Overlay from 'ol/Overlay'
   import TileLayer from 'ol/layer/Tile'
   import XYZ from 'ol/source/XYZ'
   import { toLonLat } from 'ol/proj'
   import { toStringHDMS } from 'ol/coordinate'
   import { OSM } from 'ol/source'
-  import { onMounted, ref, reactive } from 'vue'
+  import { onMounted, ref, reactive, Transition } from 'vue'
   import { Icon, Style } from 'ol/style'
   import { Point } from 'ol/geom'
-  import { fromLonLat } from 'ol/proj'
+  import { fromLonLat, transform } from 'ol/proj'
+  import { ApiKeyManager } from '@esri/arcgis-rest-request'
+  import { geocode, type IGeocodeResponse } from '@esri/arcgis-rest-geocoding'
   import { Map, View, Feature } from 'ol'
   import { Vector as VectorLayer } from 'ol/layer'
   import { Vector as VectorSource } from 'ol/source'
   import { Control, defaults as defaultControls } from 'ol/control'
   import { defaults as defaultInteractions } from 'ol/interaction.js'
-
   import geoCoderSvg from '@/assets/images/geo-marker.svg'
+import { RouterLink } from 'vue-router'
 
+  // import { Popup } from 'ol-popup';
   //
   //
   // TODO: Essayer de régler ce typeScript de m*rde
@@ -24,6 +29,7 @@
   //
 
   // Cette ref correspond à la div du popup
+
   const popup = ref(null)
 
   const map = ref()
@@ -38,6 +44,7 @@
   // Pour changer le type de partie on utilise gamemode
   const gamemode = ref(1)
   // Ici on stocke les différents points que l'on va afficher sur la map
+
   const pointState = reactive({
     points: [
       {
@@ -154,11 +161,12 @@
 
     for (let item in pointState.points) {
       let point = pointState.points[item]
+
       let feature = new Feature({
         geometry: new Point(fromLonLat([point.coordinates[0], point.coordinates[1]])), //[4.39064, 50.83756]
         name: point.label
       })
-      feature.setId(point.levelId)
+      // feature.setId(point.levelId)
       feature.setStyle(iconStyle)
       let vector = new VectorLayer({
         source: new VectorSource({
@@ -197,6 +205,95 @@
       }
     })
   })
+  // map.value.setView(
+  //   new View({
+  //     center: fromLonLat([151.2093, -33.8688]), // Sydney
+
+  //     zoom: 13
+  //   })
+  // )
+  const basemapId = 'ArcGIS:Streets'
+  const basemapURL =
+    'https://basemaps-api.arcgis.com/arcgis/rest/services/styles/' +
+    basemapId +
+    '?type=style&token=' +
+    import.meta.env.VITE_API_KEY
+
+  // olms(map, basemapURL)
+  console.log(basemapURL)
+
+  const authentication = ApiKeyManager.fromKey(import.meta.env.VITE_API_KEY)
+
+  const handleGeocode = () => {
+    // get the value of the input element
+    const query = (<HTMLInputElement>document.getElementById('geocode-input')).value
+
+    // recupère les coordonnées
+    const center = transform(map.value.getView().getCenter(), 'EPSG:3857', 'EPSG:4326')
+    geocode({
+      singleLine: query,
+      authentication,
+
+      params: {
+        outFields: '*',
+        location: center.join(','),
+        outSR: 3857 // Request coordinates in Web Mercator to simplify displaying
+      }
+    })
+      .then((response: IGeocodeResponse) => {
+        const result: any = response.candidates[0]
+        const coords = [result.attributes.X, result.attributes.Y]
+        console.log(result)
+        let feature = new Feature({
+          geometry: new Point(fromLonLat(coords)), //[4.39064, 50.83756]
+          name: result.address
+        })
+        feature.setStyle(
+          new Style({
+            // stroke: new Stroke({
+            //       width: 5,
+            //       color: "#ff0000"
+            //     },
+            image: new Icon({
+              anchor: [10, 10],
+              anchorXUnits: 'pixels',
+              anchorYUnits: 'pixels',
+              src: geoCoderSvg,
+              displacement: [-5, 25],
+              scale: 1
+            })
+          })
+        )
+        let vector = new VectorLayer({
+          source: new VectorSource({
+            features: [feature]
+          })
+        })
+        // Au lieu d'ajouter à la fin de la liste de layers
+        // On ajoute la nouvelle feature à la fin de la liste des layers de la map
+        map.value.getLayers().extend([vector])
+        if (!result) {
+          alert("That query didn't match any geocoding results.")
+          return
+        }
+
+        // popup.show(coords, result.attributes.LongLabel)
+        // map.getView().setCenter(coords)
+      })
+
+      .catch((error) => {
+        alert('There was a problem using the geocoder. See the console for details.')
+        console.error(error)
+      })
+  }
+  // geocode({
+  //   address: '1600 Pennsylvania Ave',
+  //   postal: 20500,
+  //   countryCode: 'USA',
+  //   authentication
+  // }).then((response) => {
+  //   console.log('Candidates:', response.candidates)
+  // })
 </script>
 
 <template>
@@ -204,6 +301,22 @@
     id="map"
     class="map"
   ></div>
+  <div class="search">
+    <input
+      id="geocode-input"
+      ref="inputGeocode"
+      type="text"
+      placeholder="Enter an address or place e.g. 1 York St"
+      size="50"
+    />
+    <!-- On click sur le bouton geocode ,  -->
+    <button
+      id="geocode-button"
+      @click="handleGeocode"
+    >
+      Geocode
+    </button>
+  </div>
   <div
     v-show="popupVisibility"
     ref="popup"
@@ -287,6 +400,20 @@
   .map {
     width: 100%;
     height: 100vh;
+  }
+  .search {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  #geocode-input,
+  #geocode-button {
+    font-size: 16px;
+    margin: 0 2px 0 0;
+    padding: 4px 8px;
+  }
+  #geocode-input {
+    width: 300px;
   }
   .ol-popup {
     position: absolute;
