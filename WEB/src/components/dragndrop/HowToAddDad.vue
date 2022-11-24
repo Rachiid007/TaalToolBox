@@ -3,6 +3,12 @@
   import getImage from '@/assets/images/daltuto/get-image.svg'
   import mobileVersion from '@/assets/images/daltuto/mobile-version.svg'
   import sendToDd from '@/assets/images/daltuto/send-to-db.svg'
+  import { useDadLevels } from '@/stores/dadLevels'
+  import { onMounted } from 'vue'
+
+  const store = useDadLevels()
+
+  onMounted(() => {})
 </script>
 <template>
   <div class="main">
@@ -47,8 +53,8 @@
         />
         <div class="explanation_description">
           <p>
-            Une fois votre nouvel éxercice créé, il vous est possible, si vous le souhaitez, de
-            l'adapter aux version mobiles. Ceci permettera à toute personne sur un appareil mobile
+            Une fois votre nouvel exercice créé, il vous est possible, si vous le souhaitez, de
+            l'adapter aux versions mobiles. Ceci permettera à toute personne sur un appareil mobile
             de pouvoir voir l'activité et d'y jouer correctement.
           </p>
         </div>
@@ -57,7 +63,7 @@
       <div class="explanation">
         <div class="explanation_description">
           <p>
-            Pour finir, quand la phase création de l'éxercice est terminée, vous pouvez lui donner
+            Pour finir, quand la phase création de l'exercice est terminée, vous pouvez lui donner
             un nom et choisir un emplacement sur la carte où la nouvelle activité se trouvera.
           </p>
         </div>
@@ -127,6 +133,8 @@
   .explanation_description {
     width: 30%;
     text-align: center;
+    font-family: Didno;
+    font-size: 18px;
   }
   .start_button {
     background-color: var(--main-dal-color);
