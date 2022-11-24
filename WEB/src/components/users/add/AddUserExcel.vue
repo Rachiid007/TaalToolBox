@@ -10,9 +10,11 @@
     Nom: string
     Prénom: string
     Email: string
-    'Date de Naissance': string
+    'Date de Naissance': Date
     Classe: string
-    "Date d'inscription": string
+    "Date d'inscription": Date
+    birdthdate_convert?: string
+    inscriptiondate_convert?: string
   }
 
   const handleFileChange = (e: Event) => {
@@ -40,7 +42,8 @@
       const data = e.target?.result
       if (data) {
         /* parse workbook */
-        const workbook = read(data, { type: 'binary' })
+        const workbook = read(data, { type: 'binary', cellDates: true })
+
         /* get first worksheet */
         const firstSheet = workbook.Sheets[workbook.SheetNames[0]]
 
@@ -54,6 +57,10 @@
           firstSheet.F1.v === "Date d'inscription"
         ) {
           rows.value = utils.sheet_to_json<UserFromExcelFR>(firstSheet)
+          rows.value.forEach((row) => {
+            row.birdthdate_convert = formatDate(row['Date de Naissance'])
+            row.inscriptiondate_convert = formatDate(row["Date d'inscription"])
+          })
         } else {
           console.log('The first row of the excel file does not correspond to the interface')
         }
@@ -78,7 +85,14 @@
       }
     })
     console.log(users)
-    await UserService.postUsers(users)
+    // await UserService.postUsers(users)
+  }
+
+  const formatDate = (date: Date) => {
+    const day = date.getDate()
+    const month = date.getMonth() + 1
+    const year = date.getFullYear()
+    return `${day}/${month}/${year}`
   }
 </script>
 
@@ -114,9 +128,9 @@
             <td>{{ row.Nom }}</td>
             <td>{{ row.Prénom }}</td>
             <td>{{ row.Email }}</td>
-            <td>{{ row['Date de Naissance'] }}</td>
+            <td>{{ row.birdthdate_convert }}</td>
             <td>{{ row.Classe }}</td>
-            <td>{{ row["Date d'inscription"] }}</td>
+            <td>{{ row.inscriptiondate_convert }}</td>
             <td>
               <button
                 type="button"
@@ -198,6 +212,7 @@
     background-color: green;
     border-radius: 5px;
     padding: 5px 10px;
+    color: white;
   }
 
   .submit-btn:hover {
