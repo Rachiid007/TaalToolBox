@@ -38,8 +38,10 @@ export class RoleService {
     this.roleRepository.save(createRoleDto);
   }
 
-  findAll() {
-    return this.roleRepository.find();
+  async findAll() {
+    const role = await this.roleRepository.createQueryBuilder('role').getMany();
+    return role;
+    // return `This action returns all role`;
   }
 
   // findOne(id: number) {
