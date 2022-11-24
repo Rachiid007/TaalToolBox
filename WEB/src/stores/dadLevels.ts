@@ -6,7 +6,10 @@ import dalService from '@/services/dalService'
 export const useDadLevels = defineStore('dadlevels', () => {
   const levelSelector = ref(0)
   const DalDataList = ref<any[]>([])
-  const selectedImage = ref('')
+
+  const selectedImageUrl = ref('')
+  const selectedImageData = ref(null)
+
   DalDataList.value.push(
     {
       fields: [
@@ -139,15 +142,23 @@ export const useDadLevels = defineStore('dadlevels', () => {
   }
 
   const getImageUrl = () => {
-    return selectedImage.value
+    return selectedImageUrl.value
   }
 
-  const addImageUrl = (url: string) => {
-    selectedImage.value = url
+  const setImageUrl = (url: string) => {
+    selectedImageUrl.value = url
+  }
+
+  const getImageData = () => {
+    return selectedImageData.value
+  }
+
+  const setImageData = (data: any) => {
+    selectedImageData.value = data
   }
 
   return {
-    selectedImage,
+    selectedImageUrl,
     DalDataList,
     addData,
     getData,
@@ -156,6 +167,8 @@ export const useDadLevels = defineStore('dadlevels', () => {
     getDragAndLearn,
     addDragAndLearn,
     getImageUrl,
-    addImageUrl
+    setImageUrl,
+    getImageData,
+    setImageData
   }
 })
