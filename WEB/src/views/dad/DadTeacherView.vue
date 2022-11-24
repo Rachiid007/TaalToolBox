@@ -25,15 +25,15 @@
       </div>
     </TheHeader>
     <HowToAddDad
-      v-show="!actualPage"
-      @change-page="(nbr: number) => changeActualPage(nbr)"
-    />
-    <DragndropTeacher
-      v-show="actualPage == 1"
+      v-if="!actualPage"
       @change-page="(nbr: number) => changeActualPage(nbr)"
     />
     <SelectDragNDropImage
-      v-show="actualPage == 2"
+      v-if="actualPage == 1"
+      @change-page="(nbr: number) => changeActualPage(nbr)"
+    />
+    <DragndropTeacher
+      v-if="actualPage == 2"
       @change-page="(nbr: number) => changeActualPage(nbr)"
     />
   </div>
