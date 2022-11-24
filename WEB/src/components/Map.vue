@@ -19,7 +19,7 @@
   import { Control, defaults as defaultControls } from 'ol/control'
   import { defaults as defaultInteractions } from 'ol/interaction.js'
   import geoCoderSvg from '@/assets/images/geo-marker.svg'
-import { RouterLink } from 'vue-router'
+  import { RouterLink } from 'vue-router'
 
   // import { Popup } from 'ol-popup';
   //
@@ -154,7 +154,8 @@ import { RouterLink } from 'vue-router'
       })
     })
     console.log(map.value)
-
+    //TODO NAFFICHER QUE LACTIVITE PRINCIPALE LORS DE LA PREMIERE ARRIVER DE LELEVE SUR LE SITE
+    // TODO FAIRE UN CONDITION SI LELEVE A DEJA COMPLETER LACTIVITE DANS SON ECOLE
     // ---------------------------------------------------------------
     // On génère les points sur la map à partir de la liste des objets
     // ---------------------------------------------------------------
@@ -176,23 +177,33 @@ import { RouterLink } from 'vue-router'
       // On ajoute la nouvelle feature à la fin de la liste des layers de la map
       map.value.getLayers().extend([vector])
     }
+    //TODO si le créateur clique sur un point qui vient d'être rajouter, on démarrer la création d'une activité
 
-    map.value.on('singleclick', function (evt) {
+    map.value.on('singleclick', function (evt: { pixel: any; coordinate: any }) {
       // Si on click autre part que sur un point, le popup se désaffiche
       popupVisibility.value = false
       setActive()
       console.log(map.value.getInteractions().getArray())
-      map.value.forEachFeatureAtPixel(evt.pixel, function (feature, layer: any) {
-        // On attribue les valeurs de nom de niveau et de numéro de niveau
-        levelName.value = feature.getProperties().name
-        levelNumber.value = feature.getId()
-        // On enregistre les coordonnées pour mettre le popup au bon endroit
-        const coordinate = evt.coordinate
-        overlay.setPosition(coordinate)
-        popupVisibility.value = true
-        allowControls.value = false
-        setNotActive()
-      })
+      map.value.forEachFeatureAtPixel(
+        evt.pixel,
+        function (
+          feature: {
+            getProperties: () => { (): any; new (): any; name: string }
+            getId: () => number
+          },
+          layer: any
+        ) {
+          // On attribue les valeurs de nom de niveau et de numéro de niveau
+          levelName.value = feature.getProperties().name
+          levelNumber.value = feature.getId()
+          // On enregistre les coordonnées pour mettre le popup au bon endroit
+          const coordinate = evt.coordinate
+          overlay.setPosition(coordinate)
+          popupVisibility.value = true
+          allowControls.value = false
+          setNotActive()
+        }
+      )
     })
     map.value.on('pointermove', function (evt: any) {
       var touche = this.forEachFeatureAtPixel(evt.pixel, function () {
@@ -220,7 +231,6 @@ import { RouterLink } from 'vue-router'
     import.meta.env.VITE_API_KEY
 
   // olms(map, basemapURL)
-  console.log(basemapURL)
 
   const authentication = ApiKeyManager.fromKey(import.meta.env.VITE_API_KEY)
 
@@ -269,9 +279,12 @@ import { RouterLink } from 'vue-router'
             features: [feature]
           })
         })
-        // Au lieu d'ajouter à la fin de la liste de layers
+
+        console.log(map.value.getLayers())
+        // Au lieu d'ajouter à la fin de la liste de layers on sort un popup qui permettra de créer l'activité
         // On ajoute la nouvelle feature à la fin de la liste des layers de la map
         map.value.getLayers().extend([vector])
+
         if (!result) {
           alert("That query didn't match any geocoding results.")
           return
