@@ -21,8 +21,8 @@ export class RoleController {
   }
 
   @Get()
-  findAll() {
-    return this.roleService.findAll();
+  async findAll() {
+    return await this.roleService.findAll();
   }
 
   // @Get(':id')
