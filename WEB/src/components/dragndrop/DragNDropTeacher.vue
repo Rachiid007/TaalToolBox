@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue'
+  import { onMounted, ref, reactive } from 'vue'
   import { useDadLevels } from '@/stores/dadLevels'
   import { useUserStore } from '@/stores/user'
   import axios from 'axios'
@@ -24,8 +24,10 @@
   // array avec des nombre dedans, ce nbr permet de savoir le nbr de DIV
   // utilisé pour générer les champs
   const fieldList = ref<number[]>([])
-  const background = ref()
+  const background = ref('')
   const image = ref()
+
+  const imageLink = ref('')
 
   const selectedId = ref('')
   const selectedDiv = ref()
@@ -309,7 +311,10 @@
       alertNoName.value = "Veuillez entrer un nom pour l'activité."
     }
   }
-  onMounted(() => {})
+  onMounted(() => {
+    imageLink.value = store.getImageUrl()
+    console.log(imageLink.value)
+  })
 </script>
 <template>
   <div class="global_content">
@@ -321,7 +326,8 @@
           class="back"
         >
           <img
-            src="@/assets/images/form.png"
+            v-show="imageLink"
+            :src="imageLink"
             alt="image for the exercice"
             ref="image"
           />
@@ -473,7 +479,7 @@
         </div>
       </div>
     </div>
-    <!-- <RouterLink to="/dadselector">Test</RouterLink> -->
+
     <div
       class="popup"
       v-show="popupDisplay"

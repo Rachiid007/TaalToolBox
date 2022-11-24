@@ -22,7 +22,7 @@
   const goodFields = ref(0)
   // On stocke le nombre de mauvaises réponses
   const badFields = ref(0)
-  const state = reactive(dataFromStore[1])
+  const state = reactive(dataFromStore[0])
 
   const checkScore = () => {
     console.log('Checking score ...')
