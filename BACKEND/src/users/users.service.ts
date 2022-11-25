@@ -1,16 +1,37 @@
-import type { UserData } from './../types/index';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Role } from './../role/entities/role.entity';
+import { Schoolclass } from './../schoolclass/entities/schoolclass.entity';
+// import { School } from './../school/entities/school.entity';
+import type { UserData, UserFormData } from './../types/index';
+import {
+  Injectable,
+  NotFoundException,
+  Inject,
+  ConflictException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InsertResult, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Users } from './entities/users.entity';
-
+import { SchoolService } from '../school/school.service';
+import { School } from 'src/school/entities/school.entity';
+import { SchoolclassService } from '../schoolclass/schoolclass.service';
+import { RoleService } from '../role/role.service';
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
   ) {}
+
+  @Inject(SchoolService)
+  private readonly schoolService: SchoolService;
+
+  @Inject(SchoolclassService)
+  private readonly schoolClassService: SchoolclassService;
+
+  @Inject(RoleService)
+  private readonly roleService: RoleService;
 
   async findOneUser(data: number | any): Promise<Users | undefined> {
     return await this.userRepository.findOne(data);
@@ -46,6 +67,111 @@ export class UsersService {
     };
     return userData;
   }
+  public async createUser(payload: UserFormData) {
+    // Normalement en front on doit récupérer toutes les écoles
+    //
+
+    const { name, surname, email, password, birthdate, phone, school, role } =
+      payload;
+    //1. Checker si l'utilisateur est déjà dans la base de données
+    const checkUser: Users = await this.userRepository
+      .createQueryBuilder()
+      .where({ email: email })
+      .getOne();
+
+    if (checkUser) {
+      console.log('utilsateur existant');
+      throw new ConflictException('User already exist');
+      // throw new InternalServerErrorException();
+    }
+
+    //2. creer dabord l'utilisateur et récupérer son id
+    const user: InsertResult = await this.userRepository
+      .createQueryBuilder('users')
+      .insert()
+      .into('users', [
+        'name',
+        'surname',
+        'email',
+        'password',
+        'birthdate',
+        'phone',
+      ])
+      .values({
+        name: name,
+        surname: surname,
+        email: email,
+        password: password,
+        birthdate: birthdate,
+        phone: phone,
+      })
+      .execute();
+    if (!user) {
+      throw new InternalServerErrorException(
+        'cannot insert users check all the field',
+      );
+    }
+    const idUser: number = user.identifiers[0].id;
+
+    // 3. Récupérer l'id de l'école de l'élève (cela ne doit jamais être null : soit l'admin mentionne l'école soit on prend l'école du prof ou de l'admin)
+    const schoolRequest: School = await this.schoolService.findSchool(school);
+
+    // Prendre l'id de l'école de l'élève dans le frontend,
+    console.log(schoolRequest.id);
+
+    // Le professeur ne peut pas créer des classes
+    // 4. Checker si la classe de l'élève existe déjà dans la DB
+    const schoolClassRequest: Schoolclass =
+      await this.schoolClassService.findClassUser(
+        schoolRequest.id,
+        payload.class,
+      );
+    let idSchoolClass: number;
+    if (schoolClassRequest) {
+      idSchoolClass = schoolClassRequest.id;
+    } else {
+      //5. inserer la classe de l'utilisateur si celle si n'existe pas
+      // La requete suivante servira pour la création des classes
+      const schoolClassInsert = await this.schoolClassService.create({
+        name: payload.class,
+        schoolId: schoolRequest.id,
+      });
+      if (!schoolClassInsert) {
+        throw new InternalServerErrorException(
+          'Cannot insert school class users',
+        );
+      }
+      idSchoolClass = schoolClassInsert.identifiers[0].id;
+    }
+
+    //6. Lier l'utilisateur et sa classe
+    const userClass: InsertResult = await this.userRepository
+      .createQueryBuilder()
+      .insert()
+      .into('users_schoolclass_schoolclass')
+      .values({ usersId: idUser, schoolclassId: idSchoolClass })
+      .execute();
+    if (!userClass) {
+      throw new InternalServerErrorException('Cannot link user with his class');
+    }
+    //7. Inserer maintenant le role de l'utilisateur
+    // Récupérer l'id role de l'utilisateur et l'
+    const roleRequest: Role = await this.roleService.findRole(role);
+    const idRole: number = roleRequest.id;
+
+    const userRole: InsertResult = await this.userRepository
+      .createQueryBuilder()
+      .insert()
+      .into('users_role_role')
+      .values({ usersId: idUser, roleId: idRole })
+      .execute();
+
+    if (!userRole) {
+      throw new InternalServerErrorException('Cannot attribute role to users');
+    }
+    console.log(userRole);
+  }
+
   async create(data: CreateUserDto): Promise<any> {
     return await this.userRepository
       .save(data)
