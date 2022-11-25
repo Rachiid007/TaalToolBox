@@ -44,6 +44,13 @@ export class SchoolService implements OnApplicationBootstrap {
   //   return this.schoolRepository.findOne(id);
   // }
 
+  public async findSchool(school: string) {
+    return await this.schoolRepository
+      .createQueryBuilder('school')
+      .where({ name: school })
+      .getOne();
+  }
+
   update(id: number, updateSchoolDto: UpdateSchoolDto) {
     this.schoolRepository.update(id, updateSchoolDto);
   }
