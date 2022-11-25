@@ -43,10 +43,15 @@ export class RoleService {
     return role;
     // return `This action returns all role`;
   }
-
-  // findOne(id: number) {
-  //   return this.roleRepository.findOne(id);
-  // }
+  public async findRole(role: string) {
+    return await this.roleRepository
+      .createQueryBuilder('role')
+      .where({ name: role })
+      .getOne();
+  }
+  findOne(id: number) {
+    return `This action returns a #${id} role`;
+  }
 
   update(id: number, updateRoleDto: UpdateRoleDto) {
     this.roleRepository.update(id, updateRoleDto);
