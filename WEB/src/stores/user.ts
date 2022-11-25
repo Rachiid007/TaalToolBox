@@ -1,7 +1,7 @@
 import {ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import loginService from '@/services/loginService'
-import type User from '@/types/user'
+import type {User} from '@/types/user'
 import { useArrayEvery } from '@vueuse/shared'
 // import localforage from 'localforage'
 
@@ -17,7 +17,7 @@ export const useUserStore = defineStore('user', () => {
   })
   // const refreshStore = () => {
   if (localStorage.getItem('user')) {
-    const userStorage:any = localStorage.getItem('user')
+    const userStorage: any = localStorage.getItem('user')
     if (JSON.parse(userStorage)) {
       user = JSON.parse(userStorage)
     }
