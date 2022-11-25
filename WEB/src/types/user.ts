@@ -1,9 +1,21 @@
-export default interface User {
-  id: number
+import { School } from './../../../BACKEND/src/school/entities/school.entity'
+export interface User {
   name: string
   surname: string
   email: string
   birthdate: string
   phone: string
   role: string[]
+}
+
+export interface UserFormData {
+  name: string
+  surname: string
+  email: string
+  birthdate: string
+  password: string
+  phone: string
+  school: string
+  class: string
+  role: string
 }
