@@ -1,8 +1,9 @@
 <script setup lang="ts">
   import { reactive, onMounted } from 'vue'
+  import { useUserStore } from '@/stores/user'
   import axios from 'axios'
   import router from '@/router'
-
+  const store = useUserStore()
   const state = reactive({
     mail: '',
     password: ''
@@ -22,35 +23,29 @@
     }
     sendData()
   }
-  const sendData = () => {
+  const sendData = async () => {
     let payload = {
       email: state.mail,
       password: state.password
     }
     console.log(payload)
-    axios
-      .post('http://localhost:3000/auth/login', payload, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
-        }
-      })
-      .then((response) => {
-        if (response.status == 201) {
-          console.log('connecté')
-          console.log(response)
-          manage.succes = 'Connexion réussie !'
-          localStorage.setItem('personalInfo', payload['email'])
-          // localStorage.setItem('isConnected', 'yes')
-          router.push({ path: '/' })
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-        manage.error = 'Email ou mot de passe incorecte(s)'
-        console.log(error.message)
-        return 1
-      })
+
+    // Récupérer l'utilisateur
+    const user = await store.getUser(state.mail, state.password)
+
+    //Muter le state initiale du user
+    store.$patch({ user: user })
+    //Redirection vers la page
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user))
+      if (store.user) {
+        manage.succes = 'Connexion réussie !'
+        window.location.pathname = '/'
+      }
+    } else {
+      manage.error = "Nom d'utilisateur ou mot de passe incorrect"
+      return 1
+    }
   }
 </script>
 
