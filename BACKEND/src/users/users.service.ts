@@ -46,25 +46,55 @@ export class UsersService {
     }
     //Decrypter le mot de passe du user
     //Get the users and here role
-    const user = await this.userRepository
-      .createQueryBuilder('users')
-      .innerJoinAndSelect('users.role', 'role')
-      .where({ email: email, password: password })
-      .getOne();
+    let user: Users;
+    let userData: UserData;
+    if (email !== 'admin@gmail.com') {
+      user = await this.userRepository
+        .createQueryBuilder('users')
+        .innerJoinAndSelect('users.role', 'role')
+        .leftJoinAndSelect('users.schoolclass', 'schoolclass')
+        .innerJoinAndSelect('schoolclass.school', 'school')
+        .where({ email: email, password: password })
+        .getOne();
+
+      userData = {
+        name: user.name,
+        surname: user.surname,
+        role: user.role.map((x: { name: any }) => {
+          return x.name;
+        }),
+        email: user.email,
+        birthdate: user.birthdate,
+        phone: user.phone,
+        schoolclass: user.schoolclass.map((x: { name: any }) => {
+          return x.name;
+        }),
+        school: user.schoolclass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
+      };
+    } else {
+      user = await this.userRepository
+        .createQueryBuilder('users')
+        .innerJoinAndSelect('users.role', 'role')
+        .where({ email: email, password: password })
+        .getOne();
+
+      userData = {
+        name: user.name,
+        surname: user.surname,
+        role: user.role.map((x: { name: any }) => {
+          return x.name;
+        }),
+        email: user.email,
+        birthdate: user.birthdate,
+        phone: user.phone,
+        schoolclass: [],
+        school: '',
+      };
+    }
+
     if (!user) {
       throw new NotFoundException();
     }
-    const userData = {
-      id: user.id,
-      name: user.name,
-      surname: user.surname,
-      role: user.role.map((x) => {
-        return x.name;
-      }),
-      email: user.email,
-      birthdate: user.birthdate,
-      phone: user.phone,
-    };
     return userData;
   }
   public async createUser(payload: UserFormData) {
