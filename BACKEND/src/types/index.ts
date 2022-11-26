@@ -8,6 +8,8 @@ export interface UserData {
   birthdate: string;
   phone: string;
   role: string[];
+  schoolclass: string[];
+  school: string;
 }
 export interface Card {
   id: number;

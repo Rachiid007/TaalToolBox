@@ -20,7 +20,7 @@
   import { defaults as defaultInteractions } from 'ol/interaction.js'
   import geoCoderSvg from '@/assets/images/geo-marker.svg'
   import { RouterLink } from 'vue-router'
-
+  import { useUserStore } from '@/stores/user'
   // import { Popup } from 'ol-popup';
   //
   //
@@ -29,7 +29,11 @@
   //
 
   // Cette ref correspond à la div du popup
+  const userRole = useUserStore().user.role
+  // const schoolUser = useUserStore().user.
+  console.log(userRole)
 
+  const moneyStudent = ref(0)
   const popup = ref(null)
 
   const map = ref()
@@ -159,23 +163,27 @@
     // ---------------------------------------------------------------
     // On génère les points sur la map à partir de la liste des objets
     // ---------------------------------------------------------------
+    if (userRole.includes('Administrateur') || userRole.includes('Créateur')) {
+      // AFFICHER TOUTES LES ACTIVITES DE LA CARTE
+      for (let item in pointState.points) {
+        let point = pointState.points[item]
 
-    for (let item in pointState.points) {
-      let point = pointState.points[item]
-
-      let feature = new Feature({
-        geometry: new Point(fromLonLat([point.coordinates[0], point.coordinates[1]])), //[4.39064, 50.83756]
-        name: point.label
-      })
-      // feature.setId(point.levelId)
-      feature.setStyle(iconStyle)
-      let vector = new VectorLayer({
-        source: new VectorSource({
-          features: [feature]
+        let feature = new Feature({
+          geometry: new Point(fromLonLat([point.coordinates[0], point.coordinates[1]])), //[4.39064, 50.83756]
+          name: point.label
         })
-      })
-      // On ajoute la nouvelle feature à la fin de la liste des layers de la map
-      map.value.getLayers().extend([vector])
+        // feature.setId(point.levelId)
+        feature.setStyle(iconStyle)
+        let vector = new VectorLayer({
+          source: new VectorSource({
+            features: [feature]
+          })
+        })
+        // On ajoute la nouvelle feature à la fin de la liste des layers de la map
+        map.value.getLayers().extend([vector])
+      }
+    } else {
+      //TODO GET LECOLE DE LELEVE ET AFFICHER LACTIVITE PRINCIPALE
     }
     //TODO si le créateur clique sur un point qui vient d'être rajouter, on démarrer la création d'une activité
 
@@ -314,7 +322,10 @@
     id="map"
     class="map"
   ></div>
-  <div class="search">
+  <div
+    class="search"
+    v-if="userRole.includes('Administrateur') || userRole.includes('Créateur' )"
+  >
     <input
       id="geocode-input"
       ref="inputGeocode"
