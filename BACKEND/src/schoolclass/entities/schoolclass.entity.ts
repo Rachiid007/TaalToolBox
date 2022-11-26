@@ -2,6 +2,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   Entity,
+  OneToMany,
   OneToOne,
   JoinColumn,
 } from 'typeorm';
@@ -14,7 +15,11 @@ export class Schoolclass {
   @Column('character varying')
   name: string;
 
-  @OneToOne(() => School)
-  @JoinColumn()
+  @Column({ name: 'schoolId' })
+  schoolId: number;
+
+  // une classe appartient à une et une seule école
+  @OneToOne(() => School, (schoolId) => schoolId.id)
+  @JoinColumn({ name: 'schoolId' })
   school: School;
 }
