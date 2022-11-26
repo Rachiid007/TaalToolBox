@@ -85,7 +85,39 @@ export class UsersService {
       // throw new InternalServerErrorException();
     }
 
-    //2. creer dabord l'utilisateur et récupérer son id
+    // 2. Récupérer l'id de l'école de l'élève (cela ne doit jamais être null : soit l'admin mentionne l'école soit on prend l'école du prof ou de l'admin)
+    const schoolRequest: School = await this.schoolService.findSchool(school);
+
+    // Prendre l'id de l'école de l'élève dans le frontend,
+    console.log(schoolRequest.id);
+
+    // Le professeur ne peut pas créer des classes
+    // 3. Checker si la classe de l'élève existe déjà dans la DB
+    const schoolClassRequest: Schoolclass =
+      await this.schoolClassService.findClassUser(
+        schoolRequest.id,
+        payload.class,
+      );
+    let idSchoolClass: number;
+    if (schoolClassRequest) {
+      idSchoolClass = schoolClassRequest.id;
+    } else {
+      //4. inserer la classe de l'utilisateur si celle si n'existe pas
+      // La requete suivante servira pour la création des classes
+      // TODO NINSERE PAS LECOLE DE LUTILISATEUR
+      const schoolClassInsert = await this.schoolClassService
+        .create({
+          name: payload.class,
+          schoolId: schoolRequest.id,
+        })
+        .catch((err) => {
+          throw new InternalServerErrorException(err);
+        });
+
+      idSchoolClass = schoolClassInsert.identifiers[0].id;
+    }
+    //5. creer dabord l'utilisateur et récupérer son id
+    console.log(idSchoolClass);
     const user: InsertResult = await this.userRepository
       .createQueryBuilder('users')
       .insert()
@@ -105,55 +137,24 @@ export class UsersService {
         birthdate: birthdate,
         phone: phone,
       })
-      .execute();
-    if (!user) {
-      throw new InternalServerErrorException(
-        'cannot insert users check all the field',
-      );
-    }
+      .execute()
+      .catch((err) => {
+        throw new InternalServerErrorException(err);
+      });
+
     const idUser: number = user.identifiers[0].id;
 
-    // 3. Récupérer l'id de l'école de l'élève (cela ne doit jamais être null : soit l'admin mentionne l'école soit on prend l'école du prof ou de l'admin)
-    const schoolRequest: School = await this.schoolService.findSchool(school);
-
-    // Prendre l'id de l'école de l'élève dans le frontend,
-    console.log(schoolRequest.id);
-
-    // Le professeur ne peut pas créer des classes
-    // 4. Checker si la classe de l'élève existe déjà dans la DB
-    const schoolClassRequest: Schoolclass =
-      await this.schoolClassService.findClassUser(
-        schoolRequest.id,
-        payload.class,
-      );
-    let idSchoolClass: number;
-    if (schoolClassRequest) {
-      idSchoolClass = schoolClassRequest.id;
-    } else {
-      //5. inserer la classe de l'utilisateur si celle si n'existe pas
-      // La requete suivante servira pour la création des classes
-      const schoolClassInsert = await this.schoolClassService.create({
-        name: payload.class,
-        schoolId: schoolRequest.id,
-      });
-      if (!schoolClassInsert) {
-        throw new InternalServerErrorException(
-          'Cannot insert school class users',
-        );
-      }
-      idSchoolClass = schoolClassInsert.identifiers[0].id;
-    }
-
     //6. Lier l'utilisateur et sa classe
-    const userClass: InsertResult = await this.userRepository
+    await this.userRepository
       .createQueryBuilder()
       .insert()
       .into('users_schoolclass_schoolclass')
       .values({ usersId: idUser, schoolclassId: idSchoolClass })
-      .execute();
-    if (!userClass) {
-      throw new InternalServerErrorException('Cannot link user with his class');
-    }
+      .execute()
+      .catch((err) => {
+        throw new InternalServerErrorException(err);
+      });
+
     //7. Inserer maintenant le role de l'utilisateur
     // Récupérer l'id role de l'utilisateur et l'
     const roleRequest: Role = await this.roleService.findRole(role);
@@ -164,11 +165,11 @@ export class UsersService {
       .insert()
       .into('users_role_role')
       .values({ usersId: idUser, roleId: idRole })
-      .execute();
+      .execute()
+      .catch((err) => {
+        throw new InternalServerErrorException(err);
+      });
 
-    if (!userRole) {
-      throw new InternalServerErrorException('Cannot attribute role to users');
-    }
     console.log(userRole);
   }
 
