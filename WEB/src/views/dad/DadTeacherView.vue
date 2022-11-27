@@ -41,6 +41,10 @@
       v-if="actualPage == 3"
       @change-page="(nbr: number) => changeActualPage(nbr)"
     />
+    <DragNDropResume
+      v-if="actualPage == 3"
+      @change-page="(nbr: number) => changeActualPage(nbr)"
+    />
   </div>
 </template>
 <style scoped>
