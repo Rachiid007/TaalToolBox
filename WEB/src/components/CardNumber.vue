@@ -2,6 +2,7 @@
   import { useCardStore } from '@/stores/card'
   const store = useCardStore()
   const setNbrOfCardsforthegame = (cardNumber: number) => {
+    store.resetCounters()
     store.setRemaining(cardNumber)
     store.setCard(cardNumber)
   }
