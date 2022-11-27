@@ -13,7 +13,7 @@
   const wordList = ref()
 
   // On utilise cette ref pour stocker un boolean qui nous indique si l'utilisateur est sur un mobile ou pas
-  const isNotMobile = ref(false)
+  // const isNotMobile = ref(false)
 
   // Cette ref est utilisée pour stocker la liste de mots rangée d'une manière aléatoire
   const wordsToGen = ref([])
@@ -26,6 +26,8 @@
   const badFields = ref(0)
   const state = reactive(dataFromStore[store.getLevel()])
   const dataFromDb: any = ref()
+
+  const notCompatible = ref(false)
 
   const getData = async () => {
     dataFromDb.value = await axios
@@ -77,10 +79,10 @@
         // Si la div contient un <p>
         if (childList[child].firstChild) {
           // On parcourt la liste qui a permit de générer les champs afin d'aller vérifier les valeurs
-          for (let index in state.fields) {
+          for (let index in state.fields.pc) {
             // Si le numéro du champ correspond et que la valeur du champ <p> correspond également, on octroit un point
-            if (state.fields[index].test == childList[child].id) {
-              if (state.fields[index].rightValue == childList[child].firstChild.textContent) {
+            if (state.fields.pc[index].test == childList[child].id) {
+              if (state.fields.pc[index].rightValue == childList[child].firstChild.textContent) {
                 localScore++
                 goodAnswers++
                 childList[child].style.border = '2px solid green'
@@ -99,17 +101,17 @@
     score.value = localScore
   }
 
-  let mobileNav = false
+  // let mobileNav = false
 
-  //On regarde si l'utilisateur est sur un mobile ou pas grace à son os
-  if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/iPhone/i)) {
-    mobileNav = true
-  }
+  // //On regarde si l'utilisateur est sur un mobile ou pas grace à son os
+  // if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/iPhone/i)) {
+  //   mobileNav = true
+  // }
 
-  //On regarde si l'utilisateur est sur un mobile ou pas grace à l'option touch screen
-  'ontouchstart' in document.documentElement || mobileNav
-    ? (isNotMobile.value = false)
-    : (isNotMobile.value = true)
+  // //On regarde si l'utilisateur est sur un mobile ou pas grace à l'option touch screen
+  // 'ontouchstart' in document.documentElement || mobileNav
+  //   ? (isNotMobile.value = false)
+  //   : (isNotMobile.value = true)
 
   onMounted(() => {
     //La fonction shuffle va prendre les mots qui sont dans l'objet principal (state) et les mettres dans un ordre aléatoire
@@ -118,8 +120,8 @@
     console.log(store.getData())
     const shuffle = () => {
       let array = []
-      for (let item in state.fields) {
-        array.push(state.fields[item].rightValue)
+      for (let item in state.fields.pc) {
+        array.push(state.fields.pc[item].rightValue)
       }
       let currentIndex = array.length,
         randomIndex
@@ -138,8 +140,13 @@
         wordsToGen.value.push({ id: i, word: array[i] })
       }
     }
-    shuffle()
-    getData()
+    // getData()
+    if (state.fields.pc[0]) {
+      shuffle()
+    } else {
+      console.log(state)
+      notCompatible.value = true
+    }
   })
 </script>
 
@@ -149,7 +156,7 @@
       class="playground"
       :ondrop="dropped"
       :ondragover="draggedOver"
-      v-if="isNotMobile"
+      v-if="!notCompatible"
     >
       <div
         ref="background"
@@ -165,8 +172,14 @@
           class="container"
           :ondrop="dropped"
           :ondragover="draggedOver"
-          :style="{ top: item.top, left: item.left, width: item.width, height: item.height }"
-          v-for="item in state.fields"
+          :style="{
+            top: item.top,
+            left: item.left,
+            width: item.width,
+            height: item.height,
+            fontSize: item.fontSize
+          }"
+          v-for="item in state.fields.pc"
         ></div>
       </div>
       <div class="wordListContainer">
@@ -189,7 +202,7 @@
         <div class="resultCheck">
           <div class="resultcontainer">
             <p class="resultShow">Votre score est de:</p>
-            <p class="result">{{ score }} / {{ state.fields.length }}</p>
+            <p class="result">{{ score }} / {{ state.fields.pc.length }}</p>
             <div>
               <p
                 v-if="goodFields | badFields"
@@ -214,8 +227,8 @@
         </div>
       </div>
     </div>
-    <div
-      v-else
+    <!-- <div
+      v-if="isNotMobile"
       class="mobileOn"
     >
       <p class="sadFace">😢</p>
@@ -225,6 +238,13 @@
         class="backToHome"
         >Retrour à l'acceuil</RouterLink
       >
+    </div> -->
+    <div
+      class="not_compatible"
+      v-else
+    >
+      <h1>Cette activité ne possède pas de version pc.</h1>
+      <p>😢</p>
     </div>
   </div>
 </template>
@@ -240,6 +260,21 @@
     justify-content: center;
     gap: 3%;
     font-family: 'NotoSans-Regular';
+  }
+
+  .not_compatible {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 50px;
+  }
+  .not_compatible h1 {
+    font-size: 20px;
+    color: var(--main-dal-color);
+    font-weight: bold;
+    margin-top: 25px;
+    padding: 0 15px;
+    text-align: center;
   }
   .playground {
     margin-top: 25px;

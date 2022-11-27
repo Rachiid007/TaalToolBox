@@ -12,19 +12,18 @@
   //     console.log(image.value, file.value)
   //   }
   const store = useDadLevels()
-  const userStore = useUserStore()
-  const addDataToStore = (data: any) => {
-    store.addData(data)
-    console.log(store.getData())
-    console.log(store.getDragAndLearn())
-    console.log(store.getData())
+  // const userStore = useUserStore()
+  const addDataToStore = (data: any, type: string) => {
+    store.setTempData(data, type)
   }
 
   const numberField = ref(0)
+  const numberFieldMobile = ref(0)
   // array avec des nombre dedans, ce nbr permet de savoir le nbr de DIV
   // utilisé pour générer les champs
   const fieldList = ref<number[]>([])
-  const background = ref('')
+  const fieldListMobile = ref<number[]>([])
+  const background = ref(null)
   const image = ref()
 
   const imageLink = ref('')
@@ -40,6 +39,8 @@
 
   const selectedDivContent = ref('')
 
+  const selectedDivContentSize = ref(0)
+
   //Ces deux refs sont utilisées pour afficher les erreurs quand le professeur souhaite sauvegarder l'activité
   const alertDiv = ref(false)
   const alertNoDiv = ref(false)
@@ -51,7 +52,7 @@
   const goodRequest = ref(false)
 
   //Pour savoir si les données on déjà été envoyées => empêche de spam le bouton
-  // const dataSended = ref(false)
+  const pcDataSended = ref(false)
 
   // Les valeurs de position pour les divs quand on utilise le drag and drop
   const positions = ref({
@@ -63,44 +64,53 @@
 
   const popupDisplay = ref(false)
 
-  // On va stocker ici le nom du nouveau niveau
-  const levelName = ref('')
+  const emit = defineEmits<{
+    (e: 'change-page', nbrPage: number): void
+  }>()
 
-  const postData = (payload: any) => {
-    console.log(payload)
-    console.log(userStore.user.name, userStore.user.surname)
-    let levelData = JSON.stringify(payload)
-    let badResponse = false
-    let dataToSend = {
-      leveldata: levelData,
-      levelname: levelName.value,
-      creator: userStore.user.name + userStore.user.surname
-    }
-    axios
-      .post('http://localhost:3000/drag_and_drop', dataToSend, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-        alertNoName.value = "Une erreur c'est produite! Veuillez réessayer ultérieurement."
-        badResponse = true
-      })
-      .then((response) => {
-        if (!badResponse) {
-          console.log(response)
-          goodRequest.value = true
-        }
-        // router.push('/')
-      })
-  }
+  // On va stocker ici le nom du nouveau niveau
+  // const levelName = ref('')
+
+  // const postData = (payload: any) => {
+  //   console.log(payload)
+  //   console.log(userStore.user.name, userStore.user.surname)
+  //   let levelData = JSON.stringify(payload)
+  //   let badResponse = false
+  //   let dataToSend = {
+  //     leveldata: levelData,
+  //     levelname: levelName.value,
+  //     creator: userStore.user.name + userStore.user.surname
+  //   }
+  //   axios
+  //     .post('http://localhost:3000/drag_and_drop', dataToSend, {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //       alertNoName.value = "Une erreur c'est produite! Veuillez réessayer ultérieurement."
+  //       badResponse = true
+  //     })
+  //     .then((response) => {
+  //       if (!badResponse) {
+  //         console.log(response)
+  //         goodRequest.value = true
+  //       }
+  //       // router.push('/')
+  //     })
+  // }
 
   const addField = () => {
     // On push un nombre dans l'array pour ajouter une div avec le v-for
-    numberField.value++
-    fieldList.value.push(numberField.value)
+    if (pcDataSended.value) {
+      numberFieldMobile.value++
+      fieldListMobile.value.push(numberFieldMobile.value)
+    } else {
+      numberField.value++
+      fieldList.value.push(numberField.value)
+    }
   }
 
   const clicked = (e: any) => {
@@ -119,6 +129,7 @@
     selectedDivHeight.value = parseInt(getComputedStyle(element).height)
     selectedDivTop.value = element.offsetTop
     selectedDivLeft.value = element.offsetLeft
+    selectedDivContentSize.value = parseInt(getComputedStyle(element).fontSize)
 
     if (element.innerText) {
       selectedDivContent.value = element.innerText
@@ -207,6 +218,12 @@
     element.innerText = newContent
   }
 
+  const setDivContentSize = (newContentSize: number) => {
+    let element: any = document.getElementById(selectedId.value)
+    element.style.fontSize = newContentSize + 'px'
+  }
+
+  // Bouger la div sélectionnée vers le haut ou bas
   const setDivTop = (newTop: number) => {
     let element: any = document.getElementById(selectedId.value)
     let calc: number = selectedDivTop.value + newTop
@@ -218,6 +235,8 @@
       selectedDivTop.value = calc
     }
   }
+
+  // Bouger la div sélectionnée vers la gauche ou droite
   const setDivLeft = (newLeft: number) => {
     let element: any = document.getElementById(selectedId.value)
     let calc: number = selectedDivLeft.value + newLeft
@@ -227,6 +246,7 @@
     }
   }
 
+  // check que tous les champs (les divs) possèdent des valeurs
   const checkFields = () => {
     alertDiv.value = false
     alertNoDiv.value = true
@@ -242,78 +262,105 @@
     return 1
   }
 
+  // Ouvre le popup si les divs sont toutes remplies
   const openPopup = () => {
     if (checkFields() && alertNoDiv) {
-      console.log('Ok to send data !!')
       popupDisplay.value = true
     }
   }
 
+  // Permet d'enregistrer les différentes divs placées dans une liste js
   const saveConfig = () => {
-    alertNoName.value = ''
-    if (levelName) {
-      console.log(levelName.value.length, levelName.value)
-      if (levelName.value.length >= 5) {
-        // let payload = {"fields": [], "backImage": }
-        let payload = { fields: [], backImage: '' }
-        if (image.value.src) {
-          payload['backImage'] = image.value.src
-        } else {
-          alert("Une erreur s'est produite !")
-          return 0
+    let payload = []
+
+    // On parcours les divs placées
+    for (let div in background.value.childNodes) {
+      // Si la div possède un id on entre (permet de ne pas prendre l'image de fond)
+      if (background.value.childNodes[div].id) {
+        let currentDiv = background.value.childNodes[div]
+
+        // On va save toutes les données de la div actuellemnt traitée (top, left, width et height) et les mettre en pourceantages
+        let currentDivHeightPorc = (
+          (parseInt(getComputedStyle(currentDiv).height) /
+            parseInt(getComputedStyle(image.value).height)) *
+          100
+        ).toFixed(2)
+        let currentDivWidthPorc = (
+          (parseInt(getComputedStyle(currentDiv).width) /
+            parseInt(getComputedStyle(image.value).width)) *
+          100
+        ).toFixed(2)
+
+        let currentDivTopPorc = (
+          (parseInt(getComputedStyle(currentDiv).top) /
+            parseInt(getComputedStyle(image.value).height)) *
+          100
+        ).toFixed(2)
+
+        let currentDivLeftPorc = (
+          (parseInt(getComputedStyle(currentDiv).left) /
+            parseInt(getComputedStyle(image.value).width)) *
+          100
+        ).toFixed(2)
+
+        // On construit l'objet à insérer dans le payload
+        let currentDivInfo = {
+          test: currentDiv.id.match(/(\d+)/)[0],
+          number: parseInt(currentDiv.id.match(/(\d+)/)),
+          top: currentDivTopPorc.toString() + '%',
+          left: currentDivLeftPorc.toString() + '%',
+          width: currentDivWidthPorc.toString() + '%',
+          height: currentDivHeightPorc.toString() + '%',
+          rightValue: currentDiv.innerText,
+          fontSize: getComputedStyle(currentDiv).fontSize
         }
-        for (let div in background.value.childNodes) {
-          if (background.value.childNodes[div].id) {
-            let currentDiv = background.value.childNodes[div]
-
-            let currentDivHeightPorc = (
-              (parseInt(getComputedStyle(currentDiv).height) /
-                parseInt(getComputedStyle(image.value).height)) *
-              100
-            ).toFixed(2)
-            let currentDivWidthPorc = (
-              (parseInt(getComputedStyle(currentDiv).width) /
-                parseInt(getComputedStyle(image.value).width)) *
-              100
-            ).toFixed(2)
-
-            let currentDivTopPorc = (
-              (parseInt(getComputedStyle(currentDiv).top) /
-                parseInt(getComputedStyle(image.value).height)) *
-              100
-            ).toFixed(2)
-
-            let currentDivLeftPorc = (
-              (parseInt(getComputedStyle(currentDiv).left) /
-                parseInt(getComputedStyle(image.value).width)) *
-              100
-            ).toFixed(2)
-
-            let currentDivInfo = {
-              test: currentDiv.id.match(/(\d+)/)[0],
-              number: parseInt(currentDiv.id.match(/(\d+)/)),
-              top: currentDivTopPorc.toString() + '%',
-              left: currentDivLeftPorc.toString() + '%',
-              width: currentDivWidthPorc.toString() + '%',
-              height: currentDivHeightPorc.toString() + '%',
-              rightValue: currentDiv.innerText
-            }
-            // console.log(currentDivInfo)
-            payload.fields.push(currentDivInfo)
-          }
-        }
-        addDataToStore(payload)
-        postData(payload)
-      } else {
-        alertNoName.value = "Le nom de l'exercice doit contenir au moins 5 caractères."
+        // On insère l'objet dans le payload
+        payload.push(currentDivInfo)
       }
+    }
+
+    if (pcDataSended.value) {
+      // On envoie au store les données de la version mobile (donc le payload)
+      addDataToStore(payload, 'mobile')
+      popupDisplay.value = false
+      emit('change-page', 3)
     } else {
-      alertNoName.value = "Veuillez entrer un nom pour l'activité."
+      // On envoie au store les données de la version PC (donc le payload)
+      addDataToStore(payload, 'pc')
+      // On va utiliser les mêmes données pour générer la version mobile
+      // Cette variable permet de changer l'état d'affichage de l'image (web ou mobile)
+      pcDataSended.value = true
+      popupDisplay.value = false
+      // Cette fontion va générer les champs pour la version mobile en fonction des données de la version web
+      generateMobileFields(payload)
     }
   }
+
+  // Cette fontion est utilisée pour regénérer les div de la version mobile à partir de ce qui a été fait en version web
+  const generateMobileFields = (data: any) => {
+    // data => Données du web
+    // On parcour c'est données et on génère des divs à partir de ces dernières
+    for (let item in data) {
+      // Même principe que pour la génération en version web
+      numberFieldMobile.value++
+      // fieldListMobile est lié à un v-for pour générer les divs
+      fieldListMobile.value.push(numberFieldMobile.value)
+      // Il faut mettre un setTimeout car le v-for n'a pas le temps de créer la div que l'on y accède déjà => Problème
+      setTimeout(() => {
+        let element: any = document.getElementById('id' + data[item].test)
+        element.style.top = data[item].top
+        element.style.left = data[item].left
+        element.style.width = data[item].width
+        element.style.height = data[item].height
+        element.innerText = data[item].rightValue
+        element.style.fontSize = data[item].fontSize
+      }, 1)
+    }
+    selectedId.value = ''
+  }
+
   onMounted(() => {
     imageLink.value = store.getImageUrl()
-    console.log(imageLink.value)
   })
 </script>
 <template>
@@ -324,6 +371,7 @@
           ref="background"
           id="back"
           class="back"
+          v-if="!pcDataSended"
         >
           <img
             v-show="imageLink"
@@ -333,6 +381,26 @@
           />
           <div
             v-for="item in fieldList"
+            class="fields"
+            :id="'id' + item"
+            @click="clicked"
+            @mousedown="dragMouseDown"
+          ></div>
+        </div>
+        <div
+          ref="background"
+          id="back"
+          class="back_mobile"
+          v-else
+        >
+          <img
+            v-show="imageLink"
+            :src="imageLink"
+            alt="image for the exercice"
+            ref="image"
+          />
+          <div
+            v-for="item in fieldListMobile"
             class="fields"
             :id="'id' + item"
             @click="clicked"
@@ -456,6 +524,19 @@
                 placeholder="Insérer la valeur du champ"
               />
             </div>
+            <div
+              class="divContentSetter"
+              v-show="selectedId"
+            >
+              <p class="infoHeaderSub">Taille de la police:</p>
+              <input
+                class="divContentInput"
+                v-model="selectedDivContentSize"
+                type="text"
+                @input="setDivContentSize(selectedDivContentSize)"
+                placeholder="Préciser la taille de la police"
+              />
+            </div>
             <button
               class="saveButton"
               @click="openPopup"
@@ -483,18 +564,13 @@
     <div
       class="popup"
       v-show="popupDisplay"
+      v-if="!pcDataSended"
     >
       <div
         class="popup_content"
         v-if="!goodRequest"
       >
-        <h1 style="color: #00307e">Veuillez entrer un nom pour ce nouvel exercice</h1>
-        <input
-          type="text"
-          class="exercice_name"
-          maxlength="20"
-          v-model="levelName"
-        />
+        <h1 style="color: #00307e">Cliquer sur continuer pour adapter l'exercice au mobile</h1>
         <p
           class="alert"
           style="font-size: 0.7em"
@@ -507,7 +583,47 @@
             class="final_save_button"
             @click="saveConfig"
           >
-            Sauvegarder
+            Continuer
+          </button>
+          <button
+            class="cancel_button"
+            @click="
+              () => {
+                popupDisplay = false
+              }
+            "
+          >
+            Annuler
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="popup"
+      v-show="popupDisplay"
+      v-if="pcDataSended"
+    >
+      <div
+        class="popup_content"
+        v-if="!goodRequest"
+      >
+        <h1 style="color: #00307e">
+          Avez-vous terminer l'adaptation de la version mobile? Si oui cliquer sur terminer. Si non
+          vous pouvez cliquer sur annuler.
+        </h1>
+        <p
+          class="alert"
+          style="font-size: 0.7em"
+          v-show="alertNoName"
+        >
+          {{ alertNoName }}
+        </p>
+        <div class="button_container">
+          <button
+            class="final_save_button"
+            @click="saveConfig"
+          >
+            Continuer
           </button>
           <button
             class="cancel_button"
@@ -569,7 +685,15 @@
     font-size: 0.7em;
     width: max-content;
     max-width: 60%;
-    min-width: 60%;
+  }
+  .back_mobile {
+    display: flex;
+    position: relative;
+    /* outline: 1px solid blue; */
+    border: 1px solid #707070;
+    font-size: 0.7em;
+    width: max-content;
+    max-width: 30%;
   }
   img {
     width: 100%;
@@ -781,7 +905,7 @@
     width: 100%;
     top: 0;
     left: 0;
-    position: absolute;
+    position: fixed;
     z-index: 20;
     background: rgb(220, 220, 220, 0.1);
     backdrop-filter: blur(5px);
@@ -790,7 +914,7 @@
     align-items: center;
   }
   .popup_content {
-    min-width: 35vw;
+    width: 35vw;
     border: 1px solid #00307e;
     background-color: white;
     text-align: center;
