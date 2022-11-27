@@ -28,10 +28,14 @@ export const useCardStore = defineStore('card', () => {
   })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   //Get athe number of required cards
 =======
   //Get the required cards
 >>>>>>> f392d3e ([UPD] add iduser to user type and update get API endpoint for cards)
+=======
+  //Get athe number of required cards
+>>>>>>> b627344 ([ADD] Send user response to backend #27 Flashcard)
   const getCard = async (cardNumber: number): Promise<Flashcard[]> => {
     const flashcardRequest = await FlashcardService.getFlashcards(cardNumber)
     return flashcardRequest.data
