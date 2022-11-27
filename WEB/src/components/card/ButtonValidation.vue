@@ -2,22 +2,22 @@
   import { useCardStore } from '@/stores/card'
   import { useShowStore } from '@/stores/show'
   import { useWeightCardStore } from '@/stores/weightCard'
-  import { useUser_ResponseStore } from '@/stores/user_response'
-  import { useUserStore } from '@/stores/user'
+  //import { useUser_ResponseStore } from '@/stores/user_response'
+  //import { useUserStore } from '@/stores/user'
   import { computed } from 'vue'
 import user_ResponseRessource from '@/services/user_ResponseService'
   const store = useCardStore()
   const storeShow = useShowStore()
   const storeWeightCard = useWeightCardStore()
-  const storeAnswer = useUser_ResponseStore();
+  //const storeAnswer = useUser_ResponseStore();
 
   const correctAnswer = () => {
 
+    // Ajout de la réponse de l'utilisateur dans le tableau des réponses
     const user_response= {
       id_card: store.getActualCard().id,
       id_answer: 1
     }
-    console.log("validation "+user_response)
     store.AddAnswer(user_response)
 
     // Enlever la carte trouvé ou presque trouvé
@@ -37,6 +37,8 @@ import user_ResponseRessource from '@/services/user_ResponseService'
     storeShow.setShowButtonValidation(false)
   }
   const almostCorrectAnswer = () => {
+
+    // Ajout de la réponse de l'utilisateur dans le tableau des réponses
     const user_response= {
       id_card: store.getActualCard().id,
       id_answer: 2
@@ -62,13 +64,13 @@ import user_ResponseRessource from '@/services/user_ResponseService'
   }
 
   const falseAnswer = () => {
+    // Ajout de la réponse de l'utilisateur dans le tableau des réponses
     const user_response= {
       id_card: store.getActualCard().id,
       id_answer: 3
     }
-    console.log("false "+user_response)
     store.AddAnswer(user_response)
-    
+
     //Remplacer la carte par une autre
     const card = computed(() => store.getCurrentDeck())
     store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
