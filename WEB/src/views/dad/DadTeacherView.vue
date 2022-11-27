@@ -3,6 +3,7 @@
   import TheHeader from '@/components/TheHeader.vue'
   import HowToAddDad from '@/components/dragndrop/HowToAddDad.vue'
   import SelectDragNDropImage from '@/components/dragndrop/SelectDragNDropImage.vue'
+  import DragNDropResume from '@/components/dragndrop/DragNDropResume.vue'
   import { ref } from 'vue'
   import { useDadLevels } from '@/stores/dadLevels'
 
@@ -36,6 +37,10 @@
       v-if="actualPage == 2"
       @change-page="(nbr: number) => changeActualPage(nbr)"
     />
+    <DragNDropResume
+      v-if="actualPage == 3"
+      @change-page="(nbr: number) => changeActualPage(nbr)"
+    />
   </div>
 </template>
 <style scoped>
@@ -43,7 +48,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 30px;
+    padding-bottom: 15px;
     overflow-x: hidden;
   }
   .title {
