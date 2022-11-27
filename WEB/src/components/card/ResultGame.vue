@@ -4,7 +4,7 @@
   import { computed } from '@vue/reactivity'
   const store = useCardStore()
   const totalScore = computed(() => store.goodAnswerPercentage)
-
+  const postUserResponse = computed (() => store.postUser_Response)
   const correctColor = ref('#4caf50')
   const almostCorrectColor = ref('#ff9800')
   const wrongColor = ref('#f44336')
@@ -65,11 +65,6 @@
       </div>
     </div>
     <hr />
-    <div class="score">
-      <p>
-        Votre score est de <span id="total-score">{{ totalScore }}</span> points !
-      </p>
-    </div>
     <div class="btn-container">
       <router-link to="/">
         <button class="btn-return">Retour à la carte</button>
