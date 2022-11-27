@@ -24,6 +24,8 @@
   const badFields = ref(0)
   const state = reactive(dataFromStore[0])
 
+  const notCompatible = ref(false)
+
   const checkScore = () => {
     console.log('Checking score ...')
     // console.log(background.value.childNodes)
@@ -40,10 +42,10 @@
         // Si la div contient à une valeur
         if (childList[child].value) {
           // On parcourt la liste qui a permit de générer les champs afin d'aller vérifier les valeurs
-          for (let index in state.fields) {
+          for (let index in state.fields.mobile) {
             // Si l'id du champ correspond et que la valeur du select correspond également, on octroit un point
-            if (state.fields[index].test == childList[child].id) {
-              if (state.fields[index].rightValue == childList[child].value) {
+            if (state.fields.mobile[index].test == childList[child].id) {
+              if (state.fields.mobile[index].rightValue == childList[child].value) {
                 localScore++
                 goodAnswers++
                 childList[child].style.border = '2px solid green'
@@ -68,8 +70,8 @@
 
     const shuffle = () => {
       let array = []
-      for (let item in state.fields) {
-        array.push(state.fields[item].rightValue)
+      for (let item in state.fields.mobile) {
+        array.push(state.fields.mobile[item].rightValue)
       }
       let currentIndex = array.length,
         randomIndex
@@ -88,27 +90,42 @@
         wordsToGen.value.push({ word: array[i] })
       }
     }
-    shuffle()
+    if (state.fields.mobile[0]) {
+      console.log(state.fields.mobile[0])
+      shuffle()
+    } else {
+      notCompatible.value = true
+    }
   })
 </script>
 
 <template>
   <div class="main">
-    <div class="playground">
+    <div
+      class="playground"
+      v-if="!notCompatible"
+    >
       <div
         class="back"
         id="back"
         ref="background"
       >
         <img
+          v-if="!notCompatible"
           :src="state.backImage"
           alt="image for the exercice"
         />
         <select
           :id="item.number.toString()"
           class="container"
-          v-for="item in state.fields"
-          :style="{ top: item.top, left: item.left, width: item.width, height: item.height }"
+          v-for="item in state.fields.mobile"
+          :style="{
+            top: item.top,
+            left: item.left,
+            width: item.width,
+            height: item.height,
+            fontSize: item.fontSize
+          }"
         >
           <option
             value=""
@@ -130,7 +147,7 @@
         <div class="resultcontainer">
           <div class="score">
             <p class="resultShow">Votre score est de:</p>
-            <p class="result">{{ score }} / {{ state.fields.length }}</p>
+            <p class="result">{{ score }} / {{ state.fields.mobile.length }}</p>
           </div>
           <button
             class="revealButton"
@@ -144,6 +161,13 @@
           <p class="badAnswers">Mauvaises réponses: {{ badFields }}</p>
         </div>
       </div>
+    </div>
+    <div
+      class="not_compatible"
+      v-else
+    >
+      <h1>Cette activité ne possède pas de version mobile.</h1>
+      <p>😢</p>
     </div>
   </div>
 </template>
@@ -159,6 +183,20 @@
     justify-content: center;
     gap: 3%;
     font-family: 'NotoSans-Regular';
+  }
+  .not_compatible {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 50px;
+  }
+  .not_compatible h1 {
+    font-size: 20px;
+    color: var(--main-dal-color);
+    font-weight: bold;
+    margin-top: 25px;
+    padding: 0 15px;
+    text-align: center;
   }
   .playground {
     margin-top: 10px;
