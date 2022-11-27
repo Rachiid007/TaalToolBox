@@ -3,6 +3,9 @@ import { ref, reactive, computed } from 'vue'
 import type Flashcard from '@/types/Flashcard'
 import FlashcardService from '@/services/FlashcardService'
 import { flashcardsData } from '@/data/animalFlashcards'
+import type User_response from '@/types/user_response'
+import user_ResponseRessource from '@/services/user_ResponseService'
+import { useUserStore } from './user'
 
 export const useCardStore = defineStore('card', () => {
   const resultGame = reactive({
@@ -11,6 +14,11 @@ export const useCardStore = defineStore('card', () => {
     almostGoodAnswers: 0,
     wrongAnswers: 0
   })
+  
+  const userStore = useUserStore()
+  
+  const tableUserResponse = reactive<User_response[]>([])
+  
   const remaining = ref(0)
   const tableCard = reactive<Flashcard[]>([])
   let actualCard = ref<Flashcard>() //{ id: 0, question: '', translation: '', image: '', category: '' }
@@ -19,7 +27,7 @@ export const useCardStore = defineStore('card', () => {
     return Math.round((resultGame.goodAnswers / resultGame.totalQuestions) * 100)
   })
 
-  //Get the required cards
+  //Get athe number of required cards
   const getCard = async (cardNumber: number): Promise<Flashcard[]> => {
     const flashcardRequest = await FlashcardService.getFlashcards(cardNumber)
     return flashcardRequest.data
@@ -55,11 +63,16 @@ export const useCardStore = defineStore('card', () => {
     tableCard.splice(tableCard.indexOf(card), 1)
   }
 
+  // If user choose the correct card remove it to the deck
+  const removeAlmostCorrectCard = (card: Flashcard) => {
+    tableCard.splice(tableCard.indexOf(card), 1)
+  }
+
   const setActualCard = (card: Flashcard) => {
     actualCard.value = card
   }
 
-  const getActualCard = (): Flashcard => {
+  const getActualCard = (): Flashcard | undefined => {
     return actualCard.value
   }
 
@@ -73,22 +86,52 @@ export const useCardStore = defineStore('card', () => {
     remaining.value = nbrOfCards
   }
 
+  const resetCounters = () => {
+    resultGame.goodAnswers = 0
+    resultGame.totalQuestions=0
+    resultGame.wrongAnswers=0
+    resultGame.almostGoodAnswers = 0
+    tableUserResponse.splice(0);
+  }
+
   const decrement = () => {
     if (remaining.value > 0) {
       remaining.value--
     }
   }
 
+  // Insertion d'une réponse dans le tabeau des réponses
+  const AddAnswer = (user_response:User_response) => {
+    
+
+    let obj = []
+    const found = tableUserResponse.some((obj) => {
+      return obj.id_card === user_response.id_card;
+    });
+
+    //Ajouter une réponse au tableau des réponses seulement si c est la première tentative
+    if (!found) {
+      tableUserResponse.push(user_response)
+    }
+  }
+
+  const postUser_Response = async () => {
+    //Envoi du tableau des réponses vers le backend
+    const user_ResponseService = new user_ResponseRessource()
+    const result = await user_ResponseService.postUserResponse(tableUserResponse, userStore.user.id)
+    return result
+  }
+
   const incrementGoodAnswers = () => {
-    resultGame.goodAnswers
+    resultGame.goodAnswers++
   }
 
   const incrementAlmostGoodAnswers = () => {
-    resultGame.almostGoodAnswers
+    resultGame.almostGoodAnswers++
   }
 
   const incrementWrongAnswers = () => {
-    resultGame.wrongAnswers
+    resultGame.wrongAnswers++
   }
 
   // ADD CARD FORM
@@ -112,8 +155,10 @@ export const useCardStore = defineStore('card', () => {
     remaining,
     resultGame,
     goodAnswerPercentage,
+    tableUserResponse,
     tableCard,
     setRemaining,
+    resetCounters,
     setCard,
     setActualCard,
     getCurrentDeck,
@@ -125,6 +170,9 @@ export const useCardStore = defineStore('card', () => {
     incrementWrongAnswers,
     addFlashcard,
     flashcardList,
-    removeFlashcard
+    AddAnswer,
+    removeFlashcard,
+    removeAlmostCorrectCard,
+    postUser_Response
   }
 })
