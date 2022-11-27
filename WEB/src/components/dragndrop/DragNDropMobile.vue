@@ -26,6 +26,8 @@
 
   const notCompatible = ref(false)
 
+  const notCompatible = ref(false)
+
   const checkScore = () => {
     console.log('Checking score ...')
     // console.log(background.value.childNodes)
@@ -94,7 +96,6 @@
       console.log(state.fields.mobile[0])
       shuffle()
     } else {
-      console.log(state.fields.mobile)
       notCompatible.value = true
     }
   })
