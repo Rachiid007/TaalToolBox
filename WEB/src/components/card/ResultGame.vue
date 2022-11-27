@@ -1,13 +1,21 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { useCardStore } from '@/stores/card'
   import { computed } from '@vue/reactivity'
   const store = useCardStore()
   const totalScore = computed(() => store.goodAnswerPercentage)
-  const postUserResponse = computed (() => store.postUser_Response)
   const correctColor = ref('#4caf50')
   const almostCorrectColor = ref('#ff9800')
   const wrongColor = ref('#f44336')
+
+
+  
+  const postUserResponse = () =>  {
+    store.postUser_Response()
+  }
+
+
+
 </script>
 
 <template>
@@ -67,7 +75,11 @@
     <hr />
     <div class="btn-container">
       <router-link to="/">
-        <button class="btn-return">Retour à la carte</button>
+        <button class="btn-return"  @click="
+        () => {
+          postUserResponse()
+        }
+      ">Retour à la carte</button>
       </router-link>
     </div>
   </div>
