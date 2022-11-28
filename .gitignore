@@ -1,3 +1,4 @@
 # Local Netlify folder
 .netlify
-/WEB/package-lock.json
+# /WEB/package-lock.json
+/backend/package-lock.json

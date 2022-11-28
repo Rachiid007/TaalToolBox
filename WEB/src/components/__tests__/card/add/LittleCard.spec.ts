@@ -1,17 +1,16 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
-// import { useCardStore } from '@/stores/card'
 
-import MainCard from '@/components/card/MainCard.vue'
+import ListLittleCard from '@/components/card/add/ListLittleCard.vue'
 
-describe('MainCard.vue Test with empty data store', () => {
+describe('AddCardForm.vue Test with empty data store', () => {
   let wrapper = null
 
   // SETUP - run prior to each unit test
   beforeEach(() => {
     // render the component
-    wrapper = shallowMount(MainCard, {
+    wrapper = shallowMount(ListLittleCard, {
       global: {
         plugins: [
           createTestingPinia({
@@ -28,12 +27,16 @@ describe('MainCard.vue Test with empty data store', () => {
   })
 
   it('initializes with zero elements displayed', () => {
-    expect(wrapper.findAll('div').length).toEqual(5)
+    expect(wrapper.findAll('h2').length).toEqual(1)
+
+    expect(wrapper.findAll('div').length).toEqual(2)
+
+    expect(wrapper.findAll('p').length).toEqual(1)
 
     expect(wrapper.findAll('button').length).toEqual(1)
 
-    expect(wrapper.findAll('img').length).toEqual(1)
+    expect(wrapper.get('p').text()).toEqual("Vous n'avez pas encore ajouté de mot 🥺")
 
-    expect(wrapper.findAll('p').length).toEqual(2)
+    expect(wrapper.get('h2').text()).toEqual('Mot ajoutés')
   })
 })

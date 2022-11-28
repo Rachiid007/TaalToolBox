@@ -14,6 +14,7 @@ export class CardsService {
 
   create(createCardDto: CreateCardDto) {
     const card = this.cardsRepository.create(createCardDto);
+    console.log('Service : ', card);
     return this.cardsRepository.save(card);
   }
 
@@ -103,8 +104,8 @@ export class CardsService {
 
     for (const row of rows) {
       const values = Object.keys(row).map((key) => row[key]);
-      const [word, translation] = values;
-      const card = { word, translation };
+      const [word, translation, image] = values;
+      const card = { word, translation, image };
       await this.create(card);
     }
 

@@ -3,15 +3,15 @@ import { shallowMount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing' // <-- !!
 // import { useCardStore } from '@/stores/card'
 
-import dragndropteacher from '@/components/testDragNDrop/dragndropteacher.vue'
+import DragNDropTeacher from '@/components/dragndrop/DragNDropTeacher.vue'
 
-describe('DragAndDropTeacher.vue Test with empty data store', () => {
+describe('DragNDropTeacher.vue Test with empty data store', () => {
   let wrapper = null
 
   // SETUP - run prior to each unit test
   beforeEach(() => {
     // render the component
-    wrapper = shallowMount(dragndropteacher, {
+    wrapper = shallowMount(DragNDropTeacher, {
       global: {
         plugins: [
           createTestingPinia({
@@ -28,8 +28,14 @@ describe('DragAndDropTeacher.vue Test with empty data store', () => {
   })
 
   it('initializes with zero elements displayed', () => {
-    expect(wrapper.findAll('div').length).toEqual(18)
+    expect(wrapper.findAll('div').length).toEqual(21)
 
-    expect(wrapper.findAll('p').length).toEqual(10)
+    expect(wrapper.findAll('p').length).toEqual(11)
+
+    expect(wrapper.findAll('button').length).toEqual(4)
+
+    expect(wrapper.findAll('img').length).toEqual(5)
+
+    expect(wrapper.findAll('input').length).toEqual(4)
   })
 })

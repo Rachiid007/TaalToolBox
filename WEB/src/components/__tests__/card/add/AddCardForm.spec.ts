@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
-import { createTestingPinia } from '@pinia/testing' // <-- !!
-import { useCardStore } from '@/stores/card'
+import { createTestingPinia } from '@pinia/testing'
 
 import AddCardForm from '@/components/card/add/AddCardForm.vue'
 
