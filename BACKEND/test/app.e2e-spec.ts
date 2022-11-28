@@ -16,24 +16,24 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('get all cards /cards (GET)', () => {
+  it('get all cards /cards (GET)', async () => {
     const listCards =
-      '[{"id":11,"word":"électricité","translation":"elektriciteit","image":"nom féminin"},{"id":12,"word":"tension","translation":"spanning","image":"nom féminin"},{"id":13,"word":"électrique","translation":"elektrisch","image":"nom féminin"},{"id":4,"word":"câble","translation":"kabel","image":"nom masculin"},{"id":5,"word":"ampoule","translation":"ampul","image":"nom féminin"},{"id":6,"word":"compteur électrique","translation":"elektriciteits meter","image":"nom masculin"},{"id":7,"word":"court circuit","translation":"kortsluiting","image":"nom masculin"},{"id":8,"word":"prise électrique","translation":"stopcontact","image":"nom féminin"},{"id":9,"word":"disjoncteur","translation":"stroomonderbreker","image":"nom masculin"},{"id":10,"word":"fusible","translation":"zekering","image":"nom féminin"},{"id":1,"word":"commutateur","translation":"schakelaar","image":"img"},{"id":2,"word":"condensateur","translation":"condensator","image":"img"},{"id":3,"word":"conductivité ","translation":"geleidbaarheid","image":"img"}]';
+      '[{"id":1,"word":"électricité","translation":"elektriciteit","image":"img"},{"id":2,"word":"tension","translation":"spanning","image":"img"},{"id":3,"word":"électrique","translation":"elektrisch","image":"img"},{"id":4,"word":"câble","translation":"kabel","image":"img"},{"id":5,"word":"ampoule","translation":"ampul","image":"img"},{"id":6,"word":"compteur électrique","translation":"elektriciteits meter","image":"img"},{"id":7,"word":"court circuit","translation":"kortsluiting","image":"img"},{"id":8,"word":"prise électrique","translation":"stopcontact","image":"img"},{"id":9,"word":"disjoncteur","translation":"stroomonderbreker","image":"img"},{"id":10,"word":"fusible","translation":"zekering","image":"img"}]';
     return request(app.getHttpServer())
       .get('/cards')
       .expect(200)
       .expect(listCards);
   });
 
-  it('GET card id 11', async () => {
+  it('GET card id 10', async () => {
     const result = {
-      id: 11,
-      word: 'électricité',
-      translation: 'elektriciteit',
-      image: 'nom féminin',
+      id: 10,
+      word: 'fusible',
+      translation: 'zekering',
+      image: 'img',
     };
     return request(app.getHttpServer())
-      .get('/cards/11')
+      .get('/cards/10')
       .expect(200)
       .expect(result);
   });
@@ -52,11 +52,11 @@ describe('AppController (e2e)', () => {
       .expect(201);
   });
 
-  it('get cards as per the wight (Get)', async () => {
+  it('get cards as per the weight (Get)', async () => {
     return request(app.getHttpServer()).get('/cards/1/10').expect(200);
   });
 
-  it('Add user Response (Post)', async () => {
+  it('Add user Response with only 1 entry (Post)', async () => {
     const user_response = {
       id_card: 1,
       id_answer: 1,
@@ -65,7 +65,42 @@ describe('AppController (e2e)', () => {
       .post('/user-response/1/cards')
       .set('Accept', 'application/json')
       .send(user_response)
-      .expect(201)
-      .expect(1);
+      .expect(201);
+  });
+
+  it('Add user Response with 2entries (Post)', async () => {
+    const user_response = [
+      {
+        id_card: 1,
+        id_answer: 1,
+      },
+      {
+        id_card: 5,
+        id_answer: 2,
+      },
+    ];
+    return request(app.getHttpServer())
+      .post('/user-response/1/cards')
+      .set('Accept', 'application/json')
+      .send(user_response)
+      .expect(201);
+  });
+
+  it('Add user Response does not exist in the DB (Post)', async () => {
+    const user_response = [
+      {
+        id_card: 1,
+        id_answer: 1,
+      },
+      {
+        id_card: 5,
+        id_answer: 2,
+      },
+    ];
+    return request(app.getHttpServer())
+      .post('/user-response/9/cards')
+      .set('Accept', 'application/json')
+      .send(user_response)
+      .expect(201);
   });
 });
