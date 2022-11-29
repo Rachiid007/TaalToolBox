@@ -44,6 +44,7 @@
       password: ''
     }
   })
+ 
 
   // RECUPERER LE ROLE DU CURRENT USER
   const manage = reactive({
@@ -149,7 +150,6 @@
       sendData()
       console.log(state.auth.password)
     }
-
     // Verifier que les données ne sont pas déjà utilisées pour un autre compte
     console.log('TODO: Envoyer les données au back')
   }
@@ -341,7 +341,6 @@
     cursor: inherit;
     line-height: inherit;
   }
-
   .select_input {
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
@@ -364,13 +363,11 @@
     font-size: 1em;
     cursor: pointer;
     background-color: #fff;
-
     display: grid;
     color: #026b30;
     align-items: center;
     position: relative;
   }
-
   .select::after {
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
@@ -400,7 +397,6 @@
     border: solid grey 1px;
     max-width: 500px;
   }
-
   .page1,
   .page2 {
     display: flex;
@@ -411,7 +407,6 @@
     flex-direction: column;
     align-items: center;
   }
-
   .title-image {
     padding-top: 5%;
     display: flex;
@@ -421,18 +416,15 @@
     gap: 2%;
     width: 100%;
   }
-
   .image {
     width: 10%;
     height: auto;
   }
-
   .logoName {
     font-family: Segoe print;
     color: #707070;
     font-size: 1.5em;
   }
-
   .form {
     padding: 30px;
     display: flex;
@@ -440,7 +432,6 @@
     gap: 25px;
     width: 80%;
   }
-
   .firstDiv {
     gap: 25px;
     color: #026b30;
@@ -448,7 +439,6 @@
     flex-direction: row;
     justify-content: center;
   }
-
   input.secondFields {
     color: #026b30;
     width: 100%;
@@ -457,7 +447,6 @@
     outline: none;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
   }
-
   input.firstFields {
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
@@ -465,18 +454,15 @@
     padding: 2px;
     outline: none;
   }
-
   input::placeholder {
     color: #026b30;
   }
-
   .radioField {
     display: flex;
     flex-direction: row;
     gap: 25%;
     width: 100%;
   }
-
   .radioLegend {
     display: flex;
     align-items: center;
@@ -484,14 +470,12 @@
     font-size: 1.2em;
     color: #026b30;
   }
-
   .radioInput {
     display: flex;
     position: relative;
     gap: 10px;
     overflow: visible;
   }
-
   .radio_button {
     width: 100%;
     min-width: 18px;
@@ -509,7 +493,6 @@
     width: 100%;
     padding: 20px;
   }
-
   .clickButton {
     display: flex;
     justify-content: center;
@@ -519,18 +502,15 @@
     font-size: 1.1em;
     min-width: 100px;
   }
-
   .error {
     color: red;
     padding-bottom: 5%;
     font-weight: bold;
   }
-
   #precedent {
     border: solid grey 2px;
     color: grey;
   }
-
   #suivant {
     align-items: center;
     color: white;
@@ -541,7 +521,6 @@
     width: 100%;
     background-color: #026b30;
   }
-
   .inscrit {
     display: flex;
     justify-content: center;

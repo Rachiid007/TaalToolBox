@@ -1,4 +1,4 @@
-import { shallowMount, mount } from '@vue/test-utils'
+import { shallowMount, mount, VueWrapper } from '@vue/test-utils'
 
 import ChooseActivities from '@/components/activity/ChooseActivities.vue'
 import { beforeEach, describe, expect, test } from 'vitest'
@@ -17,7 +17,7 @@ describe('ChooseActivities.vue', () => {
   test('Number of h2', () => {
     expect(wrapper.findAll('h1').length).toEqual(1)
   })
-
+ 
   test('Number of p', () => {
     expect(wrapper.findAll('p').length).toEqual(1)
   })
