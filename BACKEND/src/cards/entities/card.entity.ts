@@ -1,4 +1,3 @@
-import { UserResponseCard } from './../../user_response_card/entities/user_response_card.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 @Entity()
@@ -22,8 +21,4 @@ export class Card {
   })
   @Column({ default: null })
   image: string;
-
-  //Une card peut appartenir a plusieur réponse
-  @OneToMany(() => UserResponseCard, (response_card) => response_card.card)
-  response_card: UserResponseCard[];
 }

@@ -7,6 +7,7 @@ import { useArrayEvery } from '@vueuse/shared'
 
 export const useUserStore = defineStore('user', () => {
   let user = reactive<User>({
+    id: 1,
     name: '',
     surname: '',
     birthdate: '',
