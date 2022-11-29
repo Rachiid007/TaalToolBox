@@ -1,10 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateSchoolclassDto } from './dto/create-schoolclass.dto';
 import { UpdateSchoolclassDto } from './dto/update-schoolclass.dto';
+import { Schoolclass } from './entities/schoolclass.entity';
 
 @Injectable()
 export class SchoolclassService {
-  create(createSchoolclassDto: CreateSchoolclassDto) {
+  constructor(
+    @InjectRepository(Schoolclass)
+    private schoolClassRepository: Repository<Schoolclass>,
+  ) {}
+
+ /* create(createSchoolclassDto: CreateSchoolclassDto) {
     return 'This action adds a new schoolclass';
   }
 
@@ -22,5 +30,12 @@ export class SchoolclassService {
 
   remove(id: number) {
     return `This action removes a #${id} schoolclass`;
+  }
+*/
+  async create(data: CreateSchoolclassDto): Promise<any> {
+    return await this.schoolClassRepository
+      .save(data)
+      .then((res) => res)
+      .catch((e) => console.log(e));
   }
 }

@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SchoolclassService } from './schoolclass.service';
 import { CreateSchoolclassDto } from './dto/create-schoolclass.dto';
 import { UpdateSchoolclassDto } from './dto/update-schoolclass.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Controller('schoolclass')
 export class SchoolclassController {
@@ -11,7 +20,7 @@ export class SchoolclassController {
   create(@Body() createSchoolclassDto: CreateSchoolclassDto) {
     return this.schoolclassService.create(createSchoolclassDto);
   }
-
+  /*
   @Get()
   findAll() {
     return this.schoolclassService.findAll();
@@ -31,4 +40,5 @@ export class SchoolclassController {
   remove(@Param('id') id: string) {
     return this.schoolclassService.remove(+id);
   }
+  */
 }

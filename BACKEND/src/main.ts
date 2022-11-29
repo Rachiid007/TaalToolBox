@@ -28,5 +28,10 @@ async function bootstrap() {
   // ATTENTION: PROBLÈMES DE SÉCU POTENTIEL AVEC LES CORS
   app.enableCors();
   await app.listen(3000);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+    }),
+  );
 }
 bootstrap();
