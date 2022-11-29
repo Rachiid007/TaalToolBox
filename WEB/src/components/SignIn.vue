@@ -1,39 +1,56 @@
 <script setup lang="ts">
-  import { reactive } from 'vue'
+  import { onMounted, reactive } from 'vue'
   import axios from 'axios'
-  import logo from '@/assets/logo/logo.svg'
-
   const state = reactive({
     page1: {
       firstName: 'Michaël',
       secondName: 'Pourbaix',
-      mail: 'test@test.com'
-      // confirmPassword: 'testtest123M@'
+      mail: 'test@test.com',
+      phoneNumber: '0444 05 04 05',
+      birthDate: '05-04-2002'
     },
     page2: {
-      phoneNumber: '0444 05 04 05',
-      birthDate: '05-04-2002',
-      gender: 'man'
+      school: 'Institut Saint Joseph',
+      classroom: '1TL1SJ',
+      role: 'student'
     },
     auth: {
       password: ''
     }
   })
-
+  const manage = reactive({
+    firstPage: true,
+    error: '',
+    role: 'admin'
+  })
+  const schoolClass: any = reactive({
+    'Institut Saint Joseph': ['1TL1SJ', '1TL2SJ', '2TL1SJ', '2TL2SJ', '3TL1SJ', '3TL2SJ'],
+    'Institut Don Bosco': ['1TL1DB', '1TL2DB', '2TL1DB', '2TL2DB', '3TL1DB', '3TL2DB'],
+    'Institut Cardinal Mercier': ['1TL1CM', '1TL2CM', '2TL1CM', '2TL2CM', '3TL1CM', '3TL2CM']
+  })
+  const updateClassrooms = () => {
+    state.page2.classroom = ''
+  }
+  const swapToTrue = () => {
+    manage.error = ''
+    manage.firstPage = true
+  }
+  const swapToFalse = () => {
+    manage.error = ''
+    manage.firstPage = false
+  }
   const sendData = () => {
     let payload = {
       name: state.page1.firstName,
       surname: state.page1.secondName,
       email: state.page1.mail,
       password: state.auth.password,
-      birthdate: state.page2.birthDate,
-      telephone: state.page2.phoneNumber,
-      role: '1',
-      class: '1'
+      birthdate: state.page1.birthDate,
+      telephone: state.page1.phoneNumber,
+      role: state.page2.role,
+      class: state.page2.classroom
     }
     console.log(payload)
-    // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
-    // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
     axios
       .post('http://localhost:3000/auth/register', payload, {
         headers: {
@@ -42,18 +59,6 @@
         }
       })
       .then((response) => console.log(response))
-  }
-  const manage = reactive({
-    firstPage: true,
-    error: ''
-  })
-  const swapToTrue = () => {
-    manage.error = ''
-    manage.firstPage = true
-  }
-  const swapToFalse = () => {
-    manage.error = ''
-    manage.firstPage = false
   }
   // const checkPasswordStrength = (password: string) => {
   //   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/
@@ -92,12 +97,11 @@
           return 1
         }
       }
-      let birth_date = state.page2.birthDate.replace('-', '').replace('-', '')
+      let birth_date = state.page1.birthDate.replace('-', '').replace('-', '')
       state.auth.password = state.page1.firstName[0] + state.page1.secondName + birth_date
       sendData()
       console.log(state.auth.password)
     }
-
     // Verifier que les données ne sont pas déjà utilisées pour un autre compte
     console.log('TODO: Envoyer les données au back')
   }
@@ -105,97 +109,47 @@
 
 <template>
   <div class="main">
-    <div
-      class="page1"
-      v-if="manage.firstPage"
-    >
+    <div class="pageDisplay">
       <div class="title">
-        <p class="inscrit">Ajouter un Utilisateur</p>
+        <p class="inscrit">Inscription</p>
       </div>
       <div class="title-image">
         <img
-          :src="logo"
+          src="../assets/logo/logo.svg"
           class="image"
         />
         <p class="logoName">TaalToolBox</p>
       </div>
-      <form class="form">
-        <div class="firstDiv">
-          <input
-            class="firstFields"
-            type="text"
-            placeholder="Nom"
-            v-model="state.page1.firstName"
-          />
-          <input
-            class="firstFields"
-            type="text"
-            placeholder="Prénom"
-            v-model="state.page1.secondName"
-          />
-        </div>
-        <div class="secondDiv">
+      <div
+        v-if="manage.firstPage"
+        class="page1"
+      >
+        <form class="form">
+          <div class="firstDiv">
+            <input
+              class="firstFields"
+              type="text"
+              placeholder="Nom"
+              v-model="state.page1.firstName"
+            />
+            <input
+              class="firstFields"
+              type="text"
+              placeholder="Prénom"
+              v-model="state.page1.secondName"
+            />
+          </div>
           <input
             class="secondFields"
             type="email"
             placeholder="Mail"
             v-model="state.page1.mail"
           />
-          <!-- <input
-            class="secondFields"
-            type="password"
-            placeholder="Mot de passe"
-            v-model="state.page1.password"
-          />
-          <input
-            class="secondFields"
-            type="password"
-            placeholder="Confirmer le mot de passe"
-            v-model="state.page1.confirmPassword"
-          /> -->
-        </div>
-      </form>
-      <div class="buttons">
-        <button
-          id="precedent"
-          class="clickButton"
-          style="opacity: 0.5; cursor: text"
-        >
-          Précédent
-        </button>
-        <button
-          id="suivant"
-          class="clickButton"
-          @click="checkFields('page1')"
-        >
-          Suivant
-        </button>
-      </div>
-      <div class="error">
-        {{ manage.error }}
-      </div>
-    </div>
-    <div
-      class="page2"
-      v-else
-    >
-      <div class="title">
-        <p class="inscrit">Inscription</p>
-      </div>
-      <div class="title-image">
-        <img
-          :src="logo"
-          class="image"
-        />
-        <p class="logoName">TaalToolBox</p>
-      </div>
-      <form class="form">
-        <div class="secondDiv">
           <input
             class="secondFields"
             type="tel"
             placeholder="Téléphone"
-            v-model="state.page2.phoneNumber"
+            v-model="state.page1.phoneNumber"
           />
           <input
             class="secondFields"
@@ -203,54 +157,121 @@
             placeholder="Date de naissance"
             onfocus="(this.type='date')"
             onblur="(this.type='text')"
-            v-model="state.page2.birthDate"
+            v-model="state.page1.birthDate"
           />
-          <fieldset class="radioField">
-            <div class="radioLegend"><legend>Sexe:</legend></div>
-            <div class="radioInput">
-              <input
-                type="radio"
-                name="gender"
-                value="man"
-                v-model="state.page2.gender"
-              />
-              <img
-                src="@/assets/logo/man.svg"
-                alt="manSign"
-                class="radioImage"
-              />
-            </div>
-            <div class="radioInput">
-              <input
-                type="radio"
-                name="gender"
-                value="woman"
-                v-model="state.page2.gender"
-              />
-              <img
-                src="@/assets/logo/woman.svg"
-                alt="womanSign"
-                class="radioImage"
-              />
-            </div>
-          </fieldset>
+        </form>
+        <div class="buttons">
+          <button
+            id="precedent"
+            class="clickButton"
+            style="opacity: 0.5; cursor: text"
+          >
+            Précédent
+          </button>
+          <button
+            id="suivant"
+            class="clickButton"
+            @click="checkFields('page1')"
+          >
+            Suivant
+          </button>
         </div>
-      </form>
-      <div class="buttons">
-        <button
-          id="precedent"
-          class="clickButton"
-          @click="swapToTrue"
-        >
-          Précédent
-        </button>
-        <button
-          id="suivant"
-          class="clickButton"
-          @click="checkFields('page2')"
-        >
-          Terminer
-        </button>
+      </div>
+      <div
+        v-else
+        class="page2"
+      >
+        <form class="form">
+          <div class="select">
+            <select
+              name="select"
+              class="select_input"
+              placeholder="École"
+              v-model="state.page2.school"
+              @change="updateClassrooms"
+            >
+              <option
+                hidden
+                value="Classe"
+                disabled
+                selected
+              >
+                École
+              </option>
+
+              <option
+                :value="item"
+                v-for="item in Object.keys(schoolClass)"
+              >
+                {{ item }}
+              </option>
+            </select>
+          </div>
+          <div class="select">
+            <select
+              name="select"
+              class="select_input"
+              placeholder="Classe"
+              v-model="state.page2.classroom"
+            >
+              <option
+                hidden
+                value="Classe"
+                disabled
+                selected
+              >
+                Classe
+              </option>
+
+              <option
+                v-if="state.page2.school"
+                :value="item"
+                v-for="item in schoolClass[state.page2.school]"
+              >
+                {{ item }}
+              </option>
+            </select>
+          </div>
+          <div
+            class="select"
+            v-if="manage.role == 'admin'"
+          >
+            <select
+              name="select"
+              class="select_input"
+              placeholder="Rôle"
+              v-model="state.page2.role"
+            >
+              <option
+                hidden
+                value="Rôle"
+                disabled
+                selected
+              >
+                Classe
+              </option>
+              <option value="student">Élève</option>
+              <option value="teacher">Professeur</option>
+              <option value="creator">Créateur</option>
+            </select>
+          </div>
+        </form>
+        <div class="buttons">
+          <button
+            id="precedent"
+            class="clickButton"
+            @click="swapToTrue"
+          >
+            Précédent
+          </button>
+          <button
+            id="suivant"
+            class="clickButton"
+            @click="checkFields('page2')"
+          >
+            Terminer
+          </button>
+        </div>
       </div>
       <div class="error">
         {{ manage.error }}
@@ -260,6 +281,49 @@
 </template>
 
 <style scoped>
+  select {
+    appearance: none;
+    border: none;
+    margin: 0;
+    width: 100%;
+    cursor: inherit;
+    line-height: inherit;
+  }
+  .select_input {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
+    border-radius: 5px;
+    padding: 2px;
+    outline: none;
+    position: relative;
+  }
+  .select_input::after {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 15px solid #026b30;
+    position: absolute;
+    left: 90%;
+    content: '';
+  }
+  .select {
+    width: 100%;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #fff;
+    display: grid;
+    color: #026b30;
+    align-items: center;
+    position: relative;
+  }
+  .select::after {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 10px solid #026b30;
+    position: absolute;
+    left: 92%;
+    content: '';
+  }
   .main {
     padding: 70px;
     display: flex;
@@ -267,7 +331,10 @@
     justify-content: center;
     align-items: center;
   }
-  .page1 {
+  /* .select-class{
+  width: 200px;
+} */
+  .pageDisplay {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -278,19 +345,16 @@
     border: solid grey 1px;
     max-width: 500px;
   }
-
+  .page1,
   .page2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 30px;
     display: flex;
+    width: 100%;
     flex-direction: column;
     align-items: center;
-    border: solid grey 1px;
-    max-width: 500px;
   }
-
   .title-image {
     padding-top: 5%;
     display: flex;
@@ -300,18 +364,15 @@
     gap: 2%;
     width: 100%;
   }
-
   .image {
     width: 10%;
     height: auto;
   }
-
   .logoName {
     font-family: Segoe print;
     color: #707070;
     font-size: 1.5em;
   }
-
   .form {
     padding: 30px;
     display: flex;
@@ -319,7 +380,6 @@
     gap: 25px;
     width: 80%;
   }
-
   .firstDiv {
     gap: 25px;
     color: #026b30;
@@ -327,14 +387,6 @@
     flex-direction: row;
     justify-content: center;
   }
-
-  .secondDiv {
-    gap: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
   input.secondFields {
     color: #026b30;
     width: 100%;
@@ -343,7 +395,6 @@
     outline: none;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
   }
-
   input.firstFields {
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
@@ -351,18 +402,15 @@
     padding: 2px;
     outline: none;
   }
-
   input::placeholder {
     color: #026b30;
   }
-
   .radioField {
     display: flex;
     flex-direction: row;
     gap: 25%;
     width: 100%;
   }
-
   .radioLegend {
     display: flex;
     align-items: center;
@@ -370,11 +418,15 @@
     font-size: 1.2em;
     color: #026b30;
   }
-
   .radioInput {
     display: flex;
     position: relative;
     gap: 10px;
+    overflow: visible;
+  }
+  .radio_button {
+    width: 100%;
+    min-width: 18px;
   }
   .radioImage {
     height: auto;
@@ -382,33 +434,33 @@
   }
   .buttons {
     padding-bottom: 5%;
-    gap: 35%;
+    gap: 28%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     width: 100%;
+    padding: 20px;
   }
-
   .clickButton {
+    display: flex;
+    justify-content: center;
     border: none;
     padding: 5px 10px 5px 10px;
     border-radius: 5px;
     font-size: 1.1em;
     min-width: 100px;
   }
-
   .error {
     color: red;
     padding-bottom: 5%;
     font-weight: bold;
   }
-
   #precedent {
     border: solid grey 2px;
     color: grey;
   }
-
   #suivant {
+    align-items: center;
     color: white;
     background-color: #026b30;
   }
@@ -417,8 +469,10 @@
     width: 100%;
     background-color: #026b30;
   }
-
   .inscrit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #026b30;
     color: white;
     flex-grow: 5;
