@@ -6,7 +6,7 @@ import { School } from '../school/entities/school.entity';
 import { Schoolclass } from './entities/schoolclass.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Schoolclass, School])],
-  exports : [TypeOrmModule, SchoolclassService],
+  exports: [TypeOrmModule, SchoolclassService],
   controllers: [SchoolclassController],
   providers: [SchoolclassService],
 })
