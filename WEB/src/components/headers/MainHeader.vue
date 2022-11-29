@@ -92,7 +92,18 @@
         v-show="role.includes(staticRole.admin)"
         >Ajouter Classes</router-link
       >
+      <router-link
+        to="/userResponseStats"
+        class="tabs_element"
+        v-show="
+          [staticRole.admin, staticRole.creator].some((x) => {
+            return role.includes(x)
+          })
+        "
+        >Suivi des Apprentissages</router-link
+      >
     </div>
+    
     <router-link
       v-if="role.length"
       class="conreg"
