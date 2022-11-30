@@ -30,6 +30,7 @@
 
   // Cette ref correspond à la div du popup
   const userRole = useUserStore().user.role
+  const userSchool = useUserStore().user.school
   // const schoolUser = useUserStore().user.
   console.log(userRole)
 
@@ -94,6 +95,7 @@
       ? (isMobile.value = true)
       : (isMobile.value = false)
 
+    // OUVERTURE DU POPUP
     function setActive() {
       for (let intercation in map.value.getInteractions().getArray()) {
         let template = map.value.getInteractions().getArray()
@@ -157,33 +159,45 @@
         // mouseWheelZoom: allowControls.value
       })
     })
+    const setPointOnMap = (point: { label: string; coordinates: number[]; levelId: number }) => {
+      let feature = new Feature({
+        geometry: new Point(fromLonLat([point.coordinates[0], point.coordinates[1]])), //[4.39064, 50.83756]
+        name: point.label
+      })
+      // feature.setId(point.levelId)
+      feature.setStyle(iconStyle)
+      let vector = new VectorLayer({
+        source: new VectorSource({
+          features: [feature]
+        })
+      })
+      // On ajoute la nouvelle feature à la fin de la liste des layers de la map
+      map.value.getLayers().extend([vector])
+    }
+
     console.log(map.value)
-    //TODO NAFFICHER QUE LACTIVITE PRINCIPALE LORS DE LA PREMIERE ARRIVER DE LELEVE SUR LE SITE
-    // TODO FAIRE UN CONDITION SI LELEVE A DEJA COMPLETER LACTIVITE DANS SON ECOLE
+
     // ---------------------------------------------------------------
     // On génère les points sur la map à partir de la liste des objets
     // ---------------------------------------------------------------
-    if (userRole.includes('Administrateur') || userRole.includes('Créateur')) {
-      // AFFICHER TOUTES LES ACTIVITES DE LA CARTE
-      for (let item in pointState.points) {
-        let point = pointState.points[item]
-
-        let feature = new Feature({
-          geometry: new Point(fromLonLat([point.coordinates[0], point.coordinates[1]])), //[4.39064, 50.83756]
-          name: point.label
-        })
-        // feature.setId(point.levelId)
-        feature.setStyle(iconStyle)
-        let vector = new VectorLayer({
-          source: new VectorSource({
-            features: [feature]
-          })
-        })
-        // On ajoute la nouvelle feature à la fin de la liste des layers de la map
-        map.value.getLayers().extend([vector])
+    if (
+      userRole.includes('Administrateur') ||
+      userRole.includes('Créateur') ||
+      moneyStudent.value >= 50
+    ) {
+      // TODO AFFICHER TOUTES LES PREMIERE ACTIVITE SI LELEVE A PLUS DE 50 POINTS
+      // TODO CHANGER LEMPLACEMENT DE TOUTES LES PREMIERES ACTIVITES CAR ELLE NE DOIVENT PAS SE TROUVER DANS LECOLE
+      // TODO FAIRE UN CONDITION SI LELEVE A DEJA COMPLETER LACTIVITE DANS SON ECOLE
+      for (let point of pointState.points) {
+        setPointOnMap(point)
       }
     } else {
-      //TODO GET LECOLE DE LELEVE ET AFFICHER LACTIVITE PRINCIPALE
+      for (let point of pointState.points) {
+        //TODO NAFFICHER QUE LACTIVITE PRINCIPALE LORS DE LA PREMIERE ARRIVER DE LELEVE SUR LE SITE
+        if (point.label === userSchool) {
+          setPointOnMap(point)
+        }
+      }
     }
     //TODO si le créateur clique sur un point qui vient d'être rajouter, on démarrer la création d'une activité
 
@@ -324,7 +338,7 @@
   ></div>
   <div
     class="search"
-    v-if="userRole.includes('Administrateur') || userRole.includes('Créateur' )"
+    v-if="userRole.includes('Administrateur') || userRole.includes('Créateur')"
   >
     <input
       id="geocode-input"
@@ -346,7 +360,9 @@
     ref="popup"
     id="popup"
     class="ol-popup"
+    v-if="userRole.includes('Administrateur') || userRole.includes('Créateur') || moneyStudent > 50"
   >
+    <!-- SHOW ALL THE ACTIVITIES TO THE CREATOR AND ADMINISTRATOR -->
     <div
       class="swipper_right"
       @click="gamemode = 0"
@@ -417,6 +433,34 @@
           >
         </div>
       </Transition>
+    </div>
+  </div>
+  <div
+    v-show="popupVisibility"
+    ref="popup"
+    id="popup"
+    class="ol-popup"
+    v-else-if="moneyStudent >= 0 && moneyStudent < 50"
+  >
+    <div class="popup-content">
+      <div
+        id="popup-content"
+        class="sub_content"
+      >
+        <p class="popup-title">{{ levelName }}</p>
+        <p class="level-details">Activité principale {{ levelNumber }}</p>
+        <img
+          class="gamemode-image"
+          src="@/assets/logo/start_game.svg"
+          alt="start_game gamemode logo"
+        />
+        <!-- CREATION DE LACTIVITE PRINCIPALE -->
+        <router-link
+          to="/start-game"
+          class="playButton"
+          >PLAY</router-link
+        >
+      </div>
     </div>
   </div>
 </template>
