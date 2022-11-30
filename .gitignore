@@ -2,3 +2,6 @@
 .netlify
 # /WEB/package-lock.json
 /backend/package-lock.json
+MOBILE/
+BACKEND/public/images/cards
+.env
