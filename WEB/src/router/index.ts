@@ -16,6 +16,7 @@ import LevelSelectorView from '@/views/dad/DadSelector.vue'
 import DadMobileView from '@/views/dad/DadMobileView.vue'
 import Login from '@/views/Login.vue'
 import SignIn from '@/views/SignIn.vue'
+import StartGame from '@/views/StartGameView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -99,6 +100,11 @@ const router = createRouter({
       path: '/signIn',
       name: 'signIn',
       component: SignIn
+    },
+    {
+      path: '/start-game',
+      name: 'startGame',
+      component: StartGame
     }
   ]
 })
