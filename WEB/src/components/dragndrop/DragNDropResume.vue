@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import router from '@/router'
   import { useDadLevels } from '@/stores/dadLevels'
   import { useUserStore } from '@/stores/user'
   import { ref } from 'vue'
@@ -15,9 +16,10 @@
   const sendData = () => {
     let totalData = store.getTotalData()
     totalData.creator = userStore.user.name + userStore.user.surname
-    // console.log(totalData)
+    console.log(totalData)
     // console.log(totalData.levelData.fields)
     store.addData(totalData.levelData)
+    router.push('/dadselector')
   }
 </script>
 <template>

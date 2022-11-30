@@ -242,6 +242,9 @@
     position: relative;
     transition: ease 0.5s;
   }
+  .tabs_element div {
+    padding: auto 0;
+  }
   .tabs_element:hover {
     color: #026b30;
     transition: ease 0.5s;
