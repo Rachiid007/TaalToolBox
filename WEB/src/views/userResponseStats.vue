@@ -3,12 +3,15 @@
   import userResponseTable from '@/components/userResponseStats/userResponseTable.vue'
   import schoolStatsTable from '@/components/userResponseStats/schoolStatsTable.vue'
   import { useUserStore } from '@/stores/user'
-
+    import BarChart from '@/components/Charts/barChart.vue'
+    import SuiviApprentissage from '@/components/Charts/barChart.vue'
+  
   const userStore = useUserStore()
 </script>
 
 <template>
   <div class="page">
+    <BarChart />
     <MainHeader />
     <schoolStatsTable />
     <userResponseTable />
