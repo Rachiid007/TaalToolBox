@@ -52,7 +52,7 @@
       <router-link
         class="tabs_element"
         to="/"
-        >Acceuil</router-link
+        >Accueil</router-link
       >
       <router-link
         class="tabs_element"
@@ -100,7 +100,7 @@
             return role.includes(x)
           })
         "
-        >Suivi des Apprentissages</router-link
+        >Suivi</router-link
       >
     </div>
     
@@ -135,7 +135,7 @@
         <router-link
           class="right_tab_element"
           to="/"
-          >Acceuil</router-link
+          >Accueil</router-link
         >
         <router-link
           v-show="
