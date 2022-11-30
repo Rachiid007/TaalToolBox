@@ -303,6 +303,15 @@
           100
         ).toFixed(2)
 
+        let calculatedFontSize = getComputedStyle(currentDiv).fontSize
+        if (pcDataSended.value) {
+          let porcentage =
+            parseInt(getComputedStyle(currentDiv).fontSize) /
+            parseInt(getComputedStyle(image.value).width)
+          calculatedFontSize = (porcentage * 100).toFixed(1) + 'vw'
+          console.log(calculatedFontSize)
+        }
+
         // On construit l'objet à insérer dans le payload
         let currentDivInfo = {
           test: currentDiv.id.match(/(\d+)/)[0],
@@ -312,7 +321,7 @@
           width: currentDivWidthPorc.toString() + '%',
           height: currentDivHeightPorc.toString() + '%',
           rightValue: currentDiv.innerText,
-          fontSize: getComputedStyle(currentDiv).fontSize
+          fontSize: calculatedFontSize
         }
         // On insère l'objet dans le payload
         payload.push(currentDivInfo)
@@ -681,16 +690,17 @@
     display: flex;
     position: relative;
     /* outline: 1px solid blue; */
-    border: 1px solid #707070;
+    outline: 1px solid #707070;
     font-size: 0.7em;
     width: max-content;
+    min-width: 50%;
     max-width: 60%;
   }
   .back_mobile {
     display: flex;
     position: relative;
     /* outline: 1px solid blue; */
-    border: 1px solid #707070;
+    outline: 1px solid #707070;
     font-size: 0.7em;
     width: max-content;
     max-width: 30%;

@@ -4,7 +4,7 @@
   import { ref } from 'vue'
 
   const userStore = useUserStore()
-  const role:string[] = userStore.user.role
+  const role: string[] = userStore.user.role
   const right_tab: any = ref(null)
   const hamburger: any = ref(null)
   const isShown: any = ref(false)
@@ -241,6 +241,9 @@
     width: max-content;
     position: relative;
     transition: ease 0.5s;
+  }
+  .tabs_element div {
+    padding: auto 0;
   }
   .tabs_element:hover {
     color: #026b30;
