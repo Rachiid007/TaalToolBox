@@ -37,9 +37,9 @@
           <RouterLink
             class="loaderButton"
             @click="handleSelection(index)"
-            to="/dadtest"
-            >Charger ce niveau</RouterLink
-          >
+            to="/dad"
+            >Charger ce niveau
+          </RouterLink>
         </div>
       </div>
     </div>
