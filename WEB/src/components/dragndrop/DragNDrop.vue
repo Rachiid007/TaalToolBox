@@ -9,8 +9,9 @@
   const store = useDadLevels()
   const dataFromStore = store.getData()
 
-  const background = ref()
-  const wordList = ref()
+  const background = ref(null)
+  const image = ref(null)
+  const wordList = ref(null)
 
   // On utilise cette ref pour stocker un boolean qui nous indique si l'utilisateur est sur un mobile ou pas
   // const isNotMobile = ref(false)
@@ -114,6 +115,10 @@
   //   : (isNotMobile.value = true)
 
   onMounted(() => {
+    image.value.addEventListener('contextmenu', (e: any) => {
+      e.preventDefault()
+    })
+
     //La fonction shuffle va prendre les mots qui sont dans l'objet principal (state) et les mettres dans un ordre aléatoire
     // CE CODE VIENS D INTERNET ET DOIS ENCORE ETRE COMPRIS
 
@@ -164,6 +169,7 @@
         class="back"
       >
         <img
+          ref="image"
           :src="state.backImage"
           alt="image for the exercice"
         />
@@ -357,7 +363,7 @@
   .container p {
     color: #707070;
     width: 100%;
-    font-size: 100%;
+    font-size: inherit;
     font-weight: bold;
     border: none;
     background: white;

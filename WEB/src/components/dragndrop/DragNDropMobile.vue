@@ -22,7 +22,7 @@
   const goodFields = ref(0)
   // On stocke le nombre de mauvaises réponses
   const badFields = ref(0)
-  const state = reactive(dataFromStore[0])
+  const state = reactive(dataFromStore[store.getLevel()])
 
   const notCompatible = ref(false)
 
@@ -38,7 +38,7 @@
       // Si l'élément est une <div> avec un id (donc un champ)
       if (childList[child].id) {
         //On reset la couleur de la bordure
-        childList[child].style.border = '1px solid #00307e'
+        childList[child].style.outline = '1px solid #00307e'
         // Si la div contient à une valeur
         if (childList[child].value) {
           // On parcourt la liste qui a permit de générer les champs afin d'aller vérifier les valeurs
@@ -48,10 +48,10 @@
               if (state.fields.mobile[index].rightValue == childList[child].value) {
                 localScore++
                 goodAnswers++
-                childList[child].style.border = '2px solid green'
+                childList[child].style.outline = '2px solid green'
               } else {
                 badAnswers++
-                childList[child].style.border = '2px solid red'
+                childList[child].style.outline = '2px solid red'
               }
             }
           }
@@ -94,6 +94,7 @@
       console.log(state.fields.mobile[0])
       shuffle()
     } else {
+      console.log(state.fields.mobile)
       notCompatible.value = true
     }
   })
@@ -138,6 +139,7 @@
           <option
             :value="choice.word"
             v-for="choice in wordsToGen"
+            style="font-size: inherit; line-height: '2px'"
           >
             {{ choice.word }}
           </option>
@@ -219,13 +221,13 @@
     display: flex;
     justify-content: center;
     position: relative;
-    border: 2px solid #707070;
+    outline: 2px solid #707070;
     font-size: 0.7em;
   }
   img {
     width: 100%;
     height: auto;
-    max-height: 60vh;
+    /* max-height: 60vh; */
   }
 
   /* container correspond à un input */
@@ -238,7 +240,7 @@
     gap: 5%;
     width: 250px;
     height: 22px;
-    border: 2px solid #00307e;
+    outline: 2px solid #00307e;
     /* border-radius: 5px; */
     position: absolute;
     background-color: white;
@@ -250,8 +252,7 @@
   .container:focus,
   .container:active,
   .container:focus-visible {
-    border: 2px solid #0162fe;
-    outline: none;
+    outline: 2px solid #0162fe;
   }
 
   .container option {
