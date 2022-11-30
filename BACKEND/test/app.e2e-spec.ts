@@ -25,6 +25,7 @@ describe('AppController (e2e)', () => {
       .expect(listCards);
   });
 
+
   it('GET card id 10', async () => {
     const result = {
       id: 10,
@@ -34,6 +35,7 @@ describe('AppController (e2e)', () => {
     };
     return request(app.getHttpServer())
       .get('/cards/10')
+
       .expect(200)
       .expect(result);
   });
@@ -57,6 +59,7 @@ describe('AppController (e2e)', () => {
   });
 
   it('Add user Response with only 1 entry (Post)', async () => {
+
     const user_response = {
       id_card: 1,
       id_answer: 1,
@@ -65,6 +68,7 @@ describe('AppController (e2e)', () => {
       .post('/user-response/1/cards')
       .set('Accept', 'application/json')
       .send(user_response)
+
       .expect(201);
   });
 
@@ -102,5 +106,6 @@ describe('AppController (e2e)', () => {
       .set('Accept', 'application/json')
       .send(user_response)
       .expect(201);
+
   });
 });
