@@ -17,6 +17,7 @@ import DadMobileView from '@/views/DadMobileView.vue'
 import Login from '@/views/Login.vue'
 import SignIn from '@/views/SignIn.vue'
 import AddClass from '@/views/Add Class/AddClass.vue'
+import InfoLevel from '@/views/Info level/InfoLevel.vue'
 
 
 const router = createRouter({
@@ -106,6 +107,11 @@ const router = createRouter({
       path: '/addClass',
       name: 'addClass',
       component: AddClass
+    },
+    {
+      path: '/infoLevel',
+      name: 'infoLevel',
+      component: InfoLevel,
     }
   ]
 })
