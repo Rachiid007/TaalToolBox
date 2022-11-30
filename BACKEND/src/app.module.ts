@@ -21,7 +21,8 @@ import { SchoolclassModule } from './schoolclass/schoolclass.module';
 import { SchoolModule } from './school/school.module';
 import { ActivityModule } from './activity/activity.module';
 import { DragModule } from './drag_and_drop/drag_and_drop.module';
-import { UserResponseModule } from './user_response/user_response.module';
+import { CardsThemeModule } from './cards_theme/cards_theme.module';
+import { LevelMapModule } from './level_map/level_map.module';
 
 @Module({
   imports: [
@@ -59,7 +60,12 @@ import { UserResponseModule } from './user_response/user_response.module';
     ProficiencyModule,
     ActivityModule,
     DragModule,
+<<<<<<< HEAD
     UserResponseModule,
+=======
+    CardsThemeModule,
+    LevelMapModule,
+>>>>>>> 8137e42 (feat(level, theme) add theme card and level)
   ],
   controllers: [AppController],
   providers: [AppService],
