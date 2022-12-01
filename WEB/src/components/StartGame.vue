@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { useUserStore } from '@/stores/user'
   import { onMounted, ref } from 'vue'
+  import router from '@/router'
 
   const userStore = useUserStore()
 
@@ -26,7 +27,9 @@
     console.log(slides)
     // Si on arrive a la fin des slides on doit remplacer le bouton suivant par completer
     if (n > slides.length) {
-      // Ajouter l'argent de l'utilisateur pour 
+      // Ajouter l'argent de l'utilisateur pour
+      userStore.setReward(50)
+      router.push('/map')
       return
     } else if (n == slides.length) {
       // slideIndex.value = 1
@@ -103,11 +106,17 @@
       </div>
 
       <div class="mySlides fade">
+        <div class="explication__text">
+          <p>
+            Vous venez de compléter l'activité principale 😉 vous pouvez maintenant effectuer
+            d'autres activités sur la carte <br />
+          </p>
+        </div>
         <!-- <div class="numbertext">3 / 3</div> -->
-        <img
+        <!-- <img
           src="@/assets/images/start_game/plateforme/barre_navigation.png"
           class="slide__img"
-        />
+        /> -->
         <!-- <div class="text">Caption Three</div> -->
       </div>
     </div>

@@ -6,6 +6,7 @@ import { useArrayEvery } from '@vueuse/shared'
 // import localforage from 'localforage'
 
 export const useUserStore = defineStore('user', () => {
+  let userReward = ref<number>(0)
   let user = reactive<User>({
     id: 1,
     name: '',
@@ -33,8 +34,15 @@ export const useUserStore = defineStore('user', () => {
       return userRequest.data
     }
   }
+
+  const setReward = (reward: number) => {
+    userReward.value = reward
+  }
+
   return {
     user,
+    userReward,
+    setReward,
     getUser
   }
 })
