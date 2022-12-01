@@ -60,12 +60,8 @@ import { LevelMapModule } from './level_map/level_map.module';
     ProficiencyModule,
     ActivityModule,
     DragModule,
-<<<<<<< HEAD
-    UserResponseModule,
-=======
     CardsThemeModule,
     LevelMapModule,
->>>>>>> 8137e42 (feat(level, theme) add theme card and level)
   ],
   controllers: [AppController],
   providers: [AppService],

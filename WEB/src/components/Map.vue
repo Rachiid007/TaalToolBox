@@ -31,10 +31,9 @@
   // Cette ref correspond à la div du popup
   const userRole = useUserStore().user.role
   const userSchool = useUserStore().user.school
+  const userReward = useUserStore().userReward
   // const schoolUser = useUserStore().user.
-  console.log(userRole)
 
-  const moneyStudent = ref(0)
   const popup = ref(null)
 
   const map = ref()
@@ -183,7 +182,7 @@
     if (
       userRole.includes('Administrateur') ||
       userRole.includes('Créateur') ||
-      moneyStudent.value >= 50
+      userReward >= 50
     ) {
       // TODO AFFICHER TOUTES LES PREMIERE ACTIVITE SI LELEVE A PLUS DE 50 POINTS
       // TODO CHANGER LEMPLACEMENT DE TOUTES LES PREMIERES ACTIVITES CAR ELLE NE DOIVENT PAS SE TROUVER DANS LECOLE
@@ -360,7 +359,7 @@
     ref="popup"
     id="popup"
     class="ol-popup"
-    v-if="userRole.includes('Administrateur') || userRole.includes('Créateur') || moneyStudent > 50"
+    v-if="userRole.includes('Administrateur') || userRole.includes('Créateur') || userReward >= 50"
   >
     <!-- SHOW ALL THE ACTIVITIES TO THE CREATOR AND ADMINISTRATOR -->
     <div
@@ -440,7 +439,7 @@
     ref="popup"
     id="popup"
     class="ol-popup"
-    v-else-if="moneyStudent >= 0 && moneyStudent < 50"
+    v-else-if="userReward >= 0 && userReward < 50"
   >
     <div class="popup-content">
       <div
