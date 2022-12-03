@@ -1,25 +1,27 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { describe, it, expect, vi, beforeEach, afterEach, test } from 'vitest'
+import { shallowMount, mount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing' // <-- !!
+import { setActivePinia, createPinia } from 'pinia'
+import { createApp } from 'vue'
 // import { useCardStore } from '@/stores/card'
 
+import DadTeacherView from '@/views/dad/DadTeacherView.vue'
 import DragNDropTeacher from '@/components/dragndrop/DragNDropTeacher.vue'
+import DragNDropResume from '@/components/dragndrop/DragNDropResume.vue'
+import HowToAddDad from '@/components/dragndrop/HowToAddDad.vue'
+import SelectDragNDropImage from '@/components/dragndrop/SelectDragNDropImage.vue'
 
-describe('DragNDropTeacher.vue Test with empty data store', () => {
-  let wrapper = null
+import { useDadLevels } from '@/stores/dadLevels'
 
-  // SETUP - run prior to each unit test
+describe('DragNDropTeacher.vue test with initialization', () => {
+  let wrapper: any | null = null
+  let store: any = null
+
   beforeEach(() => {
-    // render the component
-    wrapper = shallowMount(DragNDropTeacher, {
-      global: {
-        plugins: [
-          createTestingPinia({
-            createSpy: vi.fn
-          })
-        ]
-      }
-    })
+    setActivePinia(createPinia())
+    store = useDadLevels()
+    store.setImageUrl('/form1.png')
+    wrapper = mount(DadTeacherView)
   })
 
   // TEARDOWN - run after each unit test
@@ -27,15 +29,24 @@ describe('DragNDropTeacher.vue Test with empty data store', () => {
     wrapper.unmount()
   })
 
-  it('initializes with zero elements displayed', () => {
-    expect(wrapper.findAll('div').length).toEqual(21)
+  test('initializes with first page displayed', () => {
+    expect(wrapper.findAll('div').length).toEqual(14)
 
-    expect(wrapper.findAll('p').length).toEqual(11)
+    expect(wrapper.findAll('p').length).toEqual(5)
 
-    expect(wrapper.findAll('button').length).toEqual(4)
+    expect(wrapper.findAll('button').length).toEqual(1)
 
-    expect(wrapper.findAll('img').length).toEqual(5)
+    expect(wrapper.findAll('img').length).toEqual(6)
+  })
 
-    expect(wrapper.findAll('input').length).toEqual(4)
+  it('swap to second page', async () => {
+    const button = wrapper.find('button')
+    await button.trigger('click')
+
+    expect(wrapper.findAll('p').length).toEqual(3)
+
+    expect(wrapper.findAll('input').length).toEqual(1)
+
+    console.log(button)
   })
 })
