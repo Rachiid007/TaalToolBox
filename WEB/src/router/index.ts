@@ -20,6 +20,7 @@ import StartGame from '@/views/StartGameView.vue'
 import AddClass from '@/views/Add Class/AddClass.vue'
 import InfoLevel from '@/views/Info level/InfoLevel.vue'
 import AddUserExcelView from '@/views/add-user/AddUserExcelView.vue'
+import Verbalize from '@/views/recognition/VerbalizeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -123,6 +124,11 @@ const router = createRouter({
       path: '/infoLevel',
       name: 'infoLevel',
       component: InfoLevel
+    },
+    {
+      path: '/verbalize',
+      name: 'Verbalize',
+      component: Verbalize
     }
   ]
 })
