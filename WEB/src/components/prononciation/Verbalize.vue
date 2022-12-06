@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { onMounted, ref } from 'vue'
-  import type { Ref } from 'vue'
+  import type { Ref, Component } from 'vue'
   import logo from '@/assets/logo/mic-logo.svg'
 
   const micAccess: Ref<boolean> = ref(false)
@@ -13,6 +13,12 @@
   const soundData: Ref<null | File> = ref(null)
 
   const audioUrl: Ref<null | string> = ref(null)
+
+  const recording: Ref<boolean> = ref(false)
+  const recordingState: Ref<null | Component> = ref(null)
+
+  const active: Ref<string> = ref('recording')
+  const recorderStateClass: Ref<string> = ref('recorder_state')
 
   // Utilisé pour activer / désactiver les console.log
   const debugMode = true
@@ -44,6 +50,8 @@
     if (mediaRecorder.value.state == 'recording') {
       // On coupe le record
       mediaRecorder.value.stop()
+      recording.value = false
+      recordingState.value.style.visibility = 'hidden'
       debug(mediaRecorder.value.state)
       debug(dataList.value)
 
@@ -63,6 +71,8 @@
     } else {
       // On lance l'enregistrement
       mediaRecorder.value.start()
+      recording.value = true
+      recordingState.value.style.visibility = 'visible'
       debug(mediaRecorder.value.state)
       // Quand les données sont disponibles => Donc quand on arrête l'enregistrement, on met les données dans la liste de données "dataList"
       mediaRecorder.value.ondataavailable = (e: any | never) => {
@@ -85,6 +95,12 @@
   <div class="main">
     <h1 class="title">Prononcer le mot:</h1>
     <p class="word">Elektriciteit</p>
+    <p
+      :class="recorderStateClass"
+      ref="recordingState"
+    >
+      Enregistrement en cours
+    </p>
     <div
       class="recorder"
       @click="recordClicked"
@@ -132,6 +148,16 @@
     font-weight: bold;
     font-family: 'Corbel';
   }
+  .recorder_state {
+    color: red;
+    font-size: 25px;
+    text-align: center;
+    margin: 35px 0;
+    visibility: hidden;
+  }
+  #active {
+    visibility: visible;
+  }
   .recorder {
     display: flex;
     justify-content: center;
@@ -139,7 +165,7 @@
     border-radius: 50%;
     /* padding: 30px 0; */
     width: 10%;
-    margin-top: 100px;
+    /* margin-top: 100px; */
     aspect-ratio: 1;
     cursor: pointer;
     transition: 0.5s ease;
