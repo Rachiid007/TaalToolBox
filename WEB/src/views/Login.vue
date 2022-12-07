@@ -1,10 +1,9 @@
 <script setup lang="ts">
   import Login from '@/components/Login.vue'
   import MainHeader from '@/components/headers/MainHeader.vue'
-  import { useUserStore } from '@/stores/user';
+  import { useUserStore } from '@/stores/user'
 
   const userStore = useUserStore()
-
 </script>
 
 <template>
@@ -19,5 +18,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden;
   }
 </style>
