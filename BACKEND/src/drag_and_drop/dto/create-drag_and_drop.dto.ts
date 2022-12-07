@@ -1,4 +1,4 @@
-import { IsString, IsJSON } from 'class-validator';
+import { IsString, IsJSON, IsOptional } from 'class-validator';
 
 export class CreateDragDto {
   // @IsJSON()
@@ -14,4 +14,8 @@ export class CreateDragDto {
 
   @IsString()
   creator: string;
+
+  @IsString()
+  @IsOptional()
+  image: string;
 }

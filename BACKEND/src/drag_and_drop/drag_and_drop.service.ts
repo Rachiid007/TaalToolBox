@@ -13,10 +13,28 @@ export class DragService {
   ) {}
 
   create(createDragDto: CreateDragDto) {
+    console.log(createDragDto);
     return this.drag_and_dropRepository.save(createDragDto);
   }
 
   findAll() {
     return this.drag_and_dropRepository.find();
+  }
+
+  findOne(id: number) {
+    return this.drag_and_dropRepository.findOneBy({
+      id: id,
+    });
+  }
+
+  async uploadImage(req, file) {
+    const drag_id = req.body.id;
+
+    const url_prev = `${req.protocol}://${req.get('host')}`;
+    const url_image = `${url_prev}/public/images/dal/${req.file.filename}`;
+
+    this.drag_and_dropRepository.update(parseInt(drag_id), {
+      image: url_image,
+    });
   }
 }

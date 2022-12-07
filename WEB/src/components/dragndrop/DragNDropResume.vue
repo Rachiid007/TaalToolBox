@@ -3,6 +3,7 @@
   import { useDadLevels } from '@/stores/dadLevels'
   import { useUserStore } from '@/stores/user'
   import { ref } from 'vue'
+  import axios from 'axios'
 
   const store = useDadLevels()
   const userStore = useUserStore()
@@ -13,13 +14,47 @@
   const numberOfFieldsPc = ref(data['pc'].length)
   const numeberOfFieldsMobile = ref(data['mobile'].length)
 
-  const sendData = () => {
-    let totalData = store.getTotalData()
-    totalData.creator = userStore.user.name + userStore.user.surname
-    console.log(totalData)
+  const sendData = async () => {
+    const levelData = { fields: store.getTempData() }
+    const creator = userStore.user.name + userStore.user.surname
+    const levelName = 'niveau test 1'
+    const imageData = store.getImageData
+    console.log(levelData)
+
     // console.log(totalData.levelData.fields)
-    store.addData(totalData.levelData)
-    router.push('/dadselector')
+    // store.addData(totalData.levelData)
+    // console.log(levelData, levelName, creator)
+    // const response = await store.addDragAndLearnDB(levelData, levelName, creator)
+
+    // store.addDragAndLearnImage(store.getImageData())
+    // router.push('/dadselector')
+
+    let receivedResponse = ''
+
+    let dataToSend = {
+      leveldata: JSON.stringify(levelData),
+      levelname: levelName,
+      creator: creator
+    }
+    axios
+      .post('http://localhost:3000/drag_and_drop', dataToSend, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
+        }
+      })
+      .catch((err: any) => {
+        console.log(err)
+      })
+      .then((response: any) => {
+        console.log(response)
+        axios.post('http://localhost:3000/drag_and_drop/image', imageData, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
+          }
+        })
+      })
   }
 </script>
 <template>

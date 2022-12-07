@@ -1,8 +1,9 @@
 import { apiClient, apiClientForm } from './apiClient'
 
 interface DragAndLearn {
-  data: []
-  imgLink: string
+  leveldata: string
+  levelname: string
+  creator: string
 }
 
 export default {
@@ -10,11 +11,14 @@ export default {
     return apiClient.get(`/drag_and_drop`)
   },
   postDragAndLearn(newExerciceData: DragAndLearn) {
-    return apiClientForm.post('/drag_and_drop', {
-      params: {
-        data: newExerciceData.data,
-        img: newExerciceData.imgLink
-      }
+    // console.log(newExerciceData)
+    return apiClient.post(`/drag_and_drop`, {
+      leveldata: newExerciceData.leveldata,
+      levelname: newExerciceData.levelname,
+      creator: newExerciceData.creator
     })
+  },
+  postDalImage(image: any) {
+    return apiClientForm.post(`/drag_and_drop/image`, { params: { image: image } })
   }
 }
