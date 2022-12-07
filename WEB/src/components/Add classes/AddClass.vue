@@ -1,5 +1,11 @@
 <script setup lang="ts">
-  
+
+ import { useSchoolsStore } from '@/stores/school' 
+
+ const store  = useSchoolsStore()
+
+ console.log(store.schoolList)
+
 </script>
 
 <template>
@@ -33,7 +39,7 @@
               >
                 Ecole
               </option>
-              <option value="student">Institut Don Bosco</option>
+              <option value="student" v-fo>Institut Don Bosco</option>
               <option value="teacher">Institut Saint Joseph</option>
               <option value="creator">Institut Cardinal Mercier</option>
             </select>
