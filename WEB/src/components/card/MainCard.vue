@@ -34,7 +34,7 @@
   <div class="card-container">
     <div class="question">
       <!-- Doit être remplacer par le mot lors de la révélation -->
-      <p v-if="!storeShow.getShowAnswer()">Comment dit-on</p>
+      <p v-if="!storeShow.getShowAnswer()">Comment dit-on ?</p>
       <p v-else>Bonne Réponse</p>
     </div>
     <div class="card">
@@ -76,10 +76,10 @@
     border: solid rgba(0, 0, 0, 0.3) 2px;
     background-color: rgba(0, 0, 0, 0.03);
     width: 350px;
-    height: 400px;
+    height: auto;
     box-shadow: inset;
     border-radius: 15px;
-    padding: 5px;
+    padding: 25px 10px;
   }
 
   .word-answer {
@@ -152,7 +152,7 @@
   @media (max-width: 768px) {
     .card {
       width: 100%;
-      margin: 0 5px;
+      margin: 0;
     }
     .card-container {
       width: 260px;
@@ -166,6 +166,32 @@
       margin-left: auto;
       margin-right: auto;
       width: 60%;
+    }
+    .question {
+      /* border: solid red 1px; */
+      margin: 15px 0;
+      padding-left: 0;
+      font-size: 25px;
+      color: rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    .word-answer {
+      /* border: solid red 1px; */
+      color: #74ac8c;
+      font-weight: bold;
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .image-answer {
+      /* border: solid red 1px; */
+      width: 100%;
+      height: auto;
+      margin-top: 0;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
   @media (max-width: 615px) {

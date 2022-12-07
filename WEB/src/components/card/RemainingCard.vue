@@ -58,7 +58,7 @@
     justify-content: center;
     align-items: center;
     width: 250px;
-    height: 600px;
+    height: auto;
   }
   .contain {
     /* border: solid red 1px; */
@@ -76,6 +76,10 @@
     font-size: 25px;
     color: rgba(0, 0, 0, 0.5);
   }
+
+  .title p {
+    font-weight: bold;
+  }
   .card {
     height: 230px;
     width: 190px;
@@ -90,7 +94,7 @@
     font-size: 50px;
     font-weight: bold;
     color: green;
-    box-shadow: 5 0 5px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 5 0 5px 1px rgba(0, 0, 0, 0.5);
   }
   .card:last-of-type {
     display: flex;
@@ -101,14 +105,22 @@
     color: green;
   }
   @media (max-width: 768px) {
+    .title {
+      font-size: 20px;
+      padding: 0;
+      width: max-content;
+    }
     .remaining-container {
+      margin-top: 20px;
       /* border: solid black 1px; */
       position: relative;
-      height: 300px;
+      height: auto;
       width: 150px;
     }
     .contain {
       width: 150px;
+      height: 170px;
+      align-self: flex-end;
       /* border: solid green 1px; */
     }
     .card {

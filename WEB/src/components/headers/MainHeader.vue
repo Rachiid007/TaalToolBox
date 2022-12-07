@@ -268,6 +268,7 @@
     width: max-content;
     position: relative;
     transition: ease 0.5s;
+    margin: auto 0;
   }
   .tabs_element div {
     padding: auto 0;
@@ -316,7 +317,7 @@
   }
   .conreg {
     font-size: 1.2em;
-    text-align: left;
+    text-align: center;
     cursor: pointer;
     /* outline: green 1px solid; */
     margin-right: 15px;
@@ -431,6 +432,14 @@
     }
     .conreg {
       font-size: 1em;
+    }
+  }
+  @media (max-width: 750px) {
+    .tabs {
+      font-size: 0.8em;
+    }
+    .conreg {
+      font-size: 0.8em;
     }
   }
   @media (max-width: 700px) {

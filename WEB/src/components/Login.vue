@@ -239,4 +239,12 @@
     color: white;
     background-color: #026b30;
   }
+  @media (max-width: 768px) {
+    .content {
+      max-width: 350px;
+    }
+    .title {
+      min-width: 300px;
+    }
+  }
 </style>
