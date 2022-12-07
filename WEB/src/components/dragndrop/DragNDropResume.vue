@@ -18,7 +18,7 @@
     const levelData = { fields: store.getTempData() }
     const creator = userStore.user.name + userStore.user.surname
     const levelName = 'niveau test 1'
-    const imageData = store.getImageData
+    const imageData = store.getImageData()
     console.log(levelData)
 
     // console.log(totalData.levelData.fields)
@@ -29,32 +29,44 @@
     // store.addDragAndLearnImage(store.getImageData())
     // router.push('/dadselector')
 
-    let receivedResponse = ''
+    // let receivedResponse = ''
 
     let dataToSend = {
       leveldata: JSON.stringify(levelData),
       levelname: levelName,
       creator: creator
     }
-    axios
-      .post('http://localhost:3000/drag_and_drop', dataToSend, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
-        }
-      })
-      .catch((err: any) => {
-        console.log(err)
-      })
-      .then((response: any) => {
-        console.log(response)
-        axios.post('http://localhost:3000/drag_and_drop/image', imageData, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
-          }
-        })
-      })
+
+    store.addDragAndLearnDB(levelData, levelName, creator, imageData)
+
+    // axios
+    //   .post('http://localhost:3000/drag_and_drop', dataToSend, {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
+    //     }
+    //   })
+    //   .catch((err: any) => {
+    //     console.log(err)
+    //   })
+    //   .then((response: any) => {
+    //     console.log(imageData)
+    //     console.log(response)
+    //     let formData = new FormData()
+    //     formData.append('file', imageData)
+    //     formData.append('id', response.data.id)
+    //     console.log(formData)
+    //     axios
+    //       .post('http://localhost:3000/drag_and_drop/image', formData, {
+    //         headers: {
+    //           'Content-Type': 'application/form-data',
+    //           'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
+    //         }
+    //       })
+    //       .catch((err) => {
+    //         console.log(err)
+    //       })
+    //   })
   }
 </script>
 <template>

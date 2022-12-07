@@ -18,7 +18,11 @@ export default {
       creator: newExerciceData.creator
     })
   },
-  postDalImage(image: any) {
-    return apiClientForm.post(`/drag_and_drop/image`, { params: { image: image } })
+  postDalImage(imageData: File, id: number) {
+    let formData = new FormData()
+    formData.append('file', imageData)
+    formData.append('id', id)
+
+    return apiClientForm.post(`/drag_and_drop/image`, formData)
   }
 }

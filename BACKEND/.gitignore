@@ -36,3 +36,7 @@ lerna-debug.log*
 .env
 
 package-lock.json
+
+# Dont upload the images 
+/public/images/cards
+/public/images/dal
