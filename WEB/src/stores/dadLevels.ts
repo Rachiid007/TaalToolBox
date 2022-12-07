@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import dalService from '@/services/dalService'
-// import Dadleveldata from '@/types/Dadleveldata'
+import type Dadleveldata from '@/types/Dadleveldata'
 
 export const useDadLevels = defineStore('dadlevels', () => {
   const levelSelector = ref(0)
@@ -152,13 +152,34 @@ export const useDadLevels = defineStore('dadlevels', () => {
   //   console.log(DalList)
   //   // DalDataList.value.push(DalList);
   // }
-  // const addDragAndLearn = (newDragAndLearnExercice: any) => {
-  //   dalService.postDragAndLearn(newDragAndLearnExercice).catch((error) => {
-  //     console.log(error)
-  //     return 1
-  //   })
-  //   DalDataList.value.push(newDragAndLearnExercice)
-  // }
+  const addDragAndLearnDB = async (
+    newDragAndLearnExerciceData: Dadleveldata,
+    newDragAndLearnExerciceLevelName: string,
+    newDragAndLearnExerciceCreator: string
+  ) => {
+    const payload = {
+      leveldata: JSON.stringify(newDragAndLearnExerciceData),
+      levelname: newDragAndLearnExerciceLevelName,
+      creator: newDragAndLearnExerciceCreator
+    }
+    dalService
+      .postDragAndLearn(payload)
+      .catch((error) => {
+        console.log(error)
+        return 1
+      })
+      .then((response) => {
+        return response
+      })
+    // DalDataList.value.push(payload)
+  }
+
+  const addDragAndLearnImage = (image: any) => {
+    dalService.postDalImage(image).catch((error) => {
+      console.log(error)
+      return 1
+    })
+  }
 
   const setTempData = (data: any, type: string) => {
     DalDataListTemp.value.fields[type] = data
@@ -184,14 +205,14 @@ export const useDadLevels = defineStore('dadlevels', () => {
     selectedImageData.value = data
   }
 
-  const getTotalData = () => {
-    let payload = {
-      levelData: DalDataListTemp.value,
-      levelName: levelName.value,
-      creator: ''
-    }
-    return payload
-  }
+  // const getTotalData = () => {
+  //   let payload = {
+  //     levelData: DalDataListTemp.value,
+  //     levelName: levelName.value,
+  //     creator: ''
+  //   }
+  //   return payload
+  // }
 
   return {
     DalDataList,
@@ -201,13 +222,14 @@ export const useDadLevels = defineStore('dadlevels', () => {
     setLevel,
     getLevel,
     // getDragAndLearn,
-    // addDragAndLearn,
+    addDragAndLearnDB,
+    addDragAndLearnImage,
     setTempData,
     getTempData,
     getImageUrl,
     setImageUrl,
     getImageData,
-    setImageData,
-    getTotalData
+    setImageData
+    // getTotalData
   }
 })
