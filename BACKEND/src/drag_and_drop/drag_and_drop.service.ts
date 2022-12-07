@@ -13,7 +13,7 @@ export class DragService {
   ) {}
 
   create(createDragDto: CreateDragDto) {
-    console.log(createDragDto);
+    // console.log(createDragDto);
     return this.drag_and_dropRepository.save(createDragDto);
   }
 
@@ -29,10 +29,9 @@ export class DragService {
 
   async uploadImage(req, file) {
     const drag_id = req.body.id;
-
+    // console.log(req);
     const url_prev = `${req.protocol}://${req.get('host')}`;
     const url_image = `${url_prev}/public/images/dal/${req.file.filename}`;
-
     this.drag_and_dropRepository.update(parseInt(drag_id), {
       image: url_image,
     });

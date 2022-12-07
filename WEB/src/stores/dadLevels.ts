@@ -155,7 +155,8 @@ export const useDadLevels = defineStore('dadlevels', () => {
   const addDragAndLearnDB = async (
     newDragAndLearnExerciceData: Dadleveldata,
     newDragAndLearnExerciceLevelName: string,
-    newDragAndLearnExerciceCreator: string
+    newDragAndLearnExerciceCreator: string,
+    newDragAndLearnImage: File
   ) => {
     const payload = {
       leveldata: JSON.stringify(newDragAndLearnExerciceData),
@@ -169,17 +170,25 @@ export const useDadLevels = defineStore('dadlevels', () => {
         return 1
       })
       .then((response) => {
-        return response
+        dalService
+          .postDalImage(newDragAndLearnImage, response.data.id)
+          .catch((error) => {
+            console.log(error)
+            return 1
+          })
+          .then((response) => {
+            return response
+          })
       })
     // DalDataList.value.push(payload)
   }
 
-  const addDragAndLearnImage = (image: any) => {
-    dalService.postDalImage(image).catch((error) => {
-      console.log(error)
-      return 1
-    })
-  }
+  // const addDragAndLearnImage = (image: any) => {
+  //   dalService.postDalImage(image).catch((error) => {
+  //     console.log(error)
+  //     return 1
+  //   })
+  // }
 
   const setTempData = (data: any, type: string) => {
     DalDataListTemp.value.fields[type] = data
@@ -223,7 +232,7 @@ export const useDadLevels = defineStore('dadlevels', () => {
     getLevel,
     // getDragAndLearn,
     addDragAndLearnDB,
-    addDragAndLearnImage,
+    // addDragAndLearnImage,
     setTempData,
     getTempData,
     getImageUrl,

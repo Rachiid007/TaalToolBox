@@ -25,7 +25,7 @@ export class DragController {
 
   @Post()
   create(@Body() createDragDto: CreateDragDto) {
-    console.log(createDragDto);
+    // console.log(createDragDto);
     return this.dragService.create(createDragDto);
   }
 
