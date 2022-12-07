@@ -1,11 +1,16 @@
 <script setup lang="ts">
 
- import { useSchoolsStore } from '@/stores/school' 
+import { useSchoolsStore } from "@/stores/school"
+import { onMounted, ref } from "vue";
 
- const store  = useSchoolsStore()
+const store = useSchoolsStore()
 
- console.log(store.schoolList)
+store.getSchoolName()
 
+let list = ref(store.schoolList)
+
+
+console.log(list)
 </script>
 
 <template>
@@ -39,9 +44,7 @@
               >
                 Ecole
               </option>
-              <option value="student" v-fo>Institut Don Bosco</option>
-              <option value="teacher">Institut Saint Joseph</option>
-              <option value="creator">Institut Cardinal Mercier</option>
+              <option v-for= "item in list" :key="item.id"> {{ item.name }}</option>
             </select>
             </div>             
           <input
@@ -51,7 +54,6 @@
           />
         </form>
         <div class="buttons">
-           
           <button
             id="confirmer"
             class="clickButton"
@@ -59,8 +61,6 @@
           </button>
         </div>
       </div>
-      
-       
     </div>
   </div>
 </template>
@@ -73,7 +73,6 @@
     justify-content: center;
     align-items: center;
   }
- 
   .page{
     display: flex;
     flex-direction: column;
