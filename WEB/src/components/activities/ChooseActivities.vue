@@ -104,7 +104,7 @@
   }
 
   .title {
-    padding-top: 20px;
+    padding-top: 70px;
   }
 
   .carte {
@@ -112,7 +112,7 @@
     align-items: center;
     justify-content: center;
     width: auto;
-    height: 50%;
+    height: 45%;
     flex: 0.2;
     border: 2px solid grey;
     border-radius: 15px;
@@ -207,10 +207,10 @@
     /* font-family:monospace; */
   }
   .logo {
-    width: 85%;
+    width: 80%;
     height: auto;
   }
-  @media (max-width: 1400px) {
+  @media (max-width: 1450px) {
     .actiName {
       font-size: 15px;
     }
@@ -218,7 +218,7 @@
       font-size: 15px;
     }
     .logo {
-      width: 75%;
+      width: 70%;
       height: auto;
     }
     .textDescrip {
@@ -233,16 +233,25 @@
       height: 40%;
     }
   }
-  @media (max-width: 1250px) {
+  @media (max-width: 1350px) {
+    .carte {
+      height: 50%;
+    }
     .actiName {
       font-size: 15px;
     }
     .descrTitle {
       font-size: 15px;
     }
+    .textDescrip {
+      font-size: 10px;
+    }
+    .button {
+      font-size: 0.7em;
+    }
     .logo {
-      width: 95%;
-      height: auto;
+      width: auto;
+      height: 80%;
     }
   }
 </style>
