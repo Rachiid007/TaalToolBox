@@ -23,7 +23,7 @@
     max-width: 1600px;
     border: 0px solid blue;
     border-bottom: 1px solid #707070;
-    height: 75px;
+    min-height: 75px;
     display: flex;
     justify-content: center;
     align-items: center;
