@@ -1,4 +1,5 @@
-import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import { Schoolclass } from 'src/schoolclass/entities/schoolclass.entity';
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany } from 'typeorm';
 
 @Entity()
 export class School {
@@ -14,4 +15,7 @@ export class School {
 
   @Column('character varying', { default: null })
   description;
+
+  @OneToMany(() => Schoolclass, (schoolclass) => schoolclass.school)
+    schoolclass: Schoolclass[]
 }

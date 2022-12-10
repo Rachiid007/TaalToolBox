@@ -2,15 +2,29 @@
 
 import { useSchoolsStore } from "@/stores/school"
 import { onMounted, ref } from "vue";
+import school from "@/services/school"
+import type { Ref } from "vue"
+
+
+const schoolId: Ref<number> = ref(0)
+
+const className: Ref<string> = ref("") 
 
 const store = useSchoolsStore()
 
 store.getSchoolName()
 
-let list = ref(store.schoolList)
-
-
+const list = ref(store.schoolList)
 console.log(list)
+
+const handleClick = () => {
+  if(schoolId.value == 1){
+    console.log("Danger de mort")
+  }
+  console.log("C'est Ok")
+}
+
+
 </script>
 
 <template>
@@ -34,29 +48,33 @@ console.log(list)
                 <select
               name="select"
               class="select_input"
-              placeholder="Rôle">
+              placeholder="Rôle"
+              v-model = "schoolId"
+              >
 
               <option
                 hidden
-                value="ecole"
+                value=0
                 disabled
                 selected
               >
                 Ecole
               </option>
-              <option v-for= "item in list" :key="item.id"> {{ item.name }}</option>
+              <option v-for= "item in list" :value="item.id"> {{ item.name }}</option>
             </select>
             </div>             
           <input
             class="schoolFields"
             type="text"
-            placeholder="Entrer une classe"            
+            placeholder="Entrer une classe" 
+            v-model = "className"           
           />
         </form>
         <div class="buttons">
           <button
             id="confirmer"
             class="clickButton"
+            @click="handleClick"
            > Confirmer
           </button>
         </div>

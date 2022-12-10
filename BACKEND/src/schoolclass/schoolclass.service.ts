@@ -62,10 +62,13 @@ export class SchoolclassService {
     return `This action removes a #${id} schoolclass`;
   }
 */
-  async create(data: CreateSchoolclassDto): Promise<any> {
-    return await this.schoolClassRepository
-      .save(data)
-      .then((res) => res)
-      .catch((e) => console.log(e));
-  }
+  // async create(data: CreateSchoolclassDto): Promise<any> {
+  //   return await this.schoolClassRepository
+  //     .save(data)
+  //     .then((res) => res)
+  //     .catch((e) => console.log(e));
+  // }
+  create(data: CreateSchoolclassDto){
+    return this.schoolClassRepository.save(data);
+}
 }
