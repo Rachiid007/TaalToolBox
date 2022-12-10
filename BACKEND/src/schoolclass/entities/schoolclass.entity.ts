@@ -22,10 +22,14 @@ export class Schoolclass {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8c988b9 (:sparkles: feat(addClass): Connecting the Backend and Frontend together)
   @Column({ name: 'schoolId' })
   schoolId: number;
 
   // une classe appartient à une et une seule école
+<<<<<<< HEAD
   @OneToOne(() => School, (schoolId) => schoolId.id)
   @JoinColumn({ name: 'schoolId' })
 =======
@@ -38,4 +42,9 @@ export class Schoolclass {
   // @JoinColumn({name: [role]})
   school: School
 >>>>>>> f0aa062 (:sparkles: feat(addClass): UPdate of the addition of a new class)
+=======
+  @OneToMany(() => School, (schoolId) => schoolId.id)
+  @JoinColumn({ name: 'schoolId' })
+  school: School;
+>>>>>>> 8c988b9 (:sparkles: feat(addClass): Connecting the Backend and Frontend together)
 }

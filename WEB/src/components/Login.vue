@@ -166,7 +166,6 @@
 
   input {
     color: #026b30;
-
     width: 100%;
     border-radius: 5px;
     padding: 3px;
@@ -174,7 +173,10 @@
     outline: none;
     margin-right: 50px;
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8c988b9 (:sparkles: feat(addClass): Connecting the Backend and Frontend together)
   input::placeholder {
     color: #026b30;
   }

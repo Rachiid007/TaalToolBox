@@ -2,6 +2,14 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { Ref } from 'vue'
 
+interface dataset {
+  name: string
+  type: number
+  theme: number
+  difficulty: number
+  description: string
+}
+
 export const useLevelsData = defineStore('dadlevels', () => {
   const levelGeoLoc: Ref<string> = ref('')
   const levelName: Ref<string> = ref('')
@@ -10,7 +18,7 @@ export const useLevelsData = defineStore('dadlevels', () => {
   const levelDifficulty: Ref<number> = ref(0)
   const levelDescription: Ref<string> = ref('')
 
-  const addLevelData = (data: {}) => {
+  const addLevelData = (data: dataset) => {
     levelName.value = data.name
     levelType.value = data.type
     levelTheme.value = data.theme

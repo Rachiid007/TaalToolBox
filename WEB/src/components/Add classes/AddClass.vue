@@ -1,30 +1,40 @@
 <script setup lang="ts">
+  import { useSchoolsStore } from '@/stores/school'
+  import { onMounted, ref } from 'vue'
+  import school from '@/services/school'
+  import type { Ref } from 'vue'
+  import { reactive } from 'vue'
 
-import { useSchoolsStore } from "@/stores/school"
-import { onMounted, ref } from "vue";
-import school from "@/services/school"
-import type { Ref } from "vue"
+  const schoolId: Ref<number> = ref(0)
 
+  const className: Ref<string> = ref('')
 
-const schoolId: Ref<number> = ref(0)
+  const manage = reactive({
+    error: '',
+    succes: ''
+  })
 
-const className: Ref<string> = ref("") 
+  const store = useSchoolsStore()
 
-const store = useSchoolsStore()
+  store.getSchoolName()
 
-store.getSchoolName()
+  const list = ref(store.schoolList)
+  console.log(list)
 
-const list = ref(store.schoolList)
-console.log(list)
-
-const handleClick = () => {
-  if(schoolId.value == 1){
-    console.log("Danger de mort")
+  const handleClick = () => {
+    manage.error = ''
+    manage.succes = ''
+    if (schoolId.value == 0 || className.value == '') {
+      manage.error = 'Veuillez completer tout les champs !'
+    } else {
+      manage.error = ''
+      school.addClass(className.value, schoolId.value).then((response) => {
+        console.log(response)
+        manage.succes = 'Classe ajoutée avec succès'
+      })
+      console.log("C'est Ok !")
+    }
   }
-  console.log("C'est Ok")
-}
-
-
 </script>
 
 <template>
@@ -40,34 +50,36 @@ const handleClick = () => {
         />
         <p class="logoName">TaalToolBox</p>
       </div>
-      <div
-        class="content"
-      >
+      <div class="content">
         <form class="form">
-            <div class="select">
-                <select
+          <div class="select">
+            <select
               name="select"
               class="select_input"
               placeholder="Rôle"
-              v-model = "schoolId"
-              >
-
+              v-model="schoolId"
+            >
               <option
                 hidden
-                value=0
+                value="0"
                 disabled
                 selected
               >
                 Ecole
               </option>
-              <option v-for= "item in list" :value="item.id"> {{ item.name }}</option>
+              <option
+                v-for="item in list"
+                :value="item.id"
+              >
+                {{ item.name }}
+              </option>
             </select>
-            </div>             
+          </div>
           <input
             class="schoolFields"
             type="text"
-            placeholder="Entrer une classe" 
-            v-model = "className"           
+            placeholder="Entrer une classe"
+            v-model="className"
           />
         </form>
         <div class="buttons">
@@ -75,15 +87,28 @@ const handleClick = () => {
             id="confirmer"
             class="clickButton"
             @click="handleClick"
-           > Confirmer
+          >
+            Confirmer
           </button>
         </div>
+        <p
+          class="error"
+          v-if="manage.error"
+        >
+          {{ manage.error }}
+        </p>
+        <p
+          class="succes"
+          v-if="manage.succes"
+        >
+          {{ manage.succes }}
+        </p>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>  
+<style scoped>
   .main {
     padding: 70px;
     display: flex;
@@ -91,7 +116,7 @@ const handleClick = () => {
     justify-content: center;
     align-items: center;
   }
-  .page{
+  .page {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -209,7 +234,7 @@ const handleClick = () => {
     gap: 25%;
     width: 100%;
   }
-   
+
   .radioImage {
     height: auto;
     width: 100%;
@@ -232,12 +257,6 @@ const handleClick = () => {
     font-size: 1.1em;
     min-width: 100px;
   }
-  /* .error {
-    color: red;
-    padding-bottom: 5%;
-    font-weight: bold;
-  } */
-   
   #confirmer {
     align-items: center;
     color: white;
@@ -252,5 +271,17 @@ const handleClick = () => {
     flex-grow: 5;
     border-bottom: solid 1px grey;
     font-size: 1.5em;
+  }
+
+  .error {
+    color: red;
+    padding-bottom: 5%;
+    font-weight: bold;
+  }
+
+  .succes {
+    color: green;
+    padding-bottom: 5%;
+    font-weight: bold;
   }
 </style>
