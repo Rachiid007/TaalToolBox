@@ -173,10 +173,7 @@
     outline: none;
     margin-right: 50px;
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> 8c988b9 (:sparkles: feat(addClass): Connecting the Backend and Frontend together)
+  
   input::placeholder {
     color: #026b30;
   }
