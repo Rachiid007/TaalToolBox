@@ -18,6 +18,20 @@ export const useSchoolsStore = defineStore('school', () => {
             schoolList.value.push({id: schoolData[i].id, name: schoolData[i].name})    
         }
       }
+    
+    // const addClass =  async (name: string, ) => {
+    //     const classRequest = school.addClass()
+    //     const requestOptions = {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify({ title: "Vue POST Request Example" })
+    //       };
+    //     fetch("http://localhost:3000/schoolclass", requestOptions)
+    //       .then(response => response.json())
+    //       .then(data => (this.postId = data.))
+    //   }
+    
+      
       console.log(schoolList.value)
      
     return { schoolList, getSchoolName }
