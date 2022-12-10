@@ -69,6 +69,7 @@ export class SchoolclassService {
   //     .catch((e) => console.log(e));
   // }
   create(data: CreateSchoolclassDto){
-    return this.schoolClassRepository.save(data);
+    console.log(data)
+    return this.schoolClassRepository.save(data);   
 }
 }

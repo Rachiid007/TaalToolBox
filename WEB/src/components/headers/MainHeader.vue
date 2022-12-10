@@ -87,7 +87,7 @@
         >Ajouter Activités</router-link
       >
       <router-link
-        to="#"
+        to="/addClass"
         class="tabs_element"
         v-show="role.includes(staticRole.admin)"
         >Ajouter Classes</router-link

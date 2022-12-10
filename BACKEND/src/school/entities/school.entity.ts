@@ -16,6 +16,4 @@ export class School {
   @Column('character varying', { default: null })
   description;
 
-  @OneToMany(() => Schoolclass, (schoolclass) => schoolclass.school)
-    schoolclass: Schoolclass[]
 }
