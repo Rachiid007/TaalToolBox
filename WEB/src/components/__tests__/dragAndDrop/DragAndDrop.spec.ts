@@ -9,7 +9,7 @@ import DragNDrop from '@/components/dragndrop/DragNDrop.vue'
 import { useDadLevels } from '@/stores/dadLevels'
 
 describe('DragNDropTeacher.vue test with initialization', () => {
-  let wrapper: any | null = null
+  let wrapper: any = null
   let store: any = null
 
   beforeEach(() => {

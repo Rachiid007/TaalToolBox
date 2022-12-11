@@ -4,7 +4,12 @@
   import axios from 'axios'
   import router from '@/router'
   const store = useUserStore()
-  const state = reactive({
+
+  interface State {
+    mail: string
+    password: string
+  }
+  const state: State = reactive({
     mail: '',
     password: ''
   })
@@ -13,15 +18,12 @@
     succes: ''
   })
   const checkFields = () => {
-    manage.error = ''
-    for (let key in state) {
-      if (state[key] == '') {
-        manage.error = 'Veuillez compléter tous les champs !'
-        console.log(key)
-        return 1
-      }
+    if (state.mail === '' || state.password === '') {
+      manage.error = 'Veuillez remplir tous les champs'
+      return 1
+    } else {
+      sendData()
     }
-    sendData()
   }
   const sendData = async () => {
     let payload = {

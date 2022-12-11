@@ -5,7 +5,7 @@ import { createTestingPinia } from '@pinia/testing'
 import AddCardForm from '@/components/card/add/AddCardForm.vue'
 
 describe('AddCardForm.vue Test with empty data store', () => {
-  let wrapper = null
+  let wrapper: any = null
 
   // SETUP - run prior to each unit test
   beforeEach(() => {

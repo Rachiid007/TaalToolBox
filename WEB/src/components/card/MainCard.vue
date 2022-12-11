@@ -40,13 +40,13 @@
     <div class="card">
       <!-- Réponse de la carte avec une image éventuelle -->
       <div class="word-answer">
-        <p v-if="storeShow.getShowAnswer()">{{ actualCard.translation }}</p>
-        <p v-else>{{ actualCard.word }}</p>
+        <p v-if="storeShow.getShowAnswer()">{{ actualCard?.translation }}</p>
+        <p v-else>{{ actualCard?.word }}</p>
       </div>
       <div class="image-answer">
         <img
           class="image-answer-reveal"
-          :src="actualCard.image!"
+          :src="actualCard?.image!"
           alt=""
         />
       </div>

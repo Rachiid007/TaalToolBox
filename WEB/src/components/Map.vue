@@ -34,7 +34,7 @@
   const userReward = useUserStore().userReward
   // const schoolUser = useUserStore().user.
 
-  const popup = ref(null)
+  const popup = ref<HTMLElement | undefined>()
 
   const map = ref()
 
@@ -179,11 +179,7 @@
     // ---------------------------------------------------------------
     // On génère les points sur la map à partir de la liste des objets
     // ---------------------------------------------------------------
-    if (
-      userRole.includes('Administrateur') ||
-      userRole.includes('Créateur') ||
-      userReward >= 50
-    ) {
+    if (userRole.includes('Administrateur') || userRole.includes('Créateur') || userReward >= 50) {
       // TODO AFFICHER TOUTES LES PREMIERE ACTIVITE SI LELEVE A PLUS DE 50 POINTS
       // TODO CHANGER LEMPLACEMENT DE TOUTES LES PREMIERES ACTIVITES CAR ELLE NE DOIVENT PAS SE TROUVER DANS LECOLE
       // TODO FAIRE UN CONDITION SI LELEVE A DEJA COMPLETER LACTIVITE DANS SON ECOLE

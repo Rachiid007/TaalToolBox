@@ -23,7 +23,7 @@
   // utilisé pour générer les champs
   const fieldList = ref<number[]>([])
   const fieldListMobile = ref<number[]>([])
-  const background = ref(null)
+  const background = ref<Element | null>(null)
   const image = ref()
 
   const imageLink = ref('')

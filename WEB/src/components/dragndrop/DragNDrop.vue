@@ -9,9 +9,9 @@
   const store = useDadLevels()
   const dataFromStore = store.getData()
 
-  const background = ref(null)
+  const background = ref<any>(null)
   const image = ref(null)
-  const wordList = ref(null)
+  const wordList = ref<any>(null)
 
   // On utilise cette ref pour stocker un boolean qui nous indique si l'utilisateur est sur un mobile ou pas
   // const isNotMobile = ref(false)
@@ -48,7 +48,9 @@
     // Si la div dans laquelle on a drop le mot n'est une div faite pour acceuillir un mot on remet le mot dans la liste des mots en bas de l'écran
     if (event.target.className != 'container' && event.target.className != 'wordList') {
       let data = event.dataTransfer.getData('text')
-      wordList.value.appendChild(document.getElementById(data))
+      if (wordList.value) {
+        wordList.value.appendChild(document.getElementById(data))
+      }
       return 0
     } else if (event.target.firstChild) {
       return 0
@@ -68,9 +70,9 @@
     console.log('Checking score ...')
     // console.log(background.value.childNodes)
     let childList = background.value.childNodes
-    let localScore = 0
     let goodAnswers = 0
     let badAnswers = 0
+    let localScore = 0
     // On parcour le contenu (les enfants) de la div background
     for (let child in childList) {
       // Si l'élément est une <div> avec un id (donc un champ)

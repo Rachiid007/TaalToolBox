@@ -4,7 +4,7 @@ import ChooseActivities from '@/components/activities/ChooseActivities.vue'
 import { beforeEach, describe, expect, test } from 'vitest'
 
 describe('ChooseActivities.vue', () => {
-  let wrapper = null
+  let wrapper: any = null
 
   beforeEach(() => {
     wrapper = mount(ChooseActivities)

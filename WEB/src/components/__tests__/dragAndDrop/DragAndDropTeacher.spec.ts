@@ -14,7 +14,7 @@ import SelectDragNDropImage from '@/components/dragndrop/SelectDragNDropImage.vu
 import { useDadLevels } from '@/stores/dadLevels'
 
 describe('DragNDropTeacher.vue test with initialization', () => {
-  let wrapper: any | null = null
+  let wrapper: any = null
   let store: any = null
 
   beforeEach(() => {
