@@ -10,18 +10,18 @@ import type { Card } from 'src/types';
 describe('CardsController', () => {
   let controller: CardsController;
 
-  const resultFindAll = [
+  const resultFindAll: Card[] = [
     {
       id: 1,
-      word: 'word1',
-      translation: 'translation1',
-      image: 'image1',
+      word: 'Cheval',
+      translation: 'Horse',
+      image: 'cheval',
     },
     {
       id: 2,
-      word: 'word2',
-      translation: 'translation2',
-      image: 'image2',
+      word: 'Chien',
+      translation: 'Dog',
+      image: 'chien',
     },
   ];
 
@@ -53,30 +53,19 @@ describe('CardsController', () => {
     controller = moduleRef.get<CardsController>(CardsController);
   });
 
-  it('should be get all card in db', async () => {
-    const result: Card[] = [
-      {
-        id: 1,
-        word: 'Cheval',
-        translation: 'Horse',
-        image: 'cheval',
-      },
-      {
-        id: 2,
-        word: 'Chien',
-        translation: 'Dog',
-        image: 'chien',
-      },
-    ];
-    //Simuler un appel du service spyOn
-    // jest.spyOn(service, 'findAll').mockImplementation(()=>result);
-    //Associer la reponse du controller
-    expect(await controller.findAll()).toBe(result);
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
   });
 
-  describe('findAll', () => {
+  describe('should be get all card in DB', () => {
     it('should return an array of cards', async () => {
       expect(await controller.findAll()).toEqual(resultFindAll);
     });
   });
+
+  // describe('should be get one card in DB', () => {
+  //   it('should return an array of cards', async () => {
+  //     expect(await controller.findOne('1')).toEqual(resultFindAll[0]);
+  //   });
+  // });
 });
