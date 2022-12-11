@@ -1,9 +1,4 @@
-import {
-  Module,
-  NestModule,
-  RequestMethod,
-  MiddlewareConsumer,
-} from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { MulterModule } from '@nestjs/platform-express';
 import { join } from 'path';
@@ -25,7 +20,6 @@ import { UsersModule } from './users/users.module';
 import { SchoolclassModule } from './schoolclass/schoolclass.module';
 import { SchoolModule } from './school/school.module';
 import { ActivityModule } from './activity/activity.module';
-import { AuthModule } from './Auth/auth/auth.module';
 import { DragModule } from './drag_and_drop/drag_and_drop.module';
 import { UserResponseModule } from './user_response/user_response.module';
 
