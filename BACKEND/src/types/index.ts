@@ -1,5 +1,3 @@
-import { PrimaryColumnCannotBeNullableError } from "typeorm";
-
 export interface UserData {
   name: string;
   surname: string;
