@@ -14,7 +14,7 @@
   const isNotMobile = ref(false)
 
   // Cette ref est utilisée pour stocker la liste de mots rangée d'une manière aléatoire
-  const wordsToGen = ref([])
+  const wordsToGen = ref<any[]>([])
 
   // Ici on stocke le score à afficher
   const score = ref(0)
