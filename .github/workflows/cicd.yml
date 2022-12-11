@@ -43,47 +43,47 @@ jobs:
           npm run test
         working-directory: ./WEB
 
-  build-frontend:
-    runs-on: ubuntu-latest
-    needs: [backend-tests, frontend-tests]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-          cache: 'npm'
-          cache-dependency-path: 'WEB/package-lock.json'
+  # build-frontend:
+  #   runs-on: ubuntu-latest
+  #   needs: [backend-tests, frontend-tests]
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Use Node.js 16.x
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16.x
+  #         cache: 'npm'
+  #         cache-dependency-path: 'WEB/package-lock.json'
 
-      - name: Build Frontend
-        run: |
-          npm ci
-          npm run build
-        working-directory: ./WEB
+  #     - name: Build Frontend
+  #       run: |
+  #         npm ci
+  #         npm run build
+  #       working-directory: ./WEB
 
-      - name: copy index.html to 404.html
-        run: |
-          cp ./dist/index.html ./dist/404.html
-        working-directory: ./WEB
+  #     - name: copy index.html to 404.html
+  #       run: |
+  #         cp ./dist/index.html ./dist/404.html
+  #       working-directory: ./WEB
 
-      - name: Upload production-ready build files
-        uses: actions/upload-artifact@v2
-        with:
-          name: production-files
-          path: ./WEB/dist
+  #     - name: Upload production-ready build files
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: production-files
+  #         path: ./WEB/dist
 
-  deploy-frontend-to-gh-pages:
-    runs-on: ubuntu-latest
-    needs: [build-frontend]
-    steps:
-      - name: Download production-ready build files
-        uses: actions/download-artifact@v2
-        with:
-          name: production-files
-          path: ./WEB/dist
+  # deploy-frontend-to-gh-pages:
+  #   runs-on: ubuntu-latest
+  #   needs: [build-frontend]
+  #   steps:
+  #     - name: Download production-ready build files
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: production-files
+  #         path: ./WEB/dist
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./WEB/dist
+  #     - name: Deploy to GitHub Pages
+  #       uses: peaceiris/actions-gh-pages@v3
+  #       with:
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
+  #         publish_dir: ./WEB/dist
