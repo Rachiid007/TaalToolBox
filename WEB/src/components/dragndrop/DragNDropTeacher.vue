@@ -168,24 +168,33 @@
     // On va vérifier que la div ne sorte pas de l'image
 
     // Pour cela on doit avoir la largeur et la hauteur de l'image ainsi que la largeur et la hauteur de la div que l'on drag
-    let imageHeight = parseFloat(getComputedStyle(background.value).height.slice(0, -2))
-    let imageWidth = parseFloat(getComputedStyle(background.value).width.slice(0, -2))
+
+    let imageHeight
+    let imageWidth
+    // if background is an Element
+    if (background.value instanceof Element) {
+      imageHeight = parseFloat(getComputedStyle(background.value).height.slice(0, -2))
+      imageWidth = parseFloat(getComputedStyle(background.value).width.slice(0, -2))
+    }
     let currentDivHeight = parseFloat(getComputedStyle(selectedDiv.value).height.slice(0, -2))
     let currentDivWidth = parseFloat(getComputedStyle(selectedDiv.value).width.slice(0, -2))
-    if (
-      //Si la valeur top ou left de la div va devenir plus petit que 0 ou égal on ne bouge pas la div => Empêche de pouvoir faire sortir la div par le coté gauche ou haut
-      selectedDiv.value.offsetTop - positions.value.pos2 > 0 &&
-      selectedDiv.value.offsetLeft - positions.value.pos1 > 0 &&
-      // Si la largeur de la div + la position left est plus grand que la largeur de l'image, on ne peut plus la bouger => Empêche de sortir la div de l'imgae par le coté droit
-      selectedDiv.value.offsetLeft - positions.value.pos1 + Math.ceil(currentDivWidth) <
-        Math.trunc(imageWidth) &&
-      // Si la hauteur de la div + la position top est plus grand que la hauteur de l'image, on ne peut plus bouger la div => Cela évite de sortir de l'image par le bas.
-      selectedDiv.value.offsetTop - positions.value.pos2 + Math.ceil(currentDivHeight) <
-        Math.trunc(imageHeight)
-    ) {
-      // Si on n'est pas en dehors de l'image, alors on accepte de bouger la div
-      selectedDiv.value.style.top = selectedDiv.value.offsetTop - positions.value.pos2 + 'px'
-      selectedDiv.value.style.left = selectedDiv.value.offsetLeft - positions.value.pos1 + 'px'
+
+    if (imageWidth && imageHeight) {
+      if (
+        //Si la valeur top ou left de la div va devenir plus petit que 0 ou égal on ne bouge pas la div => Empêche de pouvoir faire sortir la div par le coté gauche ou haut
+        selectedDiv.value.offsetTop - positions.value.pos2 > 0 &&
+        selectedDiv.value.offsetLeft - positions.value.pos1 > 0 &&
+        // Si la largeur de la div + la position left est plus grand que la largeur de l'image, on ne peut plus la bouger => Empêche de sortir la div de l'imgae par le coté droit
+        selectedDiv.value.offsetLeft - positions.value.pos1 + Math.ceil(currentDivWidth) <
+          Math.trunc(imageWidth) &&
+        // Si la hauteur de la div + la position top est plus grand que la hauteur de l'image, on ne peut plus bouger la div => Cela évite de sortir de l'image par le bas.
+        selectedDiv.value.offsetTop - positions.value.pos2 + Math.ceil(currentDivHeight) <
+          Math.trunc(imageHeight)
+      ) {
+        // Si on n'est pas en dehors de l'image, alors on accepte de bouger la div
+        selectedDiv.value.style.top = selectedDiv.value.offsetTop - positions.value.pos2 + 'px'
+        selectedDiv.value.style.left = selectedDiv.value.offsetLeft - positions.value.pos1 + 'px'
+      }
     }
     // On sauvegarde les informations de position pour les display à l'écran dans l'onglet informations
     selectedDivTop.value = selectedDiv.value.offsetTop
@@ -250,10 +259,16 @@
   const checkFields = () => {
     alertDiv.value = false
     alertNoDiv.value = true
+    // if background is not null
+    if (!background.value) {
+      return 0
+    }
     for (let div in background.value.childNodes) {
-      if (background.value.childNodes[div].id) {
+      const elem = background.value.childNodes[div] as HTMLElement
+      if (elem.id) {
         alertNoDiv.value = false
-        if (!background.value.childNodes[div].innerText) {
+        const secondElem = background.value.childNodes[div] as HTMLElement
+        if (!secondElem.innerText) {
           alertDiv.value = true
           return 0
         }
@@ -272,59 +287,69 @@
   // Permet d'enregistrer les différentes divs placées dans une liste js
   const saveConfig = () => {
     let payload = []
+    // if background is not null
+    if (background.value) {
+      // On parcours les divs placées
+      for (let div in background.value.childNodes) {
+        // Si la div possède un id on entre (permet de ne pas prendre l'image de fond)
+        const elem = background.value.childNodes[div] as HTMLElement
+        if (elem.id) {
+          let currentDiv = background.value.childNodes[div]
 
-    // On parcours les divs placées
-    for (let div in background.value.childNodes) {
-      // Si la div possède un id on entre (permet de ne pas prendre l'image de fond)
-      if (background.value.childNodes[div].id) {
-        let currentDiv = background.value.childNodes[div]
+          // On va save toutes les données de la div actuellemnt traitée (top, left, width et height) et les mettre en pourceantages
+          let currentDivHeightPorc = (
+            (parseInt(getComputedStyle(currentDiv as HTMLElement).height) /
+              parseInt(getComputedStyle(image.value).height)) *
+            100
+          ).toFixed(2)
 
-        // On va save toutes les données de la div actuellemnt traitée (top, left, width et height) et les mettre en pourceantages
-        let currentDivHeightPorc = (
-          (parseInt(getComputedStyle(currentDiv).height) /
-            parseInt(getComputedStyle(image.value).height)) *
-          100
-        ).toFixed(2)
-        let currentDivWidthPorc = (
-          (parseInt(getComputedStyle(currentDiv).width) /
-            parseInt(getComputedStyle(image.value).width)) *
-          100
-        ).toFixed(2)
+          let currentDivWidthPorc = (
+            (parseInt(getComputedStyle(currentDiv as HTMLElement).width) /
+              parseInt(getComputedStyle(image.value).width)) *
+            100
+          ).toFixed(2)
 
-        let currentDivTopPorc = (
-          (parseInt(getComputedStyle(currentDiv).top) /
-            parseInt(getComputedStyle(image.value).height)) *
-          100
-        ).toFixed(2)
+          let currentDivTopPorc = (
+            (parseInt(getComputedStyle(currentDiv as HTMLElement).top) /
+              parseInt(getComputedStyle(image.value).height)) *
+            100
+          ).toFixed(2)
 
-        let currentDivLeftPorc = (
-          (parseInt(getComputedStyle(currentDiv).left) /
-            parseInt(getComputedStyle(image.value).width)) *
-          100
-        ).toFixed(2)
+          let currentDivLeftPorc = (
+            (parseInt(getComputedStyle(currentDiv as HTMLElement).left) /
+              parseInt(getComputedStyle(image.value).width)) *
+            100
+          ).toFixed(2)
 
-        let calculatedFontSize = getComputedStyle(currentDiv).fontSize
-        if (pcDataSended.value) {
-          let porcentage =
-            parseInt(getComputedStyle(currentDiv).fontSize) /
-            parseInt(getComputedStyle(image.value).width)
-          calculatedFontSize = (porcentage * 100).toFixed(1) + 'vw'
-          console.log(calculatedFontSize)
+          let calculatedFontSize = getComputedStyle(currentDiv as HTMLElement).fontSize
+          if (pcDataSended.value) {
+            let porcentage =
+              parseInt(getComputedStyle(currentDiv as HTMLElement).fontSize) /
+              parseInt(getComputedStyle(image.value).width)
+            calculatedFontSize = (porcentage * 100).toFixed(1) + 'vw'
+            console.log(calculatedFontSize)
+          }
+
+          // convert currentDiv to an HTMLElement to get the text content of the div (the text inside the div) and the id of the div
+          let currentDivContent = (currentDiv as HTMLElement).innerText
+          let currentDivId = (currentDiv as HTMLElement).id
+
+          // On crée un objet avec toutes les données de la div actuellement traitée
+          // il y encore un dernier problème avec les test et number avec TypeScript (je ne sais pas pourquoi) mais j'arrive pas à résoudre leurs types !!!
+          let currentDivInfo = {
+            // ! TODO: fix the type of test and number
+            // test: currentDivId.match(/(\d+)/)[0],
+            // number: parseInt(currentDivId.match(/(\d+)/)),
+            top: currentDivTopPorc.toString() + '%',
+            left: currentDivLeftPorc.toString() + '%',
+            width: currentDivWidthPorc.toString() + '%',
+            height: currentDivHeightPorc.toString() + '%',
+            rightValue: currentDivContent,
+            fontSize: calculatedFontSize
+          }
+          // On insère l'objet dans le payload
+          payload.push(currentDivInfo)
         }
-
-        // On construit l'objet à insérer dans le payload
-        let currentDivInfo = {
-          test: currentDiv.id.match(/(\d+)/)[0],
-          number: parseInt(currentDiv.id.match(/(\d+)/)),
-          top: currentDivTopPorc.toString() + '%',
-          left: currentDivLeftPorc.toString() + '%',
-          width: currentDivWidthPorc.toString() + '%',
-          height: currentDivHeightPorc.toString() + '%',
-          rightValue: currentDiv.innerText,
-          fontSize: calculatedFontSize
-        }
-        // On insère l'objet dans le payload
-        payload.push(currentDivInfo)
       }
     }
 
