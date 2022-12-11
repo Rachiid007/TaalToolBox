@@ -1,66 +1,137 @@
 <script setup lang="ts">
-  
- 
+  import { ref } from 'vue'
+  import type { Ref } from 'vue'
+  import { useLevelsData } from '@/stores/levelsData'
+
+  const levelName: Ref<string> = ref('')
+  const levelType: Ref<number> = ref(0)
+  const levelTheme: Ref<number> = ref(0)
+  const levelDifficulty: Ref<number> = ref(0)
+  const levelDescription: Ref<string> = ref('')
+
+  const store = useLevelsData()
+
+  const error: Ref<string> = ref('')
+
+  const checkFields = () => {
+    if (
+      levelName.value == '' ||
+      levelType.value == 0 ||
+      levelTheme.value == 0 ||
+      levelDifficulty.value == 0 ||
+      levelDescription.value == ''
+    ) {
+      return 0
+    }
+    return 1
+  }
+
+  const handleClick = () => {
+    error.value = ''
+    // console.log(
+    //   levelName.value,
+    //   levelType.value,
+    //   levelTheme.value,
+    //   levelDifficulty.value,
+    //   levelDescription.value
+    // )
+    if (checkFields()) {
+      console.log('succes')
+      const dataPayload = {
+        name: levelName.value,
+        type: levelType.value,
+        theme: levelTheme.value,
+        difficulty: levelDifficulty.value,
+        description: levelDescription.value
+      }
+      store.addLevelData(dataPayload)
+    } else {
+      error.value = 'Veuillez compléter tous les champs'
+    }
+  }
 </script>
 <template>
   <div class="main">
-    <div class="title">
+    <div>
       <h1 class="text">Informations du nouveau niveau</h1>
     </div>
     <div class="content">
-        <div class="textArera">
-            <div class="descriLevel">
-                <h1>Description:</h1>
-            </div>
-            <div class="areaText">
-                <textarea placeholder="Introduisez une description..." cols="30" rows="5"></textarea>
-            </div>
+      <div class="textArera">
+        <div class="descriLevel">
+          <h1>Description:</h1>
         </div>
+        <textarea
+          class="areaText"
+          placeholder="Introduisez une description..."
+          v-model="levelDescription"
+        ></textarea>
+        <!-- <input
+          type="text"
+          placeholder="Introduisez une description..."
+          class="areaText"
+        /> -->
+      </div>
       <div class="fields">
         <form class="fieldForm">
-            <div class="nameField">
-                <h1 class="titleField">Nom du nouveau niveau:</h1>
-                <input type="text" class="name" />
-            </div>
-            <div class="select">
+          <div class="nameField">
+            <!-- <h1 class="titleField">Nom du nouveau niveau:</h1> -->
+            <input
+              type="text"
+              class="select_input"
+              placeholder="Nom du niveau"
+              v-model="levelName"
+            />
+          </div>
+          <div class="select">
             <select
               name="select"
               class="select_input"
-              placeholder="activities">
+              placeholder="activities"
+              v-model="levelType"
+            >
               <option
                 hidden
-                value="theme du niveau"
+                value="0"
                 disabled
                 selected
               >
                 Changer l'activité
               </option>
-              <option value="flashcard">FlashCard</option>
-              <option value="dragandlearn">DragAndLearn</option>
+              <option value="1">FlashCard</option>
+              <option value="2">DragAndLearn</option>
             </select>
-            </div>
-            <div class="select">
+          </div>
+          <div class="select">
             <select
               name="select"
               class="select_input"
-               >
+              v-model="levelTheme"
+            >
               <option
                 hidden
-                value="theme du niveau"
                 disabled
                 selected
+                value="0"
               >
                 Thême du niveau
               </option>
-              <option value="flashcard">Pâtisserie</option>
-              <option value="dragandlearn">Sport</option>
+              <option value="1">Pâtisserie</option>
+              <option value="2">Sport</option>
             </select>
-            </div> 
-            <div class="select"> 
-            <select
+          </div>
+          <div class="level_difficulty">
+            <input
+              type="number"
+              min="1"
+              max="5"
+              style="width: 100%"
+              v-model="levelDifficulty"
+              class="select_input"
+            />
+            <!-- <select
               name="select"
               class="select_input"
-               >
+            >
               <option
                 hidden
                 value="theme du niveau"
@@ -68,41 +139,128 @@
                 selected
               >
                 Difficulté
-            </option>  
+              </option>
               <option value="facile">Facile</option>
               <option value="moyen">Moyen</option>
               <option value="difficile">Difficile</option>
-            </select>
-            </div>        
+            </select> -->
+          </div>
         </form>
+        <p
+          class="error"
+          v-if="error"
+        >
+          {{ error }}
+        </p>
         <div class="button">
-            <button>Confirmer</button>
+          <button @click="handleClick">Confirmer</button>
         </div>
       </div>
-      </div>
     </div>
+  </div>
 </template>
 <style scoped>
-.textArera{
+  .descriLevel {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: rgb(94, 89, 89);
+  }
+  textarea {
+    width: 100%;
+    min-height: 500px;
+    padding: 10px;
+    outline: 2px solid #ccc;
+    border-radius: 4px;
+    /* background-color: #f8f8f8; */
+    /* float: left; */
+    overflow-y: visible;
+    resize: none;
+    /* resize: none; */
+  }
+  .main {
+    gap: 4%;
     display: flex;
     flex-direction: column;
-}
-/* .titleField{
-    color: black;
-    
-} */
-textarea::placeholder{
-    position: relative;
-    text-align: left;
-}
-select {
-    appearance: none;
-    border: none;
-    margin: 0;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
     width: 100%;
-    cursor: inherit;
-    line-height: inherit;
+    max-width: 1600px;
+    text-align: center;
+    margin-top: 30px;
   }
+
+  .main h1 {
+    color: grey;
+    margin-bottom: 10px;
+  }
+
+  .sms {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 50%;
+    flex: 0.2;
+    border: 2px solid grey;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.1) 0px 8px 10px;
+    padding: 5px;
+    transition: 0.1s ease;
+  }
+  .text {
+    font-size: 28px;
+    color: grey;
+    border-bottom: 2px solid green;
+    font-weight: 600;
+    font-size: 30px;
+  }
+  .content {
+    gap: 5%;
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    max-height: 700px;
+    /* align-items: center; */
+    justify-content: center;
+  }
+
+  .textArera {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
+
+  .name {
+    border: 1px solid black;
+  }
+
+  .fields {
+    gap: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px;
+    width: 30%;
+    height: max-content;
+    max-height: 700px;
+    align-items: center;
+    margin-top: 50px;
+  }
+  .fieldForm {
+    gap: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .level_difficulty {
+    width: 100%;
+  }
+
   .select_input {
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 2px 4px -2px;
@@ -110,6 +268,7 @@ select {
     padding: 4px;
     outline: none;
     position: relative;
+    color: grey;
   }
   .select_input::after {
     border-left: 10px solid transparent;
@@ -117,6 +276,9 @@ select {
     position: absolute;
     left: 90%;
     content: '';
+  }
+  .select_input::placeholder {
+    color: grey;
   }
   .select {
     width: 100%;
@@ -137,106 +299,21 @@ select {
     left: 93%;
     content: '';
   }
-
-.name{
-    border: 1px solid black;
-}
-.areaText{
-    text-align: left;
-}
-.descriLevel {
-    font-size: 1.5em;
-    font-weight: 600;
-    color: rgb(94, 89, 89)
-
-}
-textarea {
-  width: 100%;
-  height: 150px;
-  padding: 200px 220px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  float: left;
-  overflow-y: hidden;
-  /* resize: none; */
-}
-.fieldForm {
-    gap: 53px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-  .main {
-    gap: 4%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+  select {
+    appearance: none;
+    border: none;
+    margin: 0;
     width: 100%;
-    max-width: 1600px;
-    text-align: center;
+    cursor: inherit;
+    line-height: inherit;
   }
 
-  .title {
-    padding-top: 20px;
-  }
-
-  .sms {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    height: 50%;
-    flex: 0.2;
-    border: 2px solid grey;
-    border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.1) 0px 8px 10px;
-    padding: 5px;
-    transition: 0.1s ease;
-  }
-
-  .carte:hover {
-    cursor: pointer;
-  }
-
-  .carte:active {
-    transform: scale(1.1);
-  }
-  .text {
-    font-size: 28px;
-    color: grey;
-    border-bottom: 2px solid green;
-    font-weight: 600;
-  }
-  .content {
-    gap: 5%;
-    width: 90%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    max-height: 700px;
-    /* align-items: center; */
-    justify-content: center;
-  }
- 
-  .fields{
-    gap: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .error {
+    color: red;
+    font-weight: bold;
     font-size: 20px;
-    font-weight: 600;
-    padding: 10px;
-    width: 30%;
-    height: 80%;
-    max-height: 700px;
-    align-items: center;
   }
- 
+
   .button {
     background-color: green;
     display: flex;
@@ -245,11 +322,8 @@ textarea {
     border: none;
     color: white;
     padding: 8px 12px;
-    display: inline-block;
     font-size: 20px;
-    margin: 20px 2px;
     cursor: pointer;
     border-radius: 5px;
   }
-  
 </style>
