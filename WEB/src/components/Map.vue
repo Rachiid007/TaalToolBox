@@ -223,13 +223,13 @@
       )
     })
     map.value.on('pointermove', function (evt: any) {
-      var touche = this.forEachFeatureAtPixel(evt.pixel, function () {
+      let touche = map.value.forEachFeatureAtPixel(evt.pixel, function () {
         return true
       })
       if (touche) {
-        this.getTargetElement().style.cursor = 'pointer'
+        map.value.getTargetElement().style.cursor = 'pointer'
       } else {
-        this.getTargetElement().style.cursor = ''
+        map.value.getTargetElement().style.cursor = ''
       }
     })
   })

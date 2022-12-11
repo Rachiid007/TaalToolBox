@@ -8,7 +8,26 @@
 
   const currentUserRole = useUserStore().user.role
   console.log(currentUserRole.includes('Administrateur'))
-  const state = reactive({
+
+  interface State {
+    page1: {
+      firstName: string
+      secondName: string
+      mail: string
+      phoneNumber: string
+      birthDate: string
+    }
+    page2: {
+      school: string
+      classroom: string
+      role: string
+    }
+    auth: {
+      password: string
+    }
+  }
+
+  const state: State = reactive({
     page1: {
       firstName: 'Michaël',
       secondName: 'Pourbaix',
@@ -25,6 +44,7 @@
       password: ''
     }
   })
+
   // RECUPERER LE ROLE DU CURRENT USER
   const manage = reactive({
     firstPage: true,
@@ -98,13 +118,18 @@
   // }
   const checkFields = (page: string) => {
     if (page == 'page1') {
-      for (let key in state.page1) {
-        if (state.page1[key] == '') {
-          manage.error = 'Veuillez compléter tous les champs !'
-          console.log(key)
-          return 1
-        }
+      // check if al fields are filled ans avoid typescript error, Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{ firstName: string; secondName: string; mail: string; phoneNumber: string; birthDate: string; }'.
+      if (
+        state.page1.firstName == '' ||
+        state.page1.secondName == '' ||
+        state.page1.mail == '' ||
+        state.page1.phoneNumber == '' ||
+        state.page1.birthDate == ''
+      ) {
+        manage.error = 'Veuillez compléter tous les champs !'
+        return 1
       }
+
       // if (state.page1.password != state.page1.confirmPassword) {
       //   manage.error = "Le champ mot de passe n'est pas identique au champ répéter le mot de passe !"
       //   return 1
@@ -115,12 +140,9 @@
       // }
       swapToFalse()
     } else {
-      for (let key in state.page2) {
-        if (state.page2[key] == '') {
-          manage.error = 'Veuillez compléter tous les champs !'
-          console.log(key)
-          return 1
-        }
+      if (state.page2.role == '' || state.page2.school == '' || state.page2.classroom == '') {
+        manage.error = 'Veuillez compléter tous les champs !'
+        return 1
       }
       let birth_date = state.page1.birthDate.replace('-', '').replace('-', '')
       state.auth.password = state.page1.firstName[0] + state.page1.secondName + birth_date

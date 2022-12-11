@@ -1,4 +1,3 @@
-import { School } from './../../../BACKEND/src/school/entities/school.entity'
 export interface User {
   id: number
   name: string
