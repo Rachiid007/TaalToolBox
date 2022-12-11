@@ -6,7 +6,7 @@ import { createTestingPinia } from '@pinia/testing'
 import MainCard from '@/components/card/MainCard.vue'
 
 describe('MainCard.vue Test with empty data store', () => {
-  let wrapper = null
+  let wrapper: any = null
 
   // SETUP - run prior to each unit test
   beforeEach(() => {

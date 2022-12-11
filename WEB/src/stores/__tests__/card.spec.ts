@@ -3,7 +3,7 @@ import { setActivePinia, createPinia } from 'pinia'
 import { useCardStore } from '@/stores/card' // <-- !!
 
 describe('Data Store Test', () => {
-  let store = null
+  let store: ReturnType<typeof useCardStore>
 
   beforeEach(() => {
     // create a fresh Pinia instance and make it active so it's automatically picked

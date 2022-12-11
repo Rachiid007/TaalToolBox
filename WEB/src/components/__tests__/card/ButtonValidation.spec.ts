@@ -5,7 +5,7 @@ import { createTestingPinia } from '@pinia/testing'
 import ButtonValidation from '@/components/card/ButtonValidation.vue'
 
 describe('RemainingCard.vue Test with empty data store', () => {
-  let wrapper = null
+  let wrapper: any = null
 
   // SETUP - run prior to each unit test
   beforeEach(() => {
