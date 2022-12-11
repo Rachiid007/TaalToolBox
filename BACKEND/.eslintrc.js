@@ -2,7 +2,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',
-    tsconfigRootDir : __dirname, 
+    tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint/eslint-plugin'],
@@ -23,8 +23,12 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
   },
 
-  "rules": {
-    "prettier/prettier": ["error",{
-      "endOfLine": "auto"}
-    ]}
+  rules: {
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
+  },
 };
