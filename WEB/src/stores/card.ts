@@ -14,11 +14,11 @@ export const useCardStore = defineStore('card', () => {
     almostGoodAnswers: 0,
     wrongAnswers: 0
   })
-  
+
   const userStore = useUserStore()
-  
+
   const tableUserResponse = reactive<User_response[]>([])
-  
+
   const remaining = ref(0)
   const tableCard = reactive<Flashcard[]>([])
   let actualCard = ref<Flashcard>() //{ id: 0, question: '', translation: '', image: '', category: '' }
@@ -59,13 +59,21 @@ export const useCardStore = defineStore('card', () => {
   }
 
   // If user choose the correct card remove it to the deck
-  const removeCorrectCard = (card: Flashcard) => {
-    tableCard.splice(tableCard.indexOf(card), 1)
+  const removeCorrectCard = (card: Flashcard | undefined) => {
+    if (card) {
+      tableCard.splice(tableCard.indexOf(card), 1)
+    } else {
+      console.log('card is undefined')
+    }
   }
 
   // If user choose the correct card remove it to the deck
-  const removeAlmostCorrectCard = (card: Flashcard) => {
-    tableCard.splice(tableCard.indexOf(card), 1)
+  const removeAlmostCorrectCard = (card: Flashcard | undefined) => {
+    if (card) {
+      tableCard.splice(tableCard.indexOf(card), 1)
+    } else {
+      console.log('card is undefined')
+    }
   }
 
   const setActualCard = (card: Flashcard) => {
@@ -88,10 +96,10 @@ export const useCardStore = defineStore('card', () => {
 
   const resetCounters = () => {
     resultGame.goodAnswers = 0
-    resultGame.totalQuestions=0
-    resultGame.wrongAnswers=0
+    resultGame.totalQuestions = 0
+    resultGame.wrongAnswers = 0
     resultGame.almostGoodAnswers = 0
-    tableUserResponse.splice(0);
+    tableUserResponse.splice(0)
   }
 
   const decrement = () => {
@@ -101,13 +109,11 @@ export const useCardStore = defineStore('card', () => {
   }
 
   // Insertion d'une réponse dans le tabeau des réponses
-  const AddAnswer = (user_response:User_response) => {
-    
-
+  const AddAnswer = (user_response: User_response) => {
     let obj = []
     const found = tableUserResponse.some((obj) => {
-      return obj.id_card === user_response.id_card;
-    });
+      return obj.id_card === user_response.id_card
+    })
 
     //Ajouter une réponse au tableau des réponses seulement si c est la première tentative
     if (!found) {

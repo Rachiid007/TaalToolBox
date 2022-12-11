@@ -2,20 +2,20 @@
   import { useCardStore } from '@/stores/card'
   import { useShowStore } from '@/stores/show'
   import { useWeightCardStore } from '@/stores/weightCard'
+  import type User_response from '@/types/user_response'
   //import { useUser_ResponseStore } from '@/stores/user_response'
   //import { useUserStore } from '@/stores/user'
   import { computed } from 'vue'
-import user_ResponseRessource from '@/services/user_ResponseService'
+  import user_ResponseRessource from '@/services/user_ResponseService'
   const store = useCardStore()
   const storeShow = useShowStore()
   const storeWeightCard = useWeightCardStore()
   //const storeAnswer = useUser_ResponseStore();
 
   const correctAnswer = () => {
-
     // Ajout de la réponse de l'utilisateur dans le tableau des réponses
-    const user_response= {
-      id_card: store.getActualCard().id,
+    const user_response: User_response = {
+      id_card: store.getActualCard()?.id,
       id_answer: 1
     }
     store.AddAnswer(user_response)
@@ -37,13 +37,12 @@ import user_ResponseRessource from '@/services/user_ResponseService'
     storeShow.setShowButtonValidation(false)
   }
   const almostCorrectAnswer = () => {
-
     // Ajout de la réponse de l'utilisateur dans le tableau des réponses
-    const user_response= {
-      id_card: store.getActualCard().id,
+    const user_response = {
+      id_card: store.getActualCard()?.id,
       id_answer: 2
     }
-    
+
     store.AddAnswer(user_response)
 
     // Enlever la carte trouvé ou presque trouvé
@@ -65,8 +64,8 @@ import user_ResponseRessource from '@/services/user_ResponseService'
 
   const falseAnswer = () => {
     // Ajout de la réponse de l'utilisateur dans le tableau des réponses
-    const user_response= {
-      id_card: store.getActualCard().id,
+    const user_response = {
+      id_card: store.getActualCard()?.id,
       id_answer: 3
     }
     store.AddAnswer(user_response)
@@ -75,7 +74,7 @@ import user_ResponseRessource from '@/services/user_ResponseService'
     const card = computed(() => store.getCurrentDeck())
     store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
     // console.log(store.getActualCard())
-   
+
     //switcher les boutons
     storeShow.setShowButtonReveal(true)
     storeShow.setShowAnswer(false)

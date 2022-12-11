@@ -16,7 +16,7 @@
         type="file"
         accept=".xlsx"
         class="input"
-        @input="handleInput"
+        @input="handleInput($event)"
       />
       <span class="message">
         <span class="icon">
@@ -44,7 +44,7 @@
     const files = e.dataTransfer?.files as FileList
     emit('upload', [...files])
   }
-  function handleInput(e: InputEvent): void {
+  function handleInput(e: Event): void {
     const files = (e.target as HTMLInputElement).files as FileList
     emit('upload', [...files])
   }

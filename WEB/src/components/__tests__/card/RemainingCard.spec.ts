@@ -6,7 +6,7 @@ import { useCardStore } from '@/stores/card'
 import RemainingCard from '@/components/card/RemainingCard.vue'
 
 describe('RemainingCard.vue Test with empty data store', () => {
-  let wrapper = null
+  let wrapper: any = null
 
   // SETUP - run prior to each unit test
   beforeEach(() => {

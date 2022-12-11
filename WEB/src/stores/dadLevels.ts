@@ -156,8 +156,12 @@ export const useDadLevels = defineStore('dadlevels', () => {
     newDragAndLearnExerciceData: Dadleveldata,
     newDragAndLearnExerciceLevelName: string,
     newDragAndLearnExerciceCreator: string,
-    newDragAndLearnImage: File
+    newDragAndLearnImage: File | null
   ) => {
+    if (newDragAndLearnImage === null) {
+      console.log('no image')
+      return 1
+    }
     const payload = {
       leveldata: JSON.stringify(newDragAndLearnExerciceData),
       levelname: newDragAndLearnExerciceLevelName,

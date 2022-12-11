@@ -2,10 +2,10 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
 import { useDadLevels } from '@/stores/dadLevels' // <-- !!
 import type { Component } from 'vue'
-import type { Store } from "pinia"
+import type { Store } from 'pinia'
 
 describe('DadLevels Test', () => {
-  let store: any | null= null
+  let store: ReturnType<typeof useDadLevels>
 
   beforeEach(() => {
     // create a fresh Pinia instance and make it active so it's automatically picked
