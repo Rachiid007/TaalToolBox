@@ -38,6 +38,12 @@ export class AnswerService implements OnApplicationBootstrap {
   }
 
   findAll() {
-    return this.answerRepository.find();
+    this.answerRepository
+      .find()
+      .then((result) => {
+        return result;
+      })
+      .catch((err) => console.error(err));
+    // return ['test'];
   }
 }
