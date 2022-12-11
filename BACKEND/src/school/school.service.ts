@@ -40,15 +40,15 @@ export class SchoolService implements OnApplicationBootstrap {
     return this.schoolRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} school`;
-  }
+  // findOne(id: number) {
+  //   return this.schoolRepository.findOne(id);
+  // }
 
   update(id: number, updateSchoolDto: UpdateSchoolDto) {
-    return `This action updates a #${id} school`;
+    this.schoolRepository.update(id, updateSchoolDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} school`;
+    this.schoolRepository.delete(id);
   }
 }

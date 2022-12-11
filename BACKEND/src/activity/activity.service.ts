@@ -26,23 +26,20 @@ export class ActivityService implements OnApplicationBootstrap {
       ]);
     }
   }
+
   create(createActivityDto: CreateActivityDto) {
-    return 'This action adds a new activity';
+    return this.activityRepository.save(createActivityDto);
   }
 
   findAll() {
-    return `This action returns all activity`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} activity`;
+    return this.activityRepository.find();
   }
 
   update(id: number, updateActivityDto: UpdateActivityDto) {
-    return `This action updates a #${id} activity`;
+    return this.activityRepository.update(id, updateActivityDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} activity`;
+    return this.activityRepository.delete(id);
   }
 }

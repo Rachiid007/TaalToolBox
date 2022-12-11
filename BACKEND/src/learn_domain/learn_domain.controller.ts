@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { LearnDomainService } from './learn_domain.service';
 import { CreateLearnDomainDto } from './dto/create-learn_domain.dto';
 import { UpdateLearnDomainDto } from './dto/update-learn_domain.dto';
@@ -23,7 +31,10 @@ export class LearnDomainController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLearnDomainDto: UpdateLearnDomainDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateLearnDomainDto: UpdateLearnDomainDto,
+  ) {
     return this.learnDomainService.update(+id, updateLearnDomainDto);
   }
 

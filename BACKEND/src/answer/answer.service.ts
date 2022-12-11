@@ -40,16 +40,4 @@ export class AnswerService implements OnApplicationBootstrap {
   findAll() {
     return this.answerRepository.find();
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} answer`;
-  }
-  /*
-  update(id: number, updateAnswerDto: UpdateAnswerDto) {
-    return `This action updates a #${id} answer`;
-  }
-*/
-  remove(id: number) {
-    return `This action removes a #${id} answer`;
-  }
 }

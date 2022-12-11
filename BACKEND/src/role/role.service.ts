@@ -31,27 +31,26 @@ export class RoleService {
           description: 'Rôle Elève',
         },
       ]);
-      
     }
   }
 
   create(createRoleDto: CreateRoleDto) {
-    return 'This action adds a new role';
+    this.roleRepository.save(createRoleDto);
   }
 
   findAll() {
-    return `This action returns all role`;
+    return this.roleRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} role`;
-  }
+  // findOne(id: number) {
+  //   return this.roleRepository.findOne(id);
+  // }
 
   update(id: number, updateRoleDto: UpdateRoleDto) {
-    return `This action updates a #${id} role`;
+    this.roleRepository.update(id, updateRoleDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} role`;
+    this.roleRepository.delete(id);
   }
 }
