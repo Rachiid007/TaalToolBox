@@ -13,7 +13,7 @@ export class CreateUserDto {
 
   password: string;
   // @IsDate()
-  birthdate:string;
+  birthdate: string;
   phone: string;
   role: Array<Role>;
   class: Array<Schoolclass>;

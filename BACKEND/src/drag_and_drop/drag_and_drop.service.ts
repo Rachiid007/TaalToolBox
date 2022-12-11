@@ -17,11 +17,6 @@ export class DragService {
   }
 
   findAll() {
-    // return `This action returns all drag-and-drops`;
     return this.drag_and_dropRepository.find();
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} drag-and-drop`;
   }
 }

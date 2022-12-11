@@ -84,6 +84,6 @@ export class UserResponseService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} userResponse`;
+    this.updateUserResponseDto.delete(id);
   }
 }
