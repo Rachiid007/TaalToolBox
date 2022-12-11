@@ -8,7 +8,6 @@ const moduleMocker = new ModuleMocker(global);
 
 describe('UsersController', () => {
   let controller: UsersController;
-
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       controllers: [UsersController],
@@ -16,20 +15,26 @@ describe('UsersController', () => {
       .useMocker((token) => {
         if (token === UsersService) {
           return {
-            findAll: jest.fn().mockResolvedValue([
+            loginUser: jest.fn().mockResolvedValue([
               {
-                id: 1,
-                username: 'admin',
-                password: 'admin',
-                email: 'admin@localhost',
-                role: 'admin',
+                name: 'admin',
+                surname: 'taaltoolbox',
+                role: ['Administrateur'],
+                email: 'admin@gmail.com',
+                birthdate: '1980-01-01',
+                phone: '0666777888',
+                schoolclass: [],
+                school: '',
               },
               {
-                id: 2,
-                username: 'user',
-                password: 'user',
-                email: 'user@localhost',
-                role: 'user',
+                name: 'eleve',
+                surname: 'taaltoolbox',
+                role: ['Elève'],
+                email: 'eleve@gmail.com',
+                birthdate: '1980-01-01',
+                phone: '0666777888',
+                schoolclass: ['3TL1'],
+                school: 'Institut Don Bosco',
               },
             ]),
           };
@@ -46,9 +51,27 @@ describe('UsersController', () => {
       .compile();
 
     controller = moduleRef.get<UsersController>(UsersController);
+    // userController = module.get<UsersController>(UsersController);
+    // userService = module.get<UsersService>(UsersService);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  it('Login User : should be return the user data', async () => {
+    const user = {
+      name: 'admin',
+      surname: 'taaltoolbox',
+      role: ['Administrateur'],
+      email: 'admin@gmail.com',
+      birthdate: '1980-01-01',
+      phone: '0666777888',
+      schoolclass: [],
+      school: '',
+    };
+    // jest.spyOn(userService, 'loginUser').mockImplementation(() => user);
+    expect(
+      await controller.findByEmail({
+        email: 'admin@gmail.com',
+        password: 'password',
+      }),
+    ).toContainEqual(user);
   });
 });

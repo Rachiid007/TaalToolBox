@@ -37,65 +37,63 @@ export class UsersService {
     return await this.userRepository.findOne(data);
   }
   // Get the user in database and her role
-  async loginUser(
-    email: string,
-    password: string,
-  ): Promise<UserData | undefined> {
+  loginUser(email: string, password: string) {
     if (!email || !password) {
       throw new NotFoundException();
     }
     //Decrypter le mot de passe du user
     //Get the users and here role
-    let user: Users;
-    let userData: UserData;
     if (email !== 'admin@gmail.com') {
-      user = await this.userRepository
+      this.userRepository
         .createQueryBuilder('users')
         .innerJoinAndSelect('users.role', 'role')
         .leftJoinAndSelect('users.schoolclass', 'schoolclass')
         .innerJoinAndSelect('schoolclass.school', 'school')
         .where({ email: email, password: password })
-        .getOne();
-
-      userData = {
-        name: user.name,
-        surname: user.surname,
-        role: user.role.map((x: { name: any }) => {
-          return x.name;
-        }),
-        email: user.email,
-        birthdate: user.birthdate,
-        phone: user.phone,
-        schoolclass: user.schoolclass.map((x: { name: any }) => {
-          return x.name;
-        }),
-        school: user.schoolclass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
-      };
+        .getOne()
+        .then((user) => {
+          return {
+            name: user.name,
+            surname: user.surname,
+            role: user.role.map((x: { name: any }) => {
+              return x.name;
+            }),
+            email: user.email,
+            birthdate: user.birthdate,
+            phone: user.phone,
+            schoolclass: user.schoolclass.map((x: { name: any }) => {
+              return x.name;
+            }),
+            school: user.schoolclass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
+          };
+        })
+        .catch((err) => {
+          throw new NotFoundException(err);
+        });
     } else {
-      user = await this.userRepository
+      this.userRepository
         .createQueryBuilder('users')
         .innerJoinAndSelect('users.role', 'role')
         .where({ email: email, password: password })
-        .getOne();
-
-      userData = {
-        name: user.name,
-        surname: user.surname,
-        role: user.role.map((x: { name: any }) => {
-          return x.name;
-        }),
-        email: user.email,
-        birthdate: user.birthdate,
-        phone: user.phone,
-        schoolclass: [],
-        school: '',
-      };
+        .getOne()
+        .then((user) => {
+          return {
+            name: user.name,
+            surname: user.surname,
+            role: user.role.map((x: { name: any }) => {
+              return x.name;
+            }),
+            email: user.email,
+            birthdate: user.birthdate,
+            phone: user.phone,
+            schoolclass: [],
+            school: '',
+          };
+        })
+        .catch((err) => {
+          throw new NotFoundException(err);
+        });
     }
-
-    if (!user) {
-      throw new NotFoundException();
-    }
-    return userData;
   }
   public async createUser(payload: UserFormData) {
     // Normalement en front on doit récupérer toutes les écoles
