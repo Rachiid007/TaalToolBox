@@ -10,7 +10,7 @@
   const dataFromStore = store.getData()
 
   const background = ref<any>(null)
-  const image = ref(null)
+  const image = ref<any>(null)
   const wordList = ref<any>(null)
 
   // On utilise cette ref pour stocker un boolean qui nous indique si l'utilisateur est sur un mobile ou pas
