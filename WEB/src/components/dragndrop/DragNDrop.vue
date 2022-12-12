@@ -10,7 +10,7 @@
   const store = useDadLevels()
   const dataFromStore = store.getData()
 
-  const background: Ref<null | any | HTMLElement> = ref(null)
+  const background: Ref<any> = ref(document.createElement('null'))
   const image: Ref<null | HTMLElement> = ref(null)
   const wordList: Ref<any | Node> = ref(null)
 
