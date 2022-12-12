@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import MainHeader from '@/components/headers/MainHeader.vue'
-  import ChooseActivities from '@/components/yemak/ChooseActivities.vue'
+  import ChooseActivities from '@/components/activity/ChooseActivities.vue'
 </script>
 <template>
   <div class="page">

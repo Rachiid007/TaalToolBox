@@ -1,6 +1,6 @@
 import { shallowMount, mount } from '@vue/test-utils'
 
-import ChooseActivities from '@/components/yemak/ChooseActivities.vue'
+import ChooseActivities from '@/components/activity/ChooseActivities.vue'
 import { beforeEach, describe, expect, test } from 'vitest'
 
 describe('ChooseActivities.vue', () => {
