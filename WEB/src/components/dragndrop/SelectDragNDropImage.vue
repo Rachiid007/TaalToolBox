@@ -1,11 +1,12 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
   import { useDadLevels } from '@/stores/dadLevels'
+  import type { Ref } from 'vue'
 
   const store = useDadLevels()
 
-  const image = ref(null)
-  const imageUrl = ref('')
+  const image: Ref<null | HTMLElement> = ref(null)
+  const imageUrl: Ref<string> = ref('')
 
   const emit = defineEmits<{
     (e: 'change-page', nbrPage: number): void
