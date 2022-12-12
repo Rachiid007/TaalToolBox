@@ -3,6 +3,7 @@ import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Answer } from './entities/answer.entity';
+import type { AnswerType } from 'src/types';
 @Injectable()
 export class AnswerService implements OnApplicationBootstrap {
   constructor(
@@ -37,13 +38,14 @@ export class AnswerService implements OnApplicationBootstrap {
     return this.answerRepository.save(answer);
   }
 
-  findAll() {
-    this.answerRepository
+  async findAll() {
+    let answer: AnswerType[];
+    await this.answerRepository
       .find()
       .then((result) => {
-        return result;
+        answer = result;
       })
       .catch((err) => console.error(err));
-    // return ['test'];
+    return answer;
   }
 }
