@@ -14,6 +14,12 @@ export interface Card {
   translation: string;
   image: string;
 }
+export interface AnswerType {
+  id: number;
+  name: string;
+  description: string;
+  weight: number;
+}
 export interface UserFormData {
   name: string;
   surname: string;

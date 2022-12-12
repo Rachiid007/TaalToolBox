@@ -13,8 +13,6 @@ export class UsersController {
 
   @Post()
   async createUser(@Body() payload: UserFormData) {
-    console.log(payload);
-
     // Dont send the array that we receive
     return await this.usersService.createUser(payload);
   }

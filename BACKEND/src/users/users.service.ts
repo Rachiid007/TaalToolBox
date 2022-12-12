@@ -37,14 +37,15 @@ export class UsersService {
     return await this.userRepository.findOne(data);
   }
   // Get the user in database and her role
-  loginUser(email: string, password: string) {
+  async loginUser(email: string, password: string) {
+    let userData: UserData;
     if (!email || !password) {
       throw new NotFoundException();
     }
     //Decrypter le mot de passe du user
     //Get the users and here role
     if (email !== 'admin@gmail.com') {
-      this.userRepository
+      await this.userRepository
         .createQueryBuilder('users')
         .innerJoinAndSelect('users.role', 'role')
         .leftJoinAndSelect('users.schoolclass', 'schoolclass')
@@ -52,7 +53,7 @@ export class UsersService {
         .where({ email: email, password: password })
         .getOne()
         .then((user) => {
-          return {
+          userData = {
             name: user.name,
             surname: user.surname,
             role: user.role.map((x: { name: any }) => {
@@ -71,13 +72,13 @@ export class UsersService {
           throw new NotFoundException(err);
         });
     } else {
-      this.userRepository
+      await this.userRepository
         .createQueryBuilder('users')
         .innerJoinAndSelect('users.role', 'role')
         .where({ email: email, password: password })
         .getOne()
         .then((user) => {
-          return {
+          userData = {
             name: user.name,
             surname: user.surname,
             role: user.role.map((x: { name: any }) => {
@@ -94,6 +95,7 @@ export class UsersService {
           throw new NotFoundException(err);
         });
     }
+    return userData;
   }
   public async createUser(payload: UserFormData) {
     // Normalement en front on doit récupérer toutes les écoles
@@ -117,8 +119,6 @@ export class UsersService {
     const schoolRequest: School = await this.schoolService.findSchool(school);
 
     // Prendre l'id de l'école de l'élève dans le frontend,
-    console.log(schoolRequest.id);
-
     // Le professeur ne peut pas créer des classes
     // 3. Checker si la classe de l'élève existe déjà dans la DB
     const schoolClassRequest: Schoolclass =
@@ -145,7 +145,6 @@ export class UsersService {
       idSchoolClass = schoolClassInsert.identifiers[0].id;
     }
     //5. creer dabord l'utilisateur et récupérer son id
-    console.log(idSchoolClass);
     const user: InsertResult = await this.userRepository
       .createQueryBuilder('users')
       .insert()
@@ -198,7 +197,6 @@ export class UsersService {
         throw new InternalServerErrorException(err);
       });
 
-    console.log(userRole);
   }
 
   async create(data: CreateUserDto): Promise<any> {
