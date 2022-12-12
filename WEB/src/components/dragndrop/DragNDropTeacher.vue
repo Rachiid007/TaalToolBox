@@ -4,6 +4,8 @@
   import { useUserStore } from '@/stores/user'
   import axios from 'axios'
   import router from '@/router'
+  import type { Ref } from 'vue'
+  import type { AnySrvRecord } from 'dns'
   //   const image = ref('')
   //   const file = ref(null)
   //   const changeImage = (e: any) => {
@@ -17,52 +19,52 @@
     store.setTempData(data, type)
   }
 
-  const numberField = ref(0)
-  const numberFieldMobile = ref(0)
+  const numberField: Ref<number> = ref(0)
+  const numberFieldMobile: Ref<number> = ref(0)
   // array avec des nombre dedans, ce nbr permet de savoir le nbr de DIV
   // utilisé pour générer les champs
-  const fieldList = ref<number[]>([])
-  const fieldListMobile = ref<number[]>([])
-  const background = ref<Element | null>(null)
-  const image = ref()
+  const fieldList: Ref<number[]> = ref([])
+  const fieldListMobile: Ref<number[]> = ref([])
+  const background: Ref<Element> = ref(document.createElement('null'))
+  const image: Ref<Element> = ref(document.createElement('null'))
 
-  const imageLink = ref('')
+  const imageLink: Ref<string> = ref('')
 
-  const selectedId = ref('')
-  const selectedDiv = ref()
+  const selectedId: Ref<string> = ref('')
+  const selectedDiv: Ref<HTMLElement> = ref(document.createElement('null'))
 
-  const selectedDivTop = ref(0)
-  const selectedDivLeft = ref(0)
+  const selectedDivTop: Ref<number> = ref(0)
+  const selectedDivLeft: Ref<number> = ref(0)
 
-  const selectedDivWidth = ref(0)
-  const selectedDivHeight = ref(0)
+  const selectedDivWidth: Ref<number> = ref(0)
+  const selectedDivHeight: Ref<number> = ref(0)
 
-  const selectedDivContent = ref('')
+  const selectedDivContent: Ref<string> = ref('')
 
-  const selectedDivContentSize = ref(0)
+  const selectedDivContentSize: Ref<number> = ref(0)
 
   //Ces deux refs sont utilisées pour afficher les erreurs quand le professeur souhaite sauvegarder l'activité
-  const alertDiv = ref(false)
-  const alertNoDiv = ref(false)
+  const alertDiv: Ref<boolean> = ref(false)
+  const alertNoDiv: Ref<boolean> = ref(false)
 
   //erreur lors du choix du nom de l'activité
-  const alertNoName = ref('')
+  const alertNoName: Ref<string> = ref('')
 
   // Pour savoir si la requête à réussie ou pas
-  const goodRequest = ref(false)
+  const goodRequest: Ref<boolean> = ref(false)
 
   //Pour savoir si les données on déjà été envoyées => empêche de spam le bouton
-  const pcDataSended = ref(false)
+  const pcDataSended: Ref<boolean> = ref(false)
 
   // Les valeurs de position pour les divs quand on utilise le drag and drop
-  const positions = ref({
+  const positions: Ref<{ pos1: number; pos2: number; pos3: number; pos4: number }> = ref({
     pos1: 0,
     pos2: 0,
     pos3: 0,
     pos4: 0
   })
 
-  const popupDisplay = ref(false)
+  const popupDisplay: Ref<boolean> = ref(false)
 
   const emit = defineEmits<{
     (e: 'change-page', nbrPage: number): void
@@ -140,7 +142,7 @@
 
   const dragMouseDown = (e: any) => {
     //Une fois que l'on commence le drag on assigne l'id à selectedDiv pour la suite
-    selectedDiv.value = document.getElementById(e.target.id)
+    selectedDiv.value = document.getElementById(e.target.id)!
     // ???????
     e = e || window.event
     // ???????
@@ -302,25 +304,21 @@
               parseInt(getComputedStyle(image.value).height)) *
             100
           ).toFixed(2)
-
           let currentDivWidthPorc = (
             (parseInt(getComputedStyle(currentDiv as HTMLElement).width) /
               parseInt(getComputedStyle(image.value).width)) *
             100
           ).toFixed(2)
-
           let currentDivTopPorc = (
             (parseInt(getComputedStyle(currentDiv as HTMLElement).top) /
               parseInt(getComputedStyle(image.value).height)) *
             100
           ).toFixed(2)
-
           let currentDivLeftPorc = (
             (parseInt(getComputedStyle(currentDiv as HTMLElement).left) /
               parseInt(getComputedStyle(image.value).width)) *
             100
           ).toFixed(2)
-
           let calculatedFontSize = getComputedStyle(currentDiv as HTMLElement).fontSize
           if (pcDataSended.value) {
             let porcentage =
@@ -329,30 +327,30 @@
             calculatedFontSize = (porcentage * 100).toFixed(1) + 'vw'
             console.log(calculatedFontSize)
           }
-
           // convert currentDiv to an HTMLElement to get the text content of the div (the text inside the div) and the id of the div
           let currentDivContent = (currentDiv as HTMLElement).innerText
           let currentDivId = (currentDiv as HTMLElement).id
-
           // On crée un objet avec toutes les données de la div actuellement traitée
           // il y encore un dernier problème avec les test et number avec TypeScript (je ne sais pas pourquoi) mais j'arrive pas à résoudre leurs types !!!
-          let currentDivInfo = {
-            // ! TODO: fix the type of test and number
-            // test: currentDivId.match(/(\d+)/)[0],
-            // number: parseInt(currentDivId.match(/(\d+)/)),
-            top: currentDivTopPorc.toString() + '%',
-            left: currentDivLeftPorc.toString() + '%',
-            width: currentDivWidthPorc.toString() + '%',
-            height: currentDivHeightPorc.toString() + '%',
-            rightValue: currentDivContent,
-            fontSize: calculatedFontSize
+          let currentDivInfo = {}
+          if (currentDivId) {
+            currentDivInfo = {
+              // ! TODO: fix the type of test and number
+              test: currentDivId.match(/(\d+)/)![0],
+              number: parseInt(currentDivId.match(/(\d+)/)!.toString()),
+              top: currentDivTopPorc.toString() + '%',
+              left: currentDivLeftPorc.toString() + '%',
+              width: currentDivWidthPorc.toString() + '%',
+              height: currentDivHeightPorc.toString() + '%',
+              rightValue: currentDivContent,
+              fontSize: calculatedFontSize
+            }
           }
           // On insère l'objet dans le payload
           payload.push(currentDivInfo)
         }
       }
     }
-
     if (pcDataSended.value) {
       // On envoie au store les données de la version mobile (donc le payload)
       addDataToStore(payload, 'mobile')
@@ -366,6 +364,7 @@
       pcDataSended.value = true
       popupDisplay.value = false
       // Cette fontion va générer les champs pour la version mobile en fonction des données de la version web
+      console.log(payload)
       generateMobileFields(payload)
     }
   }
@@ -375,6 +374,7 @@
     // data => Données du web
     // On parcour c'est données et on génère des divs à partir de ces dernières
     for (let item in data) {
+      console.log(data)
       // Même principe que pour la génération en version web
       numberFieldMobile.value++
       // fieldListMobile est lié à un v-for pour générer les divs

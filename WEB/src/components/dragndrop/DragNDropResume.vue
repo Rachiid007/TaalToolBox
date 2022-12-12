@@ -2,7 +2,9 @@
   import router from '@/router'
   import { useDadLevels } from '@/stores/dadLevels'
   import { useUserStore } from '@/stores/user'
+  import type Dadleveldata from '@/types/Dadleveldata'
   import { ref } from 'vue'
+  import type { Ref } from 'vue'
   import axios from 'axios'
 
   const store = useDadLevels()
@@ -11,13 +13,13 @@
   const data: any = store.getTempData()
   // console.log(data)
 
-  const numberOfFieldsPc = ref(data['pc'].length)
-  const numeberOfFieldsMobile = ref(data['mobile'].length)
+  const numberOfFieldsPc: Ref<number> = ref(data['pc'].length)
+  const numeberOfFieldsMobile: Ref<number> = ref(data['mobile'].length)
 
   const sendData = async () => {
-    const levelData = { fields: store.getTempData() }
-    const creator = userStore.user.name + userStore.user.surname
-    const levelName = 'niveau test 1'
+    const levelData: Dadleveldata = { fields: store.getTempData() }
+    const creator: string = userStore.user.name + userStore.user.surname
+    const levelName: string = 'niveau test 1'
     const imageData = store.getImageData()
     console.log(levelData)
 

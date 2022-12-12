@@ -3,6 +3,7 @@
   // import jsonfile from '@/assets/levelData/dragndrop.json'
   import { useDadLevels } from '@/stores/dadLevels'
   import { RouterLink } from 'vue-router'
+  import type { Ref } from 'vue'
 
   const store = useDadLevels()
   const dataFromStore = store.getData()
@@ -14,7 +15,7 @@
   const isNotMobile = ref(false)
 
   // Cette ref est utilisée pour stocker la liste de mots rangée d'une manière aléatoire
-  const wordsToGen = ref<any[]>([])
+  const wordsToGen: Ref<any[]> = ref([])
 
   // Ici on stocke le score à afficher
   const score = ref(0)

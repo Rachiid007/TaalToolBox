@@ -5,34 +5,35 @@
   import { RouterLink } from 'vue-router'
   import axios from 'axios'
   import form4 from '@/assets/images/form4.png'
+  import type { Ref } from 'vue'
 
   const store = useDadLevels()
   const dataFromStore = store.getData()
 
-  const background = ref<any>(null)
-  const image = ref<any>(null)
-  const wordList = ref<any>(null)
+  const background: Ref<null | any | HTMLElement> = ref(null)
+  const image: Ref<null | HTMLElement> = ref(null)
+  const wordList: Ref<any | Node> = ref(null)
 
   // On utilise cette ref pour stocker un boolean qui nous indique si l'utilisateur est sur un mobile ou pas
   // const isNotMobile = ref(false)
 
   // Cette ref est utilisée pour stocker la liste de mots rangée d'une manière aléatoire
-  const wordsToGen = ref<any>([])
+  const wordsToGen: Ref<{ id: number; word: string }[]> = ref([])
 
   // Ici on stocke le score à afficher
-  const score = ref(0)
+  const score: Ref<number> = ref(0)
   // On stocke le nombre de bonnes réponses
-  const goodFields = ref(0)
+  const goodFields: Ref<number> = ref(0)
   // On stocke le nombre de mauvaises réponses
-  const badFields = ref(0)
+  const badFields: Ref<number> = ref(0)
   const state = reactive(dataFromStore[store.getLevel()])
-  const dataFromDb: any = ref()
+  const dataFromDb: Ref<any[] | void> = ref([])
 
-  const notCompatible = ref(false)
+  const notCompatible: Ref<boolean> = ref(false)
 
   const getData = async () => {
     dataFromDb.value = await axios
-      .get('http://localhost:3000/drag_and_drop', {
+      .get<[]>('http://localhost:3000/drag_and_drop', {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
@@ -49,7 +50,7 @@
     if (event.target.className != 'container' && event.target.className != 'wordList') {
       let data = event.dataTransfer.getData('text')
       if (wordList.value) {
-        wordList.value.appendChild(document.getElementById(data))
+        wordList.value?.appendChild(document.getElementById(data))
       }
       return 0
     } else if (event.target.firstChild) {
@@ -117,7 +118,7 @@
   //   : (isNotMobile.value = true)
 
   onMounted(() => {
-    image.value.addEventListener('contextmenu', (e: any) => {
+    image.value?.addEventListener('contextmenu', (e: any) => {
       e.preventDefault()
     })
 

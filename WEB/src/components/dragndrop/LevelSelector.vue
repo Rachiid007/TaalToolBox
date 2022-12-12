@@ -6,7 +6,7 @@
   const levels = store.getData()
 
   const getNumberOfWords = (item: any) => {
-    let count = 0
+    let count: number = 0
     for (let word in item.fields) {
       count++
     }
