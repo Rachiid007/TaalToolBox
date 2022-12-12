@@ -65,6 +65,15 @@
         >Carte</router-link
       >
       <router-link
+          class="tabs_element"
+          to="/profile"
+          v-show="
+            Object.values(staticRole).some((x) => {
+            return role.includes(x)
+            })
+          "
+          >Profile</router-link>
+      <router-link
         to="/add-user"
         class="tabs_element"
         v-show="
