@@ -8,6 +8,7 @@
   const userStore = useUserStore()
   //const store = useCardStore()
   //const remaining = computed(() => store.remaining)
+  console.log(localStorage.getItem('user'))
   const comp = ref(0)
 
   function changeComp(nb: number){
