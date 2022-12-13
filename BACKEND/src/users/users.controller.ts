@@ -1,7 +1,7 @@
 import type { UserFormData } from './../types/index';
 import { UsersService } from '../users/users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { Controller, Body, Get, Post, Param, Query } from '@nestjs/common';
+import { CreateUserExcelDto } from '../users/dto/create-user-excel.dto';
+import { Controller, Body, Get, Post, Query } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
@@ -15,5 +15,11 @@ export class UsersController {
   async createUser(@Body() payload: UserFormData) {
     // Dont send the array that we receive
     return await this.usersService.createUser(payload);
+  }
+
+  @Post('excel')
+  async createUsersExcel(@Body() createUserExcelDto: CreateUserExcelDto[]) {
+    // console.log(createUserExcelDto);
+    return await this.usersService.createUsersExcel(createUserExcelDto);
   }
 }

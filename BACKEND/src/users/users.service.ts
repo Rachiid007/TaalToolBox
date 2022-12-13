@@ -12,6 +12,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { InsertResult, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserExcelDto } from './dto/create-user-excel.dto';
 import { Users } from './entities/users.entity';
 import { SchoolService } from '../school/school.service';
 import { School } from 'src/school/entities/school.entity';
@@ -196,7 +197,6 @@ export class UsersService {
       .catch((err) => {
         throw new InternalServerErrorException(err);
       });
-
   }
 
   async create(data: CreateUserDto): Promise<any> {
@@ -204,5 +204,21 @@ export class UsersService {
       .save(data)
       .then((res) => res)
       .catch((e) => console.log(e));
+  }
+
+  async createUsersExcel(data: CreateUserExcelDto[]) {
+    // insert CreateUserExcelDto into users table and return the users inserted
+    return await this.userRepository.insert(
+      data.map((user) => {
+        return {
+          name: user.name,
+          surname: user.surname,
+          schoolEmail: user.schoolEmail,
+          privateEmail: user.privateEmail,
+          birthdate: user.birthdate,
+          sex: user.sex,
+        };
+      }),
+    );
   }
 }

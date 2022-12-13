@@ -24,7 +24,7 @@ export default {
   },
   // send a list of users to the server to be created
   async createUsers(users: User[]): Promise<User[]> {
-    const { data } = await apiClient.post('/users/bulk', users)
+    const { data } = await apiClient.post('/users/excel', users)
     return data
   }
 }
