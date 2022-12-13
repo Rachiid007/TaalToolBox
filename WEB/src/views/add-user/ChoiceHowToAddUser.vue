@@ -1,16 +1,12 @@
 <script setup lang="ts">
   import MainHeader from '@/components/headers/MainHeader.vue'
   import choiceHowToAddUser from '@/components/users/ChoiceHowToAddUser.vue'
-  import { useUserStore } from '@/stores/user'
-
-  const useStore = useUserStore()
 </script>
 
 <template>
   <div class="page">
     <MainHeader />
-    <choice-how-to-add-user />
-    <RouterView />
+    <choiceHowToAddUser />
   </div>
 </template>
 
