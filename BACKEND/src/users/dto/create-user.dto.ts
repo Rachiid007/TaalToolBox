@@ -1,6 +1,6 @@
 import { Schoolclass } from '../../schoolclass/entities/schoolclass.entity';
 import { Role } from '../../role/entities/role.entity';
-import { IsDate, IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsString, IsOptional } from 'class-validator';
 export class CreateUserDto {
   @IsString()
   name: string;
@@ -11,10 +11,15 @@ export class CreateUserDto {
   @IsEmail()
   email: string;
 
+  @IsOptional()
   password: string;
-  // @IsDate()
+
   birthdate: string;
+
+  @IsEmail()
   phone: string;
+
   role: Array<Role>;
+
   class: Array<Schoolclass>;
 }

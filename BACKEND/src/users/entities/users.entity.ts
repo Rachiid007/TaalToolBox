@@ -14,23 +14,54 @@ export class Users {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column('character varying')
+  @Column({
+    nullable: true,
+  })
   name: string;
 
-  @Column('character varying')
+  @Column({
+    nullable: true,
+  })
   surname: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
+  firstName: string;
+
+  @Column({
+    nullable: true,
+  })
+  lastName: string;
+
+  @Column({
+    nullable: true,
+  })
   email: string;
 
-  @Column('character varying')
+  @Column()
+  schoolEmail: string;
+
+  @Column()
+  privateEmail: string;
+
+  @Column({
+    nullable: true,
+  })
   password: string;
 
   @Column('date')
   birthdate: string;
 
-  @Column('character varying')
+  @Column({
+    nullable: true,
+  })
   phone: string;
+
+  @Column({
+    nullable: true,
+  })
+  sex: string;
 
   @ManyToMany(() => Role)
   @JoinTable()
