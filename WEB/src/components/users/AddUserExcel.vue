@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import UserService from '@/services/UserService'
-  import type User from '@/types/user'
+  import type UserFromExcelFile from '@/types/user'
   import { ref } from 'vue'
   import { read, utils } from 'xlsx'
 
@@ -98,9 +98,9 @@
   }
 
   const sendUsersToAPI = async () => {
-    const users: User[] = []
+    const users: UserFromExcelFile[] = []
     rows.value?.forEach((row) => {
-      const user: User = {
+      const user: UserFromExcelFile = {
         firstName: row[expectedHeaders.value[0].indexInHeaderExcel] as string,
         lastName: row[expectedHeaders.value[1].indexInHeaderExcel] as string,
         schoolEmail: row[expectedHeaders.value[2].indexInHeaderExcel] as string,
@@ -113,7 +113,7 @@
     })
     console.log('users', users)
     try {
-      await UserService.postListUsers(users)
+      await UserService.createUsers(users)
     } catch (err) {
       console.log(err)
     }

@@ -21,3 +21,13 @@ export interface UserFormData {
   class: string
   role: string
 }
+
+export default interface UserFromExcelFile {
+  firstName: string
+  lastName: string
+  schoolEmail: string
+  privateEmail: string
+  birthdate: Date
+  class: string
+  sex: string
+}

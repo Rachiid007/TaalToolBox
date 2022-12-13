@@ -19,7 +19,7 @@ import SignIn from '@/views/SignIn.vue'
 import StartGame from '@/views/StartGameView.vue'
 import AddClass from '@/views/Add Class/AddClass.vue'
 import InfoLevel from '@/views/Info level/InfoLevel.vue'
-
+import AddUserExcelView from '@/views/add-user/AddUserExcelView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +58,11 @@ const router = createRouter({
       path: '/add-user',
       name: 'add-user',
       component: ChoiceHowToAddUserView
+    },
+    {
+      path: '/add-user/excel',
+      name: 'add-user-excel',
+      component: AddUserExcelView
     },
     {
       path: '/add-card/excel',
@@ -108,7 +113,6 @@ const router = createRouter({
       path: '/start-game',
       name: 'startGame',
       component: StartGame
-
     },
     {
       path: '/addClass',
@@ -118,7 +122,7 @@ const router = createRouter({
     {
       path: '/infoLevel',
       name: 'infoLevel',
-      component: InfoLevel,
+      component: InfoLevel
     }
   ]
 })
