@@ -21,6 +21,8 @@
   import geoCoderSvg from '@/assets/images/geo-marker.svg'
   import { RouterLink } from 'vue-router'
   import { useUserStore } from '@/stores/user'
+  import useMapStore from '@/stores/map'
+  import router from '@/router'
   // import { Popup } from 'ol-popup';
   //
   //
@@ -32,6 +34,7 @@
   const userRole = useUserStore().user.role
   const userSchool = useUserStore().user.school
   const userReward = useUserStore().userReward
+  const mapStore = useMapStore()
   // const schoolUser = useUserStore().user.
 
   const popup = ref<HTMLElement | undefined>()
@@ -48,7 +51,14 @@
   // Pour changer le type de partie on utilise gamemode
   const gamemode = ref(1)
   // Ici on stocke les différents points que l'on va afficher sur la map
+  interface Point {
+    label: string
+    coordinates: number[]
+    levelId: number
+  }
+  const popupCreateGame = ref(false)
 
+  let newPointState: Point = reactive({ label: '', coordinates: [], levelId: 0 })
   const pointState = reactive({
     points: [
       {
@@ -73,6 +83,7 @@
 
   const onCloserClick = () => {
     popupVisibility.value = false
+    popupCreateGame.value = false
     // closer.style.display = 'none'
     for (let intercation in map.value.getInteractions().getArray()) {
       let template = map.value.getInteractions().getArray()
@@ -268,6 +279,7 @@
       }
     })
       .then((response: IGeocodeResponse) => {
+        // stocker les cooordonnées de l'adresse et le nom de l'adresse
         const result: any = response.candidates[0]
         const coords = [result.attributes.X, result.attributes.Y]
         console.log(result)
@@ -298,9 +310,12 @@
         })
 
         console.log(map.value.getLayers())
+        popupCreateGame.value = true
+        console.log(vector)
+        newPointState = { label: result.address, coordinates: coords, levelId: 1 }
         // Au lieu d'ajouter à la fin de la liste de layers on sort un popup qui permettra de créer l'activité
         // On ajoute la nouvelle feature à la fin de la liste des layers de la map
-        map.value.getLayers().extend([vector])
+        // map.value.getLayers().extend([vector])
 
         if (!result) {
           alert("That query didn't match any geocoding results.")
@@ -324,6 +339,12 @@
   // }).then((response) => {
   //   console.log('Candidates:', response.candidates)
   // })
+
+  const onConfirmAddress = () => {
+    // Enregistrer l'adresse dans le store et switch de page
+    console.log(mapStore.$patch({ newLevel: { name: newPointState.label } }))
+    router.replace('/')
+  }
 </script>
 
 <template>
@@ -350,6 +371,7 @@
       Geocode
     </button>
   </div>
+  <!-- Contenu du PoPuP et mode de jeu -->
   <div
     v-show="popupVisibility"
     ref="popup"
@@ -358,7 +380,7 @@
     v-if="userRole.includes('Administrateur') || userRole.includes('Créateur') || userReward >= 50"
   >
     <!-- SHOW ALL THE ACTIVITIES TO THE CREATOR AND ADMINISTRATOR -->
-    <div
+    <!-- <div
       class="swipper_right"
       @click="gamemode = 0"
     >
@@ -369,7 +391,7 @@
       @click="gamemode = 1"
     >
       {{ '<' }}
-    </div>
+    </div> -->
     <a
       href="#"
       id="popup-closer"
@@ -430,6 +452,7 @@
       </Transition>
     </div>
   </div>
+  <!-- Redirection vers l'activité principale -->
   <div
     v-show="popupVisibility"
     ref="popup"
@@ -458,156 +481,29 @@
       </div>
     </div>
   </div>
+  <!-- Concernant la création de jeu Faire un poppup avec lavec la confirmation de l'adresse -->
+
+  <div
+    id="create__game__popup"
+    v-show="popupCreateGame"
+  >
+    <a
+      href="#"
+      id="popup-closer"
+      class="ol-popup-closer"
+      @click="onCloserClick"
+    ></a>
+    <h2 id="create__game__popup__title">Veuillez Confirmer l'adresse du nouveau niveau</h2>
+    <p id="create__game__popup__address">{{ newPointState.label }}</p>
+    <!-- Quand il confirme envoyer l'adresse dans le store -->
+    <button
+      id="create__game__popup__confirm"
+      @click="onConfirmAddress"
+    >
+      Confirmer
+    </button>
+  </div>
 </template>
 <style scoped>
-  .map {
-    width: 100%;
-    height: 100vh;
-  }
-  .search {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-  }
-  #geocode-input,
-  #geocode-button {
-    font-size: 16px;
-    margin: 0 2px 0 0;
-    padding: 4px 8px;
-  }
-  #geocode-input {
-    width: 300px;
-  }
-  .ol-popup {
-    position: absolute;
-    background-color: white;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #cccccc;
-    bottom: 12px;
-    left: -50px;
-    min-width: 220px;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 45px;
-  }
-  .ol-popup:after,
-  .ol-popup:before {
-    top: 100%;
-    border: solid transparent;
-    content: ' ';
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-  }
-  .ol-popup:after {
-    border-top-color: white;
-    border-width: 10px;
-    left: 48px;
-    margin-left: -10px;
-  }
-  .ol-popup:before {
-    border-top-color: #cccccc;
-    border-width: 11px;
-    left: 48px;
-    margin-left: -11px;
-  }
-  .popup-content {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    overflow: hidden;
-    /* border: 1px solid red; */
-  }
-  .sub_content {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    /* position: absolute; */
-  }
-
-  .popup-title {
-    color: #026b30;
-    font-size: 1.2em;
-    font-weight: bold;
-  }
-  .level-details {
-    color: #707070;
-    font-size: 1.1em;
-    font-weight: bold;
-  }
-  .gamemode-image {
-    margin-top: 15px;
-    border-radius: 5px;
-    padding: 35px 3px 35px 3px;
-    width: 50%;
-    height: auto;
-    border: 2px solid grey;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 6px 0px;
-  }
-  .gamemode-image-dal {
-    margin-top: 15px;
-    width: 47%;
-    padding: 10px 5px 10px 5px;
-    border: 2px solid grey;
-    border-radius: 5px;
-    height: auto;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 6px 0px;
-  }
-  .playButton {
-    margin-top: 15px;
-    background: #026b30;
-    color: white;
-    border-radius: 5px;
-    padding: 5px;
-    width: 80%;
-  }
-  .swipper_right {
-    position: absolute;
-    left: 85%;
-    top: 42%;
-    font-weight: bold;
-    font-size: 1.5em;
-    z-index: 5;
-    cursor: pointer;
-  }
-  .swipper_left {
-    position: absolute;
-    right: 85%;
-    top: 42%;
-    font-weight: bold;
-    font-size: 1.5em;
-    z-index: 5;
-    cursor: pointer;
-  }
-  .ol-popup-closer {
-    text-decoration: none;
-    position: absolute;
-    top: 2px;
-    right: 8px;
-  }
-  .ol-popup-closer:after {
-    content: '✖';
-  }
-  #buttonDad {
-    background-color: #00307e;
-  }
-  #levelDad {
-    color: #00307e;
-  }
-  .v-enter-from {
-    opacity: 0;
-    display: none;
-  }
-  .v-enter-active {
-    opacity: 0;
-  }
-  .v-enter-to {
-    opacity: 0;
-  }
+  @import '../assets/map.css';
 </style>
