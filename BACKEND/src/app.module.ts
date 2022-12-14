@@ -1,3 +1,4 @@
+import { UserResponseModule } from './user_response/user_response.module';
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { MulterModule } from '@nestjs/platform-express';
@@ -13,16 +14,14 @@ import { RoleModule } from './role/role.module';
 import { AnswerModule } from './answer/answer.module';
 import { LearnDomainModule } from './learn_domain/learn_domain.module';
 import { ProficiencyModule } from './proficiency/proficiency.module';
-// import { RewardModule } from './reward/reward.module';
-import { WeightCardModule } from './weight_card/weight_card.module';
 import { UsersModule } from './users/users.module';
-// import { AuthModule } from './Auth/auth/auth.module';
 import { SchoolclassModule } from './schoolclass/schoolclass.module';
 import { SchoolModule } from './school/school.module';
 import { ActivityModule } from './activity/activity.module';
 import { DragModule } from './drag_and_drop/drag_and_drop.module';
 import { CardsThemeModule } from './cards_theme/cards_theme.module';
 import { LevelMapModule } from './level_map/level_map.module';
+import { LevelDifficultyModule } from './level_difficulty/level_difficulty.module';
 
 @Module({
   imports: [
@@ -44,14 +43,15 @@ import { LevelMapModule } from './level_map/level_map.module';
     MulterModule.register({
       dest: join(__dirname, '..', 'public/images'),
     }),
+    // Card depend on theme and difficulty
+    CardsThemeModule,
+    LevelDifficultyModule,
     CardsModule,
     LangModule,
     CategoryModule,
-    LangModule,
     RoleModule,
     AnswerModule,
     LearnDomainModule,
-    WeightCardModule,
     // RewardModule,
     SchoolModule,
     SchoolclassModule,
@@ -60,8 +60,8 @@ import { LevelMapModule } from './level_map/level_map.module';
     ProficiencyModule,
     ActivityModule,
     DragModule,
-    CardsThemeModule,
     LevelMapModule,
+    UserResponseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
