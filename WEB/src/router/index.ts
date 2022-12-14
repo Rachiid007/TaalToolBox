@@ -17,6 +17,7 @@ import DadMobileView from '@/views/dad/DadMobileView.vue'
 import Login from '@/views/Login.vue'
 import SignIn from '@/views/SignIn.vue'
 import StartGame from '@/views/StartGameView.vue'
+import Rgpd from '@/views/RgpdView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -105,6 +106,11 @@ const router = createRouter({
       path: '/start-game',
       name: 'startGame',
       component: StartGame
+    },
+    {
+      path: '/rgpd',
+      name: 'rgpd',
+      component: Rgpd
     }
   ]
 })

@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import MainHeader from '@/components/headers/MainHeader.vue'
+  import Footer from '@/components/footer/Footer.vue'
   import Greetings from '@/components/Greetings.vue'
   import { useUserStore } from '@/stores/user'
 
@@ -10,6 +11,7 @@
   <div class="page">
     <MainHeader />
     <Greetings />
+    <Footer/>
   </div>
 </template>
 
