@@ -33,9 +33,7 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.env
-
-package-lock.json
+.env    
 
 # Dont upload the images 
 /public/images/cards
