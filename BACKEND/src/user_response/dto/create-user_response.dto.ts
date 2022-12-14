@@ -5,25 +5,25 @@ import { Entity, Column } from 'typeorm';
 export class CreateUserResponseDto {
   @ApiProperty()
   @Column()
-  date_response: Date;
+  dateResponse: Date;
 
   @ApiProperty()
   @Column()
-  id_user: number;
+  userId: number;
 
   @ApiProperty()
   @Column()
-  id_card: number;
+  cardId: number;
 
   @ApiProperty({
     description: 'id_answer',
   })
   @Column()
-  id_answer: number;
+  answerId: number;
 
   @ApiProperty({
     description: 'id_proficiency',
   })
   @Column()
-  id_proficiency: number;
+  proficiencyId: number;
 }

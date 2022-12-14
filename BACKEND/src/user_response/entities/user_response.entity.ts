@@ -1,22 +1,54 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { LevelMap } from './../../level_map/entities/level_map.entity';
+import { Users } from './../../users/entities/users.entity';
+import { Card } from './../../cards/entities/card.entity';
+import { Answer } from './../../answer/entities/answer.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity()
 export class UserResponse {
   @PrimaryGeneratedColumn('increment')
-  id_user_response: number;
+  id: number;
 
   @Column()
-  date_response: Date;
+  dateResponse: Date;
 
   @Column()
-  id_user: number;
+  userId: number;
+  // Plusieurs réponse peuvent concernet un même utilisateur
+
+  @ManyToOne(() => Users, (user) => user.id)
+  @JoinColumn({ name: 'userId' })
+  user: Users;
 
   @Column()
-  id_card: number;
+  cardId: number;
+
+  // Plusieurs réponse peuvent concerner la meme carte
+  @ManyToOne(() => Card, (card) => card.id)
+  @JoinColumn({ name: 'cardId' })
+  card: Card;
 
   @Column()
-  id_answer: number;
+  answerId: number;
+
+  // Plusieur réponse peuvent avoir la meme answer
+  @ManyToOne(() => Answer, (answer) => answer.id)
+  @JoinColumn({ name: 'answerId' })
+  answer: Answer;
 
   @Column()
-  id_proficiency: number;
+  levelMapId: number;
+  // Plusieur réponse peuvent concerner une même niveau sur la carte
+  @ManyToOne(() => LevelMap, (levelMap) => levelMap.id)
+  @JoinColumn({ name: 'levelMapId' })
+  levelMap: LevelMap;
+
+  @Column()
+  proficiencyId: number;
 }
