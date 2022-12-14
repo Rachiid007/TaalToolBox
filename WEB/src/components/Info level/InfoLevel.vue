@@ -1,7 +1,10 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, reactive } from 'vue'
   import type { Ref } from 'vue'
   import { useLevelsData } from '@/stores/levelsData'
+  import { useMapStore } from '@/stores/map'
+  import generalService from '@/services/generalService'
+  import mapService from '@/services/mapService'
 
   const levelName: Ref<string> = ref('')
   const levelType: Ref<number> = ref(0)
@@ -10,9 +13,24 @@
   const levelDescription: Ref<string> = ref('')
 
   const store = useLevelsData()
+  const mapStore = useMapStore()
 
   const error: Ref<string> = ref('')
+  let theme: { id: number; name: string }[] = reactive([])
+  let difficulty: { id: number; description: string }[] = reactive([])
+  let activities: { id: number; name: string; description: string }[] = reactive([])
 
+  const themeRequest = await generalService.getCardTheme().catch((err) => console.error(err))
+  theme = themeRequest.data
+  console.log(theme)
+
+  const difficultyRequest = await generalService
+    .getDifficultyLevel()
+    .catch((err) => console.error(err))
+  difficulty = difficultyRequest.data
+
+  const activitiesRequest = await generalService.getActivities().catch((err) => console.error(err))
+  activities = activitiesRequest.data
   const checkFields = () => {
     if (
       levelName.value == '' ||
@@ -26,7 +44,7 @@
     return 1
   }
 
-  const handleClick = () => {
+  const handleClick = async () => {
     error.value = ''
     // console.log(
     //   levelName.value,
@@ -39,12 +57,19 @@
       console.log('succes')
       const dataPayload = {
         name: levelName.value,
-        type: levelType.value,
-        theme: levelTheme.value,
-        difficulty: levelDifficulty.value,
+        activityId: levelType.value,
+        themeId: levelTheme.value,
+        difficultyId: levelDifficulty.value,
         description: levelDescription.value
       }
-      store.addLevelData(dataPayload)
+      console.log(dataPayload)
+      // Rajouter au store et inserer le level dans la base de données
+      mapStore.$patch({ newLevel: dataPayload })
+      // store.addLevelData(dataPayload)
+
+      console.log(mapStore.getLevelMap())
+      // mapStore.setLevelMap(mapStore.newLevel)
+      mapService.setLevelMap(mapStore.newLevel)
     } else {
       error.value = 'Veuillez compléter tous les champs'
     }
@@ -97,8 +122,14 @@
               >
                 Changer l'activité
               </option>
-              <option value="1">FlashCard</option>
-              <option value="2">DragAndLearn</option>
+              <option
+                :value="item.id"
+                v-for="item in activities"
+              >
+                {{ item.name }}
+              </option>
+              <!-- <option value="1">FlashCard</option>
+              <option value="2">DragAndLearn</option> -->
             </select>
           </div>
           <div class="select">
@@ -113,37 +144,42 @@
                 selected
                 value="0"
               >
-                Thême du niveau
+                Thème du niveau
               </option>
-              <option value="1">Pâtisserie</option>
-              <option value="2">Sport</option>
+              <option
+                :value="item.id"
+                v-for="item in theme"
+              >
+                {{ item.name }}
+              </option>
+              <!-- <option value="1">Pâtisserie</option>
+              <option value="2">Sport</option> -->
             </select>
           </div>
-          <div class="level_difficulty">
-            <input
-              type="number"
-              min="1"
-              max="5"
-              style="width: 100%"
-              v-model="levelDifficulty"
-              class="select_input"
-            />
-            <!-- <select
+          <div class="select">
+            <select
               name="select"
               class="select_input"
+              v-model="levelDifficulty"
             >
               <option
                 hidden
-                value="theme du niveau"
                 disabled
                 selected
+                value="0"
               >
                 Difficulté
               </option>
-              <option value="facile">Facile</option>
+              <option
+                :value="item.id"
+                v-for="item in difficulty"
+              >
+                {{ item.description }}
+              </option>
+              <!-- <option value="facile">Facile</option>
               <option value="moyen">Moyen</option>
-              <option value="difficile">Difficile</option>
-            </select> -->
+              <option value="difficile">Difficile</option> -->
+            </select>
           </div>
         </form>
         <p
@@ -281,6 +317,7 @@
     color: grey;
   }
   .select {
+    /* border: solid red 1px; */
     width: 100%;
     border-radius: 5px;
     font-size: 1em;
@@ -325,5 +362,8 @@
     font-size: 20px;
     cursor: pointer;
     border-radius: 5px;
+  }
+  input.select_imput {
+    border: solid red 1px;
   }
 </style>

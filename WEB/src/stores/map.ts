@@ -7,20 +7,24 @@ export const useMapStore = defineStore('map', () => {
   // Enregistrer les level
   const newLevel: LevelMap = reactive({
     name: '',
+    description: '',
+    address: '',
     position: [],
-    difficulty: '',
-    theme: ''
+    activityId: 0,
+    difficultyId: 0,
+    themeId: 0
   })
-  const getMap = () => {
-    return
+  const getLevelMap = (): LevelMap => {
+    return newLevel
   }
-  const setMap = () => {
+  const setLevelMap = async (level: LevelMap) => {
+    // Enregistrer le nouveau level dans la map
     return
   }
   return {
     newLevel,
-    getMap,
-    setMap
+    getLevelMap,
+    setLevelMap
   }
 })
 

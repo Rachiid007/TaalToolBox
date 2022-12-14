@@ -23,6 +23,7 @@
   import { useUserStore } from '@/stores/user'
   import useMapStore from '@/stores/map'
   import router from '@/router'
+
   // import { Popup } from 'ol-popup';
   //
   //
@@ -259,7 +260,7 @@
     import.meta.env.VITE_API_KEY
 
   // olms(map, basemapURL)
-
+  // console.log(import.meta.env.VITE_API_KEY)
   const authentication = ApiKeyManager.fromKey(import.meta.env.VITE_API_KEY)
 
   const handleGeocode = () => {
@@ -342,8 +343,12 @@
 
   const onConfirmAddress = () => {
     // Enregistrer l'adresse dans le store et switch de page
-    console.log(mapStore.$patch({ newLevel: { name: newPointState.label } }))
-    router.replace('/')
+    console.log(
+      mapStore.$patch({
+        newLevel: { address: newPointState.label, position: newPointState.coordinates }
+      })
+    )
+    router.replace('/infoLevel')
   }
 </script>
 

@@ -1,6 +1,9 @@
 export interface LevelMap {
   name: string
+  description: string
+  address: string
   position: number[]
-  difficulty: string
-  theme: string
+  activityId: number
+  difficultyId: number
+  themeId: number
 }
