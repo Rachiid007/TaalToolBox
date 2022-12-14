@@ -1,4 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { CardsThemeService } from './../cards_theme/cards_theme.service';
+import { dataCard } from './data/cards';
+import {
+  Injectable,
+  NotFoundException,
+  OnApplicationBootstrap,
+  Inject,
+} from '@nestjs/common';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,12 +13,86 @@ import { Repository } from 'typeorm';
 import * as XLSX from 'xlsx';
 import { Card } from './entities/card.entity';
 @Injectable()
-export class CardsService {
+export class CardsService implements OnApplicationBootstrap {
   constructor(
     @InjectRepository(Card)
     private cardsRepository: Repository<Card>,
   ) {}
+  @Inject(CardsThemeService)
+  private readonly cardsThemeService: CardsThemeService;
 
+  async onApplicationBootstrap() {
+    const card = await this.cardsRepository.find();
+    if (!card.length) {
+      // return this.cardsRepository.save(dataCard);
+      for (let i = 0; i < dataCard.length; i++) {
+        await this.insertCard(dataCard[i]);
+      }
+    } else if (card.length === dataCard.length) {
+      for (let i = card.length; i < dataCard.length; i++) {
+        await this.insertCard(dataCard[i]);
+        // const insertCard = await this.cardsRepository
+        //   .createQueryBuilder('cards')
+        //   .insert()
+        //   .into('cards', ['word', 'translation', 'difficultyId'])
+        //   .values({
+        //     word: dataCard[i].word,
+        //     translation: dataCard[i].translation,
+        //     difficultyId: dataCard[i].difficultyId,
+        //   })
+        //   .execute();
+        // const idInsertCard = insertCard.identifiers[0].id;
+        // for (let j = 0; j < dataCard[i].theme.length; j++) {
+        //   // Recupérer les id des theme
+        //   const cardThemeRequest = await this.cardsThemeService.findCardTheme(
+        //     dataCard[i].theme[j],
+        //   );
+        //   const idCardTheme = cardThemeRequest.id;
+        //   const insertCardTheme = await this.cardsRepository
+        //     .createQueryBuilder()
+        //     .insert()
+        //     .into('card_cardstheme_cards_theme')
+        //     .values({ cardId: idInsertCard, cardsThemeId: idCardTheme })
+        //     .execute()
+        //     .catch((err) => console.error(err));
+        //   console.log(insertCardTheme);
+        // }
+      }
+    }
+  }
+  async insertCard(dataCard: {
+    word: string;
+    translation: string;
+    difficultyId: number;
+    theme: string[];
+  }) {
+    const insertCard = await this.cardsRepository
+      .createQueryBuilder('card')
+      .insert()
+      .into('card', ['word', 'translation', 'difficultyId'])
+      .values({
+        word: dataCard.word,
+        translation: dataCard.translation,
+        difficultyId: dataCard.difficultyId,
+      })
+      .execute();
+    const idInsertCard = insertCard.identifiers[0].id;
+    for (let j = 0; j < dataCard.theme.length; j++) {
+      // Recupérer les id des theme
+      const cardThemeRequest = await this.cardsThemeService.findCardTheme(
+        dataCard.theme[j],
+      );
+      console.log(cardThemeRequest);
+      const idCardTheme = cardThemeRequest.id;
+      const insertCardTheme = await this.cardsRepository
+        .createQueryBuilder()
+        .insert()
+        .into('card_cardstheme_cards_theme')
+        .values({ cardId: idInsertCard, cardsThemeId: idCardTheme })
+        .execute()
+        .catch((err) => console.error(err));
+    }
+  }
   create(createCardDto: CreateCardDto) {
     const card = this.cardsRepository.create(createCardDto);
     console.log('Service : ', card);
