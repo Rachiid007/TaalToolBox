@@ -7,7 +7,9 @@
 <template>
   <main>
     <!-- <template #data> HELLO </template> -->
-    <Map />
+    <Suspense>
+      <Map />
+    </Suspense>
   </main>
 </template>
 <style scoped>
