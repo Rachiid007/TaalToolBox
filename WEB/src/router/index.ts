@@ -22,6 +22,7 @@ import InfoLevel from '@/views/Info level/InfoLevel.vue'
 import AddUserExcelView from '@/views/add-user/AddUserExcelView.vue'
 import Verbalize from '@/views/recognition/VerbalizeView.vue'
 import userResponseStats from '@/views/userResponseStats.vue'
+import Rgpd from '@/views/RgpdView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -135,7 +136,12 @@ const router = createRouter({
       path: '/userResponseStats',
       name: 'userResponseStats',
       component: userResponseStats
-    }  
+    },
+    { 
+      path: '/rgpd',
+      name: 'rgpd',
+      component: Rgpd
+    }
   ]
   
 })
