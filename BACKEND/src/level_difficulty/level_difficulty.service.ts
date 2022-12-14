@@ -32,7 +32,7 @@ export class LevelDifficultyService implements OnApplicationBootstrap {
   }
 
   findAll() {
-    return `This action returns all levelDifficulty`;
+    return this.levelDifficultyRepository.find();
   }
 
   findOne(id: number) {

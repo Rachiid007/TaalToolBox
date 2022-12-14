@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreateLevelMapDto } from './dto/create-level_map.dto';
 import { UpdateLevelMapDto } from './dto/update-level_map.dto';
-
+import { Repository } from 'typeorm';
+import { LevelMap } from './entities/level_map.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
 export class LevelMapService {
+  constructor(
+    @InjectRepository(LevelMap)
+    private levelMapRepository: Repository<LevelMap>,
+  ) {}
   create(createLevelMapDto: CreateLevelMapDto) {
-    return 'This action adds a new levelMap';
+    return this.levelMapRepository.save(createLevelMapDto);
   }
 
   findAll() {
