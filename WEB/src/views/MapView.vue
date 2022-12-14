@@ -1,5 +1,7 @@
 <script setup lang="ts">
   import Map from '@/components/Map.vue'
+  import useMapStore from '@/stores/map'
+  const mapStore = useMapStore()
 </script>
 
 <template>

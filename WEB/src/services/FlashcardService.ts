@@ -1,7 +1,6 @@
 import { apiClient, apiClientForm } from './apiClient'
 import { useUserStore } from '@/stores/user'
 
-
 interface FlashcardForm {
   word: string | null
   translation: string | null
@@ -15,8 +14,8 @@ interface FlashcardImage {
 export default {
   getFlashcards(nbrcards: number) {
     const store = useUserStore()
-    console.log(store.user);
-    return apiClient.get('/cards/'+store.user.id+'/'+nbrcards)
+    console.log(store.user)
+    return apiClient.get('/cards/' + store.user.id + '/' + nbrcards)
   },
 
   getFlashcard(id: string) {
