@@ -1,32 +1,26 @@
 <script setup lang="ts">
   // il n'ya que ceux ayant le profil créateur qui peuvent ajouter des activités
-  import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { RouterLink } from 'vue-router';
+import  activityService  from '@/services/activityService'
+import type { Ref } from 'vue'
+
   const selectedActivity = ref(0)
   const isThereAnyActivitySelected = ref(false)
-  const listActivities = [
-    {
-      activity_name: 'FlashCards',
-      url: '/src/assets/logo/flashcards.svg',
-      description:
-        "Activité dans laquelle l'étudiant doit trouver de mots et doit s'auto-évaluer. Les mots" +
-        '            sont representé sous forme de carte. Un systeme de poids est mise en place pour que les' +
-        "            cartes plus dure de l'élève réaparaissent le plus souvent.",
-      link: '/infoLevel'
-    },
-    {
-      activity_name: 'DragAndLearn',
-      url: '/src/assets/logo/dalcard.svg',
-      description:
-        "Activité dans laquelle l'étudiant doit placer des mots qui lui seront proposer dans la zone de jeu." +
-        ' Dans cette zone de jeu les mots devrons être placés dans des champs et la zone de jeu comportera une image de background.',
-      link: '/infoLevel'
-    }
-  ]
+  const listActivities: Ref<{name:string, description:string, src:string}[]>  = ref([])
   const handleClick = (divId: any) => {
     isThereAnyActivitySelected.value = true
     console.log(divId)
     selectedActivity.value = divId
   }
+  onMounted(() => {
+    activityService.getActivity()
+    .then((response) => {
+      listActivities.value = response.data
+    })
+  })
+
+
 </script>
 <template>
   <div class="main">
@@ -43,7 +37,7 @@
         >
           <img
             class="logo"
-            :src="value.url"
+            :src="value.src"
             alt="Gamemode logo"
           />
         </div>
@@ -65,7 +59,7 @@
           class="actiName"
           v-show="isThereAnyActivitySelected"
         >
-          {{ isThereAnyActivitySelected ? listActivities[selectedActivity].activity_name : '' }}
+          {{ isThereAnyActivitySelected ? listActivities[selectedActivity].name : '' }}
         </div>
         <div
           class="textDescrip"
@@ -78,7 +72,7 @@
         <div>
           <router-link
             v-show="isThereAnyActivitySelected"
-            :to="isThereAnyActivitySelected ? listActivities[selectedActivity].link : ''"
+            :to="isThereAnyActivitySelected ?  '/infoLevel' : ''"
             class="button"
           >
             Créer une activité

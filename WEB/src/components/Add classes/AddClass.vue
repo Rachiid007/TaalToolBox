@@ -17,9 +17,24 @@
   const store = useSchoolsStore()
 
   store.getSchoolName()
+  store.getSchoolClass()
 
   const list = ref(store.schoolList)
   console.log(list)
+
+  const listClass = ref(store.schoolClassList)
+
+//   const listC = () => {
+//     // console.log(listClass.value)
+//     const classL =  listClass.value
+//     console.log(classL)
+//     for (let i in classL){
+//       if(classL[i].idSchool == classL[i].idSchool && classL[i].nameClass ) {
+
+//       }
+//       console.log(typeof ( i ))
+//     }
+// }
 
   const handleClick = () => {
     manage.error = ''

@@ -25,6 +25,10 @@ export default {
     return apiClient.get('/school')
   },
 
+  getSchoolClass() {
+    return apiClient.get('/schoolClass')
+  },
+
   addClass(name: string, schoolId: number ) {
     return apiClient.post(`/schoolclass`, {
         name : name,
