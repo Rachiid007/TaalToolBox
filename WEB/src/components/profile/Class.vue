@@ -1,12 +1,25 @@
 <template>
-    <div class="title">
-        <b>Classe</b>
-    </div> 
-    <div class="school">
-        <b>Ecole: </b>{{user.school}}
+    <div class="class" v-if="user">
+        <div class="title">
+            <b>Classe</b>
+        </div> 
+        <div class="school">
+            <b>Ecole: </b>{{user.school}}
+        </div>
+        <div class="class">
+            <b>Classe: </b>{{user.schoolclass[0]}}
+        </div>
     </div>
-    <div class="class">
-        <b>Classe: </b>{{user.schoolclass[0]}}
+    <div class="class2" v-else>
+        <div class="title">
+            <b>Classe</b>
+        </div> 
+        <div class="school">
+            <b>Ecole: </b>
+        </div>
+        <div class="class">
+            <b>Classe: </b>
+        </div>
     </div>
 </template>
 
