@@ -1,3 +1,4 @@
+import { Activity } from './../../activity/entities/activity.entity';
 import { CardsTheme } from './../../cards_theme/entities/cards_theme.entity';
 import { LevelDifficulty } from './../../level_difficulty/entities/level_difficulty.entity';
 import {
@@ -15,10 +16,23 @@ export class LevelMap {
 
   @Column('character varying')
   name: string;
+
+  @Column('character varying')
+  description: string;
+
+  @Column('character varying')
+  address: string;
   // Stocker la position du jeu sur la map
 
   @Column('float', { array: true })
   position: number[];
+
+  @Column({ name: 'activityId' })
+  activityId: number;
+
+  @ManyToOne(() => Activity, (activity) => activity.id)
+  @JoinColumn({ name: 'activityId' })
+  activity: Activity;
 
   // Difficulté des cartes (un niveau de difficulté par carte)
   // Mentionner le niveau de difficulté des cartes ?

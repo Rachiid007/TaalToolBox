@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { LevelMapService } from './level_map.service';
 import { CreateLevelMapDto } from './dto/create-level_map.dto';
 import { UpdateLevelMapDto } from './dto/update-level_map.dto';
@@ -8,8 +16,8 @@ export class LevelMapController {
   constructor(private readonly levelMapService: LevelMapService) {}
 
   @Post()
-  create(@Body() createLevelMapDto: CreateLevelMapDto) {
-    return this.levelMapService.create(createLevelMapDto);
+  async create(@Body() createLevelMapDto: CreateLevelMapDto) {
+    return await this.levelMapService.create(createLevelMapDto);
   }
 
   @Get()
@@ -23,7 +31,10 @@ export class LevelMapController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLevelMapDto: UpdateLevelMapDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateLevelMapDto: UpdateLevelMapDto,
+  ) {
     return this.levelMapService.update(+id, updateLevelMapDto);
   }
 

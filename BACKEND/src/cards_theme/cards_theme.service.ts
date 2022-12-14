@@ -52,7 +52,8 @@ export class CardsThemeService implements OnApplicationBootstrap {
   }
 
   findAll() {
-    return `This action returns all cardsTheme`;
+    // return `This action returns all cardsTheme`;
+    return this.cardsThemeRepository.find();
   }
 
   findOne(id: number) {
