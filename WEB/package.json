@@ -25,7 +25,8 @@
     "pinia": "^2.0.28",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.1/xlsx-0.19.1.tgz"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.1/xlsx-0.19.1.tgz",
+    "wav-file-encoder": "^1.0.4"
   },
   "devDependencies": {
     "@pinia/testing": "^0.0.14",

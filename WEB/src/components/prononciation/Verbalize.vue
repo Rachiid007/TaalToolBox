@@ -2,26 +2,36 @@
   import { onMounted, ref } from 'vue'
   import type { Ref, Component } from 'vue'
   import logo from '@/assets/logo/mic-logo.svg'
+  import axios from 'axios'
+  import { encodeWavFileFromAudioBuffer } from 'wav-file-encoder'
 
   const micAccess: Ref<boolean> = ref(false)
+  const audioContext: Ref<AudioContext | null> = ref(null)
 
-  const player: any = ref(null)
-  const mediaRecorder: any = ref(null)
-  const dataList: Ref<never[] | []> = ref([])
+  const player: Ref<HTMLImageElement | null> = ref(null)
+  const mediaRecorder: Ref<MediaRecorder | null> = ref(null)
+  const dataList: Ref<any[]> = ref([])
 
   const soundBlob: Ref<null | Blob> = ref(null)
-  const soundData: Ref<null | File> = ref(null)
-
-  const audioUrl: Ref<null | string> = ref(null)
+  // const soundData: Ref<null | File> = ref(null)
+  const soundName: Ref<string> = ref('')
 
   const recording: Ref<boolean> = ref(false)
-  const recordingState: Ref<null | Component> = ref(null)
+  const recordingState: Ref<any> = ref(null)
 
-  const active: Ref<string> = ref('recording')
+  const playerDisplay = ref(false)
+
   const recorderStateClass: Ref<string> = ref('recorder_state')
 
+  const prononc_result: Ref<{ prononciation: boolean; word: string }> = ref({
+    prononciation: false,
+    word: ''
+  })
+  const goodResponse: Ref<boolean> = ref(false)
+  const badResponse: Ref<boolean> = ref(false)
+
   // Utilisé pour activer / désactiver les console.log
-  const debugMode = true
+  const debugMode = false
 
   const debug = (param: any) => {
     if (debugMode) {
@@ -31,8 +41,10 @@
 
   // Si l'utilisateur à accordé l'accès au micro on crée un nouveau MediaRecorder
   const handleSuccess = (stream: any) => {
+    debug(stream)
     micAccess.value = true
     mediaRecorder.value = new MediaRecorder(stream)
+    audioContext.value = new window.AudioContext()
   }
 
   // On regarde si l'utilisateur à accordé l'accès | On demande à l'utilisateur pour accéder au micro
@@ -47,44 +59,97 @@
 
   // Quand on clic sur le bouton du micro soit on démare l'enregistrement soit on le coupe
   const recordClicked = () => {
-    if (mediaRecorder.value.state == 'recording') {
+    if (mediaRecorder.value?.state == 'recording') {
       // On coupe le record
-      mediaRecorder.value.stop()
+      mediaRecorder.value?.stop()
       recording.value = false
       recordingState.value.style.visibility = 'hidden'
       debug(mediaRecorder.value.state)
       debug(dataList.value)
+      playerDisplay.value = true
 
       // On met un set timeout pour qu'il ai bien le temps de mettre les valeurs dans dataList
+      // On va prendre l'ArrayBuffer contenu dans le blob et le reconvertir en .wav (car de base on peut uniquement record en .webm avec js)
       setTimeout(() => {
-        // On crée un nouveau Blob à partir de ces données et on le stocke dans une ref
-        soundBlob.value = new Blob(dataList.value, { type: 'audio/wav; codecs=opus' })
-        audioUrl.value = window.URL.createObjectURL(soundBlob.value)
-        // On assigne le blob en temps que source de la balise audio pour que l'utilisateur puisse s'écouter
-        player.value.src = audioUrl.value
-        // On crée un nouveau fichier à partir des informations contenues dans le Blob
-        soundData.value = new File([audioUrl.value], 'record')
-        // On réinitialise le tableau de données
-        dataList.value = []
-      }, 1000)
+        debug(audioContext.value)
+        debug(mediaRecorder.value)
+        debug(dataList.value[0])
+        dataList.value[0].arrayBuffer().then((response: ArrayBuffer) => {
+          debug(response)
+          audioContext.value?.decodeAudioData(response).then((audioBuff: AudioBuffer) => {
+            const arrayBuffer: ArrayBuffer = encodeWavFileFromAudioBuffer(audioBuff, 0)
+            debug(arrayBuffer)
+
+            // On crée un nouveau Blob à partir de ces données
+            soundBlob.value = new Blob([arrayBuffer], { type: 'audio/wav' })
+            debug(soundBlob.value)
+            const audioUrl: string = window.URL.createObjectURL(soundBlob.value)
+
+            // On assigne le blob en temps que source de la balise audio pour que l'utilisateur puisse s'écouter
+            soundName.value = audioUrl
+            player.value!.src = soundName.value
+
+            // On crée un nouveau fichier à partir des informations contenues dans le Blob
+            // soundData.value = new File([audioUrl.value], 'record')
+
+            // On réinitialise le tableau de données
+            dataList.value = []
+          })
+        })
+      }, 1)
       // Si le record n'est pas lancé on rentre ici
     } else {
       // On lance l'enregistrement
-      mediaRecorder.value.start()
-      recording.value = true
-      recordingState.value.style.visibility = 'visible'
-      debug(mediaRecorder.value.state)
       // Quand les données sont disponibles => Donc quand on arrête l'enregistrement, on met les données dans la liste de données "dataList"
-      mediaRecorder.value.ondataavailable = (e: any | never) => {
-        dataList.value.push(e.data)
+      mediaRecorder.value?.start()
+
+      recording.value = true
+      goodResponse.value = false
+      badResponse.value = false
+      recordingState.value.style.visibility = 'visible'
+
+      debug(mediaRecorder.value?.state)
+
+      if (mediaRecorder.value) {
+        mediaRecorder.value.ondataavailable = (e: any) => {
+          dataList.value.push(e.data)
+        }
       }
     }
+  }
+
+  const sendToDjango = () => {
+    let formData = new FormData()
+    formData.append('data', soundBlob.value!, soundName.value)
+    formData.append('word', 'elektriciteit')
+
+    axios
+      .post('http://localhost:8000/polls/posts', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+          // 'Access-Control-Allow-Origin': '*'
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      .then((response) => {
+        console.log(response)
+        prononc_result.value = response.data
+        if (prononc_result.value.prononciation) {
+          goodResponse.value = true
+        } else {
+          badResponse.value = true
+        }
+        // router.push('/')
+      })
   }
 
   onMounted(() => {
     // Quand le composant est chargé, on demande l'accès au micro
     // grandAcces()
-    navigator.permissions.query({ name: 'microphone' }).then((result) => {
+    let permission: any = { name: 'microphone' }
+    navigator.permissions.query(permission).then((result) => {
       if (result.state == 'granted' || result.state == 'prompt') {
         grandAcces()
       }
@@ -117,6 +182,7 @@
       controls
       volume="0.5"
       style="margin-top: 25px; outline: none"
+      v-if="playerDisplay"
     ></audio>
     <h2
       class="no_acces"
@@ -126,6 +192,25 @@
       fonctionner
     </h2>
   </div>
+  <button
+    @click="sendToDjango"
+    class="send"
+    v-if="playerDisplay && !recording"
+  >
+    Vérifier
+  </button>
+  <h2
+    class="response good_res"
+    v-if="goodResponse"
+  >
+    Félicitation, vous avez bien prononcé le mot !
+  </h2>
+  <h2
+    class="response bad_res"
+    v-if="badResponse"
+  >
+    Dommage, vous avez mal prononcé le mot. Réessayé !
+  </h2>
 </template>
 <style scoped>
   .main {
@@ -193,6 +278,40 @@
     opacity: 0;
     animation: appear 0.5s ease 2s forwards;
   }
+  .send {
+    border: 2px solid var(--main-verbalize-color);
+    color: var(--second-verbalize-color);
+    padding: 15px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 25px;
+    transition: 0.2s ease;
+  }
+  .send:hover {
+    background: rgb(178, 0, 255, 0.1);
+    transform: scale(1.05);
+    transition: 0.2s ease;
+  }
+  .response {
+    margin-top: 25px;
+    font-size: 25px;
+    color: green;
+    font-weight: 500;
+    text-align: center;
+  }
+  .good_res {
+    color: green;
+  }
+  .bad_res {
+    color: red;
+  }
+  @media (max-width: 900px) {
+    .recorder {
+      width: 40%;
+    }
+  }
+
   @keyframes appear {
     0% {
       opacity: 0;
