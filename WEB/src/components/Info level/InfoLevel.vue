@@ -5,7 +5,7 @@
   import { useMapStore } from '@/stores/map'
   import generalService from '@/services/generalService'
   import mapService from '@/services/mapService'
-
+  import router from '@/router'
   const levelName: Ref<string> = ref('')
   const levelType: Ref<number> = ref(0)
   const levelTheme: Ref<number> = ref(0)
@@ -22,7 +22,6 @@
 
   const themeRequest = await generalService.getCardTheme().catch((err) => console.error(err))
   theme = themeRequest.data
-  console.log(theme)
 
   const difficultyRequest = await generalService
     .getDifficultyLevel()
@@ -54,7 +53,6 @@
     //   levelDescription.value
     // )
     if (checkFields()) {
-      console.log('succes')
       const dataPayload = {
         name: levelName.value,
         activityId: levelType.value,
@@ -62,14 +60,13 @@
         difficultyId: levelDifficulty.value,
         description: levelDescription.value
       }
-      console.log(dataPayload)
       // Rajouter au store et inserer le level dans la base de données
       mapStore.$patch({ newLevel: dataPayload })
       // store.addLevelData(dataPayload)
 
-      console.log(mapStore.getLevelMap())
       // mapStore.setLevelMap(mapStore.newLevel)
       mapService.setLevelMap(mapStore.newLevel)
+      router.replace('/map')
     } else {
       error.value = 'Veuillez compléter tous les champs'
     }

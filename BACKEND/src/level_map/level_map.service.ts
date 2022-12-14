@@ -15,7 +15,7 @@ export class LevelMapService {
   }
 
   findAll() {
-    return `This action returns all levelMap`;
+    return this.levelMapRepository.find();
   }
 
   findOne(id: number) {

@@ -23,7 +23,8 @@
   import { useUserStore } from '@/stores/user'
   import useMapStore from '@/stores/map'
   import router from '@/router'
-
+  import mapService from '@/services/mapService'
+  import type { LevelMapWithId } from '@/types/map'
   // import { Popup } from 'ol-popup';
   //
   //
@@ -79,6 +80,18 @@
       }
     ]
   })
+  // Chercher tous les niveaux dans la base de données (pour la démo)
+  const levelRequest = await mapService.getLevelMap()
+
+  const levelMap = levelRequest.data
+  if (levelMap.length) {
+    pointState.points.push.apply(
+      pointState.points,
+      levelMap.map((x: LevelMapWithId) => {
+        return { label: x.address, coordinates: x.position, levelId: x.id }
+      })
+    )
+  }
   // Permet de désactiver le dézoom et les mouvements sur la carte quand le popup est ouvert
   const allowControls = ref(true)
 
