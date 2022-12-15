@@ -2,6 +2,11 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import dalService from '@/services/dalService'
 import type Dadleveldata from '@/types/Dadleveldata'
+import type { LevelMap } from '@/types/map'
+import mapService from '@/services/mapService'
+// import useMapStore from './map'
+
+// const mapLevelData = await useMapStore().newLevel
 
 export const useDadLevels = defineStore('dadlevels', () => {
   const levelSelector = ref(0)
@@ -153,9 +158,8 @@ export const useDadLevels = defineStore('dadlevels', () => {
   //   // DalDataList.value.push(DalList);
   // }
   const addDragAndLearnDB = async (
+    mapLevelData: LevelMap,
     newDragAndLearnExerciceData: Dadleveldata,
-    newDragAndLearnExerciceLevelName: string,
-    newDragAndLearnExerciceCreator: string,
     newDragAndLearnImage: File | null
   ) => {
     if (newDragAndLearnImage === null) {
@@ -163,19 +167,20 @@ export const useDadLevels = defineStore('dadlevels', () => {
       return 1
     }
     const payload = {
-      leveldata: JSON.stringify(newDragAndLearnExerciceData),
-      levelname: newDragAndLearnExerciceLevelName,
-      creator: newDragAndLearnExerciceCreator
+      leveldata: JSON.stringify(newDragAndLearnExerciceData)
     }
-    dalService
-      .postDragAndLearn(payload)
+
+    mapService.setDadLevelMap(mapLevelData, payload).then((result: number) => {})
+
+    mapService
+      .setDadLevelMap(mapLevelData, payload)
       .catch((error) => {
         console.log(error)
         return 1
       })
-      .then((response) => {
+      .then((response: number) => {
         dalService
-          .postDalImage(newDragAndLearnImage, response.data.id)
+          .postDalImage(newDragAndLearnImage, response)
           .catch((error) => {
             console.log(error)
             return 1

@@ -29,7 +29,7 @@
     if (n > slides.length) {
       // Ajouter l'argent de l'utilisateur pour
       userStore.setReward(50)
-      router.push('/map')
+      router.replace('/map')
       return
     } else if (n == slides.length) {
       // slideIndex.value = 1
