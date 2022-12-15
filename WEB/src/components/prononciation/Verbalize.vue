@@ -23,12 +23,13 @@
 
   const recorderStateClass: Ref<string> = ref('recorder_state')
 
-  const prononc_result: Ref<{ prononciation: boolean; word: string }> = ref({
+  const prononc_result: Ref<{ prononciation: boolean | string; word: string }> = ref({
     prononciation: false,
     word: ''
   })
   const goodResponse: Ref<boolean> = ref(false)
   const badResponse: Ref<boolean> = ref(false)
+  const errorResponse: Ref<boolean> = ref(false)
 
   // Utilisé pour activer / désactiver les console.log
   const debugMode = false
@@ -106,6 +107,7 @@
       recording.value = true
       goodResponse.value = false
       badResponse.value = false
+      errorResponse.value = false
       recordingState.value.style.visibility = 'visible'
 
       debug(mediaRecorder.value?.state)
@@ -121,7 +123,7 @@
   const sendToDjango = () => {
     let formData = new FormData()
     formData.append('data', soundBlob.value!, soundName.value)
-    formData.append('word', 'elektriciteit')
+    formData.append('word', 'bestelling')
 
     axios
       .post('http://localhost:8000/polls/posts', formData, {
@@ -137,7 +139,9 @@
         console.log(response)
         prononc_result.value = response.data
         if (prononc_result.value.prononciation) {
-          goodResponse.value = true
+          prononc_result.value.prononciation == 'error'
+            ? (errorResponse.value = true)
+            : (goodResponse.value = true)
         } else {
           badResponse.value = true
         }
@@ -159,7 +163,7 @@
 <template>
   <div class="main">
     <h1 class="title">Prononcer le mot:</h1>
-    <p class="word">Elektriciteit</p>
+    <p class="word">Bestelling</p>
     <p
       :class="recorderStateClass"
       ref="recordingState"
@@ -177,28 +181,30 @@
       />
     </div>
     <p class="desc">Appuyer pour enregister</p>
-    <audio
-      ref="player"
-      controls
-      volume="0.5"
-      style="margin-top: 25px; outline: none"
-      v-if="playerDisplay"
-    ></audio>
-    <h2
-      class="no_acces"
-      v-if="!micAccess"
-    >
-      Veuillez accorder l'accès au microphone et rafraichir la page pour que l'activité puisse
-      fonctionner
-    </h2>
+    <div class="last_row">
+      <audio
+        ref="player"
+        controls
+        volume="0.5"
+        style="outline: none"
+        v-if="playerDisplay"
+      ></audio>
+      <button
+        @click="sendToDjango"
+        class="send"
+        v-if="playerDisplay && !recording"
+      >
+        Vérifier
+      </button>
+    </div>
   </div>
-  <button
-    @click="sendToDjango"
-    class="send"
-    v-if="playerDisplay && !recording"
+  <h2
+    class="no_acces"
+    v-if="!micAccess"
   >
-    Vérifier
-  </button>
+    Veuillez accorder l'accès au microphone et rafraichir la page pour que l'activité puisse
+    fonctionner
+  </h2>
   <h2
     class="response good_res"
     v-if="goodResponse"
@@ -209,7 +215,13 @@
     class="response bad_res"
     v-if="badResponse"
   >
-    Dommage, vous avez mal prononcé le mot. Réessayé !
+    Dommage, vous avez mal prononcé le mot. Réessayer !
+  </h2>
+  <h2
+    class="response error_res"
+    v-if="errorResponse"
+  >
+    Une erreur est survenue lors de la vérification de la prononciation. Réessayer!
   </h2>
 </template>
 <style scoped>
@@ -225,7 +237,7 @@
     color: var(--second-verbalize-color);
     font-size: 35px;
     font-family: 'Corbel';
-    margin-top: 35px;
+    margin-top: 10px;
   }
   .word {
     color: var(--main-verbalize-color);
@@ -237,7 +249,7 @@
     color: red;
     font-size: 25px;
     text-align: center;
-    margin: 35px 0;
+    margin: 20px 0;
     visibility: hidden;
   }
   #active {
@@ -249,7 +261,7 @@
     border: 5px solid var(--second-verbalize-color);
     border-radius: 50%;
     /* padding: 30px 0; */
-    width: 10%;
+    width: 150px;
     /* margin-top: 100px; */
     aspect-ratio: 1;
     cursor: pointer;
@@ -266,9 +278,16 @@
   }
   .desc {
     color: var(--second-verbalize-color);
-    font-size: 30px;
+    font-size: 25px;
     padding-top: 5px;
     font-family: 'Corbel';
+  }
+  .last_row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    gap: 25px;
   }
   .no_acces {
     color: red;
@@ -281,11 +300,10 @@
   .send {
     border: 2px solid var(--main-verbalize-color);
     color: var(--second-verbalize-color);
-    padding: 15px 25px;
+    padding: 12px 25px;
     border-radius: 5px;
     font-weight: bold;
     font-size: 20px;
-    margin-top: 25px;
     transition: 0.2s ease;
   }
   .send:hover {
@@ -305,6 +323,9 @@
   }
   .bad_res {
     color: red;
+  }
+  .error_res {
+    color: var(--main-verbalize-color);
   }
   @media (max-width: 900px) {
     .recorder {

@@ -40,7 +40,10 @@ def posts(request):
         default_storage.delete(new_file_path)
 
         # On récupère les données pour les renvoyer au client 
-        response = {'prononciation': prononciation_response, 'word': word_to_guess}
+        if(prononciation_response == -1):
+            response = {'prononciation': "error", 'word': word_to_guess}
+        else:
+            response = {'prononciation': prononciation_response, 'word': word_to_guess}
 
     return Response(response)
 
