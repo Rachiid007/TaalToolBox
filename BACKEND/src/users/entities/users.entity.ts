@@ -9,7 +9,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Role } from '../../role/entities/role.entity';
-import { Schoolclass } from '../../schoolclass/entities/schoolclass.entity';
+import { Schoolclass } from 'src/schoolclass/entities/schoolclass.entity';
+import { School } from 'src/school/entities/school.entity';
 import { Lang } from '../../lang/entities/lang.entity';
 @Entity()
 export class Users {
@@ -34,10 +35,6 @@ export class Users {
   @Column('character varying')
   phone: string;
 
-  @ManyToMany(() => Role)
-  @JoinTable()
-  role: Role[];
-
   @ManyToMany(() => Schoolclass)
   @JoinTable()
   schoolclass: Schoolclass[];
@@ -45,4 +42,9 @@ export class Users {
   //chaque utilisateur possède une seule langue
   @ManyToOne(() => Lang, (lang) => lang.users)
   lang: Lang;
+
+  //Chaque utilisateur peut avoir un seul role
+  @ManyToOne(() => Role)
+  @JoinTable()
+  role: Role[];
 }
