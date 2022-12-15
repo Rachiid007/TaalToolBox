@@ -22,7 +22,7 @@ export interface UserFormData {
   role: string
 }
 
-export default interface UserFromExcelFile {
+export interface UserFromExcelFile {
   firstName: string
   lastName: string
   schoolEmail: string

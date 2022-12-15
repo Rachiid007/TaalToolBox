@@ -1,9 +1,8 @@
 import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import loginService from '@/services/loginService'
-import type { User } from '@/types/user'
-import { useArrayEvery } from '@vueuse/shared'
-// import localforage from 'localforage'
+import type { User, UserFromExcelFile } from '@/types/user'
+import UserService from '@/services/UserService'
 
 export const useUserStore = defineStore('user', () => {
   let userReward = ref<number>(0)
@@ -39,10 +38,22 @@ export const useUserStore = defineStore('user', () => {
     userReward.value = reward
   }
 
+  const postListUsers = async (users: UserFromExcelFile[]) => {
+    const userRequest = await UserService.createUsers(users)
+      .then((res) => {
+        return res
+      })
+      .catch((err) => {
+        return err
+      })
+    return userRequest
+  }
+
   return {
     user,
     userReward,
     setReward,
-    getUser
+    getUser,
+    postListUsers
   }
 })

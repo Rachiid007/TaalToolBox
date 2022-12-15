@@ -1,11 +1,13 @@
 <script setup lang="ts">
-  import UserService from '@/services/UserService'
-  import type UserFromExcelFile from '@/types/user'
+  // import UserService from '@/services/UserService'
+  import type { UserFromExcelFile } from '@/types/user'
   import { ref } from 'vue'
   import { read, utils } from 'xlsx'
+  import { useUserStore } from '@/stores/user'
+  const userStore = useUserStore()
 
   const file = ref<File | null>(null)
-  const headersFromExcel = ref<unknown | null>(null)
+  const headersFromExcel = ref<any>(null)
   const rows = ref<unknown[][] | null>(null)
 
   const handleFileChange = (e: Event) => {
@@ -97,7 +99,7 @@
     rows.value?.splice(index, 1)
   }
 
-  const sendUsersToAPI = async () => {
+  const sendUsersToStore = async () => {
     const users: UserFromExcelFile[] = []
     rows.value?.forEach((row) => {
       const user: UserFromExcelFile = {
@@ -112,20 +114,23 @@
       users.push(user)
     })
     console.log('users', users)
-    try {
-      await UserService.createUsers(users)
-    } catch (err) {
-      console.log(err)
-    }
 
-    // Rest
-    file.value = null
-    headersFromExcel.value = null
-    rows.value = null
-    expectedHeaders.value.forEach((e) => {
-      e.indexInHeaderExcel = null
-    })
-    displayTable.value = false
+    const response = await userStore.postListUsers(users)
+
+    if (response) {
+      console.log('response', response)
+
+      // Rest
+      file.value = null
+      headersFromExcel.value = null
+      rows.value = null
+      expectedHeaders.value.forEach((e) => {
+        e.indexInHeaderExcel = null
+      })
+      displayTable.value = false
+
+      // Display success message
+    }
   }
 </script>
 
@@ -231,7 +236,7 @@
       </table>
 
       <button
-        @click="sendUsersToAPI"
+        @click="sendUsersToStore"
         class="submit-btn"
       >
         Ajouter les utilisateurs
