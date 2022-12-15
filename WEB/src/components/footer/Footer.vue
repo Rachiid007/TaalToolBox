@@ -52,16 +52,19 @@ import logo from '@/assets/logo/logo.svg'
 
 <style scoped>
 .main1{
+  margin-top: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
  /* position:absolute;*/
-  bottom:0;
+ /* right: 0;*/
+ /* left: 0;*/
+ /* bottom:0;*/
   width:100%;
   /*height:80px;  */
   background:#E0E0E0;
   padding-top: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 }
 
 .logo{
