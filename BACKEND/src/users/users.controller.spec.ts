@@ -1,6 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
+import { Role } from './../role/entities/role.entity';
 
 import { ModuleMocker, MockFunctionMetadata } from 'jest-mock';
 
@@ -73,5 +74,22 @@ describe('UsersController', () => {
         password: 'password',
       }),
     ).toContainEqual(user);
+
+    // expect(
+    //   await controller.createUsersExcel([
+    //     {
+    //       name: 'admin',
+    //       surname: 'taaltoolbox',
+    //       schoolEmail: 'belooo@gmail.com',
+    //       privateEmail: 'belooo@gmail.com',
+    //       birthdate: '1980-01-01',
+    //       schoolclass: [],
+    //       sex: 'M',
+    //       password: 'password',
+    //       role: [Role.Administrateur],
+    //       lang: 'fr',
+    //     },
+    //   ]),
+    // ).toContainEqual(user);
   });
 });
