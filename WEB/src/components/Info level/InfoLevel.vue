@@ -6,6 +6,7 @@
   import generalService from '@/services/generalService'
   import mapService from '@/services/mapService'
   import router from '@/router'
+  import type { AxiosInstance } from 'axios'
   const levelName: Ref<string> = ref('')
   const levelType: Ref<number> = ref(0)
   const levelTheme: Ref<number> = ref(0)
@@ -16,20 +17,11 @@
   const mapStore = useMapStore()
 
   const error: Ref<string> = ref('')
-  let theme: { id: number; name: string }[] = reactive([])
-  let difficulty: { id: number; description: string }[] = reactive([])
-  let activities: { id: number; name: string; description: string }[] = reactive([])
+  const theme: { id: number; name: string }[] = await mapStore.getThemeRequest()
+  const difficulty: { id: number; description: string }[] = await mapStore.getDifficultyRequest()
+  let activities: { id: number; name: string; description: string }[] =
+    await mapStore.getActivitiesRequest()
 
-  const themeRequest = await generalService.getCardTheme().catch((err) => console.error(err))
-  theme = themeRequest.data
-
-  const difficultyRequest = await generalService
-    .getDifficultyLevel()
-    .catch((err) => console.error(err))
-  difficulty = difficultyRequest.data
-
-  const activitiesRequest = await generalService.getActivities().catch((err) => console.error(err))
-  activities = activitiesRequest.data
   const checkFields = () => {
     if (
       levelName.value == '' ||

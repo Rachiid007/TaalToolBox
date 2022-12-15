@@ -1,26 +1,23 @@
 <script setup lang="ts">
   // il n'ya que ceux ayant le profil créateur qui peuvent ajouter des activités
-import { onMounted, ref } from 'vue'
-import { RouterLink } from 'vue-router';
-import  activityService  from '@/services/activityService'
-import type { Ref } from 'vue'
+  import { onMounted, ref } from 'vue'
+  import { RouterLink } from 'vue-router'
+  // import  activityService  from '@/services/activityService'
+  import type { Ref } from 'vue'
+  import useMapStore from '@/stores/map'
 
   const selectedActivity = ref(0)
   const isThereAnyActivitySelected = ref(false)
-  const listActivities: Ref<{name:string, description:string, src:string}[]>  = ref([])
+  const listActivities: Ref<{ name: string; description: string; src: string }[]> = ref([])
+  const mapStore = useMapStore()
   const handleClick = (divId: any) => {
     isThereAnyActivitySelected.value = true
     console.log(divId)
     selectedActivity.value = divId
   }
-  onMounted(() => {
-    activityService.getActivity()
-    .then((response) => {
-      listActivities.value = response.data
-    })
+  onMounted(async () => {
+    listActivities.value = await mapStore.getActivitiesRequest()
   })
-
-
 </script>
 <template>
   <div class="main">
@@ -72,7 +69,7 @@ import type { Ref } from 'vue'
         <div>
           <router-link
             v-show="isThereAnyActivitySelected"
-            :to="isThereAnyActivitySelected ?  '/infoLevel' : ''"
+            :to="isThereAnyActivitySelected ? '/infoLevel' : ''"
             class="button"
           >
             Créer une activité

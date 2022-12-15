@@ -5,7 +5,9 @@
 <template>
   <div class="page">
     <MainHeader />
-    <ChooseActivities />
+    <Suspense>
+      <ChooseActivities />
+    </Suspense>
   </div>
 </template>
 <style scoped>

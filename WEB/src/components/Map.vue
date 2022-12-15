@@ -361,7 +361,7 @@
         newLevel: { address: newPointState.label, position: newPointState.coordinates }
       })
     )
-    router.replace('/infoLevel')
+    router.replace('/chooseActivities')
   }
 </script>
 
