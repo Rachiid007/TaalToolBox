@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsArray, IsNumber, IsString } from 'class-validator';
 export class CreateLevelMapDto {
   @IsString()
   name: string;
@@ -8,12 +8,16 @@ export class CreateLevelMapDto {
 
   @IsString()
   address: string;
-
+  //validator fail If we dont put class validator to column
+  @IsArray()
   position: Array<number>;
 
+  @IsNumber()
   activityId: number;
 
+  @IsNumber()
   difficultyId: number;
 
+  @IsNumber()
   themeId: number;
 }

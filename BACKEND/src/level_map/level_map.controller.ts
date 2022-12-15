@@ -11,12 +11,17 @@ import { LevelMapService } from './level_map.service';
 import { CreateLevelMapDto } from './dto/create-level_map.dto';
 import { UpdateLevelMapDto } from './dto/update-level_map.dto';
 
+export interface DadPayloadDto {
+  mapPayload: CreateLevelMapDto;
+  dadPayload: { levelData: string };
+}
 @Controller('level-map')
 export class LevelMapController {
   constructor(private readonly levelMapService: LevelMapService) {}
 
   @Post()
-  async create(@Body() createLevelMapDto: CreateLevelMapDto) {
+  // TODO : regarder comment combiner deux types pour un parametre typescript
+  async create(@Body() createLevelMapDto: DadPayloadDto) {
     return await this.levelMapService.create(createLevelMapDto);
   }
 
