@@ -126,7 +126,7 @@
     formData.append('word', 'bestelling')
 
     axios
-      .post('http://localhost:8000/polls/posts', formData, {
+      .post('http://localhost:8000/verbalize/get_prononciation', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
           // 'Access-Control-Allow-Origin': '*'
