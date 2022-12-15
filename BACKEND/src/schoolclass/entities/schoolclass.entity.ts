@@ -1,5 +1,11 @@
-import { PrimaryGeneratedColumn, Column, Entity, OneToOne, JoinColumn } from 'typeorm';
-import {School} from "../../school/entities/school.entity"
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { School } from '../../school/entities/school.entity';
 @Entity()
 export class Schoolclass {
   @PrimaryGeneratedColumn('increment')
@@ -8,8 +14,7 @@ export class Schoolclass {
   @Column('character varying')
   name: string;
 
-  @OneToOne(()=> School)
+  @ManyToOne(()=> School)
   @JoinColumn()
-  school : School;
-  
+  school: School;
 }

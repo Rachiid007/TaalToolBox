@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Role } from '../../role/entities/role.entity';
 import { Schoolclass } from 'src/schoolclass/entities/schoolclass.entity';
+import { School } from 'src/school/entities/school.entity';
 import { Lang } from '../../lang/entities/lang.entity';
 import { UserResponseCard } from 'src/user_response_card/entities/user_response_card.entity';
 @Entity()
@@ -35,10 +36,6 @@ export class Users {
   @Column('character varying')
   phone: string;
 
-  @ManyToMany(() => Role)
-  @JoinTable()
-  role: Role[];
-
   @ManyToMany(() => Schoolclass)
   @JoinTable()
   schoolclass: Schoolclass[];
@@ -50,4 +47,9 @@ export class Users {
   //Une utilisateur peut avoir plusieurs solution
   @OneToMany(() => UserResponseCard, (response_card) => response_card.user)
   response_card: UserResponseCard[];
+
+  //Chaque utilisateur peut avoir un seul role
+  @ManyToOne(() => Role)
+  @JoinTable()
+  role: Role[];
 }
