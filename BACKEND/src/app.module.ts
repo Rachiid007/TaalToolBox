@@ -28,13 +28,13 @@ import { LevelDifficultyModule } from './level_difficulty/level_difficulty.modul
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: process.env.POSTGRES_HOST,
       port: 5432,
       username: 'postgres',
       password: process.env.POSTGRES_PASSWORD,
-      database: 'language_project',
+      database: process.env.POSTGRES_DB,
       autoLoadEntities: true,
-      synchronize: true, // ! SET TO FALSE IN PRODUCTION
+      synchronize: false, // ! SET TO FALSE IN PRODUCTION
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
