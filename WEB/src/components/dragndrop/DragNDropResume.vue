@@ -6,9 +6,11 @@
   import { ref } from 'vue'
   import type { Ref } from 'vue'
   import axios from 'axios'
+  import useMapStore from '@/stores/map'
 
   const store = useDadLevels()
   const userStore = useUserStore()
+  const mapStore = useMapStore().newLevel
 
   const data: any = store.getTempData()
   // console.log(data)
@@ -18,8 +20,6 @@
 
   const sendData = async () => {
     const levelData: Dadleveldata = { fields: store.getTempData() }
-    const creator: string = userStore.user.name + userStore.user.surname
-    const levelName: string = 'niveau test 1'
     const imageData = store.getImageData()
     console.log(levelData)
 
@@ -34,12 +34,10 @@
     // let receivedResponse = ''
 
     let dataToSend = {
-      leveldata: JSON.stringify(levelData),
-      levelname: levelName,
-      creator: creator
+      leveldata: JSON.stringify(levelData)
     }
 
-    store.addDragAndLearnDB(levelData, levelName, creator, imageData)
+    store.addDragAndLearnDB(mapStore, levelData, imageData)
 
     // axios
     //   .post('http://localhost:3000/drag_and_drop', dataToSend, {

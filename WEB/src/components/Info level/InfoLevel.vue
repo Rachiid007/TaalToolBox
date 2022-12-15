@@ -57,8 +57,12 @@
       // store.addLevelData(dataPayload)
 
       // mapStore.setLevelMap(mapStore.newLevel)
-      mapService.setLevelMap(mapStore.newLevel)
-      router.replace('/map')
+      if (activities.filter((x) => x.id === levelType.value)[0].name === 'DragAndLearn') {
+        router.replace('/dadteacher')
+      } else {
+        mapService.setLevelMap(mapStore.newLevel)
+        window.location.pathname = '/TaalToolBox/map'
+      }
     } else {
       error.value = 'Veuillez compléter tous les champs'
     }
