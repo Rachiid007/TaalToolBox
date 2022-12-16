@@ -34,7 +34,7 @@ import { LevelDifficultyModule } from './level_difficulty/level_difficulty.modul
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       autoLoadEntities: true,
-      synchronize: false, // ! SET TO FALSE IN PRODUCTION
+      synchronize: true, // ! SET TO FALSE IN PRODUCTION
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
