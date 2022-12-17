@@ -39,7 +39,12 @@ services:
             context: ./BACKEND
             dockerfile: Dockerfile
         container_name: nestjs
-        command: ["./docker-entrypoint.sh"]
+        command:
+            - /bin/sh
+            - -c
+            - |
+                npm run typeorm migration:run
+                npm run start:prod
         ports:
             - 3000:3000
         volumes:
