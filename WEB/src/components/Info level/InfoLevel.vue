@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import { ref, reactive } from 'vue'
   import type { Ref } from 'vue'
-  import { useLevelsData } from '@/stores/levelsData'
   import { useMapStore } from '@/stores/map'
   import generalService from '@/services/generalService'
   import mapService from '@/services/mapService'
@@ -13,7 +12,6 @@
   const levelDifficulty: Ref<number> = ref(0)
   const levelDescription: Ref<string> = ref('')
 
-  const store = useLevelsData()
   const mapStore = useMapStore()
 
   const error: Ref<string> = ref('')

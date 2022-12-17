@@ -167,10 +167,8 @@ export const useDadLevels = defineStore('dadlevels', () => {
       return 1
     }
     const payload = {
-      leveldata: JSON.stringify(newDragAndLearnExerciceData)
+      levelData: JSON.stringify(newDragAndLearnExerciceData)
     }
-
-    mapService.setDadLevelMap(mapLevelData, payload).then((result: number) => {})
 
     mapService
       .setDadLevelMap(mapLevelData, payload)

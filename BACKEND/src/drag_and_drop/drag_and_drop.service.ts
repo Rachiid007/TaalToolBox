@@ -13,7 +13,7 @@ export class DragService {
   ) {}
 
   create(createDragDto: CreateDragDto) {
-    // console.log(createDragDto);
+    console.log(createDragDto);
     return this.drag_and_dropRepository.save(createDragDto);
   }
 

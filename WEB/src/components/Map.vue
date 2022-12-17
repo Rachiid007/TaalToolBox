@@ -49,48 +49,52 @@
   // Cette ref permet de stocker le nom du niveau à ensuite afficher
   const levelName = ref('')
   // Cette ref permet de stocker le numéro du niveau à ensuite afficher
-  const levelNumber = ref(1)
+  const levelNumber = ref(0)
   // Pour changer le type de partie on utilise gamemode
   const gamemode = ref(1)
   // Ici on stocke les différents points que l'on va afficher sur la map
+  const levelId = ref(0)
   interface Point {
-    label: string
-    coordinates: number[]
+    address: string
+    position: number[]
     levelId: number
   }
   const popupCreateGame = ref(false)
 
-  let newPointState: Point = reactive({ label: '', coordinates: [], levelId: 0 })
+  let newPointState: Point = reactive({ address: '', position: [], levelId: 0 })
   const pointState = reactive({
     points: [
       {
-        label: 'Institut Saint Joseph',
-        coordinates: [4.39064, 50.83756],
-        levelId: 1
+        address: 'Institut Saint Joseph',
+        position: [4.39064, 50.83756],
+        levelId: 0
       },
       {
-        coordinates: [4.42537, 50.83826], //[4.39064, 50.83756]
-        label: 'Institut Don Bosco',
-        levelId: 2
+        position: [4.42537, 50.83826], //[4.39064, 50.83756]
+        address: 'Institut Don Bosco',
+        levelId: 0
       },
       {
-        coordinates: [4.37576, 50.87358], //[4.39064, 50.83756]
-        label: 'Institut Cardinal Mercier',
-        levelId: 3
+        position: [4.37576, 50.87358], //[4.39064, 50.83756]
+        address: 'Institut Cardinal Mercier',
+        levelId: 0
       }
     ]
   })
   // Chercher tous les niveaux dans la base de données (pour la démo)
-  const levelRequest = await mapService.getLevelMap()
+  const levelRequest = await mapService.getLevelMap().catch((err) => console.error(err))
 
-  const levelMap = levelRequest.data
-  if (levelMap.length) {
-    pointState.points.push.apply(
-      pointState.points,
-      levelMap.map((x: LevelMapWithId) => {
-        return { label: x.address, coordinates: x.position, levelId: x.id }
-      })
-    )
+  //Ajout des niveau dans le tableau de niveau
+  if (levelRequest) {
+    const levelMap = levelRequest.data
+    if (levelMap.length) {
+      pointState.points.push.apply(
+        pointState.points,
+        levelMap.map((x: LevelMapWithId) => {
+          return { address: x.address, position: x.position, levelId: x.id }
+        })
+      )
+    }
   }
   // Permet de désactiver le dézoom et les mouvements sur la carte quand le popup est ouvert
   const allowControls = ref(true)
@@ -99,9 +103,9 @@
     popupVisibility.value = false
     popupCreateGame.value = false
     // closer.style.display = 'none'
-    for (let intercation in map.value.getInteractions().getArray()) {
+    for (let interaction in map.value.getInteractions().getArray()) {
       let template = map.value.getInteractions().getArray()
-      template[intercation].setActive(true)
+      template[interaction].setActive(true)
     }
     return false
   }
@@ -121,16 +125,16 @@
 
     // OUVERTURE DU POPUP
     function setActive() {
-      for (let intercation in map.value.getInteractions().getArray()) {
+      for (let interaction in map.value.getInteractions().getArray()) {
         let template = map.value.getInteractions().getArray()
-        template[intercation].setActive(true)
+        template[interaction].setActive(true)
       }
     }
 
     function setNotActive() {
-      for (let intercation in map.value.getInteractions().getArray()) {
+      for (let interaction in map.value.getInteractions().getArray()) {
         let template = map.value.getInteractions().getArray()
-        template[intercation].setActive(false)
+        template[interaction].setActive(false)
       }
     }
 
@@ -183,10 +187,10 @@
         // mouseWheelZoom: allowControls.value
       })
     })
-    const setPointOnMap = (point: { label: string; coordinates: number[]; levelId: number }) => {
+    const setPointOnMap = (point: { address: string; position: number[]; levelId: number }) => {
       let feature = new Feature({
-        geometry: new Point(fromLonLat([point.coordinates[0], point.coordinates[1]])), //[4.39064, 50.83756]
-        name: point.label
+        geometry: new Point(fromLonLat([point.position[0], point.position[1]])), //[4.39064, 50.83756]
+        name: point.address
       })
       // feature.setId(point.levelId)
       feature.setStyle(iconStyle)
@@ -214,7 +218,7 @@
     } else {
       for (let point of pointState.points) {
         //TODO NAFFICHER QUE LACTIVITE PRINCIPALE LORS DE LA PREMIERE ARRIVER DE LELEVE SUR LE SITE
-        if (point.label === userSchool) {
+        if (point.address === userSchool) {
           setPointOnMap(point)
         }
       }
@@ -224,6 +228,7 @@
     map.value.on('singleclick', function (evt: { pixel: any; coordinate: any }) {
       // Si on click autre part que sur un point, le popup se désaffiche
       popupVisibility.value = false
+
       setActive()
       console.log(map.value.getInteractions().getArray())
       map.value.forEachFeatureAtPixel(
@@ -236,8 +241,13 @@
           layer: any
         ) {
           // On attribue les valeurs de nom de niveau et de numéro de niveau
+          console.log(feature)
           levelName.value = feature.getProperties().name
-          levelNumber.value = feature.getId()
+          // levelNumber.value = feature.getId()
+          levelNumber.value = pointState.points.filter(
+            (x) => x.address === levelName.value
+          )[0].levelId
+          console.log(levelNumber.value)
           // On enregistre les coordonnées pour mettre le popup au bon endroit
           const coordinate = evt.coordinate
           overlay.setPosition(coordinate)
@@ -326,7 +336,7 @@
         console.log(map.value.getLayers())
         popupCreateGame.value = true
         console.log(vector)
-        newPointState = { label: result.address, coordinates: coords, levelId: 1 }
+        newPointState = { address: result.address, position: coords, levelId: 1 }
         // Au lieu d'ajouter à la fin de la liste de layers on sort un popup qui permettra de créer l'activité
         // On ajoute la nouvelle feature à la fin de la liste des layers de la map
         // map.value.getLayers().extend([vector])
@@ -358,7 +368,7 @@
     // Enregistrer l'adresse dans le store et switch de page
     console.log(
       mapStore.$patch({
-        newLevel: { address: newPointState.label, position: newPointState.coordinates }
+        newLevel: { address: newPointState.address, position: newPointState.position }
       })
     )
     router.replace('/chooseActivities')
@@ -395,7 +405,11 @@
     ref="popup"
     id="popup"
     class="ol-popup"
-    v-if="userRole.includes('Administrateur') || userRole.includes('Créateur') || userReward >= 50"
+    v-if="
+      (userRole.includes('Administrateur') && levelNumber > 0) ||
+      (userRole.includes('Créateur') && levelNumber > 0) ||
+      (userReward >= 50 && levelNumber > 0)
+    "
   >
     <!-- SHOW ALL THE ACTIVITIES TO THE CREATOR AND ADMINISTRATOR -->
     <!-- <div
@@ -418,10 +432,10 @@
     ></a>
     <div class="popup-content">
       <Transition>
+        <!-- v-if="gamemode" -->
         <div
           id="popup-content"
           class="sub_content"
-          v-if="gamemode"
         >
           <p class="popup-title">{{ levelName }}</p>
           <p class="level-details">Quizz Flashcard {{ levelNumber }}</p>
@@ -436,7 +450,7 @@
             >PLAY</router-link
           >
         </div>
-        <div
+        <!-- <div
           class="sub_content"
           v-else
         >
@@ -466,7 +480,7 @@
             id="buttonDad"
             >PLAY</router-link
           >
-        </div>
+        </div> -->
       </Transition>
     </div>
   </div>
@@ -476,7 +490,7 @@
     ref="popup"
     id="popup"
     class="ol-popup"
-    v-else-if="userReward >= 0 && userReward < 50"
+    v-else-if="userReward >= 0 && userReward < 50 && levelNumber === 0"
   >
     <div class="popup-content">
       <div
@@ -484,7 +498,7 @@
         class="sub_content"
       >
         <p class="popup-title">{{ levelName }}</p>
-        <p class="level-details">Activité principale {{ levelNumber }}</p>
+        <p class="level-details">Activité principale</p>
         <img
           class="gamemode-image"
           src="@/assets/logo/start_game.svg"
@@ -512,7 +526,7 @@
       @click="onCloserClick"
     ></a>
     <h2 id="create__game__popup__title">Veuillez Confirmer l'adresse du nouveau niveau</h2>
-    <p id="create__game__popup__address">{{ newPointState.label }}</p>
+    <p id="create__game__popup__address">{{ newPointState.address }}</p>
     <!-- Quand il confirme envoyer l'adresse dans le store -->
     <button
       id="create__game__popup__confirm"
