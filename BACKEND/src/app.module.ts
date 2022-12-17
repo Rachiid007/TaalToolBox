@@ -7,7 +7,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CardsModule } from './cards/cards.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CategoryModule } from './category/category.module';
 import { LangModule } from './lang/lang.module';
 import { RoleModule } from './role/role.module';
@@ -26,15 +26,22 @@ import { LevelDifficultyModule } from './level_difficulty/level_difficulty.modul
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.POSTGRES_HOST,
-      port: 5432,
-      username: 'postgres',
-      password: process.env.POSTGRES_PASSWORD,
-      database: process.env.POSTGRES_DB,
-      autoLoadEntities: true,
-      synchronize: true, // ! SET TO FALSE IN PRODUCTION
+    TypeOrmModule.forRootAsync({
+      imports : [ConfigModule], 
+      inject: [ConfigService],
+      useFactory: ((configService:ConfigService)=>({
+
+        type: 'postgres',
+        host: process.env.POSTGRES_HOST,
+        port: 5432,
+        username: 'postgres',
+        password: process.env.POSTGRES_PASSWORD,
+        database: configService.get('POSTGRES_DB'),
+        autoLoadEntities: true,
+        entities: [],
+        synchronize: false,
+        // synchronize: true, // ! SET TO FALSE IN PRODUCTION
+      }))
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
@@ -44,21 +51,20 @@ import { LevelDifficultyModule } from './level_difficulty/level_difficulty.modul
       dest: join(__dirname, '..', 'public/images'),
     }),
     // Card depend on theme and difficulty
-    CardsThemeModule,
-    LevelDifficultyModule,
-    CardsModule,
+    ActivityModule,
     LangModule,
-    CategoryModule,
-    RoleModule,
     AnswerModule,
+    RoleModule,
     LearnDomainModule,
-    // RewardModule,
+    CategoryModule,
+    ProficiencyModule,
+    LevelDifficultyModule,
+    CardsThemeModule,
+    CardsModule,
     SchoolModule,
     SchoolclassModule,
     UsersModule,
     // AuthModule,
-    ProficiencyModule,
-    ActivityModule,
     DragModule,
     LevelMapModule,
     UserResponseModule,
