@@ -3,7 +3,7 @@ import Class from '@/components/profile/Class.vue'
 import { beforeEach, describe, expect, test } from 'vitest'
 
 describe('Profile.vue', () => {
-    let wrapper = null
+    let wrapper: any | null = null;
 
     beforeEach(() => {
         wrapper = mount(Class)

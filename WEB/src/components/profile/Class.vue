@@ -1,5 +1,5 @@
 <template>
-    <div class="class" v-if="user">
+    <div class="class" v-if="user.schoolclass">
         <div class="title">
             <b>Classe</b>
         </div> 
@@ -25,7 +25,11 @@
 
 <script  setup lang="ts">
 const user_json = localStorage.getItem('user');
-const user = JSON.parse(user_json);
+let user = {school: null, schoolclass: null};
+
+if (user_json){
+    user = JSON.parse(user_json);
+}
 //console.log(user)
 </script>
 <style>
