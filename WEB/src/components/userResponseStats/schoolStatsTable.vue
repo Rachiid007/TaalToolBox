@@ -1,7 +1,7 @@
 <template>
     <div class="main">
     <div class="info">
-      <p id="firstIn">Suivi des Apprentissages par Ecole</p>
+      <p id="firstIn">Suivi des Apprentissages par Classe</p>
     </div>
   </div>
   <br>
@@ -33,7 +33,7 @@
   const searchValue = ref();
 
   const headers: Header[] = [
-    { text: "ECOLE", value: "ecole", sortable: true},
+    { text: "Classe", value: "classe", sortable: true},
     { text: "TOTAL MAITRISE", value: "maitrise", sortable: true},
     { text: "TOTAL EN ACQUIS", value: "acquis"},
     { text: "TOTAL EN APPRENTISSAGE", value: "apprentissage"},
@@ -41,10 +41,9 @@
   ];
   
   const items: Item[] = [
-    { ecole: "GSW", maitrise: 25, acquis:3, nbrEtudiant: 24, apprentissage: 10},
-    { ecole: "LAL", maitrise: 10, acquis: 2, nbrEtudiant: 21, apprentissage: 21},
-    { ecole: "BKN", maitrise: 39, acquis: 1, nbrEtudiant: 15, apprentissage: 6},
-    { ecole: "MIL", maitrise: 5, acquis: 3, nbrEtudiant: 13, apprentissage: 2},
+    { classe: "1elec", maitrise: 25, acquis:3, nbrEtudiant: 4, apprentissage: 10},
+    { classe: "1IT", maitrise: 10, acquis: 2, nbrEtudiant: 2, apprentissage: 21},
+    { classe: "1meca", maitrise: 39, acquis: 1, nbrEtudiant: 1, apprentissage: 6}
   ];
   </script>
 
