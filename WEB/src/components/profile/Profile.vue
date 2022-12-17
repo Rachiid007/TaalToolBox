@@ -1,9 +1,11 @@
 <script  setup lang="ts">
 
     const user_json = localStorage.getItem('user');
-    const user = JSON.parse(user_json);
+    console.log(user_json)
+    let user = {birthdate: '', name: null, surname: null, email: null, phone: null}
     let birthdateStr = "0000-00-00";
-    if (user){
+    if (user_json){
+        user = JSON.parse(user_json);
         birthdateStr = user.birthdate;
     }
     const birthdateTab = birthdateStr.split('-');
@@ -11,7 +13,7 @@
 </script>
 
 <template>
-    <div class="profile" v-if="user">
+    <div class="profile" v-if="user.name">
         <div class="name">
             {{user.name}} {{user.surname}}
         </div>
