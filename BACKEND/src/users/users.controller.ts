@@ -21,5 +21,16 @@ export class UsersController {
   findSubscriptionStats(@Param('id_user') id_user: number) {
     return this.usersService.findSubscriptionStats(+id_user);
   }
+
+  @Get('activePlayers/:id_user')
+  @ApiParam({
+    name: 'id_user',
+    required: true,
+    description: 'Should be an id of a teacher user',
+    type: Number,
+  })
+  findActivePlayersCount(@Param('id_user') id_user: number) {
+    return this.usersService.findActivePlayersCount(+id_user);
+  }
  
 }

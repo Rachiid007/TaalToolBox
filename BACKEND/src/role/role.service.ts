@@ -31,7 +31,6 @@ export class RoleService {
           description: 'Rôle Elève',
         },
       ]);
-      
     }
   }
 

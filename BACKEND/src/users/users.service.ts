@@ -52,7 +52,7 @@ export class UsersService {
       .catch((e) => console.log(e));
   }
 
-  //cette requête permet de recupérer le nombre d'utilisateur inscrit par classe sous la responsabilité d un prof ayant id_user.
+  //cette fonction permet de recupérer le nombre d'utilisateur inscrit par classe sous la responsabilité d un prof ayant id_user.
   async findSubscriptionStats(id_user: number): Promise<Users | undefined> {
     const subscriptionStats = this.userRepository.query(
       `select school.name || ' - ' ||schoolclass."name" as SchoolClass_name,count(*) from schoolclass
@@ -60,6 +60,20 @@ export class UsersService {
       join school on school.id = schoolclass."schoolId"
       where school.id in (select schoolclass."schoolId" from schoolclass where schoolclass.id in (select users_schoolclass_schoolclass."schoolclassId" from users_schoolclass_schoolclass where users_schoolclass_schoolclass."usersId"=${id_user}))
       group by school.name,schoolclass.name;`,
+    );
+    return await subscriptionStats;
+  }
+
+  async findActivePlayersCount(id_user: number): Promise<Users | undefined> {
+    const subscriptionStats = this.userRepository.query(
+      `select A.name,count(*) from
+      (select  distinct id_user, schoolclass."name" as name from user_response
+            left join users_schoolclass_schoolclass on user_response."id_user"=users_schoolclass_schoolclass."schoolclassId"
+          left join schoolclass on schoolclass.id=users_schoolclass_schoolclass."schoolclassId"
+            left join school on school.id = schoolclass."schoolId"
+            where school.id in (select schoolclass."schoolId" from schoolclass where schoolclass.id in (select users_schoolclass_schoolclass."schoolclassId" from users_schoolclass_schoolclass where users_schoolclass_schoolclass."usersId"=${id_user}))  
+        group by id_user,schoolclass.name) as A
+        group by A.name`,
     );
     return await subscriptionStats;
   }
