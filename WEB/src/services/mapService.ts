@@ -3,10 +3,9 @@ import type { LevelMap } from '@/types/map'
 
 export default {
   async setLevelMap(payload: LevelMap) {
-    console.log(payload)
     return await apiClient.post('/level-map', {
       mapPayload: payload,
-      dadPayload: { leveldata: '' }
+      dadPayload: { levelData: '' }
     })
   },
 
@@ -14,7 +13,7 @@ export default {
     return apiClient.get('/level-map')
   },
 
-  async setDadLevelMap(mapPayload: LevelMap, payload: { leveldata: string }) {
+  async setDadLevelMap(mapPayload: LevelMap, payload: { levelData: string }) {
     return apiClient.post('/level-map', { mapPayload: mapPayload, dadPayload: payload })
   }
 }

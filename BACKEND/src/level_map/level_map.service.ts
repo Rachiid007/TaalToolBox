@@ -3,29 +3,30 @@ import { UpdateLevelMapDto } from './dto/update-level_map.dto';
 import { Repository } from 'typeorm';
 import { LevelMap } from './entities/level_map.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { OnApplicationBootstrap } from '@nestjs/common';
+// import { OnApplicationBootstrap } from '@nestjs/common';
 import { DragService } from 'src/drag_and_drop/drag_and_drop.service';
 import type { DadPayloadDto } from './level_map.controller';
 @Injectable()
-export class LevelMapService implements OnApplicationBootstrap {
+export class LevelMapService {
   constructor(
     @InjectRepository(LevelMap)
     private levelMapRepository: Repository<LevelMap>,
   ) {}
 
-  async onApplicationBootstrap() {
-    const levelMap = await this.levelMapRepository.find();
-    if (!levelMap.length) {
-      return this.levelMapRepository.save([{}, {}, {}]);
-    }
-  }
+  // async onApplicationBootstrap() {
+  //   const levelMap = await this.levelMapRepository.find();
+  //   if (!levelMap.length) {
+  //     return this.levelMapRepository.save([{}, {}, {}]);
+  //   }
+  // }
   // Inject drag and learn service
   @Inject(DragService)
   private readonly dragService: DragService;
 
   async create(createLevelMapDto: DadPayloadDto) {
     // Si on a pas d'information sur le dad level
-    if (!createLevelMapDto.dadPayload.levelData.length) {
+    console.log(createLevelMapDto.dadPayload);
+    if (createLevelMapDto.dadPayload.levelData === '') {
       return await this.levelMapRepository.save(createLevelMapDto.mapPayload);
     } else {
       // Insert level to have the id
@@ -37,11 +38,13 @@ export class LevelMapService implements OnApplicationBootstrap {
         .execute();
       const idLevel: number = levelMapRequest.identifiers[0].id;
       // Insert DAD
+      console.log('level Data', createLevelMapDto.dadPayload.levelData);
       const dragRequest = await this.dragService.create({
         levelMapId: idLevel,
         levelData: createLevelMapDto.dadPayload.levelData,
         image: '',
       });
+      console.log(dragRequest.id);
       return dragRequest.id;
     }
   }
