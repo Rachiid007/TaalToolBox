@@ -3,6 +3,8 @@
   import { useUserStore } from '@/stores/user'
   import axios from 'axios'
   import router from '@/router'
+  import { sha512 } from 'js-sha512'
+
   const store = useUserStore()
 
   interface State {
@@ -29,11 +31,15 @@
     let payload = {
       email: state.mail,
       password: state.password
+      // password: state.password
     }
-    console.log(payload)
 
+    const hashedPassword =
+      sha512(state.password) +
+      '__gny-b?QH06wr5rBR)*a5H!RR9zevVa!XMR@W4LXpgXXkmqy3zVP-T*S_YLxwj=v1xIAk-+u?TdgBlsIV)8PsqvZpWSn6#4J77/)6w?o6.@UC+nVpCU0j*x9j-K=vS+'
+    console.log(hashedPassword)
     // Récupérer l'utilisateur
-    const user = await store.getUser(state.mail, state.password)
+    const user = await store.getUser(state.mail, hashedPassword)
 
     //Muter le state initiale du user
     store.$patch({ user: user })
@@ -173,7 +179,7 @@
     outline: none;
     margin-right: 50px;
   }
-  
+
   input::placeholder {
     color: #026b30;
   }

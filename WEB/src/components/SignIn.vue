@@ -6,6 +6,8 @@
   import axios from 'axios'
   import { useUserStore } from '../stores/user'
 
+  import { sha512 } from 'js-sha512'
+
   const currentUserRole = useUserStore().user.role
   console.log(currentUserRole.includes('Administrateur'))
 
@@ -89,14 +91,16 @@
       surname: state.page1.secondName,
       email: state.page1.mail,
       schoolEmail: state.page1.schoolMail,
-      password: state.auth.password,
+      password:
+        sha512(state.auth.password) +
+        '__gny-b?QH06wr5rBR)*a5H!RR9zevVa!XMR@W4LXpgXXkmqy3zVP-T*S_YLxwj=v1xIAk-+u?TdgBlsIV)8PsqvZpWSn6#4J77/)6w?o6.@UC+nVpCU0j*x9j-K=vS+',
       birthdate: state.page1.birthDate,
       role: state.page2.role, //LADMIN PEUT AJOUTER UN UTILISATEUR AVEC NIMPORTE QUEL ROLE OR LE PROF NE PEUT AJOUTER QUE LE ROLE ELEVE
       school: state.page2.school, //TODO si c'est l'admin qui inscris il doit mentionner l'école si c'est le prof on récupère son école
       schoolClass: state.page2.classroom, //TODO EST CE QUUN PROF PEUT AVOIR PLUSIEURS CLASSES
       sex: state.page1.gender
     }
-
+    console.log(payload)
     loginService.setUsers(payload)
     // axios
     //   .post('http://localhost:3000/auth/register', payload, {
