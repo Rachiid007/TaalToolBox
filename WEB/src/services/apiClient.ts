@@ -1,6 +1,15 @@
 import axios from 'axios'
+
+let apiBaseUrl = 'http://localhost:3000'
+
+if (!import.meta.env.DEV) {
+  apiBaseUrl = 'http://taaltoolbox.be/api/'
+}
+
+export default axios
+
 export const apiClient = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: apiBaseUrl,
   withCredentials: false,
   headers: {
     Accept: 'application/json',
@@ -9,7 +18,7 @@ export const apiClient = axios.create({
 })
 
 export const apiClientForm = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: apiBaseUrl,
   headers: {
     'Content-Type': 'multipart/form-data'
   }
