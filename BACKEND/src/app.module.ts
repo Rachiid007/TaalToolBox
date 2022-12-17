@@ -23,6 +23,8 @@ import { CardsThemeModule } from './cards_theme/cards_theme.module';
 import { LevelMapModule } from './level_map/level_map.module';
 import { LevelDifficultyModule } from './level_difficulty/level_difficulty.module';
 
+const isDevelopment = (process.env.NODE_ENV === 'development' ? true : false)
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -39,7 +41,7 @@ import { LevelDifficultyModule } from './level_difficulty/level_difficulty.modul
         database: configService.get('POSTGRES_DB'),
         autoLoadEntities: true,
         entities: [],
-        synchronize: false,
+        synchronize: isDevelopment? true: false,
         // synchronize: true, // ! SET TO FALSE IN PRODUCTION
       }))
     }),
