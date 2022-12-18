@@ -10,8 +10,18 @@ export default class statsServiceRessource{
     return stats //+store.user.id
   }
   getActivePlayersStats() {
-    console.log("test2")
     const stats=apiClient.get('/users/activePlayers/1')
+    return stats //+store.user.id
+  }
+
+  findSchoolResponseStats() {
+    const stats=apiClient.get('/user-response/schoolClassStats/1')
+    //console.log(stats)
+    return stats //+store.user.id
+  }
+
+  findUsersResponseStats() {
+    const stats=apiClient.get('/user-response/userStats/1')
     //console.log(stats)
     return stats //+store.user.id
   }

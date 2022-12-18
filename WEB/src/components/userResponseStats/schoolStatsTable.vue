@@ -25,26 +25,64 @@
     <br>
   </template>
   
-  <script lang="ts" setup>
+  <script lang="ts"  >
   import type { Header, Item } from "vue3-easy-data-table";
-  import { ref } from "vue";
+  import { ref, onMounted, computed } from "vue";
+  import  statsServiceRessource  from '@/services/statsService'
   
-  const searchField = ref();
-  const searchValue = ref();
+ 
+export default {
+  name: 'EasyTable',
+  data: () => ({
+    loaded: false,
+    headers: [],
+    items:[],
+    searchField:ref(),
+    searchValue : ref(),
+      
+  }),
 
-  const headers: Header[] = [
-    { text: "Classe", value: "classe", sortable: true},
-    { text: "TOTAL MAITRISE", value: "maitrise", sortable: true},
-    { text: "TOTAL EN ACQUIS", value: "acquis"},
-    { text: "TOTAL EN APPRENTISSAGE", value: "apprentissage"},
-    { text: "NOMBRE DE PARTICIPANTS", value: "nbrEtudiant", width: 200, sortable: true},
+  async mounted () {
+     this.searchField = ref();
+         this.searchValue = ref();
+         const statsS = new statsServiceRessource()
+      
+      const classStats = await statsS.findSchoolResponseStats()
+      
+      
+
+    
+        const headers1: Header[] = [
+    { text: "Classe", value: "name", sortable: true},
+    { text: "TOTAL MAITRISE", value: "total_maitrise", sortable: true},
+    { text: "TOTAL EN ACQUIS", value: "total_acquis", sortable: true},
+    { text: "TOTAL EN APPRENTISSAGE", value: "total_apprentissage", sortable: true},
   ];
+  this.headers=headers1
+      
   
-  const items: Item[] = [
-    { classe: "1elec", maitrise: 25, acquis:3, nbrEtudiant: 4, apprentissage: 10},
-    { classe: "1IT", maitrise: 10, acquis: 2, nbrEtudiant: 2, apprentissage: 21},
-    { classe: "1meca", maitrise: 39, acquis: 1, nbrEtudiant: 1, apprentissage: 6}
-  ];
+     
+        
+ 
+        console.log("test333")
+    
+          
+  console.log("test334")
+  
+  console.log( await classStats.data)
+  //const items: Item[] = stats;
+  this.items= await classStats.data
+      
+    
+
+  }}
+
+  
+      
+
+ 
+
+  
   </script>
 
   
