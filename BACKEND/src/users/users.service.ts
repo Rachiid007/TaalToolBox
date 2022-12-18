@@ -41,12 +41,10 @@ export class UsersService {
     return await this.userRepository.findOne({ where: { email: email } });
   }
   // Get the user in database and her role
-
   async loginUser(email: string, password: string) {
     let userData: UserData;
     console.log(email);
     if (!email) {
-
       throw new NotFoundException();
     }
     // await this.roleService.findOne(wh:
@@ -111,18 +109,6 @@ export class UsersService {
           throw new NotFoundException(err);
         });
     }
-    const userData = {
-      name: user.name,
-      surname: user.surname,
-      role: user.role.map((x) => {
-        return x.name;
-      }),
-      email: user.email,
-      birthdate: user.birthdate,
-      phone: user.phone,
-      schoolclass: ['1', '2'],
-      school: '1',
-    };
     return userData;
   }
   public async createUser(payload: UserFormData) {
@@ -265,7 +251,6 @@ export class UsersService {
     //   }),
     // );
   }
-
   //cette fonction permet de recupérer le nombre d'utilisateur inscrit par classe sous la responsabilité d un prof ayant userId.
   async findSubscriptionStats(userId: number): Promise<Users | undefined> {
     const subscriptionStats = this.userRepository.query(
