@@ -46,9 +46,4 @@ export class Users {
   @ManyToOne(() => Role)
   @JoinTable()
   role: Role[];
-
-  //Chaque utilisateur peut avoir un seul role
-  @ManyToOne(() => Role)
-  @JoinTable()
-  role: Role[];
 }
