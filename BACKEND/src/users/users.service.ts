@@ -118,7 +118,7 @@ export class UsersService {
   public async createUser(payload: UserFormData) {
     // Normalement en front on doit récupérer toutes les écoles
     //
-
+    payload['password'] = await argon2.hash(payload['password']);
     const {
       name,
       surname,
@@ -131,6 +131,7 @@ export class UsersService {
       schoolClass,
       sex,
     } = payload;
+    console.log(payload);
     //1. Checker si l'utilisateur est déjà dans la base de données
     const checkUser: Users = await this.userRepository
       .createQueryBuilder()
