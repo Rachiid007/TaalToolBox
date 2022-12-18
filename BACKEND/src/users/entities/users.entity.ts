@@ -14,53 +14,25 @@ export class Users {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column({
-    nullable: true,
-  })
+  @Column('character varying')
   name: string;
 
-  @Column({
-    nullable: true,
-  })
+  @Column('character varying')
   surname: string;
 
-  @Column({
-    nullable: true,
-  })
-  firstName: string;
-
-  @Column({
-    nullable: true,
-  })
-  lastName: string;
-
-  @Column({
-    nullable: true,
-  })
+  @Column('character varying')
   email: string;
 
-  @Column()
+  @Column('character varying')
   schoolEmail: string;
 
   @Column()
-  privateEmail: string;
-
-  @Column({
-    nullable: true,
-  })
   password: string;
 
-  @Column('date')
+  @Column('character varying')
   birthdate: string;
 
-  @Column({
-    nullable: true,
-  })
-  phone: string;
-
-  @Column({
-    nullable: true,
-  })
+  @Column()
   sex: string;
 
   @ManyToMany(() => Role)
@@ -69,7 +41,7 @@ export class Users {
 
   @ManyToMany(() => Schoolclass)
   @JoinTable()
-  schoolclass: Schoolclass[];
+  schoolClass: Schoolclass[];
 
   //chaque utilisateur possède une seule langue
   @ManyToOne(() => Lang, (lang) => lang.users)
