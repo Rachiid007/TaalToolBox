@@ -30,12 +30,12 @@ import type { Header, Item } from "vue3-easy-data-table";
 import { ref } from "vue";
 import  statsServiceRessource  from '@/services/statsService'
 
-
+const arr: Header[]=[]
 export default {
 name: 'EasyTable',
 data: () => ({
   loaded: false,
-  headers: [],
+  headers: arr,
   items:[],
   searchField:ref(),
   searchValue : ref(),
@@ -50,21 +50,18 @@ async mounted () {
     const userStats = await statsS.findUsersResponseStats()
     
     const headers1: Header[] = [
-    { text: "JOUEUR", value: "joueur",width: 200 ,sortable: true },
-    { text: "CLASSE", value: "classe", sortable: true},
-    { text: "TOTAL MAITRISE", value: "total_maitrise", sortable: true},
-    { text: "TOTAL EN ACQUIS", value: "total_acquis",sortable: true},
-    { text: "TOTAL EN APPRENTISSAGE", value: "total_apprentissage"},
-    { text: "DATE DERNIER JEUX", value: "lastplay", width: 200, sortable: true},
-  ];
+      { text: "JOUEUR", value: "joueur",width: 200 ,sortable: true },
+      { text: "CLASSE", value: "classe", sortable: true},
+      { text: "TOTAL MAITRISE", value: "total_maitrise", sortable: true},
+      { text: "TOTAL EN ACQUIS", value: "total_acquis",sortable: true},
+      { text: "TOTAL EN APPRENTISSAGE", value: "total_apprentissage"},
+      { text: "DATE DERNIER JEUX", value: "lastplay", width: 200, sortable: true},
+    ];
   
-  this.headers=headers1
-  console.log( await userStats.data)
-  //const items: Item[] = stats;
-  this.items= await userStats.data
-    
-  
-
+    this.headers=headers1
+    console.log( await userStats.data)
+    //const items: Item[] = stats;
+    this.items= await userStats.data
 }}
 
 

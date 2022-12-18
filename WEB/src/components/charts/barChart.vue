@@ -16,7 +16,7 @@
   import statsServiceRessource from '@/services/statsService'
   
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
-  
+  const arr : any[]=[]
   export default {
     name: 'ChartApp',
     components: {
@@ -25,12 +25,12 @@
     data : () => ({
       loaded: false,
       chartConfig: {
-        labels: [],
+        labels: arr,
         datasets: [
         {
           label: "Nombre",
           backgroundColor: '#F4D4D4',
-          data: []
+          data: arr
         }
       ]
       },

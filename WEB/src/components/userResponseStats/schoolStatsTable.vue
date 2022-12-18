@@ -30,12 +30,12 @@ import type { Header, Item } from "vue3-easy-data-table";
 import { ref, onMounted, computed } from "vue";
 import  statsServiceRessource  from '@/services/statsService'
 
-
+const arr: Header[]=[]
 export default {
 name: 'EasyTable',
 data: () => ({
   loaded: false,
-  headers: [],
+  headers: arr,
   items:[],
   searchField:ref(),
   searchValue : ref(),
@@ -53,19 +53,17 @@ async mounted () {
 
   
       const headers1: Header[] = [
-  { text: "Classe", value: "name", sortable: true},
-  { text: "TOTAL MAITRISE", value: "total_maitrise", sortable: true},
-  { text: "TOTAL EN ACQUIS", value: "total_acquis", sortable: true},
-  { text: "TOTAL EN APPRENTISSAGE", value: "total_apprentissage", sortable: true},
-];
-this.headers=headers1
+        { text: "Classe", value: "name", sortable: true},
+        { text: "TOTAL MAITRISE", value: "total_maitrise", sortable: true},
+        { text: "TOTAL EN ACQUIS", value: "total_acquis", sortable: true},
+        { text: "TOTAL EN APPRENTISSAGE", value: "total_apprentissage", sortable: true},
+      ];
+    this.headers=headers1
 
-//const items: Item[] = stats;
-this.items= await classStats.data
-    
-  
-
+      //const items: Item[] = stats;
+    this.items= await classStats.data
 }}
+
 
 
     

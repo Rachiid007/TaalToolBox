@@ -8,7 +8,7 @@
   import statsServiceRessource from '@/services/statsService'
   
   ChartJS.register(ArcElement, Tooltip, Legend)
-  
+  const arr : any[]=[]
   export default {
     name: 'pieChart',
     components: {
@@ -17,11 +17,11 @@
     data: () => ({
       loaded: false,
       pieConfig: {
-          labels: [],
+          labels: arr,
           datasets: [
             {
-              backgroundColor: [],
-              data: [],
+              backgroundColor: arr,
+              data: arr,
             }
           ] 
     },
@@ -33,13 +33,13 @@
         
     async mounted () {
       
-      let corporateColor=['#CAB8CB','#F4D4D4','#DCB69F','342A1F','#BDB8AD', '#EBE7E0', '#C6D4E1', '#44749D']
+      let corporateColor: string[] =['#CAB8CB','#F4D4D4','#DCB69F','342A1F','#BDB8AD', '#EBE7E0', '#C6D4E1', '#44749D']
       let i=0
   
       try {
         const statsService = new statsServiceRessource()
         const stats = await statsService.getSubscriptionStats()
-        stats.data.forEach(element => {
+        stats.data.forEach((element:any) => {
           this.pieConfig.labels.push(element["schoolclass_name"])
           this.pieConfig.datasets[0].backgroundColor.push(corporateColor[i])
           this.pieConfig.datasets[0].data.push(element["count"])
