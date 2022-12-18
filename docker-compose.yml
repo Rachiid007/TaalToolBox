@@ -14,8 +14,8 @@ services:
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    depends_on:
-      - nestjs
+    # depends_on:
+    #   - nestjs
     networks:
       network:
         ipv4_address: 10.5.0.2
@@ -31,51 +31,51 @@ services:
       - ./certbot/www:/var/www/certbot
     command: certonly --webroot -w /var/www/certbot --force-renewal --email abderrachid.bellaali@gmail.com -d taaltoolbox.be -d www.taaltoolbox.be --agree-tos
 
-  postgres-db:
-    image: postgres
-    container_name: postgres-db
-    restart: unless-stopped
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_HOST=${POSTGRES_HOST}
-    volumes:
-      - db:/var/lib/postgresql/data
-    networks:
-      network:
-        ipv4_address: 10.5.0.3
+  # postgres-db:
+  #   image: postgres
+  #   container_name: postgres-db
+  #   restart: unless-stopped
+  #   ports:
+  #     - 5432:5432
+  #   environment:
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #     - POSTGRES_DB=${POSTGRES_DB}
+  #     - POSTGRES_HOST=${POSTGRES_HOST}
+  #   volumes:
+  #     - db:/var/lib/postgresql/data
+  #   networks:
+  #     network:
+  #       ipv4_address: 10.5.0.3
 
-  nestjs:
-    build:
-      context: ./BACKEND
-      dockerfile: Dockerfile
-    container_name: nestjs
-    command:
-      - /bin/sh
-      - -c
-      - |
-        npm run typeorm migration:run
-        npm run start:prod
-    ports:
-      - 3000:3000
-    volumes:
-      - ./BACKEND:/app
-      - /BACKEND/node_modules
-      - /BACKEND/dist
-    depends_on:
-      - postgres-db
-    environment:
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_HOST=${POSTGRES_HOST}
-      - NODE_ENV:${NODE_ENV}
-    env_file:
-      - .env
-    networks:
-      network:
-        ipv4_address: 10.5.0.4
+  # nestjs:
+  #   build:
+  #     context: ./BACKEND
+  #     dockerfile: Dockerfile
+  #   container_name: nestjs
+  #   command:
+  #     - /bin/sh
+  #     - -c
+  #     - |
+  #       npm run typeorm migration:run
+  #       npm run start:prod
+  #   ports:
+  #     - 3000:3000
+  #   volumes:
+  #     - ./BACKEND:/app
+  #     - /BACKEND/node_modules
+  #     - /BACKEND/dist
+  #   depends_on:
+  #     - postgres-db
+  #   environment:
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #     - POSTGRES_DB=${POSTGRES_DB}
+  #     - POSTGRES_HOST=${POSTGRES_HOST}
+  #     - NODE_ENV:${NODE_ENV}
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     network:
+  #       ipv4_address: 10.5.0.4
 
 volumes:
   db:
