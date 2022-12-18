@@ -24,6 +24,5 @@ export class School {
   description;
 
   @OneToMany(() => Schoolclass, (schoolclassId) => schoolclassId.id)
-  @JoinColumn({ name: 'schoolclassId' })
   schoolclass: Schoolclass[];
 }

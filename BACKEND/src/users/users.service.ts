@@ -58,6 +58,7 @@ export class UsersService {
     //Get the users and here role
     if (!role.role.filter((x) => x.name === 'Administrateur').length) {
       if (await argon2.verify(role.password, password)) {
+        console.log('pass ok');
         await this.userRepository
           .createQueryBuilder('users')
           .innerJoinAndSelect('users.role', 'role')
@@ -66,6 +67,7 @@ export class UsersService {
           .where({ email: email })
           .getOne()
           .then((user) => {
+            console.log(user);
             userData = {
               name: user.name,
               surname: user.surname,
@@ -74,16 +76,19 @@ export class UsersService {
               }),
               email: user.email,
               birthdate: user.birthdate,
-              schoolClass: user.schoolClass.map((x: { name: any }) => {
+              schoolClass: user.schoolclass.map((x: { name: any }) => {
                 return x.name;
               }),
-              school: user.schoolClass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
+              school: user.schoolclass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
               sex: user.sex,
             };
           })
           .catch((err) => {
+            console.log(err);
             throw new NotFoundException(err);
           });
+      } else {
+        return 'Mot de passe incorect';
       }
     } else {
       console.log('inside this');
