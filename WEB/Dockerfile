@@ -7,6 +7,6 @@ RUN npm run build
 
 FROM nginx as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+VOLUME ./nginx/default.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]

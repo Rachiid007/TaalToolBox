@@ -12,8 +12,8 @@ services:
       - BACKEND_PORT=${BACKEND_PORT}
       - NODE_ENV=prod
     volumes:
-      - ./certbot/www:/var/www/certbot/
-      - ./certbot/conf/:/etc/nginx/ssl/
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     depends_on:
       - nestjs
     networks:
@@ -23,12 +23,13 @@ services:
 
   certbot:
     image: certbot/certbot:latest
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    container_name: certbot
+    depends_on:
+      - proxy-nginx
     volumes:
-      - ./certbot/www/:/var/www/certbot/
-      - ./certbot/conf/:/etc/letsencrypt/
-      - ./certbot/data:/var/www/certbot
-    command: certonly --webroot --webroot-path=/var/www/certbot --email abderrachid.bellaali@gmail.com --agree-tos --no-eff-email --staging 0 --force-renewal -d www.taaltoolbox.be -d taaltoolbox.be
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email abderrachid.bellaali@gmail.com -d taaltoolbox.be -d www.taaltoolbox.be --agree-tos
 
   postgres-db:
     image: postgres
