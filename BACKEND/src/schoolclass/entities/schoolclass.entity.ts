@@ -20,7 +20,7 @@ export class Schoolclass {
   schoolId: number;
 
   // une classe appartient à une et une seule école
-  @OneToMany(() => School, (schoolId) => schoolId.id)
+  @ManyToOne(() => School, (schoolId) => schoolId.id)
   @JoinColumn({ name: 'schoolId' })
   school: School;
-} 
+}
