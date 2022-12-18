@@ -1,7 +1,7 @@
 import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import loginService from '@/services/loginService'
-import type { User, UserFromExcelFile } from '@/types/user'
+import type { User, UserFormData } from '@/types/user'
 import UserService from '@/services/UserService'
 
 export const useUserStore = defineStore('user', () => {
@@ -13,9 +13,10 @@ export const useUserStore = defineStore('user', () => {
     birthdate: '',
     role: [],
     email: '',
-    phone: '',
-    schoolclass: [],
-    school: ''
+    schoolEmail: '',
+    schoolClass: [],
+    school: '',
+    sex: ''
   })
   // const refreshStore = () => {
   if (localStorage.getItem('user')) {
@@ -38,7 +39,7 @@ export const useUserStore = defineStore('user', () => {
     userReward.value = reward
   }
 
-  const postListUsers = async (users: UserFromExcelFile[]) => {
+  const postListUsers = async (users: UserFormData[]) => {
     const userRequest = await UserService.createUsers(users)
       .then((res) => {
         return res

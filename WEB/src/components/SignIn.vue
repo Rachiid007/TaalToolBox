@@ -14,8 +14,9 @@
       firstName: string
       secondName: string
       mail: string
-      phoneNumber: string
       birthDate: string
+      gender: string
+      schoolMail: string
     }
     page2: {
       school: string
@@ -32,8 +33,9 @@
       firstName: 'Michaël',
       secondName: 'Pourbaix',
       mail: 'test@test.com',
-      phoneNumber: '0444 05 04 05',
-      birthDate: '05-04-2002'
+      schoolMail: 'test@school.com',
+      birthDate: '05-04-2002',
+      gender: ''
     },
     page2: {
       school: 'Institut Saint Joseph',
@@ -44,7 +46,6 @@
       password: ''
     }
   })
- 
 
   // RECUPERER LE ROLE DU CURRENT USER
   const manage = reactive({
@@ -87,12 +88,13 @@
       name: state.page1.firstName,
       surname: state.page1.secondName,
       email: state.page1.mail,
+      schoolEmail: state.page1.schoolMail,
       password: state.auth.password,
       birthdate: state.page1.birthDate,
-      phone: state.page1.phoneNumber,
       role: state.page2.role, //LADMIN PEUT AJOUTER UN UTILISATEUR AVEC NIMPORTE QUEL ROLE OR LE PROF NE PEUT AJOUTER QUE LE ROLE ELEVE
       school: state.page2.school, //TODO si c'est l'admin qui inscris il doit mentionner l'école si c'est le prof on récupère son école
-      class: state.page2.classroom //TODO EST CE QUUN PROF PEUT AVOIR PLUSIEURS CLASSES
+      schoolClass: state.page2.classroom, //TODO EST CE QUUN PROF PEUT AVOIR PLUSIEURS CLASSES
+      sex: state.page1.gender
     }
 
     loginService.setUsers(payload)
@@ -124,7 +126,6 @@
         state.page1.firstName == '' ||
         state.page1.secondName == '' ||
         state.page1.mail == '' ||
-        state.page1.phoneNumber == '' ||
         state.page1.birthDate == ''
       ) {
         manage.error = 'Veuillez compléter tous les champs !'
@@ -145,8 +146,11 @@
         manage.error = 'Veuillez compléter tous les champs !'
         return 1
       }
-      let birth_date = state.page1.birthDate.replace('-', '').replace('-', '')
-      state.auth.password = state.page1.firstName[0] + state.page1.secondName + birth_date
+      const birthTable = state.page1.birthDate.split('-')
+      const birthTableString = birthTable.map((x) => parseInt(x))
+      // let birth_date = state.page1.birthDate.replace('-', '').replace('-', '')
+      state.auth.password =
+        state.page1.firstName[0] + state.page1.secondName + birthTableString.join('')
       sendData()
       console.log(state.auth.password)
     }
@@ -196,9 +200,9 @@
           />
           <input
             class="secondFields"
-            type="tel"
-            placeholder="Téléphone"
-            v-model="state.page1.phoneNumber"
+            type="email"
+            placeholder="School Mail"
+            v-model="state.page1.schoolMail"
           />
           <input
             class="secondFields"
@@ -208,6 +212,35 @@
             onblur="(this.type='text')"
             v-model="state.page1.birthDate"
           />
+          <fieldset class="radioField">
+            <div class="radioLegend"><legend>Sexe:</legend></div>
+            <div class="radioInput">
+              <input
+                type="radio"
+                name="gender"
+                value="M"
+                v-model="state.page1.gender"
+              />
+              <img
+                src="@/assets/logo/man.svg"
+                alt="manSign"
+                class="radioImage"
+              />
+            </div>
+            <div class="radioInput">
+              <input
+                type="radio"
+                name="gender"
+                value="F"
+                v-model="state.page1.gender"
+              />
+              <img
+                src="@/assets/logo/woman.svg"
+                alt="womanSign"
+                class="radioImage"
+              />
+            </div>
+          </fieldset>
         </form>
         <div class="buttons">
           <button

@@ -1,6 +1,6 @@
 <script setup lang="ts">
   // import UserService from '@/services/UserService'
-  import type { UserFromExcelFile } from '@/types/user'
+  import type { User, UserFormData, UserFromExcelFile } from '@/types/user'
   import { ref } from 'vue'
   import { read, utils } from 'xlsx'
   import { useUserStore } from '@/stores/user'
@@ -100,16 +100,34 @@
   }
 
   const sendUsersToStore = async () => {
-    const users: UserFromExcelFile[] = []
+    const users: UserFormData[] = []
+
     rows.value?.forEach((row) => {
-      const user: UserFromExcelFile = {
-        firstName: row[expectedHeaders.value[0].indexInHeaderExcel] as string,
-        lastName: row[expectedHeaders.value[1].indexInHeaderExcel] as string,
+      const birthDate = row[expectedHeaders.value[4].indexInHeaderExcel] as string
+      const birthDateString = new Date(birthDate)
+      const yr = birthDateString.getFullYear()
+      const mo = birthDateString.getMonth()
+      const day = birthDateString.getDay()
+      const birthDateSend = day + '-' + mo + '-' + yr
+      const birthDateConcat = day.toString() + mo.toString() + yr.toString()
+
+      // const birthDateConcat = birthDate.replace('-', '').replace('-', '')
+
+      console.log(birthDate)
+      const name = row[expectedHeaders.value[0].indexInHeaderExcel] as string
+      const surname = row[expectedHeaders.value[1].indexInHeaderExcel] as string
+      const password = surname[0] + name + birthDateConcat
+      const user: UserFormData = {
+        name: row[expectedHeaders.value[0].indexInHeaderExcel] as string,
+        surname: row[expectedHeaders.value[1].indexInHeaderExcel] as string,
         schoolEmail: row[expectedHeaders.value[2].indexInHeaderExcel] as string,
-        privateEmail: row[expectedHeaders.value[3].indexInHeaderExcel] as string,
-        birthdate: row[expectedHeaders.value[4].indexInHeaderExcel] as Date,
-        class: row[expectedHeaders.value[5].indexInHeaderExcel] as string,
-        sex: row[expectedHeaders.value[6].indexInHeaderExcel] as string
+        email: row[expectedHeaders.value[3].indexInHeaderExcel] as string,
+        birthdate: birthDateSend,
+        schoolClass: row[expectedHeaders.value[5].indexInHeaderExcel] as string,
+        sex: row[expectedHeaders.value[6].indexInHeaderExcel] as string,
+        role: 'Elève',
+        school: userStore.user.school,
+        password: password
       }
       users.push(user)
     })
