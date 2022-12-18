@@ -176,14 +176,17 @@ export const useDadLevels = defineStore('dadlevels', () => {
         console.log(error)
         return 1
       })
-      .then((response: number) => {
+      .then((response: any) => {
+        console.log('map ok')
+        console.log(response)
         dalService
-          .postDalImage(newDragAndLearnImage, response)
+          .postDalImage(newDragAndLearnImage, response.data)
           .catch((error) => {
             console.log(error)
             return 1
           })
           .then((response) => {
+            console.log('dal ok')
             return response
           })
       })

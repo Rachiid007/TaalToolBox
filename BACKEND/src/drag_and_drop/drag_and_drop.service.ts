@@ -28,10 +28,13 @@ export class DragService {
   }
 
   async uploadImage(req, file) {
+    console.log('into the service');
     const drag_id = req.body.id;
     // console.log(req);
     const url_prev = `${req.protocol}://${req.get('host')}`;
     const url_image = `${url_prev}/public/images/dal/${req.file.filename}`;
+    console.log('into the service => updating');
+    console.log(req);
     this.drag_and_dropRepository.update(parseInt(drag_id), {
       image: url_image,
     });

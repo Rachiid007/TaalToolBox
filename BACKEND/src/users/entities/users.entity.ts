@@ -23,26 +23,10 @@ export class Users {
   @Column('character varying')
   email: string;
 
-<<<<<<< HEAD
   @Column('character varying')
   schoolEmail: string;
 
   @Column()
-=======
-  @Column({
-    nullable: true,
-  })
-  schoolEmail: string;
-
-  @Column({
-    nullable: true,
-  })
-  privateEmail: string;
-
-  @Column({
-    nullable: true,
-  })
->>>>>>> 92933b9 (:sparkles: feat(register): Adding hash and salt for the front and back side of registration)
   password: string;
 
   @Column('character varying')
@@ -57,7 +41,7 @@ export class Users {
 
   @ManyToMany(() => Schoolclass)
   @JoinTable()
-  schoolClass: Schoolclass[];
+  schoolclass: Schoolclass[];
 
   //chaque utilisateur possède une seule langue
   @ManyToOne(() => Lang, (lang) => lang.users)

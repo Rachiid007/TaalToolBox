@@ -12,7 +12,7 @@ export default {
     let formData = new FormData()
     formData.append('file', imageData)
     formData.append('id', id.toString())
-
+    console.log(formData)
     return apiClientForm.post(`/drag_and_drop/image`, formData)
   }
 }
