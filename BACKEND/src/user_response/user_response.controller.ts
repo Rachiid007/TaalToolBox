@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UserResponseService } from './user_response.service';
 import { CreateUserResponseDto } from './dto/create-user_response.dto';
 import { UpdateUserResponseDto } from './dto/update-user_response.dto';
@@ -33,5 +41,15 @@ export class UserResponseController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userResponseService.remove(+id);
+  }
+
+  @Get('schoolClassStats/:id')
+  findSchoolResponseStats(@Param('id') id: string) {
+    return this.userResponseService.schoolResponseStats(+id);
+  }
+
+  @Get('userStats/:id')
+  findUserResponseStats(@Param('id') id: string) {
+    return this.userResponseService.userResponseStats(+id);
   }
 }

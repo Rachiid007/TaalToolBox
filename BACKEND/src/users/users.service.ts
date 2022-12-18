@@ -69,7 +69,7 @@ export class UsersService {
     const subscriptionStats = this.userRepository.query(
       `select A.name,count(*) from
       (select  distinct id_user, schoolclass."name" as name from user_response
-            left join users_schoolclass_schoolclass on user_response."id_user"=users_schoolclass_schoolclass."schoolclassId"
+            left join users_schoolclass_schoolclass on user_response."id_user"=users_schoolclass_schoolclass."usersId"
           left join schoolclass on schoolclass.id=users_schoolclass_schoolclass."schoolclassId"
             left join school on school.id = schoolclass."schoolId"
             where school.id in (select schoolclass."schoolId" from schoolclass where schoolclass.id in (select users_schoolclass_schoolclass."schoolclassId" from users_schoolclass_schoolclass where users_schoolclass_schoolclass."usersId"=${id_user}))  
