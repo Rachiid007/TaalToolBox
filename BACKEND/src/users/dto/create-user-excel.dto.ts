@@ -10,15 +10,15 @@ export class CreateUserExcelDto {
   surname: string;
 
   @IsEmail()
-  schoolEmail: string;
+  email: string;
 
   @IsEmail()
-  privateEmail: string;
+  schoolEmail: string;
 
-  @IsDate()
+  @IsString()
   birthdate: string;
 
-  schoolclass: Schoolclass[];
+  schoolClass: Schoolclass[];
 
   @IsString()
   sex: string;

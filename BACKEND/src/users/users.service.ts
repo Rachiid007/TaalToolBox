@@ -37,21 +37,32 @@ export class UsersService {
   async findOneUser(data: number | any): Promise<Users | undefined> {
     return await this.userRepository.findOne(data);
   }
+  async findByEmail(email: string): Promise<Users> {
+    return await this.userRepository.findOne({ where: { email: email } });
+  }
   // Get the user in database and her role
   async loginUser(email: string, password: string) {
     let userData: UserData;
-    if (!email || !password) {
+    console.log(email);
+    if (!email) {
       throw new NotFoundException();
     }
+    // await this.roleService.findOne(wh:
+    const role = await this.userRepository
+      .createQueryBuilder('users')
+      .innerJoinAndSelect('users.role', 'role')
+      .where({ email: email })
+      .getOne();
     //Decrypter le mot de passe du user
     //Get the users and here role
-    if (email !== 'admin@gmail.com') {
+    if (!role.role.filter((x) => x.name === 'Administrateur').length) {
+      // if (!role.role.includes('Administrateur')) {
       await this.userRepository
         .createQueryBuilder('users')
         .innerJoinAndSelect('users.role', 'role')
         .leftJoinAndSelect('users.schoolclass', 'schoolclass')
         .innerJoinAndSelect('schoolclass.school', 'school')
-        .where({ email: email, password: password })
+        .where({ email: email })
         .getOne()
         .then((user) => {
           userData = {
@@ -62,23 +73,25 @@ export class UsersService {
             }),
             email: user.email,
             birthdate: user.birthdate,
-            phone: user.phone,
-            schoolclass: user.schoolclass.map((x: { name: any }) => {
+            schoolClass: user.schoolClass.map((x: { name: any }) => {
               return x.name;
             }),
-            school: user.schoolclass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
+            school: user.schoolClass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
+            sex: user.sex,
           };
         })
         .catch((err) => {
           throw new NotFoundException(err);
         });
     } else {
+      console.log('inside this');
       await this.userRepository
         .createQueryBuilder('users')
         .innerJoinAndSelect('users.role', 'role')
         .where({ email: email, password: password })
         .getOne()
         .then((user) => {
+          console.log(user);
           userData = {
             name: user.name,
             surname: user.surname,
@@ -87,9 +100,9 @@ export class UsersService {
             }),
             email: user.email,
             birthdate: user.birthdate,
-            phone: user.phone,
-            schoolclass: [],
-            school: '',
+            schoolClass: [],
+            school: 'Institut Saint Joseph',
+            sex: 'M',
           };
         })
         .catch((err) => {
@@ -102,8 +115,18 @@ export class UsersService {
     // Normalement en front on doit récupérer toutes les écoles
     //
 
-    const { name, surname, email, password, birthdate, phone, school, role } =
-      payload;
+    const {
+      name,
+      surname,
+      email,
+      schoolEmail,
+      password,
+      birthdate,
+      school,
+      role,
+      schoolClass,
+      sex,
+    } = payload;
     //1. Checker si l'utilisateur est déjà dans la base de données
     const checkUser: Users = await this.userRepository
       .createQueryBuilder()
@@ -125,7 +148,7 @@ export class UsersService {
     const schoolClassRequest: Schoolclass =
       await this.schoolClassService.findClassUser(
         schoolRequest.id,
-        payload.class,
+        schoolClass,
       );
     let idSchoolClass: number;
     if (schoolClassRequest) {
@@ -136,7 +159,7 @@ export class UsersService {
       // TODO NINSERE PAS LECOLE DE LUTILISATEUR
       const schoolClassInsert = await this.schoolClassService
         .create({
-          name: payload.class,
+          name: schoolClass,
           schoolId: schoolRequest.id,
         })
         .catch((err) => {
@@ -153,17 +176,19 @@ export class UsersService {
         'name',
         'surname',
         'email',
+        'schoolEmail',
         'password',
         'birthdate',
-        'phone',
+        'sex',
       ])
       .values({
         name: name,
         surname: surname,
         email: email,
+        schoolEmail: schoolEmail,
         password: password,
         birthdate: birthdate,
-        phone: phone,
+        sex: sex,
       })
       .execute()
       .catch((err) => {
@@ -197,6 +222,7 @@ export class UsersService {
       .catch((err) => {
         throw new InternalServerErrorException(err);
       });
+    console.log(userRole);
   }
 
   async create(data: CreateUserDto): Promise<any> {
@@ -206,19 +232,23 @@ export class UsersService {
       .catch((e) => console.log(e));
   }
 
-  async createUsersExcel(data: CreateUserExcelDto[]) {
+  async createUsersExcel(data: UserFormData[]) {
     // insert CreateUserExcelDto into users table and return the users inserted
-    return await this.userRepository.insert(
-      data.map((user) => {
-        return {
-          name: user.name,
-          surname: user.surname,
-          schoolEmail: user.schoolEmail,
-          privateEmail: user.privateEmail,
-          birthdate: user.birthdate,
-          sex: user.sex,
-        };
-      }),
-    );
+    // return await this.createUser()
+    data.map(async (user: UserFormData) => {
+      return await this.createUser(user);
+    });
+    // return await this.userRepository.insert(
+    //   data.map((user) => {
+    //     return {
+    //       name: user.name,
+    //       surname: user.surname,
+    //       schoolEmail: user.schoolEmail,
+    //       email: user.email,
+    //       birthdate: user.birthdate,
+    //       sex: user.sex,
+    //     };
+    //   }),
+    // );
   }
 }
