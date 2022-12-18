@@ -1,3 +1,5 @@
+import { Users } from 'src/users/entities/users.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -10,6 +12,7 @@ import { LocalStrategy } from './strategy/local.strategy';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([Users]),
     UsersModule,
     PassportModule,
     JwtModule.register({

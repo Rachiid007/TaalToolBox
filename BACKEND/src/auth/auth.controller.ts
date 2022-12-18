@@ -7,10 +7,12 @@ import { LocalAuthGuard } from './guard/local-auth.guard';
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
+
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Req() req) {
-    return this.authService.login(req);
+    // Loger l'utilisateur (appeler le service qui va s'occuper de sa : à la fin mettre le payload en jwt)
+    return await this.authService.login(req);
   }
 
   @Get('classroom')
