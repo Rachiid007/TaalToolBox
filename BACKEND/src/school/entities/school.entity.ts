@@ -1,5 +1,12 @@
 import { Schoolclass } from 'src/schoolclass/entities/schoolclass.entity';
-import { PrimaryGeneratedColumn, Column, Entity, OneToMany } from 'typeorm';
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity()
 export class School {
@@ -16,4 +23,7 @@ export class School {
   @Column('character varying', { default: null })
   description;
 
+  @OneToMany(() => Schoolclass, (schoolclassId) => schoolclassId.id)
+  @JoinColumn({ name: 'schoolclassId' })
+  schoolclass: Schoolclass[];
 }

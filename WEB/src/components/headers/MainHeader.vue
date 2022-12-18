@@ -30,7 +30,7 @@
   const handleDisconnection = () => {
     localStorage.removeItem('user')
     userStore.$reset
-    window.location.pathname = '/login'
+    window.location.pathname = '/TaalToolBox/login'
   }
 </script>
 
