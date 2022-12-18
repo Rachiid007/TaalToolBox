@@ -23,7 +23,7 @@ export interface UserFormData {
   school: string
   schoolClass: string
   role: string
-  sex: string
+  sex : string
 }
 
 export interface UserFromExcelFile {
