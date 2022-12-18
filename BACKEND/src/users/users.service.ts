@@ -38,64 +38,35 @@ export class UsersService {
     return await this.userRepository.findOne(data);
   }
   // Get the user in database and her role
-  async loginUser(email: string, password: string) {
-    let userData: UserData;
+  async loginUser(
+    email: string,
+    password: string,
+  ): Promise<UserData | undefined> {
     if (!email || !password) {
       throw new NotFoundException();
     }
     //Decrypter le mot de passe du user
     //Get the users and here role
-    if (email !== 'admin@gmail.com') {
-      await this.userRepository
-        .createQueryBuilder('users')
-        .innerJoinAndSelect('users.role', 'role')
-        .leftJoinAndSelect('users.schoolclass', 'schoolclass')
-        .innerJoinAndSelect('schoolclass.school', 'school')
-        .where({ email: email, password: password })
-        .getOne()
-        .then((user) => {
-          userData = {
-            name: user.name,
-            surname: user.surname,
-            role: user.role.map((x: { name: any }) => {
-              return x.name;
-            }),
-            email: user.email,
-            birthdate: user.birthdate,
-            phone: user.phone,
-            schoolclass: user.schoolclass.map((x: { name: any }) => {
-              return x.name;
-            }),
-            school: user.schoolclass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
-          };
-        })
-        .catch((err) => {
-          throw new NotFoundException(err);
-        });
-    } else {
-      await this.userRepository
-        .createQueryBuilder('users')
-        .innerJoinAndSelect('users.role', 'role')
-        .where({ email: email, password: password })
-        .getOne()
-        .then((user) => {
-          userData = {
-            name: user.name,
-            surname: user.surname,
-            role: user.role.map((x: { name: any }) => {
-              return x.name;
-            }),
-            email: user.email,
-            birthdate: user.birthdate,
-            phone: user.phone,
-            schoolclass: [],
-            school: '',
-          };
-        })
-        .catch((err) => {
-          throw new NotFoundException(err);
-        });
+    const user = await this.userRepository
+      .createQueryBuilder('users')
+      .innerJoinAndSelect('users.role', 'role')
+      .where({ email: email, password: password })
+      .getOne();
+    if (!user) {
+      throw new NotFoundException();
     }
+    const userData = {
+      name: user.name,
+      surname: user.surname,
+      role: user.role.map((x) => {
+        return x.name;
+      }),
+      email: user.email,
+      birthdate: user.birthdate,
+      phone: user.phone,
+      schoolclass: ['1', '2'],
+      school: '1',
+    };
     return userData;
   }
   public async createUser(payload: UserFormData) {
@@ -220,5 +191,31 @@ export class UsersService {
         };
       }),
     );
+  }
+
+  //cette fonction permet de recupérer le nombre d'utilisateur inscrit par classe sous la responsabilité d un prof ayant userId.
+  async findSubscriptionStats(userId: number): Promise<Users | undefined> {
+    const subscriptionStats = this.userRepository.query(
+      `select school.name || ' - ' ||schoolclass."name" as SchoolClass_name,count(*) from schoolclass
+      join users_schoolclass_schoolclass on schoolclass.id=users_schoolclass_schoolclass."schoolclassId"
+      join school on school.id = schoolclass."schoolId"
+      where school.id in (select schoolclass."schoolId" from schoolclass where schoolclass.id in (select users_schoolclass_schoolclass."schoolclassId" from users_schoolclass_schoolclass where users_schoolclass_schoolclass."usersId"=${userId}))
+      group by school.name,schoolclass.name;`,
+    );
+    return await subscriptionStats;
+  }
+
+  async findActivePlayersCount(userId: number): Promise<Users | undefined> {
+    const subscriptionStats = this.userRepository.query(
+      `select A.name,count(*) from
+      (select  distinct user_response."userId", schoolclass."name" as name from user_response
+            left join users_schoolclass_schoolclass on user_response."userId"=users_schoolclass_schoolclass."usersId"
+          left join schoolclass on schoolclass.id=users_schoolclass_schoolclass."schoolclassId"
+            left join school on school.id = schoolclass."schoolId"
+            where school.id in (select schoolclass."schoolId" from schoolclass where schoolclass.id in (select users_schoolclass_schoolclass."schoolclassId" from users_schoolclass_schoolclass where users_schoolclass_schoolclass."usersId"=${userId}))  
+        group by user_response."userId",schoolclass.name) as A
+        group by A.name`,
+    );
+    return await subscriptionStats;
   }
 }
