@@ -21,6 +21,7 @@ import AddClass from '@/views/Add Class/AddClass.vue'
 import InfoLevel from '@/views/Info level/InfoLevel.vue'
 import AddUserExcelView from '@/views/add-user/AddUserExcelView.vue'
 import Verbalize from '@/views/recognition/VerbalizeView.vue'
+import userResponseStats from '@/views/userResponseStats.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -129,8 +130,14 @@ const router = createRouter({
       path: '/verbalize',
       name: 'Verbalize',
       component: Verbalize
-    }
+    },
+    {
+      path: '/userResponseStats',
+      name: 'userResponseStats',
+      component: userResponseStats
+    }  
   ]
+  
 })
 
 export default router
