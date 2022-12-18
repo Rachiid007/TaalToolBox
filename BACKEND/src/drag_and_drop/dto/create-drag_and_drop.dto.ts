@@ -1,4 +1,4 @@
-import { IsString, IsJSON, IsOptional } from 'class-validator';
+import { IsString, IsJSON, IsOptional, IsNumber } from 'class-validator';
 
 export class CreateDragDto {
   // @IsJSON()
@@ -7,13 +7,10 @@ export class CreateDragDto {
   //   imgLink: string;
   // };
   @IsString()
-  leveldata: string;
+  levelData: string;
 
-  @IsString()
-  levelname: string;
-
-  @IsString()
-  creator: string;
+  @IsNumber()
+  levelMapId: number;
 
   @IsString()
   @IsOptional()

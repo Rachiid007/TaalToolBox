@@ -3,10 +3,10 @@ export interface UserData {
   surname: string;
   email: string;
   birthdate: string;
-  phone: string;
   role: string[];
-  schoolclass: string[];
+  schoolClass: string[];
   school: string;
+  sex: string;
 }
 export interface Card {
   id: number;
@@ -24,10 +24,12 @@ export interface UserFormData {
   name: string;
   surname: string;
   email: string;
+  schoolEmail;
   birthdate: string;
   password: string;
   phone: string;
   school: string;
-  class: string;
+  schoolClass: string;
   role: string;
+  sex: string;
 }

@@ -1,8 +1,9 @@
 import { apiClient } from './apiClient'
-import type { UserFromExcelFile } from '@/types/user'
+import type { UserFormData } from '@/types/user'
 
 export default {
-  async createUsers(users: UserFromExcelFile[]) {
-    return apiClient.post('/users/excel', users)
+  async createUsers(payload: UserFormData[]) {
+    // console.log(payload)
+    return apiClient.post('/users/excel', payload)
   }
 }

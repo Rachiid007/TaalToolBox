@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import { ref, reactive } from 'vue'
   import type { Ref } from 'vue'
-  import { useLevelsData } from '@/stores/levelsData'
   import { useMapStore } from '@/stores/map'
   import generalService from '@/services/generalService'
   import mapService from '@/services/mapService'
@@ -13,7 +12,6 @@
   const levelDifficulty: Ref<number> = ref(0)
   const levelDescription: Ref<string> = ref('')
 
-  const store = useLevelsData()
   const mapStore = useMapStore()
 
   const error: Ref<string> = ref('')
@@ -57,8 +55,12 @@
       // store.addLevelData(dataPayload)
 
       // mapStore.setLevelMap(mapStore.newLevel)
-      mapService.setLevelMap(mapStore.newLevel)
-      router.replace('/map')
+      if (activities.filter((x) => x.id === levelType.value)[0].name === 'DragAndLearn') {
+        router.replace('/dadteacher')
+      } else {
+        mapService.setLevelMap(mapStore.newLevel)
+        window.location.pathname = '/TaalToolBox/map'
+      }
     } else {
       error.value = 'Veuillez compléter tous les champs'
     }

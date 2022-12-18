@@ -31,8 +31,8 @@ if (user_json){
     user = JSON.parse(user_json);
 }
 //console.log(user)
-</script>
-<style>
+</script >
+<style scoped>
     .title{
         text-align: center;
         font-size: 40px;

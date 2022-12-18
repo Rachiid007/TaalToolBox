@@ -8,5 +8,6 @@ import { dragAndDrop } from './entities/drag_and_drop.entity';
   imports: [TypeOrmModule.forFeature([dragAndDrop])],
   controllers: [DragController],
   providers: [DragService],
+  exports: [DragService],
 })
 export class DragModule {}
