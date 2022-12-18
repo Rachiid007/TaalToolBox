@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { LevelMap } from './entities/level_map.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 // import { OnApplicationBootstrap } from '@nestjs/common';
-import { DragService } from 'src/drag_and_drop/drag_and_drop.service';
+import { DragService } from '../drag_and_drop/drag_and_drop.service';
 import type { DadPayloadDto } from './level_map.controller';
 @Injectable()
 export class LevelMapService {
