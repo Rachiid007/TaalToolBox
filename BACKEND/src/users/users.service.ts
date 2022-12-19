@@ -256,6 +256,7 @@ export class UsersService {
       .catch((e) => console.log(e));
   }
 
+<<<<<<< HEAD
   async createUsersExcel(data: UserFormData[]) {
     // insert CreateUserExcelDto into users table and return the users inserted
     // return await this.createUser()
@@ -299,5 +300,21 @@ export class UsersService {
         group by A.name`,
     );
     return await subscriptionStats;
+=======
+  async getUserStatistics(id: number): Promise<any> {
+    /*const user = await this.userRepository.findOne(id, {
+      relations: ['statistics'],
+    });
+    return user.statistics;*/
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.statistic', 'statistic')
+      .where('user.statistic = :id', { id: id })
+      .getMany();
+
+    console.log(user);
+
+    return user;
+>>>>>>> cd0a472 (accomplissement service created)
   }
 }
