@@ -30,6 +30,13 @@ export class ActivityService implements OnApplicationBootstrap {
             ' Dans cette zone de jeu les mots devrons être placés dans des champs et la zone de jeu comportera une image de background.',
           src: '/src/assets/logo/dalcard.svg',
         },
+        {
+          name: 'Verbalize',
+          description:
+            "Activité dans laquelle l'étudiant pourra apprendre à bien articuler" +
+            " Dans cette zone de jeu l'étudiant devra s'enregister pour savoir s'il a bien prononcer le mot proposer.",
+          src: '/src/assets/logo/verbalize.svg',
+        },
       ]);
     }
   }
