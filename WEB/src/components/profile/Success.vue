@@ -87,14 +87,14 @@ function get_pourcentage(a: any, b: any) {
         class="card"
         v-for="data in data_test"
       >
-        <p class="card_title">{{ data.titre }}</p>
+        <p class="card_title">{{ data.Titre }}</p>
         <p>
           {{
-            parseFloat(get_pourcentage(user_stat[data.target], data.resultat).toString()).toFixed(2)
+            parseFloat(get_pourcentage(user_stat[data.Target], data.Resultat).toString()).toFixed(2)
           }}
         </p>
         <img :src="data.img" />
-        <p class="card_description">{{ data.description }}</p>
+        <p class="card_description">{{ data.Description }}</p>
       </div>
     </div>
   </div>
@@ -103,14 +103,28 @@ function get_pourcentage(a: any, b: any) {
 <script setup lang="ts">
   import { ref } from 'vue'
   import type { Ref } from 'vue'
-  function get_pourcentage(a: any, b: any) {
-    return (a / b) * 100
+  import { onMounted } from 'vue';
+  import axios from 'axios';
+import { Result } from 'postcss';
+
+
+  const user = ref(null);
+  const data_test = ref(null)
+
+  const user_json = localStorage.getItem('user')
+  if(user_json){
+    user.value = JSON.parse(user_json);
+    console.log(user)
+
   }
-  const user_stat: Ref<any> = ref({
-    nombre_parties_flashcards: 1,
-    nombre_parties_drag: 5
-  })
-  const data_test = ref([
+
+
+  function get_pourcentage(a: any, b: any) {
+    const result = (a / b) * 100
+    return result
+  }
+  const user_stat: Ref<any> = ref(null)
+ /* const data_test = ref([
     {
       titre: 'Flashcard',
       description: 'Jouer 50 parties de flashcards',
@@ -146,7 +160,19 @@ function get_pourcentage(a: any, b: any) {
       target: 'nombre_parties_drag',
       img: '/src/assets/images/300.svg'
     }
-  ])
+  ])*/
+
+  onMounted(async() => {
+    await axios.get('http://localhost:3000/accomplissements')
+    .then( (response) =>{
+        data_test.value = response.data
+        console.log(response)
+    })
+    .catch(error => {
+        console.log(error)
+    })
+    
+  });
 </script>
 <style>
   .success {
