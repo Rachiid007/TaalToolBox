@@ -12,12 +12,20 @@
     (e: 'change-page', nbrPage: number): void
   }>()
 
+  const manageErrorSize: Ref<string> = ref('')
+
   const handleImage = (e: any) => {
     console.log(e.target.files)
-    if (e.target.files[0]) {
-      imageUrl.value = URL.createObjectURL(e.target.files[0])
-      image.value = e.target.files[0]
-      console.log(imageUrl.value, image.value)
+    manageErrorSize.value = ''
+    if (e.target.files[0].size < 1048576) {
+      if (e.target.files[0]) {
+        imageUrl.value = URL.createObjectURL(e.target.files[0])
+        image.value = e.target.files[0]
+        console.log(imageUrl.value, image.value)
+      }
+    } else {
+      console.log('erreur taille')
+      manageErrorSize.value = "La taille de l'image ne doit pas excéder 1Mo!"
     }
   }
 
@@ -88,6 +96,12 @@
           </button>
         </div>
       </div>
+      <p
+        class="error"
+        v-if="manageErrorSize"
+      >
+        {{ manageErrorSize }}
+      </p>
     </div>
   </div>
 </template>
@@ -191,5 +205,10 @@
     transform: scale(1.05);
     transition: 0.2s ease;
     /* box-shadow: red 0px 0 5px 1px; */
+  }
+  .error {
+    color: red;
+    font-size: 1.5em;
+    font-weight: bold;
   }
 </style>
