@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
+// import { Users } from '../users/entities/users.entity';
 
 export class CreateTable1671232640211 implements MigrationInterface {
   name = 'CreateTable1671232640211';
@@ -127,6 +128,22 @@ export class CreateTable1671232640211 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "users_schoolclass_schoolclass" ADD CONSTRAINT "FK_af3ff04d68b4454d6cc452073f9" FOREIGN KEY ("schoolclassId") REFERENCES "schoolclass"("id") ON DELETE CASCADE ON UPDATE CASCADE`,
     );
+    // await queryRunner.manager.save(
+    //   queryRunner.manager.create<Users>(Users, {
+    //     id: 1,
+    //     name: 'admin',
+    //     surname: 'taaltoolbox',
+    //     firstName: 'admin',
+    //     lastName: 'taaltoolbox',
+    //     email: 'admin@gmail.com',
+    //     schoolEmail: 'admin@gmail.com',
+    //     privateEmail: 'admin@school.com',
+    //     password: 'Taaltoolbox2022',
+    //     birthdate: '01-01-2002',
+    //     phone: '0666777888',
+    //     sex: 'M',
+    //   }),
+    // );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

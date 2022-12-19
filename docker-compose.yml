@@ -8,9 +8,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    environment:
-      - BACKEND_PORT=${BACKEND_PORT}
-      - NODE_ENV=prod
     volumes:
       - ./certbot/www:/var/www/certbot/
       - ./certbot/:/etc/nginx/ssl/
@@ -21,14 +18,6 @@ services:
         ipv4_address: 10.5.0.2
     restart: unless-stopped
 
-    # certbot:
-    # image: certbot/certbot:latest
-    # volumes:
-    #   - ./certbot/www/:/var/www/certbot/:rw
-    #   - ./certbot/conf/:/etc/letsencrypt/:rw
-    # networks:
-    #   network:
-    #     ipv4_address: 10.5.0.5
   postgres-db:
     image: postgres
     container_name: postgres-db
@@ -50,27 +39,19 @@ services:
       context: ./BACKEND
       dockerfile: Dockerfile
     container_name: nestjs
-    command:
-      - /bin/sh
-      - -c
-      - |
-        npm run typeorm migration:run
-        npm run start:prod
+    # command:
+    #   - /bin/sh
+    #   - -c
+    #   - |
+    #     npm run typeorm migration:run && npm run start:prod
     ports:
       - 3000:3000
-    volumes:
-      - ./BACKEND:/app
-      - /BACKEND/node_modules
-      - /BACKEND/dist
     depends_on:
       - postgres-db
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_HOST=${POSTGRES_HOST}
-      - NODE_ENV:${NODE_ENV}
-    env_file:
-      - .env
     networks:
       network:
         ipv4_address: 10.5.0.4
