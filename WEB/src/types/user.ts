@@ -10,6 +10,7 @@ export interface User {
   schoolClass: string[]
   school: string
   sex: string
+  infos : string
 }
 
 // Type qu'on essaie d'envooyer dans la base de données : on envoie 1 role à la fois
