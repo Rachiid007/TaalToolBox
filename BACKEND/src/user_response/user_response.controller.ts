@@ -33,4 +33,13 @@ export class UserResponseController {
   remove(@Param('id') id: string) {
     return this.userResponseService.remove(+id);
   }
+  @Get('schoolClassStats/:id')
+  findSchoolResponseStats(@Param('id') id: string) {
+    return this.userResponseService.schoolResponseStats(+id);
+  }
+
+  @Get('userStats/:id')
+  findUserResponseStats(@Param('id') id: string) {
+    return this.userResponseService.userResponseStats(+id);
+  }
 }

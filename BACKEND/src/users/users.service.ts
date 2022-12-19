@@ -251,4 +251,29 @@ export class UsersService {
     //   }),
     // );
   }
+  //cette fonction permet de recupérer le nombre d'utilisateur inscrit par classe sous la responsabilité d un prof ayant userId.
+  async findSubscriptionStats(userId: number): Promise<Users | undefined> {
+    const subscriptionStats = this.userRepository.query(
+      `select school.name || ' - ' ||schoolclass."name" as SchoolClass_name,count(*) from schoolclass
+      join users_schoolclass_schoolclass on schoolclass.id=users_schoolclass_schoolclass."schoolclassId"
+      join school on school.id = schoolclass."schoolId"
+      where school.id in (select schoolclass."schoolId" from schoolclass where schoolclass.id in (select users_schoolclass_schoolclass."schoolclassId" from users_schoolclass_schoolclass where users_schoolclass_schoolclass."usersId"=${userId}))
+      group by school.name,schoolclass.name;`,
+    );
+    return await subscriptionStats;
+  }
+
+  async findActivePlayersCount(userId: number): Promise<Users | undefined> {
+    const subscriptionStats = this.userRepository.query(
+      `select A.name,count(*) from
+      (select  distinct user_response."userId", schoolclass."name" as name from user_response
+            left join users_schoolclass_schoolclass on user_response."userId"=users_schoolclass_schoolclass."usersId"
+          left join schoolclass on schoolclass.id=users_schoolclass_schoolclass."schoolclassId"
+            left join school on school.id = schoolclass."schoolId"
+            where school.id in (select schoolclass."schoolId" from schoolclass where schoolclass.id in (select users_schoolclass_schoolclass."schoolclassId" from users_schoolclass_schoolclass where users_schoolclass_schoolclass."usersId"=${userId}))  
+        group by user_response."userId",schoolclass.name) as A
+        group by A.name`,
+    );
+    return await subscriptionStats;
+  }
 }
