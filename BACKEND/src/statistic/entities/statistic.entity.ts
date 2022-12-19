@@ -20,8 +20,4 @@ export class Statistic {
   nombre_parties_flashcards: number;
   @Column()
   nombre_parties_drag: number;
-
-  @OneToOne(() => Users, { cascade: true })
-  @JoinColumn({ name: 'id' })
-  user: Users;
 }

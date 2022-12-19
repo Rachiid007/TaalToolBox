@@ -24,11 +24,18 @@ export class StatisticController {
   @Get()
   findAll() {
     return this.statisticService.findAll();
+<<<<<<< HEAD
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.statisticService.findOne(+id);
+=======
+  }*/
+  @Get(':id')
+  findOne(@Param('id') id: number) {
+    return this.statisticService.getStatisticsForUser(+id);
+>>>>>>> cd0a472 (accomplissement service created)
   }
 
   @Patch(':id')

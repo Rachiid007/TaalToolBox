@@ -35,6 +35,7 @@ export class UsersController {
     return await this.usersService.loginUser(query.email, query.password);
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   @Post()
   async createUser(@Body() payload: UserFormData) {
@@ -72,4 +73,11 @@ export class UsersController {
  
 =======
 >>>>>>> c8ce166 (get statistics service)
+=======
+
+  /*@Get('/statistic/:id')
+  findOne(@Param('id') id: number) {
+    return this.usersService.getUserStatistics(+id);
+  }*/
+>>>>>>> cd0a472 (accomplissement service created)
 }

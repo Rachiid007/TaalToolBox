@@ -25,6 +25,7 @@ import { Statistic } from './entities/statistic.entity';
 
 
 
+<<<<<<< HEAD
 @Injectable()
 export class StatisticService {
   constructor(
@@ -149,10 +150,11 @@ import { CreateStatisticDto } from './dto/create-statistic.dto';
 import { UpdateStatisticDto } from './dto/update-statistic.dto';
 import { Statistic } from './entities/statistic.entity';
 
+=======
+>>>>>>> cd0a472 (accomplissement service created)
 @Injectable()
 export class StatisticService {
   constructor(
-    @Inject(forwardRef(() => UsersService))
     @InjectRepository(Statistic)
     private userStatRepository: Repository<Statistic>,
   ) {}
@@ -166,7 +168,7 @@ export class StatisticService {
   }*/
   // recuperer les stats d'un users
 
-  async Get_User_stat(id: number): Promise<object | undefined> {
+  /*async Get_User_stat(id: number): Promise<object | undefined> {
     const stat = await this.userStatRepository
       .createQueryBuilder('statistics')
       .innerJoinAndSelect('statistics.user', 'user')
@@ -197,6 +199,27 @@ export class StatisticService {
   /*remove(id: number) {
     return `This action removes a #${id} statistic`;
   }*/
+
+  async getStatisticsForUser(userId: number): Promise<any> {
+    // Utilisez ici le répository pour récupérer les statistiques d'un utilisateur spécifique à partir de la base de données
+    const stat = await this.userStatRepository.findOneBy({
+      id: userId,
+    });
+
+    console.log(stat);
+
+    /*if (!stat) {
+      throw new NotFoundException();
+    }*/
+
+    const userStat = {
+      id: stat.id,
+      Flashcards: stat.nombre_parties_flashcards,
+      dragAndDrop: stat.nombre_parties_drag,
+    };
+
+    return userStat;
+  }
 }
 function inject() {
   throw new Error('Function not implemented.');

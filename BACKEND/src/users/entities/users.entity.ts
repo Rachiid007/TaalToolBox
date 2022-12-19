@@ -62,14 +62,20 @@ export class Users {
   nombre_de_parties_drag: any;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cd0a472 (accomplissement service created)
 
   @OneToOne(() => Statistic)
   @JoinColumn()
   statistic: Statistic;
+<<<<<<< HEAD
 >>>>>>> cd0a472 (accomplissement service created)
 =======
 >>>>>>> c8ce166 (get statistics service)
 >>>>>>> de881d2 (get statistics service)
 =======
 >>>>>>> c8ce166 (get statistics service)
+=======
+>>>>>>> cd0a472 (accomplissement service created)
 }

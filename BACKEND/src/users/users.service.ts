@@ -264,6 +264,7 @@ export class UsersService {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   async createUsersExcel(data: UserFormData[]) {
     // insert CreateUserExcelDto into users table and return the users inserted
     // return await this.createUser()
@@ -308,6 +309,8 @@ export class UsersService {
     );
     return await subscriptionStats;
 =======
+=======
+>>>>>>> cd0a472 (accomplissement service created)
   async getUserStatistics(id: number): Promise<any> {
     /*const user = await this.userRepository.findOne(id, {
       relations: ['statistics'],
@@ -322,6 +325,9 @@ export class UsersService {
     console.log(user);
 
     return user;
+<<<<<<< HEAD
+>>>>>>> cd0a472 (accomplissement service created)
+=======
 >>>>>>> cd0a472 (accomplissement service created)
   }
 }
