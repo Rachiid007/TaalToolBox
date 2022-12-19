@@ -8,4 +8,9 @@ export class UsersController {
   async findByEmail(@Query() query: { email: string; password: string }) {
     return await this.usersService.loginUser(query.email, query.password);
   }
+
+  /*@Get('/statistic/:id')
+  findOne(@Param('id') id: number) {
+    return this.usersService.getUserStatistics(+id);
+  }*/
 }

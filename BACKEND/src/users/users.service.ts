@@ -54,4 +54,20 @@ export class UsersService {
       .then((res) => res)
       .catch((e) => console.log(e));
   }
+
+  async getUserStatistics(id: number): Promise<any> {
+    /*const user = await this.userRepository.findOne(id, {
+      relations: ['statistics'],
+    });
+    return user.statistics;*/
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.statistic', 'statistic')
+      .where('user.statistic = :id', { id: id })
+      .getMany();
+
+    console.log(user);
+
+    return user;
+  }
 }

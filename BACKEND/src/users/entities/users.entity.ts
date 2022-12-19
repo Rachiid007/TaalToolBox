@@ -6,12 +6,15 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Role } from '../../role/entities/role.entity';
 import { Schoolclass } from 'src/schoolclass/entities/schoolclass.entity';
 import { Lang } from '../../lang/entities/lang.entity';
 import { UserResponseCard } from 'src/user_response_card/entities/user_response_card.entity';
+import { Statistic } from 'src/statistic/entities/statistic.entity'
+
 @Entity()
 export class Users {
   @PrimaryGeneratedColumn('increment')
@@ -45,6 +48,7 @@ export class Users {
 
   //chaque utilisateur possède une seule langue
   @ManyToOne(() => Lang, (lang) => lang.users)
+  statistics: any;
   lang: Lang;
 
   //Une utilisateur peut avoir plusieurs solution
@@ -52,4 +56,8 @@ export class Users {
   response_card: UserResponseCard[];
   nombre_de_parties_flashcards: any;
   nombre_de_parties_drag: any;
+
+  @OneToOne(() => Statistic)
+  @JoinColumn()
+  statistic: Statistic;
 }

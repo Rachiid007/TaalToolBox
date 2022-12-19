@@ -16,10 +16,9 @@ export class StatisticController {
   findAll() {
     return this.statisticService.findAll();
   }*/
-
   @Get(':id')
   findOne(@Param('id') id: number) {
-    return this.statisticService.Get_User_stat(+id);
+    return this.statisticService.getStatisticsForUser(+id);
   }
 
   /* @Patch(':id')

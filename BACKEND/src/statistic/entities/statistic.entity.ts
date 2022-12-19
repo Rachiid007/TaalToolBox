@@ -11,14 +11,13 @@ import {
 @Entity()
 export class Statistic {
   @PrimaryGeneratedColumn('increment')
-  id_stat: number;
+  id: number;
+
+  /*@Column()
+  userId: number;*/
 
   @Column()
   nombre_parties_flashcards: number;
   @Column()
   nombre_parties_drag: number;
-
-  @OneToOne(() => Users, { cascade: true })
-  @JoinColumn({ name: 'id' })
-  user: Users;
 }
