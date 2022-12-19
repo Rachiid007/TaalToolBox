@@ -34,9 +34,27 @@
   // Utilisé pour activer / désactiver les console.log
   const debugMode = false
 
+  const wordList = ['Bestelling', 'Naam', 'Efficiënt', 'Brandbaar']
+  const pos: Ref<number> = ref(0)
+
   const debug = (param: any) => {
     if (debugMode) {
       console.log(param)
+    }
+  }
+
+  const changePos = (number: number) => {
+    if (number > 0) {
+      if (pos.value !== wordList.length - 1) {
+        pos.value++
+        playerDisplay.value = false
+      }
+    } else {
+      if (pos.value !== 0) {
+        pos.value--
+        playerDisplay
+        playerDisplay.value = false
+      }
     }
   }
 
@@ -123,7 +141,7 @@
   const sendToDjango = () => {
     let formData = new FormData()
     formData.append('data', soundBlob.value!, soundName.value)
-    formData.append('word', 'bestelling')
+    formData.append('word', wordList[pos.value].toLowerCase())
 
     axios
       .post('http://localhost:8000/verbalize/get_prononciation', formData, {
@@ -163,7 +181,21 @@
 <template>
   <div class="main">
     <h1 class="title">Prononcer le mot:</h1>
-    <p class="word">Bestelling</p>
+    <div class="word_container">
+      <div
+        v-if="!recording"
+        class="arrow left_arr"
+        @click="changePos(-1)"
+      ></div>
+      <div class="word">
+        <p>{{ wordList[pos] }}</p>
+      </div>
+      <div
+        v-if="!recording"
+        class="arrow right_arr"
+        @click="changePos(1)"
+      ></div>
+    </div>
     <p
       :class="recorderStateClass"
       ref="recordingState"
@@ -192,7 +224,7 @@
       <button
         @click="sendToDjango"
         class="send"
-        v-if="playerDisplay && !recording"
+        v-if="playerDisplay"
       >
         Vérifier
       </button>
@@ -239,11 +271,36 @@
     font-family: 'Corbel';
     margin-top: 10px;
   }
+
+  .word_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    min-width: 20%;
+  }
+  .arrow {
+    border: solid var(--second-verbalize-color);
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    cursor: pointer;
+  }
+  .left_arr {
+    transform: rotate(135deg);
+  }
+  .right_arr {
+    transform: rotate(-45deg);
+  }
   .word {
     color: var(--main-verbalize-color);
     font-size: 30px;
     font-weight: bold;
     font-family: 'Corbel';
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
   }
   .recorder_state {
     color: red;
@@ -286,7 +343,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 15px;
+    margin-top: 25px;
     gap: 25px;
   }
   .no_acces {
