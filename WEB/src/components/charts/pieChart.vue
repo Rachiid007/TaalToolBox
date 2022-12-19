@@ -8,7 +8,9 @@
   import statsServiceRessource from '@/services/statsService'
   
   ChartJS.register(ArcElement, Tooltip, Legend)
-  const arr : any[]=[]
+  const arr1 : any[]=[]
+  const arr2 : any[]=[]
+  const arr3 : any[]=[]
   export default {
     name: 'pieChart',
     components: {
@@ -17,11 +19,11 @@
     data: () => ({
       loaded: false,
       pieConfig: {
-          labels: arr,
+          labels: arr1,
           datasets: [
             {
-              backgroundColor: arr,
-              data: arr,
+              backgroundColor: arr2,
+              data: arr3,
             }
           ] 
     },
@@ -33,7 +35,7 @@
         
     async mounted () {
       
-      let corporateColor: string[] =['#CAB8CB','#F4D4D4','#DCB69F','342A1F','#BDB8AD', '#EBE7E0', '#C6D4E1', '#44749D']
+      let corporateColor=['#CAB8CB','#F4D4D4','#DCB69F','342A1F','#BDB8AD', '#EBE7E0', '#C6D4E1', '#44749D']
       let i=0
   
       try {
