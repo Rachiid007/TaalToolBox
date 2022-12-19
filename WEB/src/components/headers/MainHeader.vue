@@ -101,6 +101,15 @@
         v-show="role.includes(staticRole.admin)"
         >Ajouter Classes</router-link
       >
+      <router-link
+        to="/userResponseStats"
+        class="tabs_element"
+        v-show="
+          [staticRole.admin, staticRole.creator].some((x) => {
+            return true //role.includes(x)
+          })
+        "
+        >Suivi</router-link>
     </div>
     <router-link
       v-if="role.length"
@@ -129,11 +138,11 @@
       class="rightTab"
       ref="right_tab"
     >
-      <div class="content">
+    <div class="content">
         <router-link
           class="right_tab_element"
           to="/"
-          >Acceuil</router-link
+          >Accueil</router-link
         >
         <router-link
           v-show="
@@ -173,6 +182,15 @@
           v-show="role.includes(staticRole.admin)"
           >Ajouter Classes</router-link
         >
+        <router-link
+        to="/userResponseStats"
+        class="tabs_element"
+        v-show="
+          [staticRole.admin, staticRole.creator].some((x) => {
+            return true //role.includes(x)
+          })
+        "
+        >Suivi</router-link>
         <router-link
           v-if="role.length"
           class="hamburger_connreg"
