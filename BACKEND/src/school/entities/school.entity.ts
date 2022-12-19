@@ -1,4 +1,4 @@
-import { Schoolclass } from 'src/schoolclass/entities/schoolclass.entity';
+import { Schoolclass } from '../../schoolclass/entities/schoolclass.entity';
 import {
   PrimaryGeneratedColumn,
   Column,

@@ -15,9 +15,19 @@
     url: ''
   })
 
+  const manageErrorSize = ref('')
+
   const handleImage = (e: any) => {
-    dataForm.url = URL.createObjectURL(e.target.files[0])
-    dataForm.image = e.target.files[0]
+    manageErrorSize.value = ''
+    if (e.target.files[0].size < 1048576) {
+      if (e.target.files[0]) {
+        dataForm.url = URL.createObjectURL(e.target.files[0])
+        dataForm.image = e.target.files[0]
+      }
+    } else {
+      console.log('erreur taille')
+      manageErrorSize.value = "La taille de l'image ne doit pas excéder 1Mo!"
+    }
   }
 
   const handleFormValidation = () => {
@@ -103,6 +113,12 @@
       v-if="showErrorMessage"
     >
       Veuillez remplir tous les champs
+    </p>
+    <p
+      v-if="manageErrorSize"
+      class="error-msg"
+    >
+      {{ manageErrorSize }}
     </p>
 
     <div
