@@ -1,36 +1,60 @@
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import loginService from '@/services/loginService'
-import type User from '@/types/user'
-import { useArrayEvery } from '@vueuse/shared'
-// import localforage from 'localforage'
+import type { User, UserFormData } from '@/types/user'
+import UserService from '@/services/UserService'
 
 export const useUserStore = defineStore('user', () => {
+  let userReward = ref<number>(0)
   let user = reactive<User>({
+    id: 1,
     name: '',
     surname: '',
     birthdate: '',
     role: [],
     email: '',
-    phone: ''
+    schoolEmail: '',
+    schoolClass: [],
+    school: '',
+    sex: ''
   })
   // const refreshStore = () => {
   if (localStorage.getItem('user')) {
-    const userStorage = localStorage.getItem('user')
-    user = JSON.parse(userStorage)
+    const userStorage: any = localStorage.getItem('user')
+    if (JSON.parse(userStorage)) {
+      user = JSON.parse(userStorage)
+    }
   }
   // }
   const getUser = async (email: string, password: string) => {
     const userRequest = await loginService.getUsers(email, password).catch((err) => {
       console.log(err)
     })
-    if (userRequest) {
-      console.log(userRequest.data)
+    if (userRequest.data) {
       return userRequest.data
     }
   }
+
+  const setReward = (reward: number) => {
+    userReward.value = reward
+  }
+
+  const postListUsers = async (users: UserFormData[]) => {
+    const userRequest = await UserService.createUsers(users)
+      .then((res) => {
+        return res
+      })
+      .catch((err) => {
+        return err
+      })
+    return userRequest
+  }
+
   return {
     user,
-    getUser
+    userReward,
+    setReward,
+    getUser,
+    postListUsers
   }
 })

@@ -1,4 +1,9 @@
-import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { stat } from 'fs';
 import { Users } from 'src/users/entities/users.entity';
@@ -7,8 +12,6 @@ import { Repository } from 'typeorm';
 import { CreateStatisticDto } from './dto/create-statistic.dto';
 import { UpdateStatisticDto } from './dto/update-statistic.dto';
 import { Statistic } from './entities/statistic.entity';
-
-
 
 @Injectable()
 export class StatisticService {
@@ -58,7 +61,7 @@ export class StatisticService {
     return `This action removes a #${id} statistic`;
   }*/
 
-  async getStatisticsForUser(userId: number): Promise<any> {
+ /* async getStatisticsForUser(userId: number): Promise<any> {
     // Utilisez ici le répository pour récupérer les statistiques d'un utilisateur spécifique à partir de la base de données
     const stat = await this.userStatRepository.findOneBy({
       id: userId,
@@ -70,14 +73,14 @@ export class StatisticService {
       throw new NotFoundException();
     }*/
 
-    const userStat = {
+   /*const userStat = {
       id: stat.id,
       Flashcards: stat.nombre_parties_flashcards,
       dragAndDrop: stat.nombre_parties_drag,
     };
 
     return userStat;
-  }
+  }*/
 }
 function inject() {
   throw new Error('Function not implemented.');

@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SchoolclassService } from './schoolclass.service';
 import { CreateSchoolclassDto } from './dto/create-schoolclass.dto';
 import { UpdateSchoolclassDto } from './dto/update-schoolclass.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Controller('schoolclass')
 export class SchoolclassController {
@@ -23,7 +32,10 @@ export class SchoolclassController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSchoolclassDto: UpdateSchoolclassDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateSchoolclassDto: UpdateSchoolclassDto,
+  ) {
     return this.schoolclassService.update(+id, updateSchoolclassDto);
   }
 

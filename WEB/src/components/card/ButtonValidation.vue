@@ -2,11 +2,24 @@
   import { useCardStore } from '@/stores/card'
   import { useShowStore } from '@/stores/show'
   import { useWeightCardStore } from '@/stores/weightCard'
+  import type User_response from '@/types/user_response'
+  //import { useUser_ResponseStore } from '@/stores/user_response'
+  //import { useUserStore } from '@/stores/user'
   import { computed } from 'vue'
+  import user_ResponseRessource from '@/services/user_ResponseService'
   const store = useCardStore()
   const storeShow = useShowStore()
   const storeWeightCard = useWeightCardStore()
-  const correctAndAlmostAnswer = () => {
+  //const storeAnswer = useUser_ResponseStore();
+
+  const correctAnswer = () => {
+    // Ajout de la réponse de l'utilisateur dans le tableau des réponses
+    const user_response: User_response = {
+      id_card: store.getActualCard()?.id,
+      id_answer: 1
+    }
+    store.AddAnswer(user_response)
+
     // Enlever la carte trouvé ou presque trouvé
     store.removeCorrectCard(store.getActualCard())
 
@@ -23,8 +36,40 @@
     storeShow.setShowAnswer(false)
     storeShow.setShowButtonValidation(false)
   }
+  const almostCorrectAnswer = () => {
+    // Ajout de la réponse de l'utilisateur dans le tableau des réponses
+    const user_response = {
+      id_card: store.getActualCard()?.id,
+      id_answer: 2
+    }
+
+    store.AddAnswer(user_response)
+
+    // Enlever la carte trouvé ou presque trouvé
+    store.removeAlmostCorrectCard(store.getActualCard())
+
+    //Remplacer la carte par une autre
+    const card = computed(() => store.getCurrentDeck())
+    store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
+    // console.log(store.getActualCard())
+
+    //decrémenter le nombre de carte restantes
+    store.decrement()
+
+    //switcher les boutons
+    storeShow.setShowButtonReveal(true)
+    storeShow.setShowAnswer(false)
+    storeShow.setShowButtonValidation(false)
+  }
 
   const falseAnswer = () => {
+    // Ajout de la réponse de l'utilisateur dans le tableau des réponses
+    const user_response = {
+      id_card: store.getActualCard()?.id,
+      id_answer: 3
+    }
+    store.AddAnswer(user_response)
+
     //Remplacer la carte par une autre
     const card = computed(() => store.getCurrentDeck())
     store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
@@ -49,7 +94,7 @@
       id="getAnswer"
       @click="
         () => {
-          correctAndAlmostAnswer()
+          correctAnswer()
 
           //Incrémenter son cota de réponse correct
           //TODOLe poids de la carte doit diminuer
@@ -65,7 +110,7 @@
       class="btn"
       @click="
         () => {
-          correctAndAlmostAnswer()
+          almostCorrectAnswer()
 
           //incrémenter son cota de réponse presque trouvé(todo : faire une liaison avec le poids)
           //TODOLe poids de la carte doit rester le même

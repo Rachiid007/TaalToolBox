@@ -10,4 +10,7 @@ export class Activity {
 
   @Column()
   description: string;
+
+  @Column()
+  src: string
 }

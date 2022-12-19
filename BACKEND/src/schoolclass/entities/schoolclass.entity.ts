@@ -1,5 +1,13 @@
-import { PrimaryGeneratedColumn, Column, Entity, OneToOne, JoinColumn } from 'typeorm';
-import {School} from "../../school/entities/school.entity"
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
+import { School } from '../../school/entities/school.entity';
 @Entity()
 export class Schoolclass {
   @PrimaryGeneratedColumn('increment')
@@ -8,8 +16,11 @@ export class Schoolclass {
   @Column('character varying')
   name: string;
 
-  @OneToOne(()=> School)
-  @JoinColumn()
-  school : School;
-  
-}
+  @Column({ name: 'schoolId' })
+  schoolId: number;
+
+  // une classe appartient à une et une seule école
+  @OneToMany(() => School, (schoolId) => schoolId.id)
+  @JoinColumn({ name: 'schoolId' })
+  school: School;
+} 

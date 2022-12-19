@@ -12,7 +12,7 @@ CREATE TABLE "Taaltoolbox"."category" (
 );
 
 --liste des langues (ex: NL, FR, EN)
-CREATE TABLE "Taaltoolbox"." lang" (
+CREATE TABLE "Taaltoolbox"."lang" (
   id_lang SERIAL,
   code char(2) NOT NULL,
   name VARCHAR(45) NOT NULL, 
@@ -107,7 +107,7 @@ CREATE TABLE "Taaltoolbox"."card" (
 );
 
 
-drop table "Taaltoolbox"."users"
+--drop table "Taaltoolbox"."users";
 CREATE TABLE "Taaltoolbox"."users" (
   id_user SERIAL,
   name VARCHAR(45) NOT NULL,
@@ -126,15 +126,15 @@ CREATE TABLE "Taaltoolbox"."users" (
         REFERENCES "Taaltoolbox".role (id_role) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-CONSTRAINT id_lang FOREIGN KEY (id_lang)
-        REFERENCES "Taaltoolbox".lang (id_lang) MATCH SIMPLE
+  CONSTRAINT id_lang FOREIGN KEY (id_lang)
+        REFERENCES "Taaltoolbox"."lang" (id_lang) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION 
+        ON DELETE NO ACTION, 
   FOREIGN KEY (id_school)
   REFERENCES "Taaltoolbox"."school" (id_school),
-PRIMARY KEY (id_schoolclass),
+ -- PRIMARY KEY (id_schoolclass), -- erreurs pas deux primary keys ??
   FOREIGN KEY (id_schoolclass)
-  REFERENCES "Taaltoolbox"."school" (id_schoolclass),  
+  REFERENCES "Taaltoolbox"."schoolclass" (id_schoolclass) --pas plutôt id_schoolclass ?? 
 );
 
 -- ex: le user 1 repond "j'ai trouvé" à la carte 1
@@ -144,7 +144,7 @@ CREATE TABLE "Taaltoolbox"."user_response" (
   id_user INT NOT NULL,
   id_card INT NOT NULL,
   id_answer INT,
-  id_proficiency INT,
+  id_proficiency char(4), --pq int de base ??
   PRIMARY KEY (id_user_response), 
   FOREIGN KEY (id_card)
   REFERENCES "Taaltoolbox"."card" (id_card),
@@ -153,14 +153,13 @@ CREATE TABLE "Taaltoolbox"."user_response" (
   FOREIGN KEY (id_user)
   REFERENCES "Taaltoolbox"."users" (id_user)  MATCH SIMPLE,
   FOREIGN KEY (id_proficiency)
-  REFERENCES "Taaltoolbox"."proficiency" (id_proficiency),
-  FOREIGN KEY (id_proficiency)
+  REFERENCES "Taaltoolbox"."proficiency" (id_proficiency)
         ON UPDATE NO ACTION
         ON DELETE NO ACTION     
 );
 
 -- permet de conserver sa dernière session/activité
-drop table "Taaltoolbox"."current_session" ;
+--drop table "Taaltoolbox"."current_session" ;
 CREATE TABLE "Taaltoolbox"."current_session" (
   id_session SERIAL,
   date_session DATE,
@@ -192,10 +191,13 @@ CREATE TABLE "Taaltoolbox"."progress" (
         ON DELETE NO ACTION        
 );
 
-	FOREIGN KEY (id_card)
-    REFERENCES "Taaltoolbox".card (id_card) 
 
-CONSTRAINT id_card FOREIGN KEY (id_card)
-        REFERENCES "Taaltoolbox".card (id_card) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION   
+-- drag and drop
+CREATE TABLE "Taaltoolbox"."dragAndDrop" (
+ id_drag SERIAL,
+ json_file JSON,
+ IdUser serial,
+ PRIMARY KEY (id_drag),
+ FOREIGN KEY (IdUser)
+ REFERENCES "Taaltoolbox"."users" (id_user)
+);

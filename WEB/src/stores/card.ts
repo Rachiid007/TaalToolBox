@@ -3,25 +3,38 @@ import { ref, reactive, computed } from 'vue'
 import type Flashcard from '@/types/Flashcard'
 import FlashcardService from '@/services/FlashcardService'
 import { flashcardsData } from '@/data/animalFlashcards'
+import type User_response from '@/types/user_response'
+import user_ResponseRessource from '@/services/user_ResponseService'
+import { useUserStore } from './user'
+
 export const useCardStore = defineStore('card', () => {
-  const remaining = ref(0)
-  const totalQuestions = ref(0)
-  const goodAnswers = ref(0)
-  const almostGoodAnswers = ref(0)
-  const wrongAnswers = ref(0)
-  const tableCard = reactive<Flashcard[]>([])
-  let actualCard = ref<Flashcard>({ id: 0, word: '', translation: '', image: '' }) //{ id: 0, question: '', translation: '', image: '', category: '' }
-  const goodAnswerPercentage = computed(() => {
-    return Math.round((goodAnswers.value / totalQuestions.value) * 100)
+  const resultGame = reactive({
+    totalQuestions: 0,
+    goodAnswers: 0,
+    almostGoodAnswers: 0,
+    wrongAnswers: 0
   })
 
-  //Get all card in DB
-  const getCard = async (): Promise<Flashcard[]> => {
-    const flashcardRequest = await FlashcardService.getFlashcards()
+  const userStore = useUserStore()
+
+  const tableUserResponse = reactive<User_response[]>([])
+
+  const remaining = ref(0)
+  const tableCard = reactive<Flashcard[]>([])
+  let actualCard = ref<Flashcard>() //{ id: 0, question: '', translation: '', image: '', category: '' }
+
+  const goodAnswerPercentage = computed(() => {
+    return Math.round((resultGame.goodAnswers / resultGame.totalQuestions) * 100)
+  })
+
+  //Get athe number of required cards
+  const getCard = async (cardNumber: number): Promise<Flashcard[]> => {
+    const flashcardRequest = await FlashcardService.getFlashcards(cardNumber)
     return flashcardRequest.data
   }
 
-  //Take a cardNumber  of card in a random position inside the flashcardTable table
+  // prend nombre de card et les melange et les met dans tableCard
+  //Take a cardNumber of card in a random position inside the flashcardTable table
   const shuffledCard = (flashcardTable: Flashcard[], cardNumber: number) => {
     // unsort table
     const shuffled = [...flashcardTable].sort(() => 0.5 - Math.random())
@@ -32,9 +45,9 @@ export const useCardStore = defineStore('card', () => {
   const setCard = async (card: number) => {
     //TODO Need to check connexion before getCard in other to go faster
 
-    getCard()
+    getCard(card)
       .then((data) => {
-        if (totalQuestions.value) {
+        if (resultGame.totalQuestions) {
           //If we have the number of card in DB else take card in front
           data.length >= card ? shuffledCard(data, card) : shuffledCard(flashcardsData, card)
         }
@@ -46,13 +59,28 @@ export const useCardStore = defineStore('card', () => {
   }
 
   // If user choose the correct card remove it to the deck
-  const removeCorrectCard = (card: Flashcard) => {
-    tableCard.splice(tableCard.indexOf(card), 1)
+  const removeCorrectCard = (card: Flashcard | undefined) => {
+    if (card) {
+      tableCard.splice(tableCard.indexOf(card), 1)
+    } else {
+      console.log('card is undefined')
+    }
   }
+
+  // If user choose the correct card remove it to the deck
+  const removeAlmostCorrectCard = (card: Flashcard | undefined) => {
+    if (card) {
+      tableCard.splice(tableCard.indexOf(card), 1)
+    } else {
+      console.log('card is undefined')
+    }
+  }
+
   const setActualCard = (card: Flashcard) => {
     actualCard.value = card
   }
-  const getActualCard = (): Flashcard => {
+
+  const getActualCard = (): Flashcard | undefined => {
     return actualCard.value
   }
 
@@ -62,8 +90,16 @@ export const useCardStore = defineStore('card', () => {
 
   // POUR LE NOMBRE DE CARTE RESTANT
   const setRemaining = (nbrOfCards: number) => {
-    totalQuestions.value = nbrOfCards
+    resultGame.totalQuestions = nbrOfCards
     remaining.value = nbrOfCards
+  }
+
+  const resetCounters = () => {
+    resultGame.goodAnswers = 0
+    resultGame.totalQuestions = 0
+    resultGame.wrongAnswers = 0
+    resultGame.almostGoodAnswers = 0
+    tableUserResponse.splice(0)
   }
 
   const decrement = () => {
@@ -72,16 +108,36 @@ export const useCardStore = defineStore('card', () => {
     }
   }
 
+  // Insertion d'une réponse dans le tabeau des réponses
+  const AddAnswer = (user_response: User_response) => {
+    let obj = []
+    const found = tableUserResponse.some((obj) => {
+      return obj.id_card === user_response.id_card
+    })
+
+    //Ajouter une réponse au tableau des réponses seulement si c est la première tentative
+    if (!found) {
+      tableUserResponse.push(user_response)
+    }
+  }
+
+  const postUser_Response = async () => {
+    //Envoi du tableau des réponses vers le backend
+    const user_ResponseService = new user_ResponseRessource()
+    const result = await user_ResponseService.postUserResponse(tableUserResponse, userStore.user.id)
+    return result
+  }
+
   const incrementGoodAnswers = () => {
-    goodAnswers.value++
+    resultGame.goodAnswers++
   }
 
   const incrementAlmostGoodAnswers = () => {
-    almostGoodAnswers.value++
+    resultGame.almostGoodAnswers++
   }
 
   const incrementWrongAnswers = () => {
-    wrongAnswers.value++
+    resultGame.wrongAnswers++
   }
 
   // ADD CARD FORM
@@ -89,7 +145,6 @@ export const useCardStore = defineStore('card', () => {
   const flashcardList = reactive([]) as Flashcard[]
 
   const addFlashcard = (flashcard: Flashcard) => {
-    console.log(flashcard)
     flashcardList.push(flashcard)
   }
 
@@ -99,20 +154,17 @@ export const useCardStore = defineStore('card', () => {
         flashcardList.splice(index, 1)
         return
       }
-
-      console.log("PROBLEME D'ID -> carte pas trouvé dans le store")
     })
   }
 
   return {
     remaining,
-    totalQuestions,
-    goodAnswers,
-    almostGoodAnswers,
-    wrongAnswers,
+    resultGame,
     goodAnswerPercentage,
+    tableUserResponse,
     tableCard,
     setRemaining,
+    resetCounters,
     setCard,
     setActualCard,
     getCurrentDeck,
@@ -124,6 +176,9 @@ export const useCardStore = defineStore('card', () => {
     incrementWrongAnswers,
     addFlashcard,
     flashcardList,
-    removeFlashcard
+    AddAnswer,
+    removeFlashcard,
+    removeAlmostCorrectCard,
+    postUser_Response
   }
 })

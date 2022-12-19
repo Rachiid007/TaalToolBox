@@ -1,7 +1,15 @@
-import { UserResponseCard } from './../../user_response_card/entities/user_response_card.entity';
+import { LevelDifficulty } from './../../level_difficulty/entities/level_difficulty.entity';
+import { CardsTheme } from './../../cards_theme/entities/cards_theme.entity';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 @Entity()
 export class Card {
   @ApiProperty({
@@ -18,14 +26,26 @@ export class Card {
   @Column()
   translation: string;
 
-
   @ApiProperty({
     description: 'Path of the image',
   })
   @Column({ default: null })
   image: string;
 
-  //Une card peut appartenir a plusieur réponse
-  @OneToMany(()=>UserResponseCard, (response_card)=> response_card.card)
-  response_card : UserResponseCard[]
+  // Chaque niveau correspond a un niveau de difficulté de carte
+  // un niveau à une difficulté
+  @Column({ name: 'difficultyId', default: null })
+  difficultyId: number;
+  // plusieur niveau peuvent avoir le meme niveau de difficulté
+  // Une difficulté appartient à plusieur niveau de map
+  @ManyToOne(() => LevelDifficulty, (level_difficulty) => level_difficulty.id)
+  @JoinColumn({ name: 'difficultyId' })
+  level_difficulty: LevelDifficulty;
+
+  // @Column()
+  // theme_id: number;
+
+  @ManyToMany(() => CardsTheme)
+  @JoinTable()
+  cardstheme: CardsTheme[];
 }

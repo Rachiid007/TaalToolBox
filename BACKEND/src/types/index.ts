@@ -3,6 +3,34 @@ export interface UserData {
   surname: string;
   email: string;
   birthdate: string;
-  phone: string;
   role: string[];
+  schoolClass: string[];
+  school: string;
+  sex: string;
+  infos: string;
+}
+export interface Card {
+  id: number;
+  word: string;
+  translation: string;
+  image: string;
+}
+export interface AnswerType {
+  id: number;
+  name: string;
+  description: string;
+  weight: number;
+}
+export interface UserFormData {
+  name: string;
+  surname: string;
+  email: string;
+  schoolEmail;
+  birthdate: string;
+  password: string;
+  phone: string;
+  school: string;
+  schoolClass: string;
+  role: string;
+  sex: string;
 }

@@ -1,22 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import HomeView from '../views/HomeView.vue'
+
 import MapView from '@/views/MapView.vue'
 import CardView from '@/views/CardView.vue'
 import CardNumberSelector from '@/views/CardNumberSelector.vue'
 import HomeView from '@/views/HomeView.vue'
 import ProfileView from '@/views/ProfileView.vue'
-import addCardExcelView from '@/views/add-card/addCardExcelView.vue'
-import addCardFormView from '@/views/add-card/addCardFormView.vue'
-import choiceHowToAddCardView from '@/views/add-card/choiceHowToAddCardView.vue'
-import choiceHowToAddUserView from '@/views/add-user/choiceHowToAddUser.vue'
+import AddCardExcelView from '@/views/add-card/AddCardExcelView.vue'
+import AddCardFormView from '@/views/add-card/AddCardFormView.vue'
+import ChoiceHowToAddCardView from '@/views/add-card/ChoiceHowToAddCardView.vue'
+import ChoiceHowToAddUserView from '@/views/add-user/ChoiceHowToAddUser.vue'
 import ChooseActivities from '@/views/chooseActivities/MultipleActivities.vue'
-import DadTestView from '@/views/DadTestView.vue'
-import DadTestTeacherView from '@/views/DadTestTeacherView.vue'
-import LevelSelectorView from '@/views/DadSelector.vue'
-import DadTestMobileView from '@/views/DadTestMobileView.vue'
+import DadView from '@/views/dad/DadView.vue'
+import DadTeacherView from '@/views/dad/DadTeacherView.vue'
+import LevelSelectorView from '@/views/dad/DadSelector.vue'
+import DadMobileView from '@/views/dad/DadMobileView.vue'
 import Login from '@/views/Login.vue'
 import SignIn from '@/views/SignIn.vue'
-// import ChooseActivities from '@/views/chooseActivities/MultipleActivities.vue'
+import StartGame from '@/views/StartGameView.vue'
+import AddClass from '@/views/Add Class/AddClass.vue'
+import InfoLevel from '@/views/Info level/InfoLevel.vue'
+import AddUserExcelView from '@/views/add-user/AddUserExcelView.vue'
+import Verbalize from '@/views/recognition/VerbalizeView.vue'
+import userResponseStats from '@/views/userResponseStats.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,22 +54,27 @@ const router = createRouter({
     {
       path: '/add-card',
       name: 'add-card',
-      component: choiceHowToAddCardView
+      component: ChoiceHowToAddCardView
     },
     {
       path: '/add-user',
       name: 'add-user',
-      component: choiceHowToAddUserView
+      component: ChoiceHowToAddUserView
+    },
+    {
+      path: '/add-user/excel',
+      name: 'add-user-excel',
+      component: AddUserExcelView
     },
     {
       path: '/add-card/excel',
       name: 'add-card-excel',
-      component: addCardExcelView
+      component: AddCardExcelView
     },
     {
       path: '/add-card/form',
       name: 'add-card-form',
-      component: addCardFormView
+      component: AddCardFormView
     },
     {
       path: '/chooseActivities',
@@ -72,14 +82,14 @@ const router = createRouter({
       component: ChooseActivities
     },
     {
-      path: '/dadtest',
-      name: 'dadtest',
-      component: DadTestView
+      path: '/dad',
+      name: 'dad',
+      component: DadView
     },
     {
-      path: '/dadteachertest',
-      name: 'dadteachertest',
-      component: DadTestTeacherView
+      path: '/dadteacher',
+      name: 'dadteacher',
+      component: DadTeacherView
     },
     {
       path: '/dadselector',
@@ -87,9 +97,9 @@ const router = createRouter({
       component: LevelSelectorView
     },
     {
-      path: '/dadtestmobile',
-      name: 'dadtestmobile',
-      component: DadTestMobileView
+      path: '/dadmobile',
+      name: 'dadmobile',
+      component: DadMobileView
     },
     {
       path: '/login',
@@ -101,7 +111,33 @@ const router = createRouter({
       name: 'signIn',
       component: SignIn
     },
+    {
+      path: '/start-game',
+      name: 'startGame',
+      component: StartGame
+    },
+    {
+      path: '/addClass',
+      name: 'addClass',
+      component: AddClass
+    },
+    {
+      path: '/infoLevel',
+      name: 'infoLevel',
+      component: InfoLevel
+    },
+    {
+      path: '/verbalize',
+      name: 'Verbalize',
+      component: Verbalize
+    },
+    {
+      path: '/userResponseStats',
+      name: 'userResponseStats',
+      component: userResponseStats
+    }  
   ]
+  
 })
 
 export default router

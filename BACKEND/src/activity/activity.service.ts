@@ -17,32 +17,43 @@ export class ActivityService implements OnApplicationBootstrap {
       return this.activityRepository.save([
         {
           name: 'Flashcard',
-          description: 'Jeu de flashcard pour les élèves',
+          description:
+            "Activité dans laquelle l'étudiant doit trouver de mots et doit s'auto-évaluer. Les mots" +
+            'sont representé sous forme de carte. Un systeme de poids est mise en place pour que les' +
+            "cartes plus dure de l'élève réaparaissent le plus souvent.",
+          src: '/src/assets/logo/flashcards.svg',
         },
         {
-          name: 'DragAndDrop',
-          description: 'Jeu de drag and drop pour les élèves',
+          name: 'DragAndLearn',
+          description:
+            "Activité dans laquelle l'étudiant doit placer des mots qui lui seront proposer dans la zone de jeu." +
+            ' Dans cette zone de jeu les mots devrons être placés dans des champs et la zone de jeu comportera une image de background.',
+          src: '/src/assets/logo/dalcard.svg',
+        },
+        {
+          name: 'Verbalize',
+          description:
+            "Activité dans laquelle l'étudiant pourra apprendre à bien articuler" +
+            " Dans cette zone de jeu l'étudiant devra s'enregister pour savoir s'il a bien prononcer le mot proposer.",
+          src: '/src/assets/logo/verbalize.svg',
         },
       ]);
     }
   }
+
   create(createActivityDto: CreateActivityDto) {
-    return 'This action adds a new activity';
+    return this.activityRepository.save(createActivityDto);
   }
 
   findAll() {
-    return `This action returns all activity`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} activity`;
+    return this.activityRepository.find();
   }
 
   update(id: number, updateActivityDto: UpdateActivityDto) {
-    return `This action updates a #${id} activity`;
+    return this.activityRepository.update(id, updateActivityDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} activity`;
+    return this.activityRepository.delete(id);
   }
 }

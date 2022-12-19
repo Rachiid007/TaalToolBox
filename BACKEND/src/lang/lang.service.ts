@@ -30,22 +30,22 @@ export class LangService implements OnApplicationBootstrap {
     }
   }
   create(createLangDto: CreateLangDto) {
-    return 'This action adds a new lang';
+    return this.langRepository.save(createLangDto);
   }
 
   findAll() {
-    return `This action returns all lang`;
+    return this.langRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} lang`;
-  }
+  // findOne(id: number) {
+  //   return this.langRepository.findOne(id);
+  // }
 
   update(id: number, updateLangDto: UpdateLangDto) {
-    return `This action updates a #${id} lang`;
+    return this.langRepository.update(id, updateLangDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} lang`;
+    return this.langRepository.delete(id);
   }
 }

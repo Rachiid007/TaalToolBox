@@ -1,39 +1,52 @@
 <script setup lang="ts">
-  import { reactive } from 'vue'
-  import logo from '@/assets/logo/logo.svg'
+  import { reactive, onMounted } from 'vue'
   import { useUserStore } from '@/stores/user'
+  import axios from 'axios'
   import router from '@/router'
   const store = useUserStore()
-  const state = reactive({
+
+  interface State {
+    mail: string
+    password: string
+  }
+  const state: State = reactive({
     mail: '',
     password: ''
   })
   const manage = reactive({
-    error: ''
+    error: '',
+    succes: ''
   })
+  const checkFields = () => {
+    if (state.mail === '' || state.password === '') {
+      manage.error = 'Veuillez remplir tous les champs'
+      return 1
+    } else {
+      sendData()
+    }
+  }
+  const sendData = async () => {
+    let payload = {
+      email: state.mail,
+      password: state.password
+    }
+    console.log(payload)
 
-  const checkFields = async () => {
-    for (let key in state) {
-      if (state[key] == '') {
-        manage.error = 'Veuillez compléter tous les champs !'
-        console.log(key)
-        return 1
-      }
-      // Récupérer l'utilisateur
-      const user = await store.getUser(state.mail, state.password)
+    // Récupérer l'utilisateur
+    const user = await store.getUser(state.mail, state.password)
 
-      //Muter le state initiale du user
-      store.$patch({ user: user })
-      //Redirection vers la page
+    //Muter le state initiale du user
+    store.$patch({ user: user })
+    //Redirection vers la page
+    if (user) {
       localStorage.setItem('user', JSON.stringify(user))
-
-      if (store.user.role) {
-        console.log(store.user.role)
+      if (store.user) {
+        manage.succes = 'Connexion réussie !'
         window.location.pathname = '/'
-        // router.push('/')
-      } else {
-        manage.error = "Nom d'utilisateur ou mot de passe incorrect"
       }
+    } else {
+      manage.error = "Nom d'utilisateur ou mot de passe incorrect"
+      return 1
     }
   }
 </script>
@@ -78,8 +91,17 @@
           Se connecter
         </button>
       </div>
-      <div class="error">
+      <div
+        class="error"
+        v-show="manage.error"
+      >
         {{ manage.error }}
+      </div>
+      <div
+        class="succes"
+        v-show="manage.succes"
+      >
+        {{ manage.succes }}
       </div>
     </div>
   </div>
@@ -144,7 +166,6 @@
 
   input {
     color: #026b30;
-
     width: 100%;
     border-radius: 5px;
     padding: 3px;
@@ -152,12 +173,7 @@
     outline: none;
     margin-right: 50px;
   }
-
-  /* input[type='text'].mailPass {
-  padding: 4px;
-  margin-right: 100px;
-} */
-
+  
   input::placeholder {
     color: #026b30;
   }
@@ -205,6 +221,11 @@
   }
   .error {
     color: red;
+    padding-bottom: 5%;
+    font-weight: bold;
+  }
+  .succes {
+    color: green;
     padding-bottom: 5%;
     font-weight: bold;
   }

@@ -1,21 +1,28 @@
 import { apiClient, apiClientForm } from './apiClient'
+import { useUserStore } from '@/stores/user'
 
-interface Flashcard {
-  word: string
-  translation: string
+interface FlashcardForm {
+  word: string | null
+  translation: string | null
 }
+
 interface FlashcardImage {
   id: string
   image: any
 }
+
 export default {
-  getFlashcards() {
-    return apiClient.get('/cards')
+  getFlashcards(nbrcards: number) {
+    const store = useUserStore()
+    console.log(store.user)
+    return apiClient.get('/cards/' + store.user.id + '/' + nbrcards)
   },
+
   getFlashcard(id: string) {
     return apiClient.get('/cards/' + id)
   },
-  postFlashcard(flashcard: Flashcard) {
+
+  postFlashcard(flashcard: FlashcardForm) {
     // for (var key of formData.entries()) {
     //   console.log(key[0] + ', ' + key[1])
     // }
@@ -28,6 +35,7 @@ export default {
   deleteFlashcard(id: string) {
     return apiClient.delete('/cards/' + id)
   },
+
   uploadImage(flashcardimage: FlashcardImage) {
     let formData = new FormData()
     formData.append('id', flashcardimage.id)

@@ -4,7 +4,7 @@
   import { ref } from 'vue'
 
   const userStore = useUserStore()
-  const role = userStore.user.role
+  const role: string[] = userStore.user.role
   const right_tab: any = ref(null)
   const hamburger: any = ref(null)
   const isShown: any = ref(false)
@@ -20,17 +20,17 @@
       isShown.value = true
     }
   }
-    const staticRole = {
-      admin : 'Administrateur',
-      creator :  'Créateur',
-      teacher : 'Professeur',
-      student : 'Elève'
-    }
-    // const role = userStore.user.role
-   const handleDisconnection = ()=>{
-     localStorage.removeItem("user")
-     userStore.$reset
-    window.location.pathname = "/login"
+  const staticRole = {
+    admin: 'Administrateur',
+    creator: 'Créateur',
+    teacher: 'Professeur',
+    student: 'Elève'
+  }
+  // const role = userStore.user.role
+  const handleDisconnection = () => {
+    localStorage.removeItem('user')
+    userStore.$reset
+    window.location.pathname = '/login'
   }
 </script>
 
@@ -57,37 +57,62 @@
       <router-link
         class="tabs_element"
         to="/map"
-        v-show="Object.values(staticRole).some(x=>{return role.includes(x)}) "
+        v-show="
+          Object.values(staticRole).some((x) => {
+            return role.includes(x)
+          })
+        "
         >Carte</router-link
       >
       <router-link
-      to="/add-user"
-      class="tabs_element"
-      v-show="[staticRole.admin , staticRole.teacher].some(x=>{return role.includes(x)})"
+          class="tabs_element"
+          to="/profile"
+          v-show="
+            Object.values(staticRole).some((x) => {
+            return role.includes(x)
+            })
+          "
+          >Profile</router-link>
+      <router-link
+        to="/add-user"
+        class="tabs_element"
+        v-show="
+          [staticRole.admin, staticRole.teacher].some((x) => {
+            return role.includes(x)
+          })
+        "
       >
-        <div   v-if="role.includes(staticRole.admin)">
-          Ajouter Prof/Elève
-        </div>
-        <div v-else >
-          Ajouter Elève
-        </div>
-      </router-link
-      >
+        <div v-if="role.includes(staticRole.admin)">Ajouter Prof/Elève</div>
+        <div v-else>Ajouter Elève</div>
+      </router-link>
       <router-link
         to="/chooseActivities"
         class="tabs_element"
-        v-show="[staticRole.admin , staticRole.creator].some(x=>{return role.includes(x)})"
+        v-show="
+          [staticRole.admin, staticRole.creator].some((x) => {
+            return role.includes(x)
+          })
+        "
         >Ajouter Activités</router-link
       >
       <router-link
-        to="#"
+        to="/addClass"
         class="tabs_element"
         v-show="role.includes(staticRole.admin)"
         >Ajouter Classes</router-link
       >
+      <router-link
+        to="/userResponseStats"
+        class="tabs_element"
+        v-show="
+          [staticRole.admin, staticRole.creator].some((x) => {
+            return true //role.includes(x)
+          })
+        "
+        >Suivi</router-link>
     </div>
     <router-link
-      v-if="userStore.user.role.length"
+      v-if="role.length"
       class="conreg"
       to="/login"
       @click="handleDisconnection()"
@@ -113,46 +138,61 @@
       class="rightTab"
       ref="right_tab"
     >
-      <div class="content">
+    <div class="content">
         <router-link
           class="right_tab_element"
           to="/"
-         
-          >Acceuil</router-link
+          >Accueil</router-link
         >
         <router-link
-          v-show="Object.values(staticRole).some(x=>{return role.includes(x)}) "
+          v-show="
+            Object.values(staticRole).some((x) => {
+              return role.includes(x)
+            })
+          "
           class="right_tab_element"
           to="/map"
-          >Carte </router-link
-        >
+          >Carte
+        </router-link>
         <router-link
-          v-show="[staticRole.admin , staticRole.teacher].some(x=>{return role.includes(x)})"
+          v-show="
+            [staticRole.admin, staticRole.teacher].some((x) => {
+              return role.includes(x)
+            })
+          "
           to="/add-user"
           class="right_tab_element"
         >
-          <div   v-if="role.includes(staticRole.admin)">
-            Ajouter Prof/Elève
-          </div>
-          <div v-else >
-            Ajouter Elève
-          </div>
-        </router-link
-        >
+          <div v-if="role.includes(staticRole.admin)">Ajouter Prof/Elève</div>
+          <div v-else>Ajouter Elève</div>
+        </router-link>
         <router-link
-          v-show="[staticRole.admin , staticRole.creator].some(x=>{return role.includes(x)})"
+          v-show="
+            [staticRole.admin, staticRole.creator].some((x) => {
+              return role.includes(x)
+            })
+          "
           to="/chooseActivities"
           class="right_tab_element"
           >Ajouter Activités</router-link
         >
         <router-link
-            to="#"
-            class="right_tab_element"
-            v-show="role.includes(staticRole.admin)"
-            >Ajouter Classes</router-link
-          >
+          to="#"
+          class="right_tab_element"
+          v-show="role.includes(staticRole.admin)"
+          >Ajouter Classes</router-link
+        >
         <router-link
-          v-if="userStore.user.role.length"
+        to="/userResponseStats"
+        class="tabs_element"
+        v-show="
+          [staticRole.admin, staticRole.creator].some((x) => {
+            return true //role.includes(x)
+          })
+        "
+        >Suivi</router-link>
+        <router-link
+          v-if="role.length"
           class="hamburger_connreg"
           to="/login"
           @click="handleDisconnection()"
@@ -228,6 +268,9 @@
     width: max-content;
     position: relative;
     transition: ease 0.5s;
+  }
+  .tabs_element div {
+    padding: auto 0;
   }
   .tabs_element:hover {
     color: #026b30;

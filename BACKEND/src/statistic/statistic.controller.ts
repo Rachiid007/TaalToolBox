@@ -16,10 +16,11 @@ export class StatisticController {
   findAll() {
     return this.statisticService.findAll();
   }*/
-  @Get(':id')
+
+  /*@Get(':id')
   findOne(@Param('id') id: number) {
-    return this.statisticService.getStatisticsForUser(+id);
-  }
+    return this.statisticService.Get_User_stat(+id);
+  }*/
 
   /* @Patch(':id')
   update(@Param('id') id: string, @Body() updateStatisticDto: UpdateStatisticDto) {

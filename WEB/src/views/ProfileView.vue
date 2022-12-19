@@ -8,15 +8,13 @@
   const userStore = useUserStore()
   //const store = useCardStore()
   //const remaining = computed(() => store.remaining)
+  console.log(localStorage.getItem('user'))
   const comp = ref(0)
 
   function changeComp(nb: number){
     comp.value = nb;
   }
 
-  function logOut(){
-    //à completer
-  }
 </script>
 
 <template>
@@ -33,9 +31,6 @@
       </button>
       <button @click="changeComp(2)">
         Succès
-      </button>
-      <button @click="logOut">
-        Log out
       </button>
     </div>
     <div class="compP">
@@ -64,7 +59,7 @@
     border: 4px double #cccccc;
     color: #242928;
     text-align: center;
-    font-size: 28px;
+    font-size: 55px;
     padding: 40px;
     margin: 8%;
     width: 100%;
@@ -83,13 +78,13 @@
   }
   .compP{
     border: ridge 5px #cccccc;
-    height: 20em;
+    height: 32em;
     margin-top: 6%;
     margin-left: 2%;
     padding: 5%;
     width: 80%;
     display: block;
     float: left;
-    font-size: 28px;
+    font-size: 18px;
   }
 </style>

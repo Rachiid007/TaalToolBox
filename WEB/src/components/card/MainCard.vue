@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { useCardStore } from '@/stores/card'
   import { useShowStore } from '@/stores/show'
-  import { ref, computed, onMounted, onUpdated, getCurrentInstance } from 'vue'
+  import { computed, onMounted, onUpdated } from 'vue'
   import cheval from '@/assets/images/card/cheval.svg'
 
   const store = useCardStore()
@@ -12,7 +12,7 @@
 
   //choose random card inside the user deck
   const actualCard = computed(() => {
-    if (card.value.length > 0) {
+    if (card.value?.length > 0) {
       store.setActualCard(card.value[Math.floor(Math.random() * card.value.length)])
       return store.getActualCard()
     }
@@ -37,17 +37,16 @@
       <p v-if="!storeShow.getShowAnswer()">Comment dit-on</p>
       <p v-else>Bonne Réponse</p>
     </div>
-    <div class="word-answer"></div>
     <div class="card">
       <!-- Réponse de la carte avec une image éventuelle -->
       <div class="word-answer">
-        <p v-if="storeShow.getShowAnswer()">{{ actualCard.translation }}</p>
-        <p v-else>{{ actualCard.word }}</p>
+        <p v-if="storeShow.getShowAnswer()">{{ actualCard?.translation }}</p>
+        <p v-else>{{ actualCard?.word }}</p>
       </div>
       <div class="image-answer">
         <img
           class="image-answer-reveal"
-          :src="actualCard.image"
+          :src="actualCard?.image!"
           alt=""
         />
       </div>
@@ -65,20 +64,6 @@
     >
       Réveler
     </button>
-    <!-- <div class="answer">
-      <ul>
-        <li class="response">
-          <label><input type="radio" name="answer" value="trouve" /> Trouvé</label>
-        </li>
-        <li class="response">
-          <input type="radio" name="answer" value="presque" />
-          <label for="reponse-1">J'y suis presque</label>
-        </li>
-        <li class="response">
-          <label><input type="radio" name="answer" value="rate" /> Raté</label>
-        </li>
-      </ul>
-    </div> -->
   </div>
 </template>
 

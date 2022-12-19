@@ -5,7 +5,7 @@ import { Role } from './entities/role.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 @Injectable()
-export class RoleService {
+export class RoleService implements OnApplicationBootstrap {
   constructor(
     @InjectRepository(Role)
     private roleRepository: Repository<Role>,
@@ -31,27 +31,33 @@ export class RoleService {
           description: 'Rôle Elève',
         },
       ]);
-      
     }
   }
 
   create(createRoleDto: CreateRoleDto) {
-    return 'This action adds a new role';
+    this.roleRepository.save(createRoleDto);
   }
 
-  findAll() {
-    return `This action returns all role`;
+  async findAll() {
+    const role = await this.roleRepository.createQueryBuilder('role').getMany();
+    return role;
+    // return `This action returns all role`;
   }
-
+  public async findRole(role: string) {
+    return await this.roleRepository
+      .createQueryBuilder('role')
+      .where({ name: role })
+      .getOne();
+  }
   findOne(id: number) {
     return `This action returns a #${id} role`;
   }
 
   update(id: number, updateRoleDto: UpdateRoleDto) {
-    return `This action updates a #${id} role`;
+    this.roleRepository.update(id, updateRoleDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} role`;
+    this.roleRepository.delete(id);
   }
 }

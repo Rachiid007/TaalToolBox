@@ -8,8 +8,6 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
-  Req,
-  Res,
 } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { imageFileFilter, editFileName } from './image.middleware';
@@ -19,7 +17,6 @@ import { UpdateCardDto } from './dto/update-card.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiParam } from '@nestjs/swagger';
 import { Cards } from './cards.decorator';
-// import { diskStorage } from 'multer';
 
 @Controller('cards')
 export class CardsController {
@@ -27,6 +24,7 @@ export class CardsController {
 
   @Post()
   create(@Body() createCardDto: CreateCardDto) {
+    console.log('Controller : ', createCardDto);
     return this.cardsService.create(createCardDto);
   }
 

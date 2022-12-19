@@ -1,4 +1,4 @@
-import { School } from 'src/school/entities/school.entity';
+import { School } from '../school/entities/school.entity';
 import { Injectable } from '@nestjs/common';
 import { OnApplicationBootstrap } from '@nestjs/common';
 import { CreateSchoolDto } from './dto/create-school.dto';
@@ -40,15 +40,22 @@ export class SchoolService implements OnApplicationBootstrap {
     return this.schoolRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} school`;
+  // findOne(id: number) {
+  //   return this.schoolRepository.findOne(id);
+  // }
+
+  public async findSchool(school: string) {
+    return await this.schoolRepository
+      .createQueryBuilder('school')
+      .where({ name: school })
+      .getOne();
   }
 
   update(id: number, updateSchoolDto: UpdateSchoolDto) {
-    return `This action updates a #${id} school`;
+    this.schoolRepository.update(id, updateSchoolDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} school`;
+    this.schoolRepository.delete(id);
   }
 }
