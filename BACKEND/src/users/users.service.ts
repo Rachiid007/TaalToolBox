@@ -38,13 +38,9 @@ export class UsersService {
   async findOneUser(data: number | any): Promise<Users | undefined> {
     return await this.userRepository.findOne(data);
   }
-<<<<<<< HEAD
   async findByEmail(email: string): Promise<Users> {
     return await this.userRepository.findOne({ where: { email: email } });
   }
-=======
-
->>>>>>> 124eca4 (get statistics service)
   // Get the user in database and her role
   async loginUser(email: string, password: string) {
     let userData: UserData;
@@ -52,15 +48,8 @@ export class UsersService {
     if (!email) {
       throw new NotFoundException();
     }
-<<<<<<< HEAD
     // await this.roleService.findOne(wh:
     const role = await this.userRepository
-=======
-    //Decrypter le mot de passe du user
-    //Get the users and here role
-   
-    const user = await this.userRepository
->>>>>>> 124eca4 (get statistics service)
       .createQueryBuilder('users')
       .innerJoinAndSelect('users.role', 'role')
       .where({ email: email })
@@ -68,66 +57,60 @@ export class UsersService {
     //Decrypter le mot de passe du user
     //Get the users and here role
     if (!role.role.filter((x) => x.name === 'Administrateur').length) {
-      if (await argon2.verify(role.password, password)) {
-        console.log('pass ok');
-        await this.userRepository
-          .createQueryBuilder('users')
-          .innerJoinAndSelect('users.role', 'role')
-          .leftJoinAndSelect('users.schoolclass', 'schoolclass')
-          .innerJoinAndSelect('schoolclass.school', 'school')
-          .where({ email: email })
-          .getOne()
-          .then((user) => {
-            console.log(user);
-            userData = {
-              name: user.name,
-              surname: user.surname,
-              role: user.role.map((x: { name: any }) => {
-                return x.name;
-              }),
-              email: user.email,
-              birthdate: user.birthdate,
-              schoolClass: user.schoolclass.map((x: { name: any }) => {
-                return x.name;
-              }),
-              school: user.schoolclass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
-              sex: user.sex,
-            };
-          })
-          .catch((err) => {
-            console.log(err);
-            throw new NotFoundException(err);
-          });
-      } else {
-        return 'Mot de passe incorect';
-      }
+      // if (!role.role.includes('Administrateur')) {
+      await this.userRepository
+        .createQueryBuilder('users')
+        .innerJoinAndSelect('users.role', 'role')
+        .leftJoinAndSelect('users.schoolclass', 'schoolclass')
+        .innerJoinAndSelect('schoolclass.school', 'school')
+        .where({ email: email })
+        .getOne()
+        .then((user) => {
+          userData = {
+            name: user.name,
+            surname: user.surname,
+            role: user.role.map((x: { name: any }) => {
+              return x.name;
+            }),
+            email: user.email,
+            birthdate: user.birthdate,
+            schoolClass: user.schoolclass.map((x: { name: any}) => {
+              return x.name;
+            }),
+            school: user.schoolclass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
+            sex: user.sex,
+            infos: user.infos,
+          };
+        })
+        .catch((err) => {
+          throw new NotFoundException(err);
+        });
     } else {
       console.log('inside this');
-      if (await argon2.verify(role.password, password)) {
-        await this.userRepository
-          .createQueryBuilder('users')
-          .innerJoinAndSelect('users.role', 'role')
-          .where({ email: email })
-          .getOne()
-          .then((user) => {
-            console.log(user);
-            userData = {
-              name: user.name,
-              surname: user.surname,
-              role: user.role.map((x: { name: any }) => {
-                return x.name;
-              }),
-              email: user.email,
-              birthdate: user.birthdate,
-              schoolClass: [],
-              school: 'Institut Saint Joseph',
-              sex: 'M',
-            };
-          })
-          .catch((err) => {
-            throw new NotFoundException(err);
-          });
-      }
+      await this.userRepository
+        .createQueryBuilder('users')
+        .innerJoinAndSelect('users.role', 'role')
+        .where({ email: email, password: password })
+        .getOne()
+        .then((user) => {
+          console.log(user);
+          userData = {
+            name: user.name,
+            surname: user.surname,
+            role: user.role.map((x: { name: any }) => {
+              return x.name;
+            }),
+            email: user.email,
+            birthdate: user.birthdate,
+            schoolClass: [],
+            school: 'Institut Saint Joseph',
+            sex: 'M',
+            infos: user.infos,
+          };
+        })
+        .catch((err) => {
+          throw new NotFoundException(err);
+        });
     }
     return userData;
   }
@@ -256,7 +239,6 @@ export class UsersService {
       .catch((e) => console.log(e));
   }
 
-<<<<<<< HEAD
   async createUsersExcel(data: UserFormData[]) {
     // insert CreateUserExcelDto into users table and return the users inserted
     // return await this.createUser()
@@ -300,21 +282,5 @@ export class UsersService {
         group by A.name`,
     );
     return await subscriptionStats;
-=======
-  async getUserStatistics(id: number): Promise<any> {
-    /*const user = await this.userRepository.findOne(id, {
-      relations: ['statistics'],
-    });
-    return user.statistics;*/
-    const user = await this.userRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.statistic', 'statistic')
-      .where('user.statistic = :id', { id: id })
-      .getMany();
-
-    console.log(user);
-
-    return user;
->>>>>>> cd0a472 (accomplissement service created)
   }
 }

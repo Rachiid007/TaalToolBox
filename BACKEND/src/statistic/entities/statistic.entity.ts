@@ -13,11 +13,6 @@ export class Statistic {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  /*@Column()
-  userId: number;*/
-
   @Column()
-  nombre_parties_flashcards: number;
-  @Column()
-  nombre_parties_drag: number;
+  infos: string;
 }

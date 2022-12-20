@@ -23,7 +23,10 @@
   import { ref } from 'vue'
   import type { Ref } from 'vue'
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> c929647aca039cc7ca59545d92799c862e738714
   import { onMounted } from 'vue';
   import axios from 'axios';
 import { Result } from 'postcss';
@@ -40,11 +43,15 @@ import { Result } from 'postcss';
   }
 
 
+<<<<<<< HEAD
 >>>>>>> c929647 (getting user stat service)
+=======
+>>>>>>> c929647aca039cc7ca59545d92799c862e738714
   function get_pourcentage(a: any, b: any) {
     const result = (a / b) * 100
     return result
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
   const user_stat: Ref<any> = ref({
     nombre_parties_flashcards: 1,
@@ -55,11 +62,19 @@ import { Result } from 'postcss';
   const user_stat: Ref<any> = ref(null)
  /* const data_test = ref([
 >>>>>>> c929647 (getting user stat service)
+=======
+  const user_stat: Ref<any> = ref(null)
+ /* const data_test = ref([
+>>>>>>> c929647aca039cc7ca59545d92799c862e738714
     {
       titre: 'Flashcard',
       description: 'Jouer 50 parties de flashcards',
       resultat: 50,
+<<<<<<< HEAD
       target: 'nombre_parties_flashcards',
+=======
+      target: 'nombrePartiesFlashcards',
+>>>>>>> c929647aca039cc7ca59545d92799c862e738714
       img: '/src/assets/images/50.svg'
     },
     {
@@ -91,8 +106,11 @@ import { Result } from 'postcss';
       img: '/src/assets/images/300.svg'
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
   ])
 =======
+=======
+>>>>>>> c929647aca039cc7ca59545d92799c862e738714
   ])*/
 
   onMounted(async() => {
@@ -106,7 +124,10 @@ import { Result } from 'postcss';
     })
     
   });
+<<<<<<< HEAD
 >>>>>>> c929647 (getting user stat service)
+=======
+>>>>>>> c929647aca039cc7ca59545d92799c862e738714
 </script>
 <style>
   .success {
