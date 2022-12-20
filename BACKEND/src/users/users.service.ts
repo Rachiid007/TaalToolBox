@@ -69,6 +69,7 @@ export class UsersService {
           .then((user) => {
             console.log(user);
             userData = {
+              id: user.id,
               name: user.name,
               surname: user.surname,
               role: user.role.map((x: { name: any }) => {
@@ -101,6 +102,7 @@ export class UsersService {
           .then((user) => {
             console.log(user);
             userData = {
+              id: user.id,
               name: user.name,
               surname: user.surname,
               role: user.role.map((x: { name: any }) => {
