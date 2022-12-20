@@ -153,6 +153,8 @@ import FooterVue from '@/components/footer/Footer.vue';
     font-weight: bold;
     color: grey;
     font-size: 20px;
+    text-align: center;
+    padding-bottom: 8px;
     
 }
 

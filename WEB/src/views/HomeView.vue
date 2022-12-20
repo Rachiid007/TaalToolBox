@@ -23,18 +23,19 @@
   .page {
     /* border : solid red 1px ;  */
     position: relative;
-    padding-bottom: 6.74rem;
+   /* padding-bottom: 6.74rem;*/
     margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 80px;
+    gap: 25px;
     
   }
 
   .footer{
     /*position: absolute;*/
-    position: absolute;
+   /* position: absolute;*/
     bottom: 0;
     left: 0;
     width: 100%;

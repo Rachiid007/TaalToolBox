@@ -63,8 +63,7 @@ import logo from '@/assets/logo/logo.svg'
   width:100%;
   /*height:80px;  */
   background:#E0E0E0;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 0;
 }
 
 .logo{
