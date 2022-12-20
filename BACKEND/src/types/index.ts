@@ -7,6 +7,7 @@ export interface UserData {
   schoolClass: string[];
   school: string;
   sex: string;
+  score: number;
 }
 export interface Card {
   id: number;
@@ -32,4 +33,5 @@ export interface UserFormData {
   schoolClass: string;
   role: string;
   sex: string;
+  score: number;
 }

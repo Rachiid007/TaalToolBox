@@ -35,7 +35,7 @@
   // Cette ref correspond à la div du popup
   const userRole = useUserStore().user.role
   const userSchool = useUserStore().user.school
-  const userReward = useUserStore().userReward
+  const userReward = await useUserStore().getUserScore()
   const mapStore = useMapStore()
   // const schoolUser = useUserStore().user.
 

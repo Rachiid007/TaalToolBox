@@ -81,6 +81,7 @@ export class UsersService {
               }),
               school: user.schoolclass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
               sex: user.sex,
+              score: user.score,
             };
           })
           .catch((err) => {
@@ -111,6 +112,7 @@ export class UsersService {
               schoolClass: [],
               school: 'Institut Saint Joseph',
               sex: 'M',
+              score: 100000,
             };
           })
           .catch((err) => {
@@ -190,6 +192,7 @@ export class UsersService {
         'password',
         'birthdate',
         'sex',
+        'score',
       ])
       .values({
         name: name,
@@ -199,6 +202,7 @@ export class UsersService {
         password: password,
         birthdate: birthdate,
         sex: sex,
+        score: 0,
       })
       .execute()
       .catch((err) => {
@@ -288,5 +292,40 @@ export class UsersService {
         group by A.name`,
     );
     return await subscriptionStats;
+  }
+
+  async getScore(email: string) {
+    let userScore: { score: number } = { score: 0 };
+    await this.userRepository
+      .createQueryBuilder('users')
+      .where({ email: email })
+      .getOne()
+      .then((user) => {
+        userScore = {
+          score: user.score,
+        };
+      })
+      .catch((err) => {
+        console.log(err);
+        throw new NotFoundException(err);
+      });
+    return userScore;
+  }
+
+  async addScore(payload: { email: string; numberToAdd: number }) {
+    const currentScore: { score: number } = await this.getScore(payload.email);
+    console.log(currentScore);
+    const newScore: number = currentScore.score + payload.numberToAdd;
+    await this.userRepository
+      .createQueryBuilder('users')
+      .update('users')
+      .set({ score: newScore })
+      .where({ email: payload.email })
+      .execute()
+      .catch((err) => {
+        console.log(err);
+        throw new InternalServerErrorException(err);
+      });
+    return newScore;
   }
 }

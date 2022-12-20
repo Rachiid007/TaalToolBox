@@ -14,7 +14,6 @@ import {
 import { ApiParam } from '@nestjs/swagger';
 import { Param } from '@nestjs/common';
 
-
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -65,5 +64,14 @@ export class UsersController {
   findActivePlayersCount(@Param('id_user') id_user: number) {
     return this.usersService.findActivePlayersCount(+id_user);
   }
- 
+
+  @Get('score')
+  async find(@Query() query: { email: string }) {
+    return await this.usersService.getScore(query.email);
+  }
+
+  @Post('score')
+  async addMoreScore(@Body() payload: { email: string; numberToAdd: number }) {
+    return await this.usersService.addScore(payload);
+  }
 }
