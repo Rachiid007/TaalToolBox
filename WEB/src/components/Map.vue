@@ -78,6 +78,11 @@
         position: [4.37576, 50.87358], //[4.39064, 50.83756]
         address: 'Institut Cardinal Mercier',
         levelId: 0
+      },
+      {
+        levelId: 15,
+        address: 'Avenue Molière Wavre',
+        position: [4.63491, 50.70874]
       }
     ]
   })
@@ -208,12 +213,24 @@
     // ---------------------------------------------------------------
     // On génère les points sur la map à partir de la liste des objets
     // ---------------------------------------------------------------
-    if (userRole.includes('Administrateur') || userRole.includes('Créateur') || userReward >= 50) {
+    if (userRole.includes('Administrateur') || userRole.includes('Créateur')) {
       // TODO AFFICHER TOUTES LES PREMIERE ACTIVITE SI LELEVE A PLUS DE 50 POINTS
       // TODO CHANGER LEMPLACEMENT DE TOUTES LES PREMIERES ACTIVITES CAR ELLE NE DOIVENT PAS SE TROUVER DANS LECOLE
       // TODO FAIRE UN CONDITION SI LELEVE A DEJA COMPLETER LACTIVITE DANS SON ECOLE
       for (let point of pointState.points) {
         setPointOnMap(point)
+        console.log(point)
+      }
+    } else if (userReward >= 50) {
+      console.log('ok')
+      console.log(pointState.points)
+      for (let point of pointState.points) {
+        //TODO NAFFICHER QUE LACTIVITE PRINCIPALE LORS DE LA PREMIERE ARRIVER DE LELEVE SUR LE SITE
+        if (point.levelId > 0) {
+          setPointOnMap(point)
+        } else if (point.address === userSchool) {
+          setPointOnMap(point)
+        }
       }
     } else {
       for (let point of pointState.points) {
@@ -250,7 +267,10 @@
           console.log(levelNumber.value)
           // On enregistre les coordonnées pour mettre le popup au bon endroit
           const coordinate = evt.coordinate
+          console.log(coordinate)
           overlay.setPosition(coordinate)
+          console.log(overlay)
+
           popupVisibility.value = true
           allowControls.value = false
           setNotActive()
@@ -405,114 +425,74 @@
     ref="popup"
     id="popup"
     class="ol-popup"
-    v-if="
-      (userRole.includes('Administrateur') && levelNumber > 0) ||
-      (userRole.includes('Créateur') && levelNumber > 0) ||
-      (userReward >= 50 && levelNumber > 0)
-    "
   >
-    <!-- SHOW ALL THE ACTIVITIES TO THE CREATOR AND ADMINISTRATOR -->
-    <!-- <div
-      class="swipper_right"
-      @click="gamemode = 0"
-    >
-      {{ '>' }}
-    </div>
     <div
-      class="swipper_left"
-      @click="gamemode = 1"
+      v-if="
+        (userRole.includes('Administrateur') && levelNumber > 0) ||
+        (userRole.includes('Créateur') && levelNumber > 0) ||
+        (userReward >= 50 && levelNumber > 0)
+      "
     >
-      {{ '<' }}
-    </div> -->
-    <a
-      href="#"
-      id="popup-closer"
-      class="ol-popup-closer"
-      @click="onCloserClick"
-    ></a>
-    <div class="popup-content">
-      <Transition>
-        <!-- v-if="gamemode" -->
+      <a
+        href="#"
+        id="popup-closer"
+        class="ol-popup-closer"
+        @click="onCloserClick"
+      ></a>
+      <div class="popup-content">
+        <Transition>
+          <!-- v-if="gamemode" -->
+          <div
+            id="popup-content"
+            class="sub_content"
+          >
+            <p class="popup-title">{{ levelName }}</p>
+            <p class="level-details">Quizz Flashcard {{ levelNumber }}</p>
+            <img
+              class="gamemode-image"
+              src="@/assets/logo/flashcards.svg"
+              alt="flashcards gamemode logo"
+            />
+            <router-link
+              to="/CardNumberSelector"
+              class="playButton"
+              >PLAY</router-link
+            >
+          </div>
+        </Transition>
+      </div>
+    </div>
+    <div v-else-if="levelNumber === 0">
+      <a
+        href="#"
+        id="popup-closer"
+        class="ol-popup-closer"
+        @click="onCloserClick"
+      ></a>
+      <div class="popup-content">
         <div
           id="popup-content"
           class="sub_content"
         >
           <p class="popup-title">{{ levelName }}</p>
-          <p class="level-details">Quizz Flashcard {{ levelNumber }}</p>
+          <p class="level-details">Activité principale</p>
           <img
             class="gamemode-image"
-            src="@/assets/logo/flashcards.svg"
-            alt="flashcards gamemode logo"
+            src="@/assets/logo/start_game.svg"
+            alt="start_game gamemode logo"
           />
+          <!-- CREATION DE LACTIVITE PRINCIPALE -->
           <router-link
-            to="/CardNumberSelector"
+            to="/start-game"
             class="playButton"
             >PLAY</router-link
           >
         </div>
-        <!-- <div
-          class="sub_content"
-          v-else
-        >
-          <p
-            class="popup-title"
-            id="levelDad"
-          >
-            {{ levelName }}
-          </p>
-          <p class="level-details">Quizz Drag&Learn {{ levelNumber }}</p>
-          <img
-            class="gamemode-image-dal"
-            src="@/assets/logo/dalcard.svg"
-            alt="flashcards gamemode logo"
-          />
-          <router-link
-            v-if="isMobile"
-            to="/dadmobile"
-            class="playButton"
-            id="buttonDad"
-            >PLAY</router-link
-          >
-          <router-link
-            v-else
-            to="/dad"
-            class="playButton"
-            id="buttonDad"
-            >PLAY</router-link
-          >
-        </div> -->
-      </Transition>
-    </div>
-  </div>
-  <!-- Redirection vers l'activité principale -->
-  <div
-    v-show="popupVisibility"
-    ref="popup"
-    id="popup"
-    class="ol-popup"
-    v-else-if="userReward >= 0 && userReward < 50 && levelNumber === 0"
-  >
-    <div class="popup-content">
-      <div
-        id="popup-content"
-        class="sub_content"
-      >
-        <p class="popup-title">{{ levelName }}</p>
-        <p class="level-details">Activité principale</p>
-        <img
-          class="gamemode-image"
-          src="@/assets/logo/start_game.svg"
-          alt="start_game gamemode logo"
-        />
-        <!-- CREATION DE LACTIVITE PRINCIPALE -->
-        <router-link
-          to="/start-game"
-          class="playButton"
-          >PLAY</router-link
-        >
       </div>
     </div>
+    <!-- SHOW ALL THE ACTIVITIES TO THE CREATOR AND ADMINISTRATOR -->
   </div>
+  <!-- Redirection vers l'activité principale -->
   <!-- Concernant la création de jeu Faire un poppup avec lavec la confirmation de l'adresse -->
 
   <div
