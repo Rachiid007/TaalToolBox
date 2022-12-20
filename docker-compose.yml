@@ -22,8 +22,6 @@ services:
     image: postgres
     container_name: postgres-db
     restart: unless-stopped
-    ports:
-      - 5432:5432
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
@@ -39,13 +37,6 @@ services:
       context: ./BACKEND
       dockerfile: Dockerfile
     container_name: nestjs
-    # command:
-    #   - /bin/sh
-    #   - -c
-    #   - |
-    #     npm run typeorm migration:run && npm run start:prod
-    ports:
-      - 3000:3000
     depends_on:
       - postgres-db
     environment:
