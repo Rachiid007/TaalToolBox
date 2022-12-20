@@ -96,6 +96,10 @@ export class UsersService {
               }),
               school: user.schoolclass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
               sex: user.sex,
+<<<<<<< HEAD
+=======
+              infos: user.infos,
+>>>>>>> 2d538ca (card design + recovering userdata)
             };
           })
           .catch((err) => {
@@ -126,6 +130,10 @@ export class UsersService {
               schoolClass: [],
               school: 'Institut Saint Joseph',
               sex: 'M',
+<<<<<<< HEAD
+=======
+              infos: user.infos,
+>>>>>>> 2d538ca (card design + recovering userdata)
             };
           })
           .catch((err) => {
