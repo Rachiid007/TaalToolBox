@@ -1,11 +1,13 @@
 <script setup lang="ts">
   import { useUserStore } from '@/stores/user'
   const userStore = useUserStore()
+  const userScope = await userStore.getUserScope()
+  const userRole = userScope.role
 </script>
 
 <template>
   <h1
-    v-if="userStore.user.role.includes('Administrateur')"
+    v-if="userRole.includes('Administrateur')"
     class="title"
   >
     Ajouter un Prof/Elève
@@ -23,7 +25,7 @@
         src="@/assets/excel.svg"
         alt="excel"
       />
-      <p v-if="userStore.user.role.includes('Administrateur')">
+      <p v-if="userRole.includes('Administrateur')">
         Vous pouvez ajouter des Professeurs/Elèves en les renseignant dans un fichier Excel.
       </p>
       <p v-else>
@@ -40,7 +42,7 @@
         src="@/assets/forms.svg"
         alt="google forms"
       />
-      <p v-if="userStore.user.role.includes('Administrateur')">
+      <p v-if="userRole.includes('Administrateur')">
         Vous pouvez ajouter vos Prof/Elève en les renseignant dans un formulaire.
       </p>
       <p v-else>Vous pouvez ajouter vos Elève en les renseignant dans un formulaire.</p>

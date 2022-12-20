@@ -6,7 +6,9 @@
 
 <template>
   <div class="page">
-    <MainHeader />
+    <Suspense>
+      <MainHeader />
+    </Suspense>
     <Greetings />
     <div class ="footer">
       <Footer/>

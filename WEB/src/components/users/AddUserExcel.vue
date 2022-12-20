@@ -4,7 +4,7 @@
   import { ref } from 'vue'
   import { read, utils } from 'xlsx'
   import { useUserStore } from '@/stores/user'
-  const userStore = useUserStore()
+  const userScope: any = useUserStore().getUserScope()
 
   const file = ref<File | null>(null)
   const headersFromExcel = ref<any>(null)
@@ -133,14 +133,14 @@
         schoolClass: row[expectedHeaders.value[5].indexInHeaderExcel] as string,
         sex: row[expectedHeaders.value[6].indexInHeaderExcel] as string,
         role: 'Elève',
-        school: userStore.user.school,
+        school: userScope.school,
         password: password
       }
       users.push(user)
     })
     console.log('users', users)
 
-    const response = await userStore.postListUsers(users)
+    const response = await useUserStore().postListUsers(users)
 
     if (response) {
       console.log('response', response)

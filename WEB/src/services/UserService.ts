@@ -1,10 +1,10 @@
-import { apiClient } from './apiClient'
+import { apiClient, apiClientWithCredential } from './apiClient'
 import type { UserFormData } from '@/types/user'
 
 export default {
   async createUsers(payload: UserFormData[]) {
     // console.log(payload)
-    return apiClient.post('/users/excel', payload)
+    return apiClientWithCredential.post('/users/excel', payload)
   },
   async getScore(email: string) {
     return await apiClient.get('/users/score', {
@@ -19,5 +19,9 @@ export default {
       email: email,
       numberToAdd: quantity
     })
+  },
+
+  getUserScope() {
+    return apiClientWithCredential.get('/users/role')
   }
 }
