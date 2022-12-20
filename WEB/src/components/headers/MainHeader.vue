@@ -2,12 +2,15 @@
   import logo from '@/assets/logo/logo.svg'
   import { useUserStore } from '@/stores/user'
   import { ref } from 'vue'
+  import type { Ref } from 'vue'
 
   const userStore = useUserStore()
   const role: string[] = userStore.user.role
   const right_tab: any = ref(null)
   const hamburger: any = ref(null)
   const isShown: any = ref(false)
+
+  const showAddSubTab: Ref<boolean> = ref(false)
 
   const toggleHamburger = () => {
     if (isShown.value) {
@@ -31,6 +34,13 @@
     localStorage.removeItem('user')
     userStore.$reset
     window.location.pathname = '/TaalToolBox/login'
+  }
+
+  const showAdd = () => {
+    showAddSubTab.value = true
+  }
+  const hideAdd = () => {
+    showAddSubTab.value = false
   }
 </script>
 
@@ -65,51 +75,70 @@
         >Carte</router-link
       >
       <router-link
-          class="tabs_element"
-          to="/profile"
-          v-show="
-            Object.values(staticRole).some((x) => {
+        class="tabs_element"
+        to="/profile"
+        v-show="
+          Object.values(staticRole).some((x) => {
             return role.includes(x)
-            })
-          "
-          >Profile</router-link>
+          })
+        "
+        >Profil</router-link
+      >
+      <div
+        class="tabs_element add_tab"
+        v-show="
+          [staticRole.admin, staticRole.teacher, staticRole.creator].some((x) => {
+            return role.includes(x)
+          })
+        "
+        @mouseenter="showAdd"
+        @mouseleave="hideAdd"
+      >
+        <button>Ajouter</button>
+        <div
+          class="add_tab_list"
+          v-show="showAddSubTab"
+        >
+          <router-link
+            to="/add-user"
+            class="tabs_element"
+            v-show="
+              [staticRole.admin, staticRole.teacher].some((x) => {
+                return role.includes(x)
+              })
+            "
+          >
+            <div v-if="role.includes(staticRole.admin)">Prof/Elève</div>
+            <div v-else>Elève</div>
+          </router-link>
+          <router-link
+            to="/chooseActivities"
+            class="tabs_element"
+            v-show="
+              [staticRole.admin, staticRole.creator].some((x) => {
+                return role.includes(x)
+              })
+            "
+            >Activités</router-link
+          >
+          <router-link
+            to="/addClass"
+            class="tabs_element"
+            v-show="role.includes(staticRole.admin)"
+            >Classes</router-link
+          >
+        </div>
+      </div>
       <router-link
-        to="/add-user"
+        to="/userResponseStats"
         class="tabs_element"
         v-show="
           [staticRole.admin, staticRole.teacher].some((x) => {
             return role.includes(x)
           })
         "
+        >Suivi</router-link
       >
-        <div v-if="role.includes(staticRole.admin)">Ajouter Prof/Elève</div>
-        <div v-else>Ajouter Elève</div>
-      </router-link>
-      <router-link
-        to="/chooseActivities"
-        class="tabs_element"
-        v-show="
-          [staticRole.admin, staticRole.creator].some((x) => {
-            return role.includes(x)
-          })
-        "
-        >Ajouter Activités</router-link
-      >
-      <router-link
-        to="/addClass"
-        class="tabs_element"
-        v-show="role.includes(staticRole.admin)"
-        >Ajouter Classes</router-link
-      >
-      <router-link
-        to="/userResponseStats"
-        class="tabs_element"
-        v-show="
-          [staticRole.admin, staticRole.creator].some((x) => {
-            return true //role.includes(x)
-          })
-        "
-        >Suivi</router-link>
     </div>
     <router-link
       v-if="role.length"
@@ -138,7 +167,7 @@
       class="rightTab"
       ref="right_tab"
     >
-    <div class="content">
+      <div class="content">
         <router-link
           class="right_tab_element"
           to="/"
@@ -183,14 +212,15 @@
           >Ajouter Classes</router-link
         >
         <router-link
-        to="/userResponseStats"
-        class="tabs_element"
-        v-show="
-          [staticRole.admin, staticRole.creator].some((x) => {
-            return true //role.includes(x)
-          })
-        "
-        >Suivi</router-link>
+          to="/userResponseStats"
+          class="tabs_element"
+          v-show="
+            [staticRole.admin, staticRole.creator].some((x) => {
+              role.includes(x)
+            })
+          "
+          >Suivi</router-link
+        >
         <router-link
           v-if="role.length"
           class="hamburger_connreg"
@@ -263,6 +293,20 @@
     font-size: 1.4em;
     color: #707070;
     text-align: center;
+    position: relative;
+  }
+  .add_tab {
+    position: relative;
+  }
+  .add_tab_list {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    background: white;
+    outline: 1px solid grey;
+    padding: 15px;
+    gap: 5px;
   }
   .tabs_element {
     width: max-content;
