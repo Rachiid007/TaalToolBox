@@ -35,6 +35,9 @@ export class Users {
   @Column()
   sex: string;
 
+  @Column({ nullable: true })
+  score: number;
+
   @ManyToMany(() => Role)
   @JoinTable()
   role: Role[];

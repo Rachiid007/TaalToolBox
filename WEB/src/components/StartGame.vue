@@ -29,7 +29,8 @@
     if (n > slides.length) {
       // Ajouter l'argent de l'utilisateur pour
       if (userStore.userReward == 0) {
-        userStore.setReward(50)
+        console.log(userStore.userReward)
+        userStore.addScoreToUser(50)
         router.replace('/map')
         return
       } else {

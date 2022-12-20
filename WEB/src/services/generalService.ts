@@ -7,10 +7,10 @@ export default {
   getCardTheme() {
     return apiClient.get('/cards-theme')
   },
-  getDifficultyLevel(){
-    return apiClient.get("/level-difficulty")
+  getDifficultyLevel() {
+    return apiClient.get('/level-difficulty')
   },
-  getActivities(){
-    return apiClient.get("/activity")
+  getActivities() {
+    return apiClient.get('/activity')
   }
 }
