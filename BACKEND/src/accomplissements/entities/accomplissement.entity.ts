@@ -16,4 +16,7 @@ export class Accomplissements {
 
   @Column()
   Resultat: number;
+
+  @Column({ nullable: true })
+  image: string;
 }

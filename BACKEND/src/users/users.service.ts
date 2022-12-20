@@ -57,60 +57,68 @@ export class UsersService {
     //Decrypter le mot de passe du user
     //Get the users and here role
     if (!role.role.filter((x) => x.name === 'Administrateur').length) {
-      // if (!role.role.includes('Administrateur')) {
-      await this.userRepository
-        .createQueryBuilder('users')
-        .innerJoinAndSelect('users.role', 'role')
-        .leftJoinAndSelect('users.schoolclass', 'schoolclass')
-        .innerJoinAndSelect('schoolclass.school', 'school')
-        .where({ email: email })
-        .getOne()
-        .then((user) => {
-          userData = {
-            name: user.name,
-            surname: user.surname,
-            role: user.role.map((x: { name: any }) => {
-              return x.name;
-            }),
-            email: user.email,
-            birthdate: user.birthdate,
-            schoolClass: user.schoolclass.map((x: { name: any}) => {
-              return x.name;
-            }),
-            school: user.schoolclass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
-            sex: user.sex,
-            infos: user.infos,
-          };
-        })
-        .catch((err) => {
-          throw new NotFoundException(err);
-        });
+      if (await argon2.verify(role.password, password)) {
+        console.log('pass ok');
+        await this.userRepository
+          .createQueryBuilder('users')
+          .innerJoinAndSelect('users.role', 'role')
+          .leftJoinAndSelect('users.schoolclass', 'schoolclass')
+          .innerJoinAndSelect('schoolclass.school', 'school')
+          .where({ email: email })
+          .getOne()
+          .then((user) => {
+            console.log(user);
+            userData = {
+              name: user.name,
+              surname: user.surname,
+              role: user.role.map((x: { name: any }) => {
+                return x.name;
+              }),
+              email: user.email,
+              birthdate: user.birthdate,
+              schoolClass: user.schoolclass.map((x: { name: any }) => {
+                return x.name;
+              }),
+              school: user.schoolclass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
+              sex: user.sex,
+              infos: user.infos,
+            };
+          })
+          .catch((err) => {
+            console.log(err);
+            throw new NotFoundException(err);
+          });
+      } else {
+        return 'Mot de passe incorect';
+      }
     } else {
       console.log('inside this');
-      await this.userRepository
-        .createQueryBuilder('users')
-        .innerJoinAndSelect('users.role', 'role')
-        .where({ email: email, password: password })
-        .getOne()
-        .then((user) => {
-          console.log(user);
-          userData = {
-            name: user.name,
-            surname: user.surname,
-            role: user.role.map((x: { name: any }) => {
-              return x.name;
-            }),
-            email: user.email,
-            birthdate: user.birthdate,
-            schoolClass: [],
-            school: 'Institut Saint Joseph',
-            sex: 'M',
-            infos: user.infos,
-          };
-        })
-        .catch((err) => {
-          throw new NotFoundException(err);
-        });
+      if (await argon2.verify(role.password, password)) {
+        await this.userRepository
+          .createQueryBuilder('users')
+          .innerJoinAndSelect('users.role', 'role')
+          .where({ email: email })
+          .getOne()
+          .then((user) => {
+            console.log(user);
+            userData = {
+              name: user.name,
+              surname: user.surname,
+              role: user.role.map((x: { name: any }) => {
+                return x.name;
+              }),
+              email: user.email,
+              birthdate: user.birthdate,
+              schoolClass: [],
+              school: 'Institut Saint Joseph',
+              sex: 'M',
+              infos: user.infos,
+            };
+          })
+          .catch((err) => {
+            throw new NotFoundException(err);
+          });
+      }
     }
     return userData;
   }

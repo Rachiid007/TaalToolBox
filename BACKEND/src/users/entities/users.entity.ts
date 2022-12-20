@@ -11,8 +11,6 @@ import {
 import { Role } from '../../role/entities/role.entity';
 import { Schoolclass } from '../../schoolclass/entities/schoolclass.entity';
 import { Lang } from '../../lang/entities/lang.entity';
-import { UserResponseCard } from 'src/user_response_card/entities/user_response_card.entity';
-import { Statistic } from 'src/statistic/entities/statistic.entity'
 
 @Entity()
 export class Users {
@@ -40,8 +38,8 @@ export class Users {
   @Column()
   sex: string;
 
-  @Column({ nullable: true })
-  infos: string;
+  @Column('jsonb', { nullable: true })
+  infos: object[];
 
   @ManyToMany(() => Role)
   @JoinTable()
@@ -53,6 +51,5 @@ export class Users {
 
   //chaque utilisateur possède une seule langue
   @ManyToOne(() => Lang, (lang) => lang.users)
-  statistics: any;
   lang: Lang;
 }
