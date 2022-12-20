@@ -93,12 +93,12 @@ export class UserResponseService {
       COUNT(*) Filter (Where user_response."proficiencyId" = 8) as TOTAL_MAITRISE, 
        COUNT(*) Filter (Where user_response."proficiencyId" in (5,6,7)) as TOTAL_ACQUIS
       from user_response
-      join users_school_class_schoolclass on users_school_class_schoolclass."usersId"=user_response."userId"
-      join schoolclass ON schoolclass.id = users_school_class_schoolclass."schoolclassId"
+      join users_schoolclass_schoolclass on users_schoolclass_schoolclass."usersId"=user_response."userId"
+      join schoolclass ON schoolclass.id = users_schoolclass_schoolclass."schoolclassId"
       where schoolclass."id" in (select id from schoolclass where schoolclass."schoolId" in (select schoolclass."schoolId" from schoolclass 
       join school on schoolclass."schoolId"=school."id"
-      join users_school_class_schoolclass on schoolclass."id"=users_school_class_schoolclass."schoolclassId"
-      where users_school_class_schoolclass."usersId"=${userId}))
+      join users_schoolclass_schoolclass on schoolclass."id"=users_schoolclass_schoolclass."schoolclassId"
+      where users_schoolclass_schoolclass."usersId"=${userId}))
       group by schoolclass."name"`,
     );
     return await schoolstats;
@@ -111,12 +111,12 @@ export class UserResponseService {
        COUNT(*) Filter (Where user_response."proficiencyId" in (5,6,7)) as TOTAL_ACQUIS,max(date_trunc('hour',user_response."dateResponse")) as lastPlay
       from user_response
       join users on users."id"=user_response."userId"
-      join users_school_class_schoolclass on users_school_class_schoolclass."usersId"=user_response."userId"
-      join schoolclass ON schoolclass.id = users_school_class_schoolclass."schoolclassId"
+      join users_schoolclass_schoolclass on users_schoolclass_schoolclass."usersId"=user_response."userId"
+      join schoolclass ON schoolclass.id = users_schoolclass_schoolclass."schoolclassId"
       where schoolclass."id" in (select id from schoolclass where schoolclass."schoolId" in (select schoolclass."schoolId" from schoolclass 
       join school on schoolclass."schoolId"=school."id"
-      join users_school_class_schoolclass on schoolclass."id"=users_school_class_schoolclass."schoolclassId"
-      where users_school_class_schoolclass."usersId"=${userId}))
+      join users_schoolclass_schoolclass on schoolclass."id"=users_schoolclass_schoolclass."schoolclassId"
+      where users_schoolclass_schoolclass."usersId"=${userId}))
       group by joueur,schoolclass."name"`,
     );
     return await userstat;
