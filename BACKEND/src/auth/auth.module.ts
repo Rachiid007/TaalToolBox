@@ -1,3 +1,4 @@
+// import { SessionSerializer } from './session.serializer';
 import { Users } from 'src/users/entities/users.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
@@ -9,7 +10,7 @@ import { AuthService } from './auth.service';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { LocalStrategy } from './strategy/local.strategy';
-
+import { SessionSerializer } from './session.serializer';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Users]),
@@ -20,7 +21,7 @@ import { LocalStrategy } from './strategy/local.strategy';
       signOptions: { expiresIn: '24h' },
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy, SessionSerializer],
   controllers: [AuthController],
   exports: [AuthService],
 })

@@ -16,16 +16,22 @@ export const useUserStore = defineStore('user', () => {
     schoolEmail: '',
     schoolClass: [],
     school: '',
-    sex: ''
+    sex: '',
+    accessToken: ''
   })
   // const refreshStore = () => {
-  if (localStorage.getItem('user')) {
-    const userStorage: any = localStorage.getItem('user')
-    if (JSON.parse(userStorage)) {
-      user = JSON.parse(userStorage)
-    }
-  }
+  // if (localStorage.getItem('user')) {
+  //   const userStorage: any = localStorage.getItem('user')
+  //   if (JSON.parse(userStorage)) {
+  //     user = JSON.parse(userStorage)
+  //   }
   // }
+  // }
+  const getProtected = async () => {
+    await loginService.getProtected().catch((err) => {
+      console.error(err)
+    })
+  }
   const getUser = async (email: string, password: string) => {
     const userRequest = await loginService.getUsers(email, password).catch((err) => {
       // console.log(err)
@@ -36,9 +42,28 @@ export const useUserStore = defineStore('user', () => {
         return 'InternalError'
       }
     })
+
+    // $cookies.get("sessionId")
+    // window.sessionStorage.sessionId = userRequest.body.sessionId
+    console.log(userRequest)
     if (userRequest.data) {
-      return userRequest.data
+      window.sessionStorage['x-xsrf-token'] = userRequest.data.xsrfToken
+      return true
+      // return userRequest.data
     }
+    return false
+  }
+
+  const getUserScope = async () => {
+    const roleRequest = await UserService.getUserScope().catch((err) => {
+      console.error(err)
+    })
+    if (roleRequest === undefined) {
+      return ''
+    } else if (roleRequest.data) {
+      return roleRequest.data
+    }
+    return ''
   }
 
   const setReward = (reward: number) => {
@@ -81,6 +106,11 @@ export const useUserStore = defineStore('user', () => {
       })
     return 'score added !'
   }
+  const logout = async () => {
+    const logoutRequest = await loginService.logout().catch((err) => {
+      console.log('logout error', err)
+    })
+  }
 
   return {
     user,
@@ -89,6 +119,9 @@ export const useUserStore = defineStore('user', () => {
     getUser,
     postListUsers,
     getUserScore,
-    addScoreToUser
+    addScoreToUser,
+    getProtected,
+    getUserScope,
+    logout
   }
 })

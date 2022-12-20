@@ -28,6 +28,7 @@
     "pinia": "^2.0.28",
     "vue": "^3.2.45",
     "vue-chartjs": "^5.0.1",
+    "vue-cookies": "^1.8.2",
     "vue-router": "^4.1.6",
     "vue3-easy-data-table": "^1.5.23",
     "wav-file-encoder": "^1.0.4",

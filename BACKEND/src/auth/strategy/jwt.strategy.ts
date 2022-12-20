@@ -12,8 +12,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: jwtConstants.secret,
     });
   }
-
+  // Ce qui est retourné si le token est valide
   async validate(payload: any) {
-    return { payload };
+    // return {payload , ...user}
+    return { xsrfToken: payload.xsrfToken };
   }
 }

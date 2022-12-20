@@ -8,8 +8,13 @@
 
 <template>
   <div class="HomePage">
-    <MainHeader />
-    <Login />
+    <Suspense>
+      <MainHeader />
+    </Suspense>
+
+    <Suspense>
+      <Login />
+    </Suspense>
   </div>
 </template>
 

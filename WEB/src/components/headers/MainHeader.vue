@@ -5,7 +5,15 @@
   import type { Ref } from 'vue'
 
   const userStore = useUserStore()
-  const role: string[] = userStore.user.role
+  let role: string[] = []
+  console.log(window.sessionStorage.getItem('x-xsrf-token'))
+  if (window.sessionStorage.getItem('x-xsrf-token')) {
+    const roleReq: any = await userStore.getUserScope()
+    if (roleReq.role.length) {
+      role = roleReq.role
+    }
+  }
+  console.log(role)
   const right_tab: any = ref(null)
   const hamburger: any = ref(null)
   const isShown: any = ref(false)

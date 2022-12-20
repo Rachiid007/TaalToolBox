@@ -10,6 +10,7 @@ export interface User {
   schoolClass: string[]
   school: string
   sex: string
+  accessToken: string
 }
 
 // Type qu'on essaie d'envooyer dans la base de données : on envoie 1 role à la fois
@@ -23,7 +24,7 @@ export interface UserFormData {
   school: string
   schoolClass: string
   role: string
-  sex : string
+  sex: string
 }
 
 export interface UserFromExcelFile {

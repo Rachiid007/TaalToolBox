@@ -27,6 +27,12 @@
       sendData()
     }
   }
+  // Route pour tester le middleware d'authentification
+  // const accessProtected = async () => {
+  //   const protectedRequest = await store.getProtected()
+  //   console.log(protectedRequest)
+  //   return protectedRequest
+  // }
   const sendData = async () => {
     let payload = {
       email: state.mail,
@@ -41,11 +47,7 @@
     // Récupérer l'utilisateur
     const user = await store.getUser(state.mail, hashedPassword)
 
-    //Muter le state initiale du user
-    store.$patch({ user: user })
-    //Redirection vers la page
     if (user) {
-      localStorage.setItem('user', JSON.stringify(user))
       if (store.user) {
         manage.succes = 'Connexion réussie !'
         window.location.pathname = '/'
@@ -96,6 +98,13 @@
         >
           Se connecter
         </button>
+        <!-- <button
+          id="suivant"
+          class="clickButton"
+          @click="accessProtected"
+        >
+          protected
+        </button> -->
       </div>
       <div
         class="error"

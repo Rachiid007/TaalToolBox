@@ -1,3 +1,4 @@
+import { AuthModule } from './auth/auth.module';
 import { UserResponseModule } from './user_response/user_response.module';
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -58,14 +59,16 @@ const isDevelopment = process.env.NODE_ENV === 'development' ? true : false;
     RoleModule,
     LearnDomainModule,
     CategoryModule,
-    ProficiencyModule,
     LevelDifficultyModule,
     CardsThemeModule,
     CardsModule,
+    UsersModule,
+    // AuthModule,
     SchoolModule,
     SchoolclassModule,
     UsersModule,
-    // AuthModule,
+    AuthModule,
+    ProficiencyModule,
     DragModule,
     LevelMapModule,
     UserResponseModule,
