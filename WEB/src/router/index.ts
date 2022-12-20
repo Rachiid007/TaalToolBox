@@ -23,6 +23,7 @@ import AddUserExcelView from '@/views/add-user/AddUserExcelView.vue'
 import Verbalize from '@/views/recognition/VerbalizeView.vue'
 import userResponseStats from '@/views/userResponseStats.vue'
 import Rgpd from '@/views/RgpdView.vue'
+import NotFound from '@/views/NotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -137,13 +138,18 @@ const router = createRouter({
       name: 'userResponseStats',
       component: userResponseStats
     },
-    { 
+    {
       path: '/rgpd',
       name: 'rgpd',
       component: Rgpd
+    },
+    //Catch All / 404 Route Not Found Page
+    {
+      path: '/:catchAll(.*)',
+      name: 'notFound',
+      component: NotFound
     }
   ]
-  
 })
 
 export default router
