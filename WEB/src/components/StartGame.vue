@@ -28,9 +28,14 @@
     // Si on arrive a la fin des slides on doit remplacer le bouton suivant par completer
     if (n > slides.length) {
       // Ajouter l'argent de l'utilisateur pour
-      userStore.setReward(50)
-      router.replace('/map')
-      return
+      if (userStore.userReward == 0) {
+        userStore.setReward(50)
+        router.replace('/map')
+        return
+      } else {
+        router.replace('/map')
+        return
+      }
     } else if (n == slides.length) {
       // slideIndex.value = 1
       next[0].innerHTML = 'Completer'
