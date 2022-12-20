@@ -96,7 +96,7 @@ describe('AppController (e2e)', () => {
         id_card: 5,
         id_answer: 2,
       },
-    i];
+    ];
     return request(app.getHttpServer())
       .post('/user-response/9/cards')
       .set('Accept', 'application/json')
@@ -105,15 +105,23 @@ describe('AppController (e2e)', () => {
   });
 
   it('user stats Endpoint test (Get)', async () => {
-    return request(app.getHttpServer()).get('/user-response/userStats/1').expect(200);
+    return request(app.getHttpServer())
+      .get('/user-response/userStats/1')
+      .expect(200);
   });
   it('school stats Endpoint test (Get) (Get)', async () => {
-    return request(app.getHttpServer()).get('/user-response/schoolClassStats/1').expect(200);
+    return request(app.getHttpServer())
+      .get('/user-response/schoolClassStats/1')
+      .expect(200);
   });
   it('subscription stats Endpoint test (Get) (Get)', async () => {
-    return request(app.getHttpServer()).get('users/subscription_stats/1').expect(200);
+    return request(app.getHttpServer())
+      .get('users/subscription_stats/1')
+      .expect(200);
   });
   it('Active players stats Endpoint test (Get) (Get)', async () => {
-    return request(app.getHttpServer()).get('/users/activePlayers/1').expect(200);
+    return request(app.getHttpServer())
+      .get('/users/activePlayers/1')
+      .expect(200);
   });
 });
