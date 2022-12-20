@@ -1,10 +1,10 @@
-import { School } from './../school/entities/school.entity';
-import { Schoolclass } from './entities/schoolclass.entity';
-import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { School } from 'src/school/entities/school.entity';
+import { Repository } from 'typeorm';
 import { CreateSchoolclassDto } from './dto/create-schoolclass.dto';
 import { UpdateSchoolclassDto } from './dto/update-schoolclass.dto';
+import { Schoolclass } from './entities/schoolclass.entity';
 
 @Injectable()
 export class SchoolclassService {
