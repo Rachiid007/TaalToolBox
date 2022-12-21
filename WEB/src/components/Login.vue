@@ -20,6 +20,8 @@
     succes: ''
   })
   const checkFields = () => {
+    manage.error = ''
+    manage.succes = ''
     if (state.mail === '' || state.password === '') {
       manage.error = 'Veuillez remplir tous les champs'
       return 1
@@ -37,7 +39,7 @@
     const hashedPassword =
       sha512(state.password) +
       '__gny-b?QH06wr5rBR)*a5H!RR9zevVa!XMR@W4LXpgXXkmqy3zVP-T*S_YLxwj=v1xIAk-+u?TdgBlsIV)8PsqvZpWSn6#4J77/)6w?o6.@UC+nVpCU0j*x9j-K=vS+'
-    console.log(hashedPassword)
+    // console.log(hashedPassword)
     // Récupérer l'utilisateur
     const user = await store.getUser(state.mail, hashedPassword)
 

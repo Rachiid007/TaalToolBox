@@ -28,7 +28,13 @@ export const useUserStore = defineStore('user', () => {
   // }
   const getUser = async (email: string, password: string) => {
     const userRequest = await loginService.getUsers(email, password).catch((err) => {
-      console.log(err)
+      // console.log(err)
+      // console.log(err.response.status)
+      if (err.response.status == 404) {
+        return 'NotFound'
+      } else if (err.response.status == 500) {
+        return 'InternalError'
+      }
     })
     if (userRequest.data) {
       return userRequest.data
