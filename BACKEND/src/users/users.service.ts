@@ -36,7 +36,7 @@ export class UsersService {
   private readonly roleService: RoleService;
 
   async findOne(data: number | any): Promise<Users | undefined> {
-    return await this.userRepository.findOne(data);
+    return await this.userRepository.findOne({ where: { id: data } });
   }
   async findByEmail(email: string): Promise<Users> {
     return await this.userRepository.findOne({ where: { email: email } });
@@ -242,7 +242,7 @@ export class UsersService {
         console.log(err);
         throw new InternalServerErrorException(err);
       });
-    console.log(userRole);
+    return true;
   }
 
   async create(data: CreateUserDto): Promise<any> {
@@ -253,23 +253,9 @@ export class UsersService {
   }
 
   async createUsersExcel(data: UserFormData[]) {
-    // insert CreateUserExcelDto into users table and return the users inserted
-    // return await this.createUser()
     data.map(async (user: UserFormData) => {
       return await this.createUser(user);
     });
-    // return await this.userRepository.insert(
-    //   data.map((user) => {
-    //     return {
-    //       name: user.name,
-    //       surname: user.surname,
-    //       schoolEmail: user.schoolEmail,
-    //       email: user.email,
-    //       birthdate: user.birthdate,
-    //       sex: user.sex,
-    //     };
-    //   }),
-    // );
   }
   //cette fonction permet de recupérer le nombre d'utilisateur inscrit par classe sous la responsabilité d un prof ayant userId.
   async findSubscriptionStats(userId: number): Promise<Users | undefined> {

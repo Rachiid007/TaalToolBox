@@ -33,9 +33,10 @@
   //
 
   // Cette ref correspond à la div du popup
-  const userRole = useUserStore().user.role
-  const userSchool = useUserStore().user.school
-  const userReward = await useUserStore().getUserScore()
+  const userScope = await useUserStore().checkUserAccessAndReturnUser()
+  const userRole = userScope.role
+  const userSchool = userScope.school
+  const userReward = userScope.score
   const mapStore = useMapStore()
   // const schoolUser = useUserStore().user.
 
@@ -391,7 +392,7 @@
         newLevel: { address: newPointState.address, position: newPointState.position }
       })
     )
-    router.replace('/chooseActivities')
+    router.replace('/choose-activities')
   }
 </script>
 
@@ -454,7 +455,7 @@
               alt="flashcards gamemode logo"
             />
             <router-link
-              to="/CardNumberSelector"
+              to="/card-number-selector"
               class="playButton"
               >PLAY</router-link
             >
@@ -483,7 +484,7 @@
           />
           <!-- CREATION DE LACTIVITE PRINCIPALE -->
           <router-link
-            to="/start-game"
+            to="/card-number-selector"
             class="playButton"
             >PLAY</router-link
           >

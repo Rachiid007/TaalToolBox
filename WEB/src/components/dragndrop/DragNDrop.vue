@@ -6,9 +6,10 @@
   import axios from 'axios'
   import form4 from '@/assets/images/form4.png'
   import type { Ref } from 'vue'
-
+  import { useUserStore } from '@/stores/user'
   const store = useDadLevels()
   const dataFromStore = store.getData()
+  await useUserStore().checkUserAcess()
 
   const background: Ref<any> = ref(document.createElement('null'))
   const image: Ref<null | HTMLElement> = ref(null)

@@ -4,9 +4,10 @@
   import school from '@/services/school'
   import type { Ref } from 'vue'
   import { reactive } from 'vue'
+  import { useUserStore } from '@/stores/user'
+  await useUserStore().checkUserAccessAndRole(['Administrateur'])
 
   const schoolId: Ref<number> = ref(0)
-
   const className: Ref<string> = ref('')
 
   const manage = reactive({
@@ -24,17 +25,17 @@
 
   const listClass = ref(store.schoolClassList)
 
-//   const listC = () => {
-//     // console.log(listClass.value)
-//     const classL =  listClass.value
-//     console.log(classL)
-//     for (let i in classL){
-//       if(classL[i].idSchool == classL[i].idSchool && classL[i].nameClass ) {
+  //   const listC = () => {
+  //     // console.log(listClass.value)
+  //     const classL =  listClass.value
+  //     console.log(classL)
+  //     for (let i in classL){
+  //       if(classL[i].idSchool == classL[i].idSchool && classL[i].nameClass ) {
 
-//       }
-//       console.log(typeof ( i ))
-//     }
-// }
+  //       }
+  //       console.log(typeof ( i ))
+  //     }
+  // }
 
   const handleClick = () => {
     manage.error = ''

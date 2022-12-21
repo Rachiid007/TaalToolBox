@@ -1,5 +1,7 @@
 <script setup lang="ts">
   import { useCardStore } from '@/stores/card'
+  import { useUserStore } from '@/stores/user';
+  await useUserStore().checkUserAcess()
   const store = useCardStore()
   const setNbrOfCardsforthegame = (cardNumber: number) => {
     store.resetCounters()

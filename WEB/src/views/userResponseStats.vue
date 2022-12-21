@@ -5,39 +5,41 @@
   import { useUserStore } from '@/stores/user'
   import ChartApp from '@/components/charts/barChart.vue'
   import pieChart from '@/components/charts/pieChart.vue'
-    //import SuiviApprentissage from '@/components/charts/barChart.vue'
-  
+  //import SuiviApprentissage from '@/components/charts/barChart.vue'
+
   const userStore = useUserStore()
 </script>
 
 <template>
-  
   <div class="page">
-    <MainHeader />
-  <div class="container">
-    <br>
-  <br>
-  <table>
-    <thead>
-        <tr >
-          <th>Nombre d'élèves inscris par classe</th>
-          <th>Nombre d'élèves actifs par classe</th>
+    <Suspense>
+      <MainHeader />
+    </Suspense>
+    <div class="container">
+      <br />
+      <br />
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre d'élèves inscris par classe</th>
+            <th>Nombre d'élèves actifs par classe</th>
+          </tr>
+        </thead>
+        <tr>
+          <td><pieChart /></td>
+          <td><ChartApp /></td>
         </tr>
-      </thead>
-      <tr>       
-        <td><pieChart /></td>
-        <td><ChartApp /></td>
-      </tr>
-    </table>
-  </div>
-  <br>
-  <br>
+      </table>
+    </div>
+    <br />
+    <br />
     <schoolStatsTable />
-    
-  <br>
-  <br>
-    <userResponseTable /> 
 
+    <br />
+    <br />
+    <Suspense>
+      <userResponseTable />
+    </Suspense>
   </div>
 </template>
 
@@ -59,20 +61,20 @@
     height: auto;
   }
   table {
-  width: 100%;
-  border: 1px solid #ccc;
-}
+    width: 100%;
+    border: 1px solid #ccc;
+  }
 
-td {
-  padding: 2px;
-  border: 1px solid #ccc;
-}
-tr {
-  padding: 2px;
-  border: 1px solid #ccc;
-}
+  td {
+    padding: 2px;
+    border: 1px solid #ccc;
+  }
+  tr {
+    padding: 2px;
+    border: 1px solid #ccc;
+  }
 
-.opened {
-  background-color: yellow;
-}
+  .opened {
+    background-color: yellow;
+  }
 </style>

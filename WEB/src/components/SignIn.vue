@@ -20,7 +20,13 @@
     // 'Institut Don Bosco': ['1TL1DB', '1TL2DB', '2TL1DB', '2TL2DB', '3TL1DB', '3TL2DB'],
     // 'Institut Cardinal Mercier': ['1TL1CM', '1TL2CM', '2TL1CM', '2TL2CM', '3TL1CM', '3TL2CM']
   })
-  const userScope: any = await useUserStore().getUserScope()
+  // const userScope: any = await useUserStore().getUserScope()
+  const userStore = useUserStore()
+  const userScope = await userStore.checkUserAccessAndRoleAndReturnUser([
+    'Administrateur',
+    'Professeur'
+  ])
+  console.log(userScope)
   const currentUserRole = userScope.role
 
   interface State {

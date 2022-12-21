@@ -104,7 +104,7 @@ export class CardsService implements OnApplicationBootstrap {
   }
 
   async findOne(id: number) {
-    const card = await this.cardsRepository.findOneBy({ id });
+    const card = await this.cardsRepository.findOne({ where: { id: id } });
     if (!card) {
       throw new NotFoundException(`Card #${id} not found`);
     }

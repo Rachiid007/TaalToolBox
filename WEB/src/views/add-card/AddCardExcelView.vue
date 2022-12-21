@@ -17,6 +17,17 @@
   import { useUserStore } from '@/stores/user'
 
   const userStore = useUserStore()
+
+  if (window.sessionStorage.getItem('x-xsrf-token')) {
+    const userScope = await userStore.getUserScope()
+    if (userScope) {
+      if (!['Adminstrateur', 'Créateur'].some((x) => userScope.role.includes(x))) {
+        window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
+      }
+    }
+  } else {
+    window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
+  }
   const sendFileToNest = (file: File) => {
     const formData = new FormData()
     formData.append('file', file)

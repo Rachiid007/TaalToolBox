@@ -29,7 +29,7 @@
     // const response = await store.addDragAndLearnDB(levelData, levelName, creator)
 
     // store.addDragAndLearnImage(store.getImageData())
-    // router.push('/dadselector')
+    // router.push('/dad-selector')
 
     // let receivedResponse = ''
 

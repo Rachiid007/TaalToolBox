@@ -6,10 +6,10 @@
 
   const userStore = useUserStore()
   let role: string[] = []
-  console.log(window.sessionStorage.getItem('x-xsrf-token'))
+
   if (window.sessionStorage.getItem('x-xsrf-token')) {
     const roleReq: any = await userStore.getUserScope()
-    if (roleReq.role.length) {
+    if (roleReq && roleReq.role.length) {
       role = roleReq.role
     }
   }
@@ -38,10 +38,11 @@
     student: 'Elève'
   }
   // const role = userStore.user.role
-  const handleDisconnection = () => {
-    localStorage.removeItem('user')
-    userStore.$reset
-    window.location.pathname = '/login'
+  const handleDisconnection = async () => {
+    // Cet appel n'a pas d'intérêt jusqu'à ce qu'on trouve un moyen de supprimer le cookie que l'utilisateur envoie en backend
+    // await userStore.logout()
+    window.sessionStorage.clear()
+    window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
   }
 
   const showAdd = () => {
@@ -120,7 +121,7 @@
             <div v-else>Elève</div>
           </router-link>
           <router-link
-            to="/chooseActivities"
+            to="/choose-activities"
             class="tabs_element"
             v-show="
               [staticRole.admin, staticRole.creator].some((x) => {
@@ -130,7 +131,7 @@
             >Activités</router-link
           >
           <router-link
-            to="/addClass"
+            to="/add-class"
             class="tabs_element"
             v-show="role.includes(staticRole.admin)"
             >Classes</router-link
@@ -138,7 +139,7 @@
         </div>
       </div>
       <router-link
-        to="/userResponseStats"
+        to="/user-response-stats"
         class="tabs_element"
         v-show="
           [staticRole.admin, staticRole.teacher].some((x) => {
@@ -209,7 +210,7 @@
               return role.includes(x)
             })
           "
-          to="/chooseActivities"
+          to="/choose-activities"
           class="right_tab_element"
           >Ajouter Activités</router-link
         >
@@ -220,11 +221,11 @@
           >Ajouter Classes</router-link
         >
         <router-link
-          to="/userResponseStats"
+          to="/user-response-stats"
           class="tabs_element"
           v-show="
             [staticRole.admin, staticRole.creator].some((x) => {
-              role.includes(x)
+              return true //role.includes(x)
             })
           "
           >Suivi</router-link

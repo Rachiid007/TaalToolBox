@@ -44,12 +44,12 @@ const router = createRouter({
       component: CardView
     },
     {
-      path: '/CardNumberSelector',
+      path: '/card-number-selector',
       name: 'CardNumberSelector',
       component: CardNumberSelector
     },
     {
-      path: '/Profile',
+      path: '/profile',
       name: 'Profile',
       component: ProfileView
     },
@@ -79,7 +79,7 @@ const router = createRouter({
       component: AddCardFormView
     },
     {
-      path: '/chooseActivities',
+      path: '/choose-activities',
       name: 'chooseActivities',
       component: ChooseActivities
     },
@@ -89,17 +89,17 @@ const router = createRouter({
       component: DadView
     },
     {
-      path: '/dadteacher',
+      path: '/dad-teacher',
       name: 'dadteacher',
       component: DadTeacherView
     },
     {
-      path: '/dadselector',
+      path: '/dad-selector',
       name: 'dadlevelselector',
       component: LevelSelectorView
     },
     {
-      path: '/dadmobile',
+      path: '/dad-mobile',
       name: 'dadmobile',
       component: DadMobileView
     },
@@ -109,7 +109,7 @@ const router = createRouter({
       component: Login
     },
     {
-      path: '/signIn',
+      path: '/register',
       name: 'signIn',
       component: SignIn
     },
@@ -119,12 +119,12 @@ const router = createRouter({
       component: StartGame
     },
     {
-      path: '/addClass',
+      path: '/add-class',
       name: 'addClass',
       component: AddClass
     },
     {
-      path: '/infoLevel',
+      path: '/info-level',
       name: 'infoLevel',
       component: InfoLevel
     },
@@ -134,7 +134,7 @@ const router = createRouter({
       component: Verbalize
     },
     {
-      path: '/userResponseStats',
+      path: '/user-response-stats',
       name: 'userResponseStats',
       component: userResponseStats
     },

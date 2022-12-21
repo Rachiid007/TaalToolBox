@@ -2,11 +2,13 @@
   import { onMounted, reactive, ref } from 'vue'
   // import jsonfile from '@/assets/levelData/dragndrop.json'
   import { useDadLevels } from '@/stores/dadLevels'
+  import { useUserStore } from '@/stores/user'
   import { RouterLink } from 'vue-router'
   import type { Ref } from 'vue'
 
   const store = useDadLevels()
   const dataFromStore = store.getData()
+  await useUserStore().checkUserAcess()
 
   const background = ref()
   const wordList = ref()

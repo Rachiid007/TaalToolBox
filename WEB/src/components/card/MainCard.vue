@@ -4,6 +4,9 @@
   import { computed, onMounted, onUpdated } from 'vue'
   import cheval from '@/assets/images/card/cheval.svg'
 
+  import { useUserStore } from '@/stores/user'
+  await useUserStore().checkUserAcess()
+
   const store = useCardStore()
   const storeShow = useShowStore()
 

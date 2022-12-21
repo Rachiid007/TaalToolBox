@@ -6,6 +6,8 @@
   import DragNDropResume from '@/components/dragndrop/DragNDropResume.vue'
   import { ref } from 'vue'
   import { useDadLevels } from '@/stores/dadLevels'
+  import { useUserStore } from '@/stores/user'
+  await useUserStore().checkUserAccessAndRole(['Adminstrateur', 'Créateur'])
 
   const actualPage = ref(0)
   const dadStore = useDadLevels()

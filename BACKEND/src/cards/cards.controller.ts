@@ -8,6 +8,7 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  Query,
 } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { imageFileFilter, editFileName } from './image.middleware';
@@ -40,8 +41,8 @@ export class CardsController {
     description: 'Should be an id of a card that exists in the database',
     type: Number,
   })
-  findOne(@Param('id') id: string) {
-    return this.cardsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.cardsService.findOne(parseInt(id));
   }
 
   @Get(':id_user/:nbrcards')
@@ -84,6 +85,12 @@ export class CardsController {
   )
   uploadImage(@UploadedFile() file, @Cards() req) {
     return this.cardsService.uploadImage(req, file);
+  }
+
+  @Get('number')
+  getSpecificNumberOfCards(@Query() query: { number: string }) {
+    console.log(query);
+    console.log('inside');
   }
 
   @Post('upload')
