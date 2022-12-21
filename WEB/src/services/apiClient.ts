@@ -6,6 +6,8 @@ if (!import.meta.env.DEV) {
   apiBaseUrl = 'https://taaltoolbox.be/api/'
 }
 
+export default axios
+
 export const apiClient = axios.create({
   baseURL: apiBaseUrl,
   withCredentials: false
@@ -13,7 +15,7 @@ export const apiClient = axios.create({
 
 export const apiClientWithCredential = axios.create({
   withCredentials: true,
-  baseURL: 'http://localhost:3000',
+  baseURL: apiBaseUrl,
   headers: {
     'x-xsrf-token': `${window.sessionStorage['x-xsrf-token']}`
   }

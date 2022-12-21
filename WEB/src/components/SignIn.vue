@@ -114,6 +114,7 @@
       schoolClass: state.page2.classroom, //TODO EST CE QUUN PROF PEUT AVOIR PLUSIEURS CLASSES
       sex: state.page1.gender
     }
+    console.log(state.auth.password)
     manage.error = ''
     manage.succes = ''
     await loginService

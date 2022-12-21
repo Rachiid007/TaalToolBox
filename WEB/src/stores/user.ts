@@ -36,10 +36,16 @@ export const useUserStore = defineStore('user', () => {
     const userRequest = await loginService.getUsers(email, password).catch((err) => {
       // console.log(err)
       // console.log(err.response.status)
-      if (err.response.status == 404) {
-        return 'NotFound'
-      } else if (err.response.status == 500) {
-        return 'InternalError'
+      if (err.response) {
+        if (err.response.status == 404) {
+          return 'NotFound'
+        } else if (err.response.status == 500) {
+          return 'InternalError'
+        } else {
+          return 'Unkown Error'
+        }
+      } else {
+        return 'Unkown Error'
       }
     })
 
