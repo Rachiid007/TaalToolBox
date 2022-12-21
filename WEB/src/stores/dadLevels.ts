@@ -232,6 +232,9 @@ export const useDadLevels = defineStore('dadlevels', () => {
   //   }
   //   return payload
   // }
+  const getOneLevel = async (id: number) => {
+    return await dalService.getDragAndLearnExercice(id)
+  }
 
   return {
     DalDataList,
@@ -248,7 +251,8 @@ export const useDadLevels = defineStore('dadlevels', () => {
     getImageUrl,
     setImageUrl,
     getImageData,
-    setImageData
+    setImageData,
+    getOneLevel
     // getTotalData
   }
 })

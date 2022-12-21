@@ -50,17 +50,17 @@
 
   const state: State = reactive({
     page1: {
-      firstName: 'Michaël',
-      secondName: 'Pourbaix',
-      mail: 'test@test.com',
-      schoolMail: 'test@school.com',
-      birthDate: '05-04-2002',
-      gender: 'M'
+      firstName: '',
+      secondName: '',
+      mail: '',
+      schoolMail: '',
+      birthDate: '',
+      gender: ''
     },
     page2: {
-      school: 'Institut Saint Joseph',
-      classroom: '1TL1SJ',
-      role: 'Elève'
+      school: '',
+      classroom: '',
+      role: ''
     },
     auth: {
       password: ''

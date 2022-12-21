@@ -4,11 +4,20 @@
   import { useDadLevels } from '@/stores/dadLevels'
   import { useUserStore } from '@/stores/user'
   import { RouterLink } from 'vue-router'
+  import { useMapStore } from '@/stores/map'
   import type { Ref } from 'vue'
 
   const store = useDadLevels()
-  const dataFromStore = store.getData()
+  // const dataFromStore = store.getData()
   await useUserStore().checkUserAcess()
+
+  const mapStore = useMapStore()
+
+  const datas = await store.getOneLevel(mapStore.getSelectedLevelId())
+  datas.data.levelData = JSON.parse(datas.data.levelData)
+  console.log(datas.data)
+
+  const state = reactive({ fields: datas.data.levelData.fields, backImage: datas.data.image })
 
   const background = ref()
   const wordList = ref()
@@ -25,7 +34,6 @@
   const goodFields = ref(0)
   // On stocke le nombre de mauvaises réponses
   const badFields = ref(0)
-  const state = reactive(dataFromStore[store.getLevel()])
 
   const notCompatible = ref(false)
 

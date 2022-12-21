@@ -7,8 +7,20 @@
   import form4 from '@/assets/images/form4.png'
   import type { Ref } from 'vue'
   import { useUserStore } from '@/stores/user'
+  import useMapStore from '@/stores/map'
+
   const store = useDadLevels()
   const dataFromStore = store.getData()
+  const mapStore = useMapStore()
+
+  const datas = await store.getOneLevel(mapStore.getSelectedLevelId())
+  datas.data.levelData = JSON.parse(datas.data.levelData)
+  // console.log(datas.data)
+
+  const state = reactive({ fields: datas.data.levelData.fields, backImage: datas.data.image })
+  // const state = reactive(dataFromStore[store.getLevel()])
+  // const state = reactive(dataFromStore[store.getLevel()])
+
   await useUserStore().checkUserAcess()
 
   const background: Ref<any> = ref(document.createElement('null'))
@@ -27,21 +39,19 @@
   const goodFields: Ref<number> = ref(0)
   // On stocke le nombre de mauvaises réponses
   const badFields: Ref<number> = ref(0)
-  const state = reactive(dataFromStore[store.getLevel()])
-  const dataFromDb: Ref<any[] | void> = ref([])
 
   const notCompatible: Ref<boolean> = ref(false)
 
-  const getData = async () => {
-    dataFromDb.value = await axios
-      .get<[]>('http://localhost:3000/drag_and_drop', {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
-        }
-      })
-      .then((response) => console.log(response))
-  }
+  // const getData = async () => {
+  //   dataFromDb.value = await axios
+  //     .get<[]>('http://localhost:3000/drag_and_drop', {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
+  //       }
+  //     })
+  //     .then((response) => console.log(response))
+  // }
 
   // fonction appellée quand on drop le mot dans la div
   const dropped = (event: any) => {

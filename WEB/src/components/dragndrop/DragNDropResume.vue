@@ -21,6 +21,7 @@
   const sendData = async () => {
     const levelData: Dadleveldata = { fields: store.getTempData() }
     const imageData = store.getImageData()
+    console.log(imageData)
     console.log(levelData)
 
     // console.log(totalData.levelData.fields)

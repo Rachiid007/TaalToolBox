@@ -8,6 +8,7 @@
   import { useUserStore } from '@/stores/user'
 
   await useUserStore().checkUserAccessAndRole(['Administrateur', 'Créateur'])
+
   const selectedActivity = ref(0)
   const isThereAnyActivitySelected = ref(false)
   const listActivities: Ref<{ name: string; description: string; src: string }[]> = ref([])
@@ -16,6 +17,9 @@
     isThereAnyActivitySelected.value = true
     console.log(divId)
     selectedActivity.value = divId
+  }
+  const continueCreation = () => {
+    mapStore.setLevelType(selectedActivity.value + 1)
   }
   onMounted(async () => {
     listActivities.value = await mapStore.getActivitiesRequest()
@@ -71,7 +75,8 @@
         <div>
           <router-link
             v-show="isThereAnyActivitySelected"
-            :to="isThereAnyActivitySelected ? '/info-level' : ''"
+            @click="continueCreation"
+            :to="isThereAnyActivitySelected ? '/map' : ''"
             class="button"
           >
             Créer une activité

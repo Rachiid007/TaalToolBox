@@ -7,14 +7,15 @@
   import router from '@/router'
   import type { AxiosInstance } from 'axios'
   import { useUserStore } from '@/stores/user'
-  const levelName: Ref<string> = ref('')
-  const levelType: Ref<number> = ref(0)
-  const levelTheme: Ref<number> = ref(0)
-  const levelDifficulty: Ref<number> = ref(0)
-  const levelDescription: Ref<string> = ref('')
 
   const mapStore = useMapStore()
   await useUserStore().checkUserAccessAndRole(['Administrateur', 'Créateur'])
+
+  const levelName: Ref<string> = ref('')
+  const levelType: Ref<number> = ref(mapStore.getLevelType())
+  const levelTheme: Ref<number> = ref(0)
+  const levelDifficulty: Ref<number> = ref(0)
+  const levelDescription: Ref<string> = ref('')
 
   const error: Ref<string> = ref('')
   const theme: { id: number; name: string }[] = await mapStore.getThemeRequest()

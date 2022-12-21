@@ -17,11 +17,11 @@
 
   const store = useSchoolsStore()
 
-  store.getSchoolName()
-  store.getSchoolClass()
+  await store.getSchoolName()
+  await store.getSchoolClass()
 
   const list = ref(store.schoolList)
-  console.log(list)
+  console.log(list.value)
 
   const listClass = ref(store.schoolClassList)
 

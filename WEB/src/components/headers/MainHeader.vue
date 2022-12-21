@@ -143,7 +143,7 @@
         class="tabs_element"
         v-show="
           [staticRole.admin, staticRole.teacher].some((x) => {
-            return role.includes(x)
+            return true
           })
         "
         >Suivi</router-link

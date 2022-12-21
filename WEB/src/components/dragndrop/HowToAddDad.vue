@@ -8,7 +8,6 @@
   import { useUserStore } from '@/stores/user'
   await useUserStore().checkUserAccessAndRole(['Administrateur', 'Créateur'])
   const store = useDadLevels()
-
 </script>
 <template>
   <div class="main">

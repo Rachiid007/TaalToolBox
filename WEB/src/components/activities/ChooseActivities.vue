@@ -21,7 +21,7 @@
       description:
         "Activité dans laquelle l'étudiant doit placer des mots qui lui seront proposer dans la zone de jeu." +
         ' Dans cette zone de jeu les mots devrons être placés dans des champs et la zone de jeu comportera une image de background.',
-      link: '/dadteacher'
+      link: '/dad-teacher'
     }
   ]
 

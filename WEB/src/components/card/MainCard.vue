@@ -82,6 +82,7 @@
     border: solid rgba(0, 0, 0, 0.3) 2px;
     background-color: rgba(0, 0, 0, 0.03);
     width: 350px;
+    min-height: 350px;
     height: auto;
     box-shadow: inset;
     border-radius: 15px;
