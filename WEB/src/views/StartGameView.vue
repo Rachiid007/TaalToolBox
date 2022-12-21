@@ -4,18 +4,19 @@
   import Greetings from '@/components/Greetings.vue'
 </script>
 <template>
-  <div class="big-container">
-    <TheHeader>
-      <div class="title">
-        <p class="activity_name">Start</p>
-        <img src="@/assets/logo/lightning.svg" />
-        <p class="activity_name">Game</p>
-      </div>
-    </TheHeader>
-    <div id="page">
-      <StartGame />
-    </div>
-  </div>
+  <Suspense>
+    <div class="big-container">
+      <TheHeader>
+        <div class="title">
+          <p class="activity_name">Start</p>
+          <img src="@/assets/logo/lightning.svg" />
+          <p class="activity_name">Game</p>
+        </div>
+      </TheHeader>
+      <div id="page">
+        <StartGame />
+      </div></div
+  ></Suspense>
 </template>
 
 <style scoped>
@@ -49,6 +50,6 @@
     /* border: solid red 1px; */
     width: 100%;
     height: 100%;
-    display : flex ;
+    display: flex;
   }
 </style>
