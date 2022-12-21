@@ -3,7 +3,7 @@
   import MainHeader from '@/components/headers/MainHeader.vue'
   import AllCard from '@/components/card/add/ListLittleCard.vue'
   import { useUserStore } from '@/stores/user'
-  await useUserStore().checkUserAccessAndRole(['Adminstrateur', 'Créateur'])
+  await useUserStore().checkUserAccessAndRole(['Administrateur', 'Créateur'])
 </script>
 
 <template>

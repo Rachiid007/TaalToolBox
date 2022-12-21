@@ -12,10 +12,9 @@ interface FlashcardImage {
 }
 
 export default {
-  getFlashcards(nbrcards: number) {
-    const store = useUserStore()
-    console.log(store.user)
-    return apiClient.get('/cards/' + store.user.id + '/' + nbrcards)
+  async getFlashcards(nbrcards: number) {
+    const store = await useUserStore().getUserScope()
+    return apiClient.get('/cards/' + store.id + '/' + nbrcards)
   },
 
   getFlashcard(id: string) {

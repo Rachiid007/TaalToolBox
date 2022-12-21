@@ -2,20 +2,17 @@
   import { ref, onMounted } from 'vue'
   import { useCardStore } from '@/stores/card'
   import { computed } from '@vue/reactivity'
+  import { useUserStore } from '@/stores/user'
   const store = useCardStore()
   const totalScore = computed(() => store.goodAnswerPercentage)
   const correctColor = ref('#4caf50')
   const almostCorrectColor = ref('#ff9800')
   const wrongColor = ref('#f44336')
 
-
-  
-  const postUserResponse = () =>  {
-    store.postUser_Response()
+  const postUserResponse = async () => {
+    const userScope = await useUserStore().getUserScope()
+    await store.postUserResponse(userScope.id)
   }
-
-
-
 </script>
 
 <template>
@@ -75,11 +72,12 @@
     <hr />
     <div class="btn-container">
       <router-link to="/">
-        <button class="btn-return"  @click="
-        () => {
-          postUserResponse()
-        }
-      ">Retour à la carte</button>
+        <button
+          class="btn-return"
+          @click="postUserResponse"
+        >
+          Retour à la carte
+        </button>
       </router-link>
     </div>
   </div>

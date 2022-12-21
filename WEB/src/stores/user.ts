@@ -123,7 +123,7 @@ export const useUserStore = defineStore('user', () => {
       if (!userScope) {
         window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
       }
-      // Si l'utilisateur n'a pas les permissions ['Adminstrateur', 'Créateur']
+      // Si l'utilisateur n'a pas les permissions ['Administrateur', 'Créateur']
       else if (!role.some((x) => userScope.role.includes(x))) {
         window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
       }
@@ -150,7 +150,7 @@ export const useUserStore = defineStore('user', () => {
       if (!userScope) {
         window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
       }
-      // Si l'utilisateur n'a pas les permissions ['Adminstrateur', 'Créateur']
+      // Si l'utilisateur n'a pas les permissions ['Administrateur', 'Créateur']
       else if (role.some((x) => userScope.role.includes(x))) {
         return userScope
       }

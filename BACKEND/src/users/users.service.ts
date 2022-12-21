@@ -15,7 +15,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { CreateUserExcelDto } from './dto/create-user-excel.dto';
 import { Users } from './entities/users.entity';
 import { SchoolService } from '../school/school.service';
-import { School } from 'src/school/entities/school.entity';
+import { School } from '../school/entities/school.entity';
 import { SchoolclassService } from '../schoolclass/schoolclass.service';
 import { RoleService } from '../role/role.service';
 import * as argon2 from 'argon2';

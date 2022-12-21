@@ -4,7 +4,7 @@ import type Flashcard from '@/types/Flashcard'
 import FlashcardService from '@/services/FlashcardService'
 import { flashcardsData } from '@/data/animalFlashcards'
 import type User_response from '@/types/user_response'
-import user_ResponseRessource from '@/services/user_ResponseService'
+import userResponseRessource from '@/services/user_ResponseService'
 import { useUserStore } from './user'
 
 export const useCardStore = defineStore('card', () => {
@@ -109,7 +109,7 @@ export const useCardStore = defineStore('card', () => {
   }
 
   // Insertion d'une réponse dans le tabeau des réponses
-  const AddAnswer = (user_response: User_response) => {
+  const addAnswer = (user_response: User_response) => {
     let obj = []
     const found = tableUserResponse.some((obj) => {
       return obj.id_card === user_response.id_card
@@ -121,10 +121,10 @@ export const useCardStore = defineStore('card', () => {
     }
   }
 
-  const postUser_Response = async () => {
+  const postUserResponse = async (userId: number) => {
     //Envoi du tableau des réponses vers le backend
-    const user_ResponseService = new user_ResponseRessource()
-    const result = await user_ResponseService.postUserResponse(tableUserResponse, userStore.user.id)
+    const user_ResponseService = new userResponseRessource()
+    const result = await user_ResponseService.postUserResponse(tableUserResponse, userId)
     return result
   }
 
@@ -176,9 +176,9 @@ export const useCardStore = defineStore('card', () => {
     incrementWrongAnswers,
     addFlashcard,
     flashcardList,
-    AddAnswer,
+    addAnswer,
     removeFlashcard,
     removeAlmostCorrectCard,
-    postUser_Response
+    postUserResponse
   }
 })
