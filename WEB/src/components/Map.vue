@@ -19,6 +19,8 @@
   import { Control, defaults as defaultControls } from 'ol/control'
   import { defaults as defaultInteractions } from 'ol/interaction.js'
   import geoCoderSvg from '@/assets/images/geo-marker.svg'
+  import geoCoderSvgDal from '@/assets/images/geo-markerDal.svg'
+  import geoCoderSvgFlash from '@/assets/images/geo-markerFlash.svg'
   import { RouterLink } from 'vue-router'
   import { useUserStore } from '@/stores/user'
   import useMapStore from '@/stores/map'
@@ -52,38 +54,42 @@
   // Cette ref permet de stocker le numéro du niveau à ensuite afficher
   const levelNumber = ref(0)
   // Pour changer le type de partie on utilise gamemode
-  const gamemode = ref(1)
+  const levelType = ref(0)
   // Ici on stocke les différents points que l'on va afficher sur la map
   const levelId = ref(0)
   interface Point {
     address: string
     position: number[]
     levelId: number
+    levelActivityType: number
   }
   const popupCreateGame = ref(false)
 
-  let newPointState: Point = reactive({ address: '', position: [], levelId: 0 })
+  let newPointState: Point = reactive({
+    address: '',
+    position: [],
+    levelId: 0,
+    levelActivityType: 0
+  })
   const pointState = reactive({
     points: [
       {
         address: 'Institut Saint Joseph',
         position: [4.39064, 50.83756],
-        levelId: 0
+        levelId: 0,
+        levelActivityType: 0
       },
       {
         position: [4.42537, 50.83826], //[4.39064, 50.83756]
         address: 'Institut Don Bosco',
-        levelId: 0
+        levelId: 0,
+        levelActivityType: 0
       },
       {
         position: [4.37576, 50.87358], //[4.39064, 50.83756]
         address: 'Institut Cardinal Mercier',
-        levelId: 0
-      },
-      {
-        levelId: 15,
-        address: 'Avenue Molière Wavre',
-        position: [4.63491, 50.70874]
+        levelId: 0,
+        levelActivityType: 0
       }
     ]
   })
@@ -97,7 +103,12 @@
       pointState.points.push.apply(
         pointState.points,
         levelMap.map((x: LevelMapWithId) => {
-          return { address: x.address, position: x.position, levelId: x.id }
+          return {
+            address: x.address,
+            position: x.position,
+            levelId: x.id,
+            levelActivityType: x.activityId
+          }
         })
       )
     }
@@ -144,20 +155,19 @@
       }
     }
 
-    const iconStyle = new Style({
-      // stroke: new Stroke({
-      //       width: 5,
-      //       color: "#ff0000"
-      //     },
-      image: new Icon({
-        anchor: [10, 10],
-        anchorXUnits: 'pixels',
-        anchorYUnits: 'pixels',
-        src: geoCoderSvg,
-        displacement: [-5, 25],
-        scale: 1
+    const createIconStyle = (logo: string) => {
+      return new Style({
+        image: new Icon({
+          anchor: [10, 10],
+          anchorXUnits: 'pixels',
+          anchorYUnits: 'pixels',
+          src: logo,
+          displacement: [-5, 25],
+          scale: 1
+        })
       })
-    })
+    }
+
     const overlay = new Overlay({
       element: popup.value,
       autoPan: {
@@ -193,13 +203,25 @@
         // mouseWheelZoom: allowControls.value
       })
     })
-    const setPointOnMap = (point: { address: string; position: number[]; levelId: number }) => {
+    const setPointOnMap = (point: {
+      address: string
+      position: number[]
+      levelId: number
+      levelActivityType: number
+    }) => {
       let feature = new Feature({
         geometry: new Point(fromLonLat([point.position[0], point.position[1]])), //[4.39064, 50.83756]
         name: point.address
       })
       // feature.setId(point.levelId)
-      feature.setStyle(iconStyle)
+      if (point.levelActivityType === 0) {
+        feature.setStyle(createIconStyle(geoCoderSvg))
+      } else if (point.levelActivityType === 1) {
+        feature.setStyle(createIconStyle(geoCoderSvgFlash))
+      } else if (point.levelActivityType === 2) {
+        feature.setStyle(createIconStyle(geoCoderSvgDal))
+      }
+
       let vector = new VectorLayer({
         source: new VectorSource({
           features: [feature]
@@ -266,6 +288,11 @@
             (x) => x.address === levelName.value
           )[0].levelId
           console.log(levelNumber.value)
+
+          levelType.value = pointState.points.filter(
+            (x) => x.address === levelName.value
+          )[0].levelActivityType
+          console.log(levelType.value)
           // On enregistre les coordonnées pour mettre le popup au bon endroit
           const coordinate = evt.coordinate
           console.log(coordinate)
@@ -357,7 +384,12 @@
         console.log(map.value.getLayers())
         popupCreateGame.value = true
         console.log(vector)
-        newPointState = { address: result.address, position: coords, levelId: 1 }
+        newPointState = {
+          address: result.address,
+          position: coords,
+          levelId: 1,
+          levelActivityType: 0
+        }
         // Au lieu d'ajouter à la fin de la liste de layers on sort un popup qui permettra de créer l'activité
         // On ajoute la nouvelle feature à la fin de la liste des layers de la map
         // map.value.getLayers().extend([vector])
@@ -397,124 +429,187 @@
 </script>
 
 <template>
-  <div
-    id="map"
-    class="map"
-  ></div>
-  <div
-    class="search"
-    v-if="userRole.includes('Administrateur') || userRole.includes('Créateur')"
-  >
-    <input
-      id="geocode-input"
-      ref="inputGeocode"
-      type="text"
-      placeholder="Enter an address or place e.g. 1 York St"
-      size="50"
-    />
-    <!-- On click sur le bouton geocode ,  -->
-    <button
-      id="geocode-button"
-      @click="handleGeocode"
-    >
-      Geocode
-    </button>
-  </div>
-  <!-- Contenu du PoPuP et mode de jeu -->
-  <div
-    v-show="popupVisibility"
-    ref="popup"
-    id="popup"
-    class="ol-popup"
-  >
+  <div class="main">
     <div
-      v-if="
-        (userRole.includes('Administrateur') && levelNumber > 0) ||
-        (userRole.includes('Créateur') && levelNumber > 0) ||
-        (userReward >= 50 && levelNumber > 0)
-      "
+      id="map"
+      class="map"
+    ></div>
+    <div
+      class="search"
+      v-if="userRole.includes('Administrateur') || userRole.includes('Créateur')"
     >
-      <a
-        href="#"
-        id="popup-closer"
-        class="ol-popup-closer"
-        @click="onCloserClick"
-      ></a>
-      <div class="popup-content">
-        <Transition>
-          <!-- v-if="gamemode" -->
+      <input
+        id="geocode-input"
+        ref="inputGeocode"
+        type="text"
+        placeholder="Entrer l'adresse du nouveau niveau"
+        size="50"
+        class="geoSearch"
+      />
+      <!-- On click sur le bouton geocode ,  -->
+      <button
+        id="geocode-button"
+        @click="handleGeocode"
+        class="geoButton"
+      >
+        Geocode
+      </button>
+    </div>
+    <!-- Contenu du PoPuP et mode de jeu -->
+    <div
+      v-show="popupVisibility"
+      ref="popup"
+      id="popup"
+      class="ol-popup"
+    >
+      <div
+        v-if="
+          (userRole.includes('Administrateur') && levelNumber > 0 && levelType === 1) ||
+          (userRole.includes('Créateur') && levelNumber > 0 && levelType === 1) ||
+          (userReward >= 50 && levelNumber > 0 && levelType === 1)
+        "
+      >
+        <a
+          href="#"
+          id="popup-closer"
+          class="ol-popup-closer"
+          @click="onCloserClick"
+        ></a>
+        <div class="popup-content">
+          <Transition>
+            <!-- v-if="gamemode" -->
+            <div
+              id="popup-content"
+              class="sub_content"
+            >
+              <p class="popup-title">
+                {{ levelName }}
+              </p>
+              <p class="level-details">Quizz Flashcard {{ levelNumber }}</p>
+              <img
+                class="gamemode-image"
+                src="@/assets/logo/flashcards.svg"
+                alt="flashcards gamemode logo"
+              />
+              <router-link
+                to="/card-number-selector"
+                class="playButton"
+                >PLAY</router-link
+              >
+            </div>
+          </Transition>
+        </div>
+      </div>
+      <div
+        v-if="
+          (userRole.includes('Administrateur') && levelNumber > 0 && levelType === 2) ||
+          (userRole.includes('Créateur') && levelNumber > 0 && levelType === 2) ||
+          (userReward >= 50 && levelNumber > 0 && levelType === 2)
+        "
+      >
+        <a
+          href="#"
+          id="popup-closer"
+          class="ol-popup-closer"
+          @click="onCloserClick"
+        ></a>
+        <div class="popup-content">
+          <Transition>
+            <!-- v-if="gamemode" -->
+            <div
+              id="popup-content"
+              class="sub_content"
+            >
+              <p
+                class="popup-title"
+                id="levelDad"
+              >
+                {{ levelName }}
+              </p>
+              <p class="level-details">Quizz DragAndLearn {{ levelNumber }}</p>
+              <img
+                class="gamemode-image-dal"
+                src="@/assets/logo/dalcard.svg"
+                alt="dragandlearn gamemode logo"
+              />
+
+              <router-link
+                id="buttonDad"
+                to="/dad-mobile"
+                class="playButton"
+                v-if="isMobile"
+                >PLAY</router-link
+              >
+              <router-link
+                id="buttonDad"
+                to="/dad"
+                class="playButton"
+                v-else="isMobile"
+                >PLAY</router-link
+              >
+            </div>
+          </Transition>
+        </div>
+      </div>
+      <div v-else-if="levelType === 0">
+        <a
+          href="#"
+          id="popup-closer"
+          class="ol-popup-closer"
+          @click="onCloserClick"
+        ></a>
+        <div class="popup-content">
           <div
             id="popup-content"
             class="sub_content"
           >
-            <p class="popup-title">{{ levelName }}</p>
-            <p class="level-details">Quizz Flashcard {{ levelNumber }}</p>
+            <p
+              class="popup-title"
+              style="color: #ff9900"
+            >
+              {{ levelName }}
+            </p>
+            <p class="level-details">Activité principale</p>
             <img
               class="gamemode-image"
-              src="@/assets/logo/flashcards.svg"
-              alt="flashcards gamemode logo"
+              src="@/assets/logo/start_game.svg"
+              alt="start_game gamemode logo"
             />
+            <!-- CREATION DE LACTIVITE PRINCIPALE -->
             <router-link
-              to="/card-number-selector"
+              to="/start-game"
               class="playButton"
+              style="background-color: #ff9900"
               >PLAY</router-link
             >
           </div>
-        </Transition>
+        </div>
       </div>
+      <!-- SHOW ALL THE ACTIVITIES TO THE CREATOR AND ADMINISTRATOR -->
     </div>
-    <div v-else-if="levelNumber === 0">
+    <!-- Redirection vers l'activité principale -->
+    <!-- Concernant la création de jeu Faire un poppup avec lavec la confirmation de l'adresse -->
+
+    <div
+      id="create__game__popup"
+      v-show="popupCreateGame"
+    >
       <a
         href="#"
         id="popup-closer"
         class="ol-popup-closer"
         @click="onCloserClick"
       ></a>
-      <div class="popup-content">
-        <div
-          id="popup-content"
-          class="sub_content"
-        >
-          <p class="popup-title">{{ levelName }}</p>
-          <p class="level-details">Activité principale</p>
-          <img
-            class="gamemode-image"
-            src="@/assets/logo/start_game.svg"
-            alt="start_game gamemode logo"
-          />
-          <!-- CREATION DE LACTIVITE PRINCIPALE -->
-          <router-link
-            to="/card-number-selector"
-            class="playButton"
-            >PLAY</router-link
-          >
-        </div>
-      </div>
+      <h2 id="create__game__popup__title">Veuillez Confirmer l'adresse du nouveau niveau</h2>
+      <p id="create__game__popup__address">{{ newPointState.address }}</p>
+      <!-- Quand il confirme envoyer l'adresse dans le store -->
+      <button
+        id="create__game__popup__confirm"
+        @click="onConfirmAddress"
+      >
+        Confirmer
+      </button>
     </div>
-    <!-- SHOW ALL THE ACTIVITIES TO THE CREATOR AND ADMINISTRATOR -->
-  </div>
-  <!-- Redirection vers l'activité principale -->
-  <!-- Concernant la création de jeu Faire un poppup avec lavec la confirmation de l'adresse -->
-
-  <div
-    id="create__game__popup"
-    v-show="popupCreateGame"
-  >
-    <a
-      href="#"
-      id="popup-closer"
-      class="ol-popup-closer"
-      @click="onCloserClick"
-    ></a>
-    <h2 id="create__game__popup__title">Veuillez Confirmer l'adresse du nouveau niveau</h2>
-    <p id="create__game__popup__address">{{ newPointState.address }}</p>
-    <!-- Quand il confirme envoyer l'adresse dans le store -->
-    <button
-      id="create__game__popup__confirm"
-      @click="onConfirmAddress"
-    >
-      Confirmer
-    </button>
   </div>
 </template>
 <style scoped>

@@ -250,7 +250,7 @@
 <style scoped>
   .main {
     width: 100vw;
-    max-width: 1500px;
+    max-width: 1600px;
     border-bottom: 1px solid grey;
     height: 70px;
     display: flex;

@@ -17,33 +17,35 @@
   }
 </script>
 <template>
-  <div class="page">
-    <TheHeader>
-      <div class="title">
-        <img
-          class="headerLogo"
-          src="@/assets/logo/dragandlearn.svg"
-          alt="drag and drop gamemode logo"
-        />
-      </div>
-    </TheHeader>
-    <HowToAddDad
-      v-if="!actualPage"
-      @change-page="(nbr: number) => changeActualPage(nbr)"
-    />
-    <SelectDragNDropImage
-      v-if="actualPage == 1"
-      @change-page="(nbr: number) => changeActualPage(nbr)"
-    />
-    <DragndropTeacher
-      v-if="actualPage == 2"
-      @change-page="(nbr: number) => changeActualPage(nbr)"
-    />
-    <DragNDropResume
-      v-if="actualPage == 3"
-      @change-page="(nbr: number) => changeActualPage(nbr)"
-    />
-  </div>
+  <Suspense>
+    <div class="page">
+      <TheHeader>
+        <div class="title">
+          <img
+            class="headerLogo"
+            src="@/assets/logo/dragandlearn.svg"
+            alt="drag and drop gamemode logo"
+          />
+        </div>
+      </TheHeader>
+      <HowToAddDad
+        v-if="!actualPage"
+        @change-page="(nbr: number) => changeActualPage(nbr)"
+      />
+      <SelectDragNDropImage
+        v-if="actualPage == 1"
+        @change-page="(nbr: number) => changeActualPage(nbr)"
+      />
+      <DragndropTeacher
+        v-if="actualPage == 2"
+        @change-page="(nbr: number) => changeActualPage(nbr)"
+      />
+      <DragNDropResume
+        v-if="actualPage == 3"
+        @change-page="(nbr: number) => changeActualPage(nbr)"
+      />
+    </div>
+  </Suspense>
 </template>
 <style scoped>
   .page {

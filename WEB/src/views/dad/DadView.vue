@@ -10,30 +10,32 @@
 </script>
 
 <template>
-  <div class="page">
-    <div
-      ref="loading"
-      class="showup"
-    >
-      <img
-        class="loadingLogo"
-        src="@/assets/logo/dalcard.svg"
-      />
-      <p class="loading">Chargement de l'activité ...</p>
+  <Suspense>
+    <div class="page">
+      <div
+        ref="loading"
+        class="showup"
+      >
+        <img
+          class="loadingLogo"
+          src="@/assets/logo/dalcard.svg"
+        />
+        <p class="loading">Chargement de l'activité ...</p>
+      </div>
+      <div>
+        <TheHeader>
+          <div class="title">
+            <img
+              class="headerLogo"
+              src="@/assets/logo/dragandlearn.svg"
+              alt="drag and drop gamemode logo"
+            />
+          </div>
+        </TheHeader>
+        <Dragndrop />
+      </div>
     </div>
-    <div>
-      <TheHeader>
-        <div class="title">
-          <img
-            class="headerLogo"
-            src="@/assets/logo/dragandlearn.svg"
-            alt="drag and drop gamemode logo"
-          />
-        </div>
-      </TheHeader>
-      <Dragndrop />
-    </div>
-  </div>
+  </Suspense>
 </template>
 
 <style scoped>
