@@ -2,6 +2,8 @@
   import AddCardForm from '@/components/card/add/AddCardForm.vue'
   import MainHeader from '@/components/headers/MainHeader.vue'
   import AllCard from '@/components/card/add/ListLittleCard.vue'
+  import { useUserStore } from '@/stores/user'
+  await useUserStore().checkUserAccessAndRole(['Adminstrateur', 'Créateur'])
 </script>
 
 <template>

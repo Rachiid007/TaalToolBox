@@ -48,10 +48,8 @@
     const user = await store.getUser(state.mail, hashedPassword)
 
     if (user) {
-      if (store.user) {
         manage.succes = 'Connexion réussie !'
         window.location.pathname = '/'
-      }
     } else {
       manage.error = "Nom d'utilisateur ou mot de passe incorrect"
       return 1

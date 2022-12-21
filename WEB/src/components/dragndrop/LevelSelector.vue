@@ -1,9 +1,11 @@
 <script lang="ts" setup>
   import { useDadLevels } from '@/stores/dadLevels'
+  import { useUserStore } from '@/stores/user'
   import { ref } from 'vue'
 
   const store = useDadLevels()
   const levels = store.getData()
+  await useUserStore().checkUserAccessAndRole(['Administrateur'])
 
   const getNumberOfWords = (item: any) => {
     let count: number = 0

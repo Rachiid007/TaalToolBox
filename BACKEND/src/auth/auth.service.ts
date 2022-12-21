@@ -15,12 +15,9 @@ export class AuthService {
   ) {}
 
   async ValidateUser(email: string, pass: string): Promise<any> {
-    // console.log(email, pass);
-    // Find le role et l'utilisateur et checker le password
+    // Find l'utilisateur et checker le password
     const user = await this.userService.findByEmail(email);
 
-    // La comparaison du mot de passe du user doit se faire à se niveau
-    // if (user && bcrypt.compare(user.password, await bcrypt.hash(pass, 10))) {
     if (user && (await argon2.verify(user.password, pass))) {
       const { password, ...result } = user;
       return result;
@@ -28,32 +25,25 @@ export class AuthService {
     return null;
   }
 
-  async login(email: string) {
+  async findUserByEmail(email: string) {
     // return les informations de l'utilisateur
 
-    const payload = await this.userService.loginUser(email);
+    const payload = await this.userService.findByEmail(email);
 
     // Créer la clé jwt à partir des informations de l'utilisateur
     // Le payload constitue le token qu'on doit crypté
     const token = {
       userId: payload.id,
       xsrfToken: randomUUID(),
-      scopes: {
-        role: payload.role,
-        school: payload.school,
-        class: payload.schoolClass,
-      }, //Accès de l'utilisateur
+      scopes: payload.id, //Accès de l'utilisateur
       sub: payload.email,
     };
     const jwtToken = this.jwtService.sign(token);
 
-    // return payloadWithToken;
     return { token, jwtToken };
-    // Arnaud method
-    // Générer le token et le stocker dans la db avec le timestamp
   }
 
-  // Trouver un moyen de supprimer le cookie que l'utilisateur envoie (sessionId afin qu'il ne l'envoie plus)
+  //TODO Trouver un moyen de supprimer le cookie que l'utilisateur envoie (sessionId afin qu'il ne l'envoie plus)
   async logout(res) {
     console.log(res.signedCookies);
     res.clearCookie('sessionId');
@@ -63,33 +53,31 @@ export class AuthService {
   }
 
   checkUserSession = (xsrfToken: string, token) => {
-    // Ensuite récupérer l'information que l'utilisateur à besoin récupérer maintenant ses informations
-
     //vérification du jwt
     return verify(token, jwtConstants.secret, function (err, decoded) {
       if (decoded.xsrfToken != xsrfToken) {
-        //erreur attaque csrf
+        //erreur potentiel attaque csrf
         throw new UnauthorizedException();
       } else {
-        //pas d'erreur on continue
-        // next();
         return true;
       }
     });
   };
 
+  async findUserById(id: number) {
+    return await this.userService.findOne(id);
+  }
+
+  async getAllUserInfo(email: string) {
+    return await this.userService.loginUser(email);
+  }
   async createUsersExcel(CreateUserDto: UserFormData[]) {
     return await this.userService.createUsersExcel(CreateUserDto);
   }
 
-  async register(data) {
+  async register(payload: UserFormData) {
     // data.password = await bcrypt.hash(data.password, 10);
-    const response = await this.userService.create(data);
-    // console.log(data);
-    if (response) {
-      const { password, ...result } = response;
-      return result;
-    }
+    return await this.userService.createUser(payload);
   }
 
   decodeToken(token: string) {

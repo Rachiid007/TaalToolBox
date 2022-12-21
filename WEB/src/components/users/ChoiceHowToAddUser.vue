@@ -1,8 +1,13 @@
 <script setup lang="ts">
   import { useUserStore } from '@/stores/user'
   const userStore = useUserStore()
-  const userScope = await userStore.getUserScope()
-  const userRole = userScope.role
+
+  const userScope = await useUserStore().checkUserAccessAndRoleAndReturnUser([
+    'Administrateur',
+    'Professeur'
+  ])
+  console.log(userScope)
+  const userRole: string[] = userScope.role
 </script>
 
 <template>
@@ -46,7 +51,7 @@
         Vous pouvez ajouter vos Prof/Elève en les renseignant dans un formulaire.
       </p>
       <p v-else>Vous pouvez ajouter vos Elève en les renseignant dans un formulaire.</p>
-      <RouterLink to="/signIn">
+      <RouterLink to="/register">
         <button class="btn">Formulaire</button>
       </RouterLink>
     </div>

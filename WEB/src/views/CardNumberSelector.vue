@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import CardNumber from '@/components/CardNumber.vue'
   import TheHeader from '@/components/TheHeader.vue'
+  import { useUserStore } from '@/stores/user'
+  const userStore = useUserStore()
 </script>
 
 <template>
@@ -12,7 +14,9 @@
         <p class="activity_name">Cards</p>
       </div>
     </TheHeader>
-    <CardNumber />
+    <Suspense>
+      <CardNumber />
+    </Suspense>
   </div>
 </template>
 

@@ -80,6 +80,17 @@ export const useUserStore = defineStore('user', () => {
       })
     return userRequest
   }
+  const checkUserAcess = async () => {
+    if (window.sessionStorage.getItem('x-xsrf-token')) {
+      const userScope = await getUserScope()
+      if (!userScope) {
+        window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
+      } else {
+      }
+    } else {
+      window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
+    }
+  }
 
   const getUserScore = async () => {
     await UserService.getScore(user.email)
@@ -106,6 +117,47 @@ export const useUserStore = defineStore('user', () => {
       })
     return 'score added !'
   }
+  const checkUserAccessAndRole = async (role: string[]) => {
+    if (window.sessionStorage.getItem('x-xsrf-token')) {
+      const userScope = await useUserStore().getUserScope()
+      if (!userScope) {
+        window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
+      }
+      // Si l'utilisateur n'a pas les permissions ['Adminstrateur', 'Créateur']
+      else if (!role.some((x) => userScope.role.includes(x))) {
+        window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
+      }
+    } else {
+      window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
+    }
+  }
+
+  const checkUserAccessAndReturnUser = async () => {
+    if (window.sessionStorage.getItem('x-xsrf-token')) {
+      const userScope = await useUserStore().getUserScope()
+      if (!userScope) {
+        window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
+      } else if (userScope && userScope.role.length) {
+        return userScope
+      }
+    } else {
+      window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
+    }
+  }
+  const checkUserAccessAndRoleAndReturnUser = async (role: string[]) => {
+    if (window.sessionStorage.getItem('x-xsrf-token')) {
+      const userScope = await useUserStore().getUserScope()
+      if (!userScope) {
+        window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
+      }
+      // Si l'utilisateur n'a pas les permissions ['Adminstrateur', 'Créateur']
+      else if (role.some((x) => userScope.role.includes(x))) {
+        return userScope
+      }
+    } else {
+      window.location.pathname = import.meta.env.VITE_LOGIN_ROUTE
+    }
+  }
   const logout = async () => {
     const logoutRequest = await loginService.logout().catch((err) => {
       console.log('logout error', err)
@@ -122,6 +174,10 @@ export const useUserStore = defineStore('user', () => {
     addScoreToUser,
     getProtected,
     getUserScope,
-    logout
+    logout,
+    checkUserAccessAndRole,
+    checkUserAcess,
+    checkUserAccessAndReturnUser,
+    checkUserAccessAndRoleAndReturnUser
   }
 })

@@ -4,6 +4,7 @@
   import router from '@/router'
 
   const userStore = useUserStore()
+  const userScope = await userStore.checkUserAccessAndReturnUser()
 
   let slideIndex = ref(1)
   window.addEventListener('load', () => {
@@ -28,9 +29,9 @@
     // Si on arrive a la fin des slides on doit remplacer le bouton suivant par completer
     if (n > slides.length) {
       // Ajouter l'argent de l'utilisateur pour
-      if (userStore.userReward == 0) {
-        console.log(userStore.userReward)
-        userStore.addScoreToUser(50)
+      if (userScope.userReward == 0) {
+        console.log(userScope.userReward)
+        userScope.addScoreToUser(50)
         router.replace('/map')
         return
       } else {

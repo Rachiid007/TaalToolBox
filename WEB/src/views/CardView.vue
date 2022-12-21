@@ -5,8 +5,10 @@
   import TheHeader from '@/components/TheHeader.vue'
   import { useShowStore } from '@/stores/show'
   import { computed } from 'vue'
+  import { useUserStore } from '@/stores/user'
   const storeShow = useShowStore()
   const showButtonValidation = computed(() => storeShow.getShowButtonValidation())
+  const userStore = useUserStore()
 </script>
 <!-- Est ce qu'il yaura ou pas un header -->
 <template>
@@ -24,7 +26,9 @@
       </div>
       <div class="play-card">
         <div class="card">
-          <MainCard />
+          <Suspense>
+            <MainCard />
+          </Suspense>
         </div>
         <!-- <div class="answer">inside answer card</div> -->
         <div class="validation-button">

@@ -5,7 +5,9 @@
   // import  activityService  from '@/services/activityService'
   import type { Ref } from 'vue'
   import useMapStore from '@/stores/map'
+  import { useUserStore } from '@/stores/user'
 
+  await useUserStore().checkUserAccessAndRole(['Administrateur', 'Créateur'])
   const selectedActivity = ref(0)
   const isThereAnyActivitySelected = ref(false)
   const listActivities: Ref<{ name: string; description: string; src: string }[]> = ref([])
@@ -69,7 +71,7 @@
         <div>
           <router-link
             v-show="isThereAnyActivitySelected"
-            :to="isThereAnyActivitySelected ? '/infoLevel' : ''"
+            :to="isThereAnyActivitySelected ? '/info-level' : ''"
             class="button"
           >
             Créer une activité

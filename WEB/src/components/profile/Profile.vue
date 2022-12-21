@@ -1,12 +1,10 @@
 <script  setup lang="ts">
-
-    const user_json = localStorage.getItem('user');
-    console.log(user_json)
+    import { useUserStore } from '@/stores/user';
+    const user_json = await useUserStore().checkUserAccessAndReturnUser()
     let user = {birthdate: '', name: null, surname: null, email: null, phone: null}
     let birthdateStr = "0000-00-00";
     if (user_json){
-        user = JSON.parse(user_json);
-        birthdateStr = user.birthdate;
+        birthdateStr = user_json.birthdate;
     }
     const birthdateTab = birthdateStr.split('-');
     const birthdate = birthdateTab[2] + '/' + birthdateTab[1] + '/' + birthdateTab[0];

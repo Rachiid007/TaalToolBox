@@ -6,7 +6,9 @@
 <template>
   <div class="page">
     <MainHeader />
-    <AddUserExcel />
+    <Suspense>
+      <AddUserExcel />
+    </Suspense>
   </div>
 </template>
 

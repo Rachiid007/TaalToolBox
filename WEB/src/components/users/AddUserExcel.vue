@@ -4,8 +4,10 @@
   import { ref } from 'vue'
   import { read, utils } from 'xlsx'
   import { useUserStore } from '@/stores/user'
-  const userScope: any = useUserStore().getUserScope()
 
+  const userScope = await useUserStore().checkUserAccessAndReturnUser()
+
+  const userSchool = userScope.school
   const file = ref<File | null>(null)
   const headersFromExcel = ref<any>(null)
   const rows = ref<unknown[][] | null>(null)
@@ -133,7 +135,7 @@
         schoolClass: row[expectedHeaders.value[5].indexInHeaderExcel] as string,
         sex: row[expectedHeaders.value[6].indexInHeaderExcel] as string,
         role: 'Elève',
-        school: userScope.school,
+        school: userSchool,
         password: password
       }
       users.push(user)

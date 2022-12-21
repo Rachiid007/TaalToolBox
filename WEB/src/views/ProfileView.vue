@@ -8,34 +8,32 @@
   const userStore = useUserStore()
   //const store = useCardStore()
   //const remaining = computed(() => store.remaining)
-  console.log(localStorage.getItem('user'))
+  // Vérification de l'utilisateur
+
   const comp = ref(0)
 
-  function changeComp(nb: number){
-    comp.value = nb;
+  function changeComp(nb: number) {
+    comp.value = nb
   }
-
 </script>
 
 <template>
   <div>
-    <MainHeader />
+    <Suspense>
+      <MainHeader />
+    </Suspense>
   </div>
   <div class="contents">
     <div class="buttons">
-      <button @click="changeComp(0)">
-        Profil
-      </button>
-      <button @click="changeComp(1)">
-        Classe
-      </button>
-      <button @click="changeComp(2)">
-        Succès
-      </button>
+      <button @click="changeComp(0)">Profil</button>
+      <button @click="changeComp(1)">Classe</button>
+      <button @click="changeComp(2)">Succès</button>
     </div>
     <div class="compP">
       <div v-if="comp == 0">
-        <Profile />
+        <Suspense>
+          <Profile />
+        </Suspense>
       </div>
       <div v-else-if="comp == 1">
         <Class />
@@ -48,7 +46,7 @@
 </template>
 
 <style scoped>
-  .contents{
+  .contents {
     display: flex;
     flex-direction: row;
   }
@@ -72,11 +70,11 @@
   button:hover {
     background-color: green;
   }
-  .buttons{
+  .buttons {
     float: left;
     margin-top: 5%;
   }
-  .compP{
+  .compP {
     border: ridge 5px #cccccc;
     height: 32em;
     margin-top: 6%;

@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { useUserStore } from '@/stores/user'
+
+  await useUserStore().checkUserAccessAndRole(['Adminstrateur', 'Créateur'])
+</script>
 
 <template>
   <h1 class="title">Ajouter une activité</h1>
@@ -29,5 +33,5 @@
 </template>
 
 <style scoped>
-@import "./choiceHowToAdd.css";
+  @import './choiceHowToAdd.css';
 </style>

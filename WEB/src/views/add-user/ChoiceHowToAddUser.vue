@@ -5,8 +5,12 @@
 
 <template>
   <div class="page">
-    <MainHeader />
-    <choiceHowToAddUser />
+    <Suspense>
+      <MainHeader />
+    </Suspense>
+    <Suspense>
+      <choiceHowToAddUser />
+    </Suspense>
   </div>
 </template>
 

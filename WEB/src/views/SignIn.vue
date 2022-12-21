@@ -7,7 +7,9 @@
 
 <template>
   <div class="HomePage">
-    <MainHeader />
+    <Suspense>
+      <MainHeader />
+    </Suspense>
     <Suspense>
       <SignIn />
     </Suspense>
