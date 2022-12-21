@@ -14,11 +14,9 @@ import {
 import { ApiParam } from '@nestjs/swagger';
 import { Param } from '@nestjs/common';
 
-
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-<<<<<<< HEAD
 
   // ROUTE DE TEST POUR LAUTHENTIFICATION ELLE SE TROUVE PLUTOT DANS LE DOSSIER AUTH
   // @UseGuards(LocalAuthGuard)
@@ -28,14 +26,10 @@ export class UsersController {
   //   return req.user;
   // }
   // @UseGuards(LocalAuthGuard)
-=======
->>>>>>> c8ce166 (get statistics service)
   @Get()
   async findByEmail(@Query() query: { email: string; password: string }) {
     return await this.usersService.loginUser(query.email, query.password);
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
   @Post()
   async createUser(@Body() payload: UserFormData) {
@@ -70,14 +64,4 @@ export class UsersController {
   findActivePlayersCount(@Param('id_user') id_user: number) {
     return this.usersService.findActivePlayersCount(+id_user);
   }
- 
-=======
->>>>>>> c8ce166 (get statistics service)
-=======
-
-  /*@Get('/statistic/:id')
-  findOne(@Param('id') id: number) {
-    return this.usersService.getUserStatistics(+id);
-  }*/
->>>>>>> cd0a472 (accomplissement service created)
 }

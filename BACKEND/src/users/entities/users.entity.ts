@@ -52,34 +52,4 @@ export class Users {
   //chaque utilisateur possède une seule langue
   @ManyToOne(() => Lang, (lang) => lang.users)
   lang: Lang;
-<<<<<<< HEAD
-=======
-
-  //Une utilisateur peut avoir plusieurs solution
-  @OneToMany(() => UserResponseCard, (response_card) => response_card.user)
-  response_card: UserResponseCard[];
-  nombre_de_parties_flashcards: any;
-  nombre_de_parties_drag: any;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> cd0a472 (accomplissement service created)
-
-  @OneToOne(() => Statistic)
-  @JoinColumn()
-  statistic: Statistic;
-<<<<<<< HEAD
->>>>>>> cd0a472 (accomplissement service created)
-=======
->>>>>>> c8ce166 (get statistics service)
->>>>>>> de881d2 (get statistics service)
-=======
->>>>>>> c8ce166 (get statistics service)
-=======
->>>>>>> cd0a472 (accomplissement service created)
-=======
->>>>>>> c8ce166 (get statistics service)
->>>>>>> de881d2 (get statistics service)
 }

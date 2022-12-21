@@ -28,6 +28,7 @@
     "vue": "^3.2.45",
     "vue-chartjs": "^5.0.1",
     "vue-router": "^4.1.6",
+    "vue-xlsx": "^0.2.1",
     "vue3-easy-data-table": "^1.5.23",
     "wav-file-encoder": "^1.0.4",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.1/xlsx-0.19.1.tgz"

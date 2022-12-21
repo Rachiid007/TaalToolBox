@@ -38,17 +38,9 @@ export class UsersService {
   async findOneUser(data: number | any): Promise<Users | undefined> {
     return await this.userRepository.findOne(data);
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
   async findByEmail(email: string): Promise<Users> {
     return await this.userRepository.findOne({ where: { email: email } });
   }
-=======
-
->>>>>>> 124eca4 (get statistics service)
-=======
-
->>>>>>> 124eca4 (get statistics service)
   // Get the user in database and her role
   async loginUser(email: string, password: string) {
     let userData: UserData;
@@ -56,15 +48,8 @@ export class UsersService {
     if (!email) {
       throw new NotFoundException();
     }
-<<<<<<< HEAD
     // await this.roleService.findOne(wh:
     const role = await this.userRepository
-=======
-    //Decrypter le mot de passe du user
-    //Get the users and here role
-   
-    const user = await this.userRepository
->>>>>>> 124eca4 (get statistics service)
       .createQueryBuilder('users')
       .innerJoinAndSelect('users.role', 'role')
       .where({ email: email })
@@ -96,10 +81,7 @@ export class UsersService {
               }),
               school: user.schoolclass[0].school.name, //Lutilisateur ne fréquente qu'une seule école
               sex: user.sex,
-<<<<<<< HEAD
-=======
               infos: user.infos,
->>>>>>> 2d538ca (card design + recovering userdata)
             };
           })
           .catch((err) => {
@@ -130,10 +112,7 @@ export class UsersService {
               schoolClass: [],
               school: 'Institut Saint Joseph',
               sex: 'M',
-<<<<<<< HEAD
-=======
               infos: user.infos,
->>>>>>> 2d538ca (card design + recovering userdata)
             };
           })
           .catch((err) => {
@@ -143,7 +122,6 @@ export class UsersService {
     }
     return userData;
   }
-<<<<<<< HEAD
   public async createUser(payload: UserFormData) {
     // Normalement en front on doit récupérer toutes les écoles
     //
@@ -261,8 +239,6 @@ export class UsersService {
       });
     console.log(userRole);
   }
-=======
->>>>>>> 124eca4 (get statistics service)
 
   async create(data: CreateUserDto): Promise<any> {
     return await this.userRepository
@@ -271,8 +247,6 @@ export class UsersService {
       .catch((e) => console.log(e));
   }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   async createUsersExcel(data: UserFormData[]) {
     // insert CreateUserExcelDto into users table and return the users inserted
     // return await this.createUser()
@@ -296,9 +270,9 @@ export class UsersService {
   async findSubscriptionStats(userId: number): Promise<Users | undefined> {
     const subscriptionStats = this.userRepository.query(
       `select school.name || ' - ' ||schoolclass."name" as SchoolClass_name,count(*) from schoolclass
-      join users_school_class_schoolclass on schoolclass.id=users_school_class_schoolclass."schoolclassId"
+      join users_schoolclass_schoolclass on schoolclass.id=users_schoolclass_schoolclass."schoolclassId"
       join school on school.id = schoolclass."schoolId"
-      where school.id in (select schoolclass."schoolId" from schoolclass where schoolclass.id in (select users_school_class_schoolclass."schoolclassId" from users_school_class_schoolclass where users_school_class_schoolclass."usersId"=${userId}))
+      where school.id in (select schoolclass."schoolId" from schoolclass where schoolclass.id in (select users_schoolclass_schoolclass."schoolclassId" from users_schoolclass_schoolclass where users_schoolclass_schoolclass."usersId"=${userId}))
       group by school.name,schoolclass.name;`,
     );
     return await subscriptionStats;
@@ -308,34 +282,13 @@ export class UsersService {
     const subscriptionStats = this.userRepository.query(
       `select A.name,count(*) from
       (select  distinct user_response."userId", schoolclass."name" as name from user_response
-            left join users_school_class_schoolclass on user_response."userId"=users_school_class_schoolclass."usersId"
-          left join schoolclass on schoolclass.id=users_school_class_schoolclass."schoolclassId"
+            left join users_schoolclass_schoolclass on user_response."userId"=users_schoolclass_schoolclass."usersId"
+          left join schoolclass on schoolclass.id=users_schoolclass_schoolclass."schoolclassId"
             left join school on school.id = schoolclass."schoolId"
-            where school.id in (select schoolclass."schoolId" from schoolclass where schoolclass.id in (select users_school_class_schoolclass."schoolclassId" from users_school_class_schoolclass where users_school_class_schoolclass."usersId"=${userId}))  
+            where school.id in (select schoolclass."schoolId" from schoolclass where schoolclass.id in (select users_schoolclass_schoolclass."schoolclassId" from users_schoolclass_schoolclass where users_schoolclass_schoolclass."usersId"=${userId}))  
         group by user_response."userId",schoolclass.name) as A
         group by A.name`,
     );
     return await subscriptionStats;
-=======
-=======
->>>>>>> cd0a472 (accomplissement service created)
-  async getUserStatistics(id: number): Promise<any> {
-    /*const user = await this.userRepository.findOne(id, {
-      relations: ['statistics'],
-    });
-    return user.statistics;*/
-    const user = await this.userRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.statistic', 'statistic')
-      .where('user.statistic = :id', { id: id })
-      .getMany();
-
-    console.log(user);
-
-    return user;
-<<<<<<< HEAD
->>>>>>> cd0a472 (accomplissement service created)
-=======
->>>>>>> cd0a472 (accomplissement service created)
   }
 }
