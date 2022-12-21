@@ -11,7 +11,7 @@ import {
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guard/local-auth.guard';
 import type { UserFormData } from 'src/types';
-import debug from 'config/debug';
+import debug from '../../config/debug';
 import { UnauthorizedException } from '@nestjs/common';
 @Controller()
 export class AuthController {

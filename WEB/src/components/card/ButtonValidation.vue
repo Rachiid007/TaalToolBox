@@ -6,19 +6,28 @@
   //import { useUser_ResponseStore } from '@/stores/user_response'
   //import { useUserStore } from '@/stores/user'
   import { computed } from 'vue'
-  import user_ResponseRessource from '@/services/user_ResponseService'
+  import userResponseRessource from '@/services/user_ResponseService'
+  import { useMapStore } from '@/stores/map'
   const store = useCardStore()
   const storeShow = useShowStore()
   const storeWeightCard = useWeightCardStore()
-  //const storeAnswer = useUser_ResponseStore();
+  const mapStore = useMapStore()
 
+  //const storeAnswer = useUser_ResponseStore();
+  // Prendre le niveau de flashcard que l'utilisateur les infos
+
+  // Si on a perdu le levelMap du user a cause du rafraichissement, le rediriger vers la map sinon récupérer le niveau
+  if (!mapStore.actualLevelMapId) {
+    window.location.pathname = '/TaalToolBox/map'
+  }
   const correctAnswer = () => {
     // Ajout de la réponse de l'utilisateur dans le tableau des réponses
     const user_response: User_response = {
       id_card: store.getActualCard()?.id,
-      id_answer: 1
+      id_answer: 1,
+      idLevel: mapStore.actualLevelMapId
     }
-    store.AddAnswer(user_response)
+    store.addAnswer(user_response)
 
     // Enlever la carte trouvé ou presque trouvé
     store.removeCorrectCard(store.getActualCard())
@@ -40,10 +49,11 @@
     // Ajout de la réponse de l'utilisateur dans le tableau des réponses
     const user_response = {
       id_card: store.getActualCard()?.id,
-      id_answer: 2
+      id_answer: 2,
+      idLevel: mapStore.actualLevelMapId
     }
 
-    store.AddAnswer(user_response)
+    store.addAnswer(user_response)
 
     // Enlever la carte trouvé ou presque trouvé
     store.removeAlmostCorrectCard(store.getActualCard())
@@ -66,9 +76,10 @@
     // Ajout de la réponse de l'utilisateur dans le tableau des réponses
     const user_response = {
       id_card: store.getActualCard()?.id,
-      id_answer: 3
+      id_answer: 3,
+      idLevel: mapStore.actualLevelMapId
     }
-    store.AddAnswer(user_response)
+    store.addAnswer(user_response)
 
     //Remplacer la carte par une autre
     const card = computed(() => store.getCurrentDeck())

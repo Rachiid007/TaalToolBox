@@ -20,6 +20,11 @@ export class CreateUserResponseDto {
   })
   @Column()
   answerId: number;
+  @ApiProperty({
+    description: 'idLevel',
+  })
+  @Column()
+  levelMapId: number;
 
   @ApiProperty({
     description: 'id_proficiency',

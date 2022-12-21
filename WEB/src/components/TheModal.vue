@@ -56,7 +56,9 @@
           </button>
 
           <div class="modal-container">
-            <ResultGame />
+            <Suspense>
+              <ResultGame />
+            </Suspense>
           </div>
         </div>
       </div>

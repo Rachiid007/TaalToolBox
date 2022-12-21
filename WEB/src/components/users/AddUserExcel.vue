@@ -4,7 +4,6 @@
   import { ref } from 'vue'
   import { read, utils } from 'xlsx'
   import { useUserStore } from '@/stores/user'
-
   const userScope = await useUserStore().checkUserAccessAndReturnUser()
 
   const userSchool = userScope.school

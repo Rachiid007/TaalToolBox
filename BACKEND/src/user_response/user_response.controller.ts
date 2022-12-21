@@ -24,9 +24,9 @@ export class UserResponseController {
   @Post(':id_user/cards')
   updateMany(
     @Param('id_user') id_user: number,
-    @Body() userResponse: object[],
+    @Body() userResponse: CreateUserResponseDto[],
   ) {
-    return this.userResponseService.updateMany(+id_user, userResponse);
+    return this.userResponseService.updateMany(id_user, userResponse);
   }
 
   @Delete(':id')

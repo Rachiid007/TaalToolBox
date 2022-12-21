@@ -1,3 +1,4 @@
+import { AuthenticatedGuard } from './../auth/guard/authenticated.guard';
 import {
   Controller,
   Get,

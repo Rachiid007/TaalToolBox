@@ -94,11 +94,9 @@
     ]
   })
   // Chercher tous les niveaux dans la base de données (pour la démo)
-  const levelRequest = await mapService.getLevelMap().catch((err) => console.error(err))
-
+  const levelMap = await mapStore.getLevelMap()
   //Ajout des niveau dans le tableau de niveau
-  if (levelRequest) {
-    const levelMap = levelRequest.data
+  if (levelMap) {
     if (levelMap.length) {
       pointState.points.push.apply(
         pointState.points,
@@ -293,6 +291,8 @@
             (x) => x.address === levelName.value
           )[0].levelActivityType
           console.log(levelType.value)
+          // Stocker dans un store le niveau que l'elève veut jouer
+          mapStore.setActualLevelMapId(levelNumber.value )
           // On enregistre les coordonnées pour mettre le popup au bon endroit
           const coordinate = evt.coordinate
           console.log(coordinate)

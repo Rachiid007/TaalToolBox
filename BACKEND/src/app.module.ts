@@ -45,10 +45,6 @@ const isDevelopment = process.env.NODE_ENV === 'development' ? true : false;
         // synchronize: true, // ! SET TO FALSE IN PRODUCTION
       }),
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-      serveRoot: '/',
-    }),
     MulterModule.register({
       dest: join(__dirname, '..', 'public/images'),
     }),

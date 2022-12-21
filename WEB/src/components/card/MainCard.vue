@@ -46,7 +46,10 @@
         <p v-if="storeShow.getShowAnswer()">{{ actualCard?.translation }}</p>
         <p v-else>{{ actualCard?.word }}</p>
       </div>
-      <div class="image-answer">
+      <div
+        class="image-answer"
+        v-show="actualCard?.image"
+      >
         <img
           class="image-answer-reveal"
           :src="actualCard?.image!"

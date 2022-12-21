@@ -1,16 +1,23 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
-
 import AddUserExcel from '@/components/users/AddUserExcel.vue'
+import { flushPromises } from '@vue/test-utils'
+import { defineComponent } from 'vue'
+import axios from 'axios'
 
-describe('AddUserExcel.vue Test with empty data store', () => {
+describe('AddUserExcel.vue Test with empty data store', async () => {
   let wrapper: any = null
-
   // SETUP - run prior to each unit test
-  beforeEach(() => {
+  beforeEach(async () => {
+    // jest.spyOn(axios, 'get').mockResolvedValue({ data: 'some mocked data!' })
+    vi.spyOn(axios, 'get').mockResolvedValue({ data: 'some mocked data' })
+    const AddUserExcelAsync = defineComponent({
+      components: { AddUserExcel },
+      template: '<Suspense><AddUserExcel/></Suspense>'
+    })
     // render the component
-    wrapper = shallowMount(AddUserExcel, {
+    wrapper = shallowMount(AddUserExcelAsync, {
       global: {
         plugins: [
           createTestingPinia({
@@ -19,6 +26,7 @@ describe('AddUserExcel.vue Test with empty data store', () => {
         ]
       }
     })
+    await flushPromises()
   })
 
   // TEARDOWN - run after each unit test
@@ -29,6 +37,9 @@ describe('AddUserExcel.vue Test with empty data store', () => {
   it('initializes with zero elements displayed', () => {
     expect(wrapper.findAll('form').length).toEqual(0)
 
+    const divNumber = wrapper.findAll('div').length
+
+    console.log(divNumber)
     expect(wrapper.findAll('div').length).toEqual(2)
 
     expect(wrapper.findAll('input').length).toEqual(1)

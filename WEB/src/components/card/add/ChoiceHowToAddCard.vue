@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { useUserStore } from '@/stores/user'
 
-  await useUserStore().checkUserAccessAndRole(['Adminstrateur', 'Créateur'])
+  await useUserStore().checkUserAccessAndRole(['Administrateur', 'Créateur'])
 </script>
 
 <template>

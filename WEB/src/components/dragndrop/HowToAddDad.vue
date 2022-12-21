@@ -5,10 +5,10 @@
   import sendToDd from '@/assets/images/daltuto/send-to-db.svg'
   import { useDadLevels } from '@/stores/dadLevels'
   import { onMounted } from 'vue'
-
+  import { useUserStore } from '@/stores/user'
+  await useUserStore().checkUserAccessAndRole(['Administrateur', 'Créateur'])
   const store = useDadLevels()
 
-  onMounted(() => {})
 </script>
 <template>
   <div class="main">

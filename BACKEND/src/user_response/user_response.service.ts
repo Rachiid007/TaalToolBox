@@ -1,6 +1,11 @@
+import debug from '../../config/debug';
 import { CreateUserResponseDto } from './dto/create-user_response.dto';
 import { UpdateUserResponseDto } from './dto/update-user_response.dto';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserResponse } from './entities/user_response.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,9 +17,11 @@ export class UserResponseService {
     private updateUserResponseDto: Repository<UserResponse>,
   ) {}
 
-  create(createUserResponseDto: CreateUserResponseDto) {
-    const card = this.updateUserResponseDto.create(createUserResponseDto);
-    return this.updateUserResponseDto.save(card);
+  async create(createUserResponseDto: CreateUserResponseDto) {
+    debug('create user response dto');
+    debug(createUserResponseDto);
+    return await this.updateUserResponseDto.create(createUserResponseDto);
+    // return await this.updateUserResponseDto.save(createUserResponseDto);
   }
 
   findAll() {
@@ -30,42 +37,62 @@ export class UserResponseService {
     //cette boucle permet de parcourir la response
     for (let i = 0; i < userResponse.length; i++) {
       //Lire la dernière réponse de la DB
-      const user_response = await this.updateUserResponseDto.findOne({
+      const userResponseRequest = await this.updateUserResponseDto.findOne({
         where: {
           userId: iduser,
           cardId: userResponse[i]['id_card'],
         },
       });
       //Insérer une nouvelle réponse
-      if (!user_response) {
+      debug('user response \n');
+      debug(userResponseRequest);
+      if (!userResponseRequest) {
         let proficiencyId;
         userResponse[i]['id_answer'] == 1
           ? (proficiencyId = 2)
           : (proficiencyId = 1);
-        const newuser_response = {
+        const newUserResponse: CreateUserResponseDto = {
           dateResponse: new Date(),
           userId: iduser,
           cardId: userResponse[i]['id_card'],
           answerId: userResponse[i]['id_answer'],
+          levelMapId: userResponse[i]['idLevel'],
           proficiencyId: proficiencyId,
         };
 
-        await this.create(newuser_response);
+        await this.updateUserResponseDto
+          .createQueryBuilder('user_response')
+          .insert()
+          .into('user_response', [
+            'dateResponse',
+            'userId',
+            'cardId',
+            'answerId',
+            'levelMapId',
+            'proficiencyId',
+          ])
+          .values(newUserResponse)
+          .execute()
+          .catch((err) => {
+            debug(err);
+            throw new InternalServerErrorException(err);
+          });
       } else {
         //changer date de réponse pour mettre la date actuelle
-        user_response.dateResponse = new Date();
+        userResponseRequest.dateResponse = new Date();
         //changer answer_id avec celle réçu
-        user_response.answerId = userResponse[i]['id_answer'];
+        userResponseRequest.answerId = userResponse[i]['id_answer'];
+        userResponseRequest.levelMapId = userResponse[i]['idLevel'];
         //mise à jour de proficiency
-        if (user_response.answerId == 1) {
+        if (userResponseRequest.answerId == 1) {
           //Si la réponse est correcte on augmente proficiency par 1
-          user_response.proficiencyId += 1;
+          userResponseRequest.proficiencyId += 1;
         } else {
           //Si la proficiency est l'une de valeurs suivantes: 3, 4, 6, 7 on diminue la proficiency par 2
-          if ([3, 4, 6, 7].includes(user_response.proficiencyId))
-            user_response.proficiencyId -= 2;
+          if ([3, 4, 6, 7].includes(userResponseRequest.proficiencyId))
+            userResponseRequest.proficiencyId -= 2;
         }
-        await this.updateUserResponseDto.save(user_response);
+        await this.updateUserResponseDto.save(userResponse);
       }
     }
 
