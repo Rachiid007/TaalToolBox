@@ -23,16 +23,15 @@ import { CardsThemeModule } from './cards_theme/cards_theme.module';
 import { LevelMapModule } from './level_map/level_map.module';
 import { LevelDifficultyModule } from './level_difficulty/level_difficulty.module';
 
-const isDevelopment = (process.env.NODE_ENV === 'development' ? true : false)
+const isDevelopment = process.env.NODE_ENV === 'development' ? true : false;
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
-      imports : [ConfigModule], 
+      imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: ((configService:ConfigService)=>({
-
+      useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: process.env.POSTGRES_HOST,
         port: 5432,
@@ -41,9 +40,9 @@ const isDevelopment = (process.env.NODE_ENV === 'development' ? true : false)
         database: configService.get('POSTGRES_DB'),
         autoLoadEntities: true,
         entities: [],
-        synchronize: isDevelopment? true: false,
+        synchronize: isDevelopment ? true : false,
         // synchronize: true, // ! SET TO FALSE IN PRODUCTION
-      }))
+      }),
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),

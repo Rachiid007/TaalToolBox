@@ -1,12 +1,13 @@
-name: CI/CD Pipeline - Runs All tests and builds, if all pass, creates a Docker Image and deploys to hub.docker.com.
+name: CI/CD Pipeline - Runs All tests and builds, if all pass, create Docker images and deploy them in the Docker Registry
 
 on:
   push:
     branches:
-      - devops
-  # pull_request:
-  #   branches:
-  #     - main
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   backend-test-build:
@@ -38,10 +39,21 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'WEB/package-lock.json'
 
+      - name: Execute Cypress E2E tests
+        uses: cypress-io/github-action@v5
+        timeout-minutes: 5
+        with:
+          working-directory: ./WEB
+          start: npm run dev
+          wait-on: http://localhost:5173
+          wait-on-timeout: 60
+          browser: chrome
+          spec: 'cypress/**/*.cy.js'
+
       - name: Execute Frontend Unit tests
         run: |
           npm ci
-          npm run test
+          npm run test:unit
           npm run build
         working-directory: ./WEB
 

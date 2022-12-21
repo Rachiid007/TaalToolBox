@@ -1,16 +1,14 @@
 version: '3.8'
 services:
   proxy-nginx:
-    build:
-      context: ./WEB
-      dockerfile: Dockerfile
+    image: rachiid007/frontend:latest
     container_name: proxy-nginx
     ports:
       - 80:80
       - 443:443
     volumes:
-      - ./certbot/www:/var/www/certbot/
-      - ./certbot/:/etc/nginx/ssl/
+      - /home/ubuntu/TaalToolBox/certbot/www:/var/www/certbot/
+      - /home/ubuntu/TaalToolBox/certbot:/etc/nginx/ssl/
     depends_on:
       - nestjs
     networks:
@@ -33,9 +31,7 @@ services:
         ipv4_address: 10.5.0.3
 
   nestjs:
-    build:
-      context: ./BACKEND
-      dockerfile: Dockerfile
+    image: rachiid007/backend:latest
     container_name: nestjs
     depends_on:
       - postgres-db
@@ -46,6 +42,16 @@ services:
     networks:
       network:
         ipv4_address: 10.5.0.4
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      network:
+        ipv4_address: 10.5.0.5
 
 volumes:
   db:
