@@ -388,6 +388,10 @@
     .recorder {
       width: 40%;
     }
+    .last_row {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   @keyframes appear {

@@ -42,7 +42,7 @@ export class UserResponse {
   @JoinColumn({ name: 'answerId' })
   answer: Answer;
 
-  @Column()
+  @Column({ nullable: true })
   levelMapId: number;
   // Plusieur réponse peuvent concerner une même niveau sur la carte
   @ManyToOne(() => LevelMap, (levelMap) => levelMap.id)

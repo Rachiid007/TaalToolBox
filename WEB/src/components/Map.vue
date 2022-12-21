@@ -21,12 +21,16 @@
   import geoCoderSvg from '@/assets/images/geo-marker.svg'
   import geoCoderSvgDal from '@/assets/images/geo-markerDal.svg'
   import geoCoderSvgFlash from '@/assets/images/geo-markerFlash.svg'
+  import geoCoderSvgVerbalize from '@/assets/images/geo-markerVerbalize.svg'
   import { RouterLink } from 'vue-router'
   import { useUserStore } from '@/stores/user'
   import useMapStore from '@/stores/map'
   import router from '@/router'
   import mapService from '@/services/mapService'
   import type { LevelMapWithId } from '@/types/map'
+
+  import VerbalizeImage from '@/assets/logo/verbalize.svg'
+
   // import { Popup } from 'ol-popup';
   //
   //
@@ -90,6 +94,12 @@
         address: 'Institut Cardinal Mercier',
         levelId: 0,
         levelActivityType: 0
+      },
+      {
+        position: [4.57576, 50.87358], //[4.39064, 50.83756]
+        address: 'Hollestraat',
+        levelId: 5,
+        levelActivityType: 3
       }
     ]
   })
@@ -218,6 +228,8 @@
         feature.setStyle(createIconStyle(geoCoderSvgFlash))
       } else if (point.levelActivityType === 2) {
         feature.setStyle(createIconStyle(geoCoderSvgDal))
+      } else if (point.levelActivityType === 3) {
+        feature.setStyle(createIconStyle(geoCoderSvgVerbalize))
       }
 
       let vector = new VectorLayer({
@@ -335,6 +347,7 @@
   const authentication = ApiKeyManager.fromKey(import.meta.env.VITE_API_KEY)
 
   const handleGeocode = () => {
+    popupVisibility.value = false
     // get the value of the input element
     const query = (<HTMLInputElement>document.getElementById('geocode-input')).value
 
@@ -424,7 +437,7 @@
         newLevel: { address: newPointState.address, position: newPointState.position }
       })
     )
-    router.replace('/choose-activities')
+    router.replace('/info-level')
   }
 </script>
 
@@ -535,6 +548,7 @@
 
               <router-link
                 id="buttonDad"
+                @click="mapStore.setSelectedLevelId(levelNumber)"
                 to="/dad-mobile"
                 class="playButton"
                 v-if="isMobile"
@@ -542,9 +556,57 @@
               >
               <router-link
                 id="buttonDad"
+                @click="mapStore.setSelectedLevelId(levelNumber)"
                 to="/dad"
                 class="playButton"
                 v-else="isMobile"
+                >PLAY</router-link
+              >
+            </div>
+          </Transition>
+        </div>
+      </div>
+      <div
+        v-if="
+          (userRole.includes('Administrateur') && levelNumber > 0 && levelType === 3) ||
+          (userRole.includes('Créateur') && levelNumber > 0 && levelType === 3) ||
+          (userReward >= 50 && levelNumber > 0 && levelType === 3)
+        "
+      >
+        <a
+          href="#"
+          id="popup-closer"
+          class="ol-popup-closer"
+          @click="onCloserClick"
+        ></a>
+        <div class="popup-content">
+          <Transition>
+            <!-- v-if="gamemode" -->
+            <div
+              id="popup-content"
+              class="sub_content"
+            >
+              <p
+                class="popup-title"
+                style="color: #b200ff"
+                id="levelDad"
+              >
+                {{ levelName }}
+              </p>
+              <p class="level-details">Niveau Verbalize {{ levelNumber }}</p>
+              <img
+                class="gamemode-image-dal"
+                style="min-height: 120px"
+                :src="VerbalizeImage"
+                alt="Verbalize gamemode logo"
+              />
+
+              <router-link
+                id="buttonDad"
+                @click="mapStore.setSelectedLevelId(levelNumber)"
+                to="/verbalize"
+                class="playButton"
+                style="background-color: #b200ff"
                 >PLAY</router-link
               >
             </div>

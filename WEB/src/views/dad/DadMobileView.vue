@@ -11,27 +11,28 @@
 </script>
 
 <template>
-  <Suspense
-    ><div class="page">
-      <div
-        ref="loading"
-        class="showup"
-      >
-        <Intro />
-      </div>
-      <div>
-        <TheHeader>
-          <div class="title">
-            <img
-              class="headerLogo"
-              src="@/assets/logo/dragandlearn.svg"
-              alt="drag and drop gamemode logo"
-            />
-          </div>
-        </TheHeader>
+  <div class="page">
+    <div
+      ref="loading"
+      class="showup"
+    >
+      <Intro />
+    </div>
+    <div>
+      <TheHeader>
+        <div class="title">
+          <img
+            class="headerLogo"
+            src="@/assets/logo/dragandlearn.svg"
+            alt="drag and drop gamemode logo"
+          />
+        </div>
+      </TheHeader>
+      <Suspense>
         <DragndropMobile />
-      </div></div
-  ></Suspense>
+      </Suspense>
+    </div>
+  </div>
 </template>
 
 <style scoped>

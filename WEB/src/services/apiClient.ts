@@ -6,8 +6,6 @@ if (!import.meta.env.DEV) {
   apiBaseUrl = 'https://taaltoolbox.be/api/'
 }
 
-export default axios
-
 export const apiClient = axios.create({
   baseURL: apiBaseUrl,
   withCredentials: false
@@ -24,7 +22,8 @@ export const apiClientWithCredential = axios.create({
 export const apiClientForm = axios.create({
   baseURL: apiBaseUrl,
   headers: {
-    'Content-Type': 'multipart/form-data'
+    'Content-Type': 'application/json; charset=utf-8',
+    'Access-Control-Allow-Credentials': true
   }
 })
 

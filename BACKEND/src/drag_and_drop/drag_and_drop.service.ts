@@ -21,14 +21,18 @@ export class DragService {
     return this.drag_and_dropRepository.find();
   }
 
-  findOne(id: number) {
-    return this.drag_and_dropRepository.findOneBy({
-      id: id,
-    });
+  async getDadById(id: number) {
+    console.log(id);
+    const levelData = await this.drag_and_dropRepository
+      .createQueryBuilder('drag_and_drop')
+      .where({ levelMapId: id })
+      .getOne();
+    return levelData;
   }
 
   async uploadImage(req, file) {
     console.log('into the service');
+    console.log(req.file);
     const drag_id = req.body.id;
     // console.log(req);
     const url_prev = `${req.protocol}://${req.get('host')}`;

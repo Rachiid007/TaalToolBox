@@ -9,6 +9,8 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  Query,
+  Req,
 } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { imageFileFilter, editFileName } from './image.middleware';
@@ -35,13 +37,9 @@ export class DragController {
     return this.dragService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.dragService.findOne(+id);
-  // }
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.dragService.findOne(+id);
+  @Get('levels')
+  async findOne(@Query() query: { id: number }) {
+    return await this.dragService.getDadById(query.id);
   }
 
   @Post('image')
@@ -58,7 +56,8 @@ export class DragController {
     }),
   )
   // Ajoute le lien vers l'image dans la DB
-  uploadImage(@UploadedFile() file, @Dals() req) {
+  uploadImage(@UploadedFile() file, @Req() req) {
+    console.log(req, file);
     return this.dragService.uploadImage(req, file);
   }
 }
