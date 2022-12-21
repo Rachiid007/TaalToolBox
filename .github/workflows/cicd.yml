@@ -17,13 +17,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: 'npm'
-          cache-dependency-path: 'BACKEND/package-lock.json'
+          cache: "npm"
+          cache-dependency-path: "BACKEND/package-lock.json"
 
       - name: Execute Backend Unit tests
         run: |
           npm ci
-          npm run test
+          npm run test:unit
+          npm run test:e2e
         working-directory: ./BACKEND
 
   frontend-tests:
@@ -34,8 +35,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: 'npm'
-          cache-dependency-path: 'WEB/package-lock.json'
+          cache: "npm"
+          cache-dependency-path: "WEB/package-lock.json"
 
       - name: Execute Frontend Unit tests
         run: |
@@ -52,8 +53,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-          cache: 'npm'
-          cache-dependency-path: 'WEB/package-lock.json'
+          cache: "npm"
+          cache-dependency-path: "WEB/package-lock.json"
 
       - name: Build Frontend
         run: |

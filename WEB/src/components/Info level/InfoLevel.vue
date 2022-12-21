@@ -59,7 +59,7 @@
         router.replace('/dadteacher')
       } else {
         mapService.setLevelMap(mapStore.newLevel)
-        window.location.pathname = '/TaalToolBox/map'
+        window.location.pathname = '/map'
       }
     } else {
       error.value = 'Veuillez compléter tous les champs'

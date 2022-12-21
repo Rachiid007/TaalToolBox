@@ -33,7 +33,7 @@
   const handleDisconnection = () => {
     localStorage.removeItem('user')
     userStore.$reset
-    window.location.pathname = '/TaalToolBox/login'
+    window.location.pathname = '/login'
   }
 
   const showAdd = () => {
@@ -62,7 +62,7 @@
       <router-link
         class="tabs_element"
         to="/"
-        >Acceuil</router-link
+        >Accueil</router-link
       >
       <router-link
         class="tabs_element"
