@@ -12,7 +12,6 @@ export default {
   },
   setUsers(payload: UserFormData) {
     // TODO THE PASSWORD NEED TO BE HASH -- IF THE ATTACKER GET THE HASH HE CAN COMPRIMISED DATABASE
-    console.log(payload)
     return apiClient.post('/users', payload)
   }
 }

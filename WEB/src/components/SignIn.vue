@@ -1,15 +1,25 @@
 <script setup lang="ts">
-  import { onMounted, reactive } from 'vue'
+  import { onMounted, reactive, ref } from 'vue'
   import loginService from '@/services/loginService'
   import generalService from '@/services/generalService'
   import type { UserFormData } from '@/types/user'
   import axios from 'axios'
   import { useUserStore } from '../stores/user'
+  import { useSchoolsStore } from '@/stores/school'
 
   import { sha512 } from 'js-sha512'
+  import school from '@/services/school'
 
   const currentUserRole = useUserStore().user.role
-  console.log(currentUserRole.includes('Administrateur'))
+  await useSchoolsStore().getSchoolClass()
+  await useSchoolsStore().getSchoolName()
+  // console.log(currentUserRole.includes('Administrateur'))
+
+  const schoolClass: any = ref({
+    // 'Institut Saint Joseph': ['1TL1SJ', '1TL2SJ', '2TL1SJ', '2TL2SJ', '3TL1SJ', '3TL2SJ'],
+    // 'Institut Don Bosco': ['1TL1DB', '1TL2DB', '2TL1DB', '2TL2DB', '3TL1DB', '3TL2DB'],
+    // 'Institut Cardinal Mercier': ['1TL1CM', '1TL2CM', '2TL1CM', '2TL2CM', '3TL1CM', '3TL2CM']
+  })
 
   interface State {
     page1: {
@@ -37,7 +47,7 @@
       mail: 'test@test.com',
       schoolMail: 'test@school.com',
       birthDate: '05-04-2002',
-      gender: ''
+      gender: 'M'
     },
     page2: {
       school: 'Institut Saint Joseph',
@@ -53,15 +63,11 @@
   const manage = reactive({
     firstPage: true,
     error: '',
+    succes: '',
     role: currentUserRole.includes('Administrateur') ? 'Administrateur' : 'Professeur'
   })
 
   // TODO RECUPERER LES ECOLES ET LES CLASSES DANS LA BASE DE DONNEES
-  const schoolClass: any = reactive({
-    'Institut Saint Joseph': ['1TL1SJ', '1TL2SJ', '2TL1SJ', '2TL2SJ', '3TL1SJ', '3TL2SJ'],
-    'Institut Don Bosco': ['1TL1DB', '1TL2DB', '2TL1DB', '2TL2DB', '3TL1DB', '3TL2DB'],
-    'Institut Cardinal Mercier': ['1TL1CM', '1TL2CM', '2TL1CM', '2TL2CM', '3TL1CM', '3TL2CM']
-  })
   // RECUPERER TOUS LES ROLES DANS LA BASE DE DONNEES ET LES METTRE DANS UN TABLEAU
   const roleRequest = await generalService.getRole().catch((err) => {
     console.error(err)
@@ -72,7 +78,7 @@
     }
   )
   // role = tempRole
-  console.log(role)
+  // console.log(role)
   const updateClassrooms = () => {
     state.page2.classroom = ''
   }
@@ -85,7 +91,7 @@
     manage.firstPage = false
   }
 
-  const sendData = () => {
+  const sendData = async () => {
     let payload: UserFormData = {
       name: state.page1.firstName,
       surname: state.page1.secondName,
@@ -100,16 +106,23 @@
       schoolClass: state.page2.classroom, //TODO EST CE QUUN PROF PEUT AVOIR PLUSIEURS CLASSES
       sex: state.page1.gender
     }
-    console.log(payload)
-    loginService.setUsers(payload)
-    // axios
-    //   .post('http://localhost:3000/auth/register', payload, {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
-    //     }
-    //   })
-    //   .then((response) => console.log(response))
+    manage.error = ''
+    manage.succes = ''
+    await loginService
+      .setUsers(payload)
+      .then((res) => {
+        console.log(res)
+        manage.succes = 'Utilisateur ajouté ! Veuillez recharger la page pour en ajouter un autre.'
+      })
+      .catch((err) => {
+        const errorCode = err.response.data.statusCode
+        if (errorCode == 409) {
+          manage.error = 'Adresse mail déjà attribué !'
+        } else if (errorCode == 500) {
+          manage.error =
+            "Une erreur interne c'est produite lors de la création du nouvel utilisateur"
+        }
+      })
   }
 
   // const checkPasswordStrength = (password: string) => {
@@ -130,7 +143,9 @@
         state.page1.firstName == '' ||
         state.page1.secondName == '' ||
         state.page1.mail == '' ||
-        state.page1.birthDate == ''
+        state.page1.schoolMail == '' ||
+        state.page1.birthDate == '' ||
+        state.page1.gender == ''
       ) {
         manage.error = 'Veuillez compléter tous les champs !'
         return 1
@@ -156,12 +171,24 @@
       state.auth.password =
         state.page1.firstName[0] + state.page1.secondName + birthTableString.join('')
       sendData()
-      console.log(state.auth.password)
+      // console.log(state.auth.password)
     }
 
     // Verifier que les données ne sont pas déjà utilisées pour un autre compte
-    console.log('TODO: Envoyer les données au back')
   }
+  onMounted(() => {
+    schoolClass.value = {}
+    for (let school of useSchoolsStore().schoolList) {
+      schoolClass.value[school.name] = []
+      for (let scClass of useSchoolsStore().schoolClassList) {
+        // console.log(scClass.idSchool, school.id)
+        if (scClass.idSchool == school.id) {
+          schoolClass.value[school.name].push(scClass.nameClass)
+        }
+      }
+    }
+    // console.log(schoolClass.value)
+  })
 </script>
 
 <template>
@@ -366,6 +393,9 @@
       <div class="error">
         {{ manage.error }}
       </div>
+      <div class="succes">
+        {{ manage.succes }}
+      </div>
     </div>
   </div>
 </template>
@@ -556,6 +586,13 @@
     color: red;
     padding-bottom: 5%;
     font-weight: bold;
+    text-align: center;
+  }
+  .succes {
+    color: green;
+    padding-bottom: 5%;
+    font-weight: bold;
+    text-align: center;
   }
 
   #precedent {

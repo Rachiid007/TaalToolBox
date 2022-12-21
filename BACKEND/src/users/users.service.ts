@@ -54,6 +54,13 @@ export class UsersService {
       .innerJoinAndSelect('users.role', 'role')
       .where({ email: email })
       .getOne();
+    // .catch((err) => {
+    //   console.log(err);
+    // });
+    console.log(role);
+    if (!role) {
+      throw new NotFoundException();
+    }
     //Decrypter le mot de passe du user
     //Get the users and here role
     if (!role.role.filter((x) => x.name === 'Administrateur').length) {
