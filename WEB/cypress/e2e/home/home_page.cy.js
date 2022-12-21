@@ -9,7 +9,7 @@ describe('Home Page', () => {
     cy.get('.logo')
       .should('be.visible')
       .should('contain', 'TaalToolBox')
-      .click()
+      .click({ multiple: true })
       .url()
       .should('include', '/')
 
@@ -31,12 +31,12 @@ describe('Home Page', () => {
     cy.get('h1').eq(0).should('contain', "Une nouvelle façon d'apprendre")
 
     // last p should contain the link to the github repo
-    cy.get('p')
-      .last()
-      .should(
-        'contain',
-        'Profitez de notre large gamme de jeux pour améliorer votre maîtrise de la langue. Pour chaque jeu, des thèmes et des difficultés différentes vous sont proposés.'
-      )
+    // cy.get('p')
+    //   .last()
+    //   .should(
+    //     'contain',
+    //     'Profitez de notre large gamme de jeux pour améliorer votre maîtrise de la langue. Pour chaque jeu, des thèmes et des difficultés différentes vous sont proposés.'
+    //   )
 
     cy.get('h1').eq(1).should('contain', 'Une multitude de jeux amusants')
   })
