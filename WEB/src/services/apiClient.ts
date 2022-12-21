@@ -3,7 +3,7 @@ import axios from 'axios'
 let apiBaseUrl = 'http://localhost:3000'
 
 if (!import.meta.env.DEV) {
-  apiBaseUrl = 'http://taaltoolbox.be/api/'
+  apiBaseUrl = 'https://taaltoolbox.be/api/'
 }
 
 export default axios
