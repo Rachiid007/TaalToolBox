@@ -1,8 +1,6 @@
 <script setup lang="ts">
-  import { reactive, onMounted } from 'vue'
+  import { reactive } from 'vue'
   import { useUserStore } from '@/stores/user'
-  import axios from 'axios'
-  import router from '@/router'
   import { sha512 } from 'js-sha512'
 
   const store = useUserStore()
@@ -76,7 +74,7 @@
             <input
               class="mailPass"
               type="email"
-              placeholder="Mail"
+              placeholder="Email"
               v-model="state.mail"
             />
             <input

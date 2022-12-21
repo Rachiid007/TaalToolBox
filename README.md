@@ -34,7 +34,7 @@ Pour éviter les erreurs, veuillez installer l'extension [Vue Volar](https://mar
 
 ### Frontend (Vue.js 3) :computer:
 
-Rendez-vous dans le répertoire _WEB_, ouvrez une console et lancez la commande `npm install` pour installer les dépendances et `npm run dev` pour lancer l'application en mode développement. L'application sera accessible à l'adresse `http://127.0.0.1:5173/TaalToolBox/`.
+Rendez-vous dans le répertoire _WEB_, ouvrez une console et lancez la commande `npm install` pour installer les dépendances et `npm run dev` pour lancer l'application en mode développement. L'application sera accessible à l'adresse `http://127.0.0.1:5173/`.
 
 ### Docker :whale:
 

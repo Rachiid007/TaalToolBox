@@ -9,13 +9,22 @@
   const file = ref<File | null>(null)
   const headersFromExcel = ref<any>(null)
   const rows = ref<unknown[][] | null>(null)
+  const error = ref<string | null>(null)
 
   const handleFileChange = (e: Event) => {
     const target = e.target as HTMLInputElement
     const files = target.files
     if (files) {
-      file.value = files[0]
-      excelToArray(file.value)
+      // accept only xlsx files (excel)
+      if (files[0].type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+        error.value =
+          'Le format du fichier est incorrect, veuillez sélectionner un fichier Excel (XLSX).'
+        return
+      } else {
+        error.value = null
+        file.value = files[0]
+        excelToArray(file.value)
+      }
     } else {
       file.value = null
     }
@@ -46,8 +55,6 @@
     }
     reader.readAsBinaryString(file)
   }
-
-  const error = ref<string | null>(null)
 
   const checkForDuplicates = (array: any[]) => {
     // verify if the properties indexInHeaderExcel are all different
@@ -164,6 +171,12 @@
         @change="handleFileChange($event)"
       />
     </div>
+    <p
+      class="error"
+      v-if="error"
+    >
+      {{ error }}
+    </p>
 
     <div
       class="convert-excel-header"
@@ -208,12 +221,12 @@
       >
         Afficher la table
       </button>
-      <p
+      <!-- <p
         class="error"
         v-if="error"
       >
         {{ error }}
-      </p>
+      </p> -->
     </div>
 
     <div
