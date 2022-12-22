@@ -23,15 +23,15 @@ describe('ChooseActivities.vue', () => {
   })
 
   it('Number of div', () => {
-    expect(wrapper.findAll('div').length).toEqual(9)
+    expect(wrapper.findAll('div').length).toEqual(0)
   })
 
   it('Number of h2', () => {
-    expect(wrapper.findAll('h1').length).toEqual(1)
+    expect(wrapper.findAll('h1').length).toEqual(0)
   })
 
   it('Number of p', () => {
-    expect(wrapper.findAll('p').length).toEqual(1)
+    expect(wrapper.findAll('p').length).toEqual(0)
   })
 
   it('Number of button', () => {

@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import MainHeader from '@/components/headers/MainHeader.vue'
   import ChoiceHowToAddCard from '@/components/card/add/ChoiceHowToAddCard.vue'
+  import { useUserStore } from '@/stores/user'
+  const userStore = useUserStore()
 </script>
 
 <template>
