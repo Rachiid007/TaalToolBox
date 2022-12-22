@@ -163,7 +163,6 @@ export const useDadLevels = defineStore('dadlevels', () => {
     newDragAndLearnImage: File | null
   ) => {
     if (newDragAndLearnImage === null) {
-      console.log('no image')
       return 1
     }
     const payload = {
@@ -178,7 +177,6 @@ export const useDadLevels = defineStore('dadlevels', () => {
       })
       .then((response: any) => {
         console.log('map ok')
-        console.log(response)
         dalService
           .postDalImage(newDragAndLearnImage, response.data)
           .catch((error) => {

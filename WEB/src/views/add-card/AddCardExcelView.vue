@@ -37,9 +37,7 @@
           'Content-Type': 'multipart/form-data'
         }
       })
-      .then((res) => {
-        console.log(res)
-      })
+      .then((res) => {})
       .catch((error) => {
         console.log(error)
       })
@@ -49,7 +47,6 @@
   )
   function startUpload(files: File[]): void {
     files.map((file) => {
-      console.log('uploading', file)
       sendFileToNest(file)
     })
   }

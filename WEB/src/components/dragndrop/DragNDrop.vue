@@ -15,7 +15,6 @@
 
   const datas = await store.getOneLevel(mapStore.getSelectedLevelId())
   datas.data.levelData = JSON.parse(datas.data.levelData)
-  // console.log(datas.data)
 
   const state = reactive({ fields: datas.data.levelData.fields, backImage: datas.data.image })
   // const state = reactive(dataFromStore[store.getLevel()])
@@ -50,12 +49,10 @@
   //         'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
   //       }
   //     })
-  //     .then((response) => console.log(response))
   // }
 
   // fonction appellée quand on drop le mot dans la div
   const dropped = (event: any) => {
-    // console.log('dropped !')
     event.preventDefault()
     // Si la div dans laquelle on a drop le mot n'est une div faite pour acceuillir un mot on remet le mot dans la liste des mots en bas de l'écran
     if (event.target.className != 'container' && event.target.className != 'wordList') {
@@ -71,16 +68,12 @@
     event.target.appendChild(document.getElementById(data))
   }
   const draggedOver = (event: any) => {
-    // console.log('draggedOver !')
     event.preventDefault()
   }
   const dragStarted = (event: any) => {
-    // console.log('dragStarted !')
     event.dataTransfer.setData('text', event.target.id)
   }
   const checkScore = () => {
-    console.log('Checking score ...')
-    // console.log(background.value.childNodes)
     let childList = background.value.childNodes
     let goodAnswers = 0
     let badAnswers = 0
@@ -110,7 +103,6 @@
         }
       }
     }
-    console.log('le score est de: ' + localScore)
     badFields.value = badAnswers
     goodFields.value = goodAnswers
     score.value = localScore
@@ -136,7 +128,6 @@
     //La fonction shuffle va prendre les mots qui sont dans l'objet principal (state) et les mettres dans un ordre aléatoire
     // CE CODE VIENS D INTERNET ET DOIS ENCORE ETRE COMPRIS
 
-    console.log(store.getData())
     const shuffle = () => {
       let array = []
       for (let item in state.fields.pc) {
@@ -163,7 +154,6 @@
     if (state.fields.pc[0]) {
       shuffle()
     } else {
-      console.log(state)
       notCompatible.value = true
     }
   })

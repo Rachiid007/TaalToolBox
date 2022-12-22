@@ -26,7 +26,6 @@
     'Administrateur',
     'Professeur'
   ])
-  console.log(userScope)
   const currentUserRole = userScope.role
 
   interface State {
@@ -114,13 +113,11 @@
       schoolClass: state.page2.classroom, //TODO EST CE QUUN PROF PEUT AVOIR PLUSIEURS CLASSES
       sex: state.page1.gender
     }
-    console.log(state.auth.password)
     manage.error = ''
     manage.succes = ''
     await loginService
       .setUsers(payload)
       .then((res) => {
-        console.log(res)
         manage.succes = 'Utilisateur ajouté ! Veuillez recharger la page pour en ajouter un autre.'
       })
       .catch((err) => {

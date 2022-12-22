@@ -15,16 +15,15 @@
   const manageErrorSize: Ref<string> = ref('')
 
   const handleImage = (e: any) => {
-    console.log(e.target.files)
     manageErrorSize.value = ''
     if (e.target.files[0].size < 1048576) {
       if (e.target.files[0]) {
         imageUrl.value = URL.createObjectURL(e.target.files[0])
         image.value = e.target.files[0]
-        console.log(imageUrl.value, image.value)
+        // console.log(imageUrl.value, image.value)
       }
     } else {
-      console.log('erreur taille')
+      // console.log('erreur taille')
       manageErrorSize.value = "La taille de l'image ne doit pas excéder 1Mo!"
     }
   }
@@ -38,7 +37,7 @@
     store.setImageUrl(imageUrl.value)
     store.setImageData(image.value)
     emit('change-page', 2)
-    console.log('next page ok ')
+    // console.log('next page ok ')
   }
   onMounted(() => {
     if (store.getImageUrl()) {
