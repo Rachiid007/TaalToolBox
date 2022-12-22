@@ -6,7 +6,7 @@
   import { useUserStore } from '@/stores/user'
   const userScope = await useUserStore().checkUserAccessAndReturnUser()
 
-  const userSchool = userScope.school
+  // const userSchool = useUserStore().userInfo
   const file = ref<File | null>(null)
   const headersFromExcel = ref<any>(null)
   const rows = ref<unknown[][] | null>(null)
@@ -134,7 +134,7 @@
         schoolClass: row[expectedHeaders.value[5].indexInHeaderExcel] as string,
         sex: row[expectedHeaders.value[6].indexInHeaderExcel] as string,
         role: 'Elève',
-        school: userSchool,
+        school: userScope.school,
         password: password
       }
       users.push(user)

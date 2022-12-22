@@ -1,20 +1,43 @@
 import { shallowMount, mount } from '@vue/test-utils'
 import Class from '@/components/profile/Class.vue'
-import { beforeEach, describe, expect, test } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach, test } from 'vitest'
+import { createTestingPinia } from '@pinia/testing'
+// import { useCardStore } from '@/stores/card'
+import { defineComponent, Suspense, h, defineAsyncComponent } from 'vue'
+import { flushPromises } from '@vue/test-utils'
 
+const mountSuspense = async (component: any) => {
+  const wrapper = mount(
+    defineComponent({
+      render() {
+        return h(Suspense, null, {
+          default: h(component),
+          fallback: h('div', 'fallback')
+        })
+      }
+    }),
+    {
+      global: {
+        plugins: [
+          createTestingPinia({
+            createSpy: vi.fn
+          })
+        ]
+      }
+    }
+  )
+
+  await flushPromises()
+  return wrapper
+}
 describe('Profile.vue', () => {
-    let wrapper: any | null = null;
+  test('Number of button', async () => {
+    const wrapper = await mountSuspense(Class)
+    expect(wrapper.findAll('div').length).toEqual(4)
+  })
 
-    beforeEach(() => {
-        wrapper = mount(Class)
-    })
-
-    test("number of divs", () =>{
-        expect(wrapper.findAll("div").length).toEqual(4)
-    })
-
-    test("text of the name div", () => {
-        expect(wrapper.find(".title").text()).toEqual("Classe")
-    })
-
+  test('Number of div', async () => {
+    const wrapper = await mountSuspense(Class)
+    expect(wrapper.find('.title').text()).toEqual('Classe')
+  })
 })

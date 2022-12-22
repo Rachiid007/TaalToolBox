@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import MainHeader from '@/components/headers/MainHeader.vue'
   import ChooseActivities from '@/components/activity/ChooseActivities.vue'
-  
+  import { useUserStore } from '@/stores/user'
+  const userStore = useUserStore()
 </script>
 <template>
   <div class="page">

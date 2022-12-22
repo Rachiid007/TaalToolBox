@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import MainHeader from '@/components/headers/MainHeader.vue'
   import AddUserExcel from '@/components/users/AddUserExcel.vue'
+  import { useUserStore } from '@/stores/user'
+  const userStore = useUserStore()
 </script>
 
 <template>

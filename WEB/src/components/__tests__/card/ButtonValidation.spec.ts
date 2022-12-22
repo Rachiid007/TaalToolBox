@@ -1,16 +1,21 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { describe, it, expect, vi, beforeEach, afterEach, test } from 'vitest'
+import { mount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
+import { defineComponent, Suspense, h, defineAsyncComponent } from 'vue'
+import { flushPromises } from '@vue/test-utils'
+import ButtonValidationVue from '@/components/card/ButtonValidation.vue'
 
-import ButtonValidation from '@/components/card/ButtonValidation.vue'
-
-describe('RemainingCard.vue Test with empty data store', () => {
-  let wrapper: any = null
-
-  // SETUP - run prior to each unit test
-  beforeEach(() => {
-    // render the component
-    wrapper = shallowMount(ButtonValidation, {
+const mountSuspense = async (component: any) => {
+  const wrapper = mount(
+    defineComponent({
+      render() {
+        return h(Suspense, null, {
+          default: h(component),
+          fallback: h('div', 'fallback')
+        })
+      }
+    }),
+    {
       global: {
         plugins: [
           createTestingPinia({
@@ -18,17 +23,19 @@ describe('RemainingCard.vue Test with empty data store', () => {
           })
         ]
       }
-    })
+    }
+  )
+
+  await flushPromises()
+  return wrapper
+}
+describe('App renderes', () => {
+  test('Number of button', async () => {
+    const wrapper = await mountSuspense(ButtonValidationVue)
+    expect(wrapper.findAll('div').length).toEqual(1) // it works
   })
-
-  // TEARDOWN - run after each unit test
-  afterEach(() => {
-    wrapper.unmount()
-  })
-
-  it('initializes with zero elements displayed', () => {
-    expect(wrapper.findAll('div').length).toEqual(1)
-
+  test('Number of button', async () => {
+    const wrapper = await mountSuspense(ButtonValidationVue)
     expect(wrapper.findAll('button').length).toEqual(3)
   })
 })

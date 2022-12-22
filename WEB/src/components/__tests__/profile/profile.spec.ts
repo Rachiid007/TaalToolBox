@@ -1,28 +1,53 @@
-import { shallowMount, mount } from '@vue/test-utils'
 import Profile from '@/components/profile/Profile.vue'
-import { beforeEach, describe, expect, test } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
+import { shallowMount, mount } from '@vue/test-utils'
+import { createTestingPinia } from '@pinia/testing'
+// import { useCardStore } from '@/stores/card'
+import { defineComponent, Suspense, h, defineAsyncComponent } from 'vue'
+import { flushPromises } from '@vue/test-utils'
 
+const mountSuspense = async (component: any) => {
+  const wrapper = mount(
+    defineComponent({
+      render() {
+        return h(Suspense, null, {
+          default: h(component),
+          fallback: h('div', 'fallback')
+        })
+      }
+    }),
+    {
+      global: {
+        plugins: [
+          createTestingPinia({
+            createSpy: vi.fn
+          })
+        ]
+      }
+    }
+  )
 
+  await flushPromises()
+  return wrapper
+}
 
 describe('Profile.vue', () => {
-    let wrapper: any | null = null;
+  test('Number of div', async () => {
+    const wrapper = await mountSuspense(Profile)
+    expect(wrapper.findAll('div').length).toEqual(6) // it works
+  })
 
-    beforeEach(() => {
-        wrapper = mount(Profile)
-    })
+  test('Number of img', async () => {
+    const wrapper = await mountSuspense(Profile)
+    expect(wrapper.findAll('img').length).toEqual(4)
+  })
+  test('Number of p', async () => {
+    const wrapper = await mountSuspense(Profile)
+    expect(wrapper.findAll('p').length).toEqual(3)
+  })
 
-    test("number of divs", () => {
-        expect(wrapper.findAll("div").length).toEqual(6)
-    })
-
-    test("number of images", () => {
-        expect(wrapper.findAll("img").length).toEqual(4)
-    })
-
-    test("number of paragraphs", () => {
-        expect(wrapper.findAll("p").length).toEqual(3)
-    })
-    test("text of the name div", () => {
-        expect(wrapper.find(".name").text()).toEqual("Nom utilisateur")
-    })
+  test('Number of .name', async () => {
+    const wrapper = await mountSuspense(Profile)
+    expect(wrapper.find('.name').text()).toEqual('Nom utilisateur')
+  })
 })
