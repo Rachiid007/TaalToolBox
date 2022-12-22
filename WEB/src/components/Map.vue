@@ -241,8 +241,6 @@
       map.value.getLayers().extend([vector])
     }
 
-    console.log(map.value)
-
     // ---------------------------------------------------------------
     // On génère les points sur la map à partir de la liste des objets
     // ---------------------------------------------------------------
@@ -252,11 +250,8 @@
       // TODO FAIRE UN CONDITION SI LELEVE A DEJA COMPLETER LACTIVITE DANS SON ECOLE
       for (let point of pointState.points) {
         setPointOnMap(point)
-        console.log(point)
       }
     } else if (userReward >= 50) {
-      console.log('ok')
-      console.log(pointState.points)
       for (let point of pointState.points) {
         //TODO NAFFICHER QUE LACTIVITE PRINCIPALE LORS DE LA PREMIERE ARRIVER DE LELEVE SUR LE SITE
         if (point.levelId > 0) {
@@ -280,7 +275,6 @@
       popupVisibility.value = false
 
       setActive()
-      console.log(map.value.getInteractions().getArray())
       map.value.forEachFeatureAtPixel(
         evt.pixel,
         function (
@@ -291,25 +285,20 @@
           layer: any
         ) {
           // On attribue les valeurs de nom de niveau et de numéro de niveau
-          console.log(feature)
           levelName.value = feature.getProperties().name
           // levelNumber.value = feature.getId()
           levelNumber.value = pointState.points.filter(
             (x) => x.address === levelName.value
           )[0].levelId
-          console.log(levelNumber.value)
 
           levelType.value = pointState.points.filter(
             (x) => x.address === levelName.value
           )[0].levelActivityType
-          console.log(levelType.value)
           // Stocker dans un store le niveau que l'elève veut jouer
-          mapStore.setActualLevelMapId(levelNumber.value )
+          mapStore.setActualLevelMapId(levelNumber.value)
           // On enregistre les coordonnées pour mettre le popup au bon endroit
           const coordinate = evt.coordinate
-          console.log(coordinate)
           overlay.setPosition(coordinate)
-          console.log(overlay)
 
           popupVisibility.value = true
           allowControls.value = false
@@ -343,7 +332,6 @@
     import.meta.env.VITE_API_KEY
 
   // olms(map, basemapURL)
-  // console.log(import.meta.env.VITE_API_KEY)
   const authentication = ApiKeyManager.fromKey(import.meta.env.VITE_API_KEY)
 
   const handleGeocode = () => {
@@ -367,7 +355,6 @@
         // stocker les cooordonnées de l'adresse et le nom de l'adresse
         const result: any = response.candidates[0]
         const coords = [result.attributes.X, result.attributes.Y]
-        console.log(result)
         let feature = new Feature({
           geometry: new Point(fromLonLat(coords)), //[4.39064, 50.83756]
           name: result.address
@@ -394,9 +381,7 @@
           })
         })
 
-        console.log(map.value.getLayers())
         popupCreateGame.value = true
-        console.log(vector)
         newPointState = {
           address: result.address,
           position: coords,
@@ -432,11 +417,9 @@
 
   const onConfirmAddress = () => {
     // Enregistrer l'adresse dans le store et switch de page
-    console.log(
-      mapStore.$patch({
-        newLevel: { address: newPointState.address, position: newPointState.position }
-      })
-    )
+    mapStore.$patch({
+      newLevel: { address: newPointState.address, position: newPointState.position }
+    })
     router.replace('/info-level')
   }
 </script>

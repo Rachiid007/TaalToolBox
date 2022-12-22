@@ -25,12 +25,10 @@
     // let slides = document.getElementsByClassName('mySlides')
     let slides = document.getElementsByClassName('mySlides')
     let next = document.getElementsByClassName('next')
-    console.log(slides)
     // Si on arrive a la fin des slides on doit remplacer le bouton suivant par completer
     if (n > slides.length) {
       // Ajouter l'argent de l'utilisateur pour
       if (userScope.userReward == 0) {
-        console.log(userScope.userReward)
         userScope.addScoreToUser(50)
         router.replace('/map')
         return

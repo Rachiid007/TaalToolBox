@@ -24,8 +24,7 @@ export const apiClientWithCredential = axios.create({
 export const apiClientForm = axios.create({
   baseURL: apiBaseUrl,
   headers: {
-    'Content-Type': 'application/json; charset=utf-8',
-    'Access-Control-Allow-Credentials': true
+    'Content-Type': 'multipart/form-data',
   }
 })
 

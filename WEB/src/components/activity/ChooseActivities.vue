@@ -15,7 +15,6 @@
   const mapStore = useMapStore()
   const handleClick = (divId: any) => {
     isThereAnyActivitySelected.value = true
-    console.log(divId)
     selectedActivity.value = divId
   }
   const continueCreation = () => {

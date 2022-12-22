@@ -13,7 +13,6 @@
       role = roleReq.role
     }
   }
-  console.log(role)
   const right_tab: any = ref(null)
   const hamburger: any = ref(null)
   const isShown: any = ref(false)
@@ -143,7 +142,7 @@
         class="tabs_element"
         v-show="
           [staticRole.admin, staticRole.teacher].some((x) => {
-            return true
+            return role.includes(x)
           })
         "
         >Suivi</router-link
@@ -225,7 +224,7 @@
           class="tabs_element"
           v-show="
             [staticRole.admin, staticRole.creator].some((x) => {
-              return true //role.includes(x)
+              role.includes(x)
             })
           "
           >Suivi</router-link

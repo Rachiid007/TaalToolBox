@@ -101,11 +101,9 @@ export const useUserStore = defineStore('user', () => {
   const getUserScore = async () => {
     await UserService.getScore(user.email)
       .then((res) => {
-        console.log(res)
         userReward.value = res.data.score
       })
       .catch((err) => {
-        console.log(err)
         return err
       })
     return userReward.value
@@ -114,7 +112,6 @@ export const useUserStore = defineStore('user', () => {
   const addScoreToUser = async (quantity: number) => {
     await UserService.addScore(user.email, quantity)
       .then((res) => {
-        console.log(res)
         userReward.value = res.data
       })
       .catch((err) => {
