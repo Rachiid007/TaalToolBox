@@ -1,8 +1,4 @@
-# Local Netlify folder
-.netlify
-# /WEB/package-lock.json
-/backend/package-lock.json
-MOBILE/
+**/node_modules/**/*
 BACKEND/public/images/cards
 .env
 certbot
