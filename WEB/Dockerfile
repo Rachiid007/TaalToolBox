@@ -8,6 +8,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
+ARG VITE_API_KEY
+ENV VITE_API_KEY ${VITE_API_KEY}
+
 # Bundle app source
 COPY . .
 

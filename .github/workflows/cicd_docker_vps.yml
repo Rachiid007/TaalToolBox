@@ -82,6 +82,8 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./WEB
+          build-args: |
+            "VITE_API_KEY=${{ secrets.VITE_API_KEY }}"
           file: ./WEB/Dockerfile
           push: true
           tags: rachiid007/frontend:latest
