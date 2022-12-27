@@ -8,7 +8,7 @@
   const listActivities = [
     {
       activity_name: 'FlashCards',
-      url: '@/assets/logo/flashcards.svg',
+      url: new URL('/src/assets/logo/flashcards.svg', import.meta.url) as any,
       description:
         "Activité dans laquelle l'étudiant doit trouver de mots et doit s'auto-évaluer. Les mots" +
         '            sont representé sous forme de carte. Un systeme de poids est mise en place pour que les' +
@@ -17,7 +17,7 @@
     },
     {
       activity_name: 'DragAndLearn',
-      url: '@/assets/logo/dalcard.svg',
+      url: new URL('/src/assets/logo/dalcard.svg', import.meta.url) as any,
       description:
         "Activité dans laquelle l'étudiant doit placer des mots qui lui seront proposer dans la zone de jeu." +
         ' Dans cette zone de jeu les mots devrons être placés dans des champs et la zone de jeu comportera une image de background.',

@@ -2,7 +2,9 @@ version: '3.8'
 services:
   proxy-nginx:
     image: rachiid007/frontend:latest
-    container_name: proxy-nginx
+    # build:
+    #   context: ./WEB
+    #   dockerfile: Dockerfile
     ports:
       - 80:80
       - 443:443
@@ -11,56 +13,55 @@ services:
       - /home/ubuntu/TaalToolBox/certbot:/etc/nginx/ssl/
     depends_on:
       - nestjs
-    networks:
-      network:
-        ipv4_address: 10.5.0.2
-    restart: unless-stopped
+    restart: always
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
 
   postgres-db:
     image: postgres
     container_name: postgres-db
-    restart: unless-stopped
+    restart: always
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_HOST=${POSTGRES_HOST}
     volumes:
       - db:/var/lib/postgresql/data
-    networks:
-      network:
-        ipv4_address: 10.5.0.3
 
   nestjs:
     image: rachiid007/backend:latest
-    container_name: nestjs
+    # build:
+    #   context: ./BACKEND
+    #   dockerfile: Dockerfile
     depends_on:
       - postgres-db
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_HOST=${POSTGRES_HOST}
-    networks:
-      network:
-        ipv4_address: 10.5.0.4
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH=${JWT_REFRESH}
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
 
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
-    restart: unless-stopped
+    restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      network:
-        ipv4_address: 10.5.0.5
+    command: --cleanup --interval 30 --include-restarting proxy-nginx nestjs
 
 volumes:
   db:
     driver: local
-
-networks:
-  network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.5.0.0/16
-          gateway: 10.5.0.1

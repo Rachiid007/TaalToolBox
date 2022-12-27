@@ -24,8 +24,6 @@ import { CardsThemeModule } from './cards_theme/cards_theme.module';
 import { LevelMapModule } from './level_map/level_map.module';
 import { LevelDifficultyModule } from './level_difficulty/level_difficulty.module';
 
-const isDevelopment = process.env.NODE_ENV === 'development' ? true : false;
-
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -34,14 +32,14 @@ const isDevelopment = process.env.NODE_ENV === 'development' ? true : false;
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: process.env.POSTGRES_HOST,
+        host: 'postgres-db',
         port: 5432,
         username: 'postgres',
         password: process.env.POSTGRES_PASSWORD,
         database: configService.get('POSTGRES_DB'),
         autoLoadEntities: true,
         entities: [],
-        synchronize: isDevelopment ? true : false,
+        synchronize: false,
         // synchronize: true, // ! SET TO FALSE IN PRODUCTION
       }),
     }),
