@@ -9,8 +9,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - /home/ubuntu/TaalToolBox/certbot/www:/var/www/certbot/
-      - /home/ubuntu/TaalToolBox/certbot:/etc/nginx/ssl/
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
     depends_on:
       - nestjs
     restart: always
@@ -56,13 +55,13 @@ services:
     #     condition: on-failure
     #     delay: 5s
 
-  watchtower:
-    image: containrrr/watchtower
-    container_name: watchtower
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    command: --cleanup --interval 30 --include-restarting proxy-nginx nestjs
+  # watchtower:
+  #   image: containrrr/watchtower
+  #   container_name: watchtower
+  #   restart: always
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   command: --cleanup --interval 30 --include-restarting proxy-nginx nestjs
 
 volumes:
   db:
